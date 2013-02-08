@@ -254,7 +254,26 @@ Theorem plus_n_n_injective_take2 : forall n m,
      n + n = m + m ->
      n = m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m.
+  generalize dependent n.
+  induction m as [| m'].
+  Case "m = 0". simpl. intros n eq. destruct n as [| n'].
+    SCase "n = 0". reflexivity.
+    SCase "n = S n'". inversion eq.
+  Case "m = S m'".
+    intros n eq. destruct n as [| n'].
+    SCase "n = 0". inversion eq.
+    SCase "n = S n'".
+      assert (H: n' = m').
+      SSCase "Proof assertion".
+        apply IHm'.
+        simpl in eq.
+        rewrite <- plus_n_Sm in eq.
+        rewrite <- plus_n_Sm in eq.
+        inversion eq. reflexivity.
+      rewrite -> H.
+      reflexivity.
+Qed.
 
 (** Now prove this by induction on [l]. *)
 
@@ -262,7 +281,22 @@ Theorem index_after_last: forall (n : nat) (X : Type) (l : list X),
      length l = n ->
      index (S n) l = None.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n X l.
+  generalize dependent n.
+  induction l as [| x l'].
+  Case "l = []".
+    intros n eq.
+    simpl in eq. rewrite <- eq. reflexivity.
+  Case "l = x :: l'".
+    intros n eq.
+    simpl.
+    rewrite <- eq.
+    assert (H: length (x :: l') = S (length l')). reflexivity.
+    rewrite -> H.
+    apply IHl'.
+    reflexivity.
+Qed.
+
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (index_after_last_informal) *)
