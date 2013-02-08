@@ -1271,7 +1271,7 @@ Example sillyex1 : forall (X : Type) (x y z : X) (l j : list X),
      x = y.
 Proof.
   intros X x y z l j H0 H1.
-  inversion H0. inversion H1. inversion H2. reflexivity.  Qed. 
+  inversion H0. inversion H1. inversion H2. reflexivity.  Qed.
 (** [] *)
 
 Theorem silly6 : forall (n : nat),
@@ -1546,7 +1546,7 @@ Proof.
           apply IHn' in H1.
           rewrite -> H1.
           reflexivity.  Qed.
-      
+
 (** [] *)
 
 (* ###################################################### *)
@@ -1588,30 +1588,23 @@ Proof.
   destruct (beq_nat k1 k2).
     reflexivity.
     reflexivity.  Qed.
-  
+
 (** [] *)
 
 (** **** Exercise: 3 stars, recommended (combine_split) *)
 
-
-Lemma add_app : forall X x (l1 l2 : list X),
-  l1 = l2 -> x::l1 = x::l2.
-Proof.
-  intros X x l1 l2 H.
-  rewrite -> H.
-  reflexivity.  Qed.
-
 Theorem combine_split : forall X Y (l : list (X * Y)) l1 l2,
-  split l = (l1, l2) ->
-  combine l1 l2 = l.
+  split l = (l1, l2) -> combine l1 l2 = l.
 Proof.
   intros X Y l. induction l as [| [x y] l'].
     Case "l = []".
       intros l1 l2 H. inversion H. reflexivity.
     Case "l = (x, y) :: l'".
-      intros.
+      intros l1 l2 eq.
+
+
 Admitted.
-         
+
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (split_combine) *)
@@ -1743,7 +1736,7 @@ Proof.
       inversion eq. rewrite <- H0. rewrite <- Heqt. reflexivity.
       apply IHl with (lf := lf). apply eq.
 Qed.
-      
+
 (** [] *)
 
 (* ###################################################### *)
@@ -1824,8 +1817,8 @@ Theorem override_permute : forall {X:Type} x1 x2 k1 k2 k3 (f : nat->X),
 Proof.
   intros X x1 x2 k1 k2 k3 f eq.
   unfold override.
-Admitted.    
-  
+Admitted.
+
 (** [] *)
 
 (* ################################################################## *)
