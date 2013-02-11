@@ -1,0 +1,139 @@
+\documentclass[a4paper]{article}
+\usepackage[swedish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+
+\author{Grupp 11}
+\title{Formalisering av Algoritmer/Matematiska Bevis}
+
+\lhead{Formalisering av Algoritmer/Matematiska Bevis}
+\rhead{Grupp 11}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\section*{Bakgrund}
+
+Ett stort tekniskt problem inom datorvärlden är mängden buggar som finns i alla
+system. Detta beror på att det är svårt att kontrollera om någon given bit kod
+är korrekt. Man nöjer sig ofta med att testa olika inputs och jämföra output
+med det önskade värdet. Men på grund av begränsad datorkapacitet kan man inte
+testa precis alla kombinationer av kod och input. Det är här Coq kommer in i
+bilden.
+
+Coq är både ett programmeringspråk och en bevisassistent (en. proof assistant).
+Programmeringsspråket är beroendetypat och funktionellt. Bevisassistenten
+används till att visa korrektheten hos programkod. Detta är intressant för
+utveckling av kritiska system där det inte får gå fel. Exempel är banker,
+medicinsk utrustning, andra inbyggda system där man inte kan uppdatera koden i
+efterhand.
+
+Coq kan också användas för att formalisera matematiska bevis. Många bevis är
+väldigt långa och komplexa och kan bara verifieras av några få personer som har
+väldigt mycket kunskap inom området som beviset hör till. För att kontrollera
+ett bevis kan man istället formalisera det och använda Coq som kan garantera
+bevisets korrekthet. Beviset för fyrfärgssatsen är ett exempel där man använt
+Coq för att visa att beviset är korrekt.
+
+\section*{Syfte}
+
+Syftet med vårt kandidatarbete är att:
+
+\begin{itemize}
+  \item Formalisera en eller flera algoritmer och/eller bevis som är
+    intressanta ur ett datavetenskapligt/matematiskt perspektiv med hjälp av
+    bevis-assistenten Coq.
+  \item Ge en viss färdighet och introduktion till ett vetenskapligt
+    arbetssätt.
+  \item Tillämpa de relevanta kunskaper vi förvärvat under studietiden och ge
+    vidare kunskaper om datorstödd formalisering.
+\end{itemize}
+
+\section*{Problem/Uppgift}
+
+Vi planerar att formalisera en eller flera algoritmer som är intressanta för
+datavetenskap och/eller matematik, och genom att ha formaliserat dem sedan även
+kunna bevisa deras korrekthet på ett formellt och relativt enkelt sätt. Exakt
+vilken/vilka algoritmer vi kommer välja att formalisera är inte fastslaget
+ännu, utan det kommer vara en del av arbetet att finna lämpliga alternativ när
+vi har lärt oss tillräckligt mycket om området för att kunna göra ett
+informerat och välövervägt val.
+
+\section*{Avgränsningar}
+
+Det hade varit intressant att jämföra Coq med andra bevisassistenter, till
+exempel Agda, för att kunna få en inblick i för- och nackdelar med de olika
+språken, vilket skulle kunna leda till en djupare förståelse inom
+formalisering. Dessvärre är tiden begränsad vilket gör att det känns viktigare
+att försöka fördjupa sig inom ett språk.
+
+Från början var tanken att vi skulle använda SSReflect. Såvitt vi vet är
+SSReflect ett tillägg till Coq. Men på grund av att vår handledare Anders blev
+otillgänglig fanns det ingen som kunde hjälpa oss med SSReflect. Om Anders
+kommer tillbaka inom de närmaste veckorna finns det en möjlighet att vi kommer
+använda SSReflect i arbetet ändå.
+
+\section*{Metod/Genomförande}
+
+De första veckorna ägnas åt att erhålla grundfärdigheter i att programmera i
+Coq. Det sker genom självstudier av texterna Coq in a Hurry och Software
+Foundations, och gemensamma träffar där vi diskuterar och jämför lösningar av
+olika problem. Vi kommer också ha några träffar med handledare och också
+studera grunderna för beroendetyper med hjälp av självstudier och diskussion av
+Dependent Types at Work.
+
+Arbetet med att hitta en algoritm eller ett matematiskt bevis att formalisera
+kommer ske i samråd med handledare. Vi kommer söka i relevant litteratur efter
+lämpliga bevis och algoritmer, och med hjälp och råd från handledare välja ut
+ett intressant och lagom svårt problem att arbeta med.
+
+Själva formaliseringsarbetet kommer börja med en period av inhämtande av
+kunskap (från böcker, handledare och andra) om algoritmen/beviset i fråga. Vi
+kommer lära oss sådant som är nödvändigt för att förstå problemet och hitta ett
+lämpligt sätt att formalisera och bevisa den/det. Därefter gör vi en grov skiss
+för hur formaliseringen ska gå till, där vi på ett ungefär beskriver vilka
+strukturer/objekt som behöver definieras, vilka lemman och delresultat som
+behövs för beviset.
+
+När vi gjort denna skiss kan vi dela upp arbetet med formaliseringen på ett
+lämpligt sätt, så att enskilda personer eller några personer har huvudansvaret
+för en del av formaliseringen, med regelbundna gruppmöten där vi stämmer av var
+vi är i arbetet och diskuterar och utbyter vad vi lärt oss och vad vi har
+problem med. Under denna tid kommer vi även i viss mån fördjupa våra kunskaper
+om Coq, både om sådant som specifikt har att göra med formaliseringen och något
+om grunderna till hur och varför Coq fungerar som det gör. Under tiden påbörjar
+vi också projektrapportsskrivandet.
+
+Projektrapportsskrivandet kommer också delas upp så att enskilda personer eller
+mindre delgrupper har huvudansvaret för olika delar av texten, men vi kommer
+också läsa, kritisera och finslipa varandras texter.
+
+\section*{Tidsplan}
+
+De första veckorna veckorna i projektet kommer vi att ägna att lära oss
+grunderna i Coq. Detta kommer till stor del att göras individuellt och med
+några möten där vi som grupp kan diskutera problem och jämföra lösningar till
+uppgifter.
+
+I slutet av februari har vi bestämt att vi ska börja tänka på vilka algoritmer
+och matematiska bevis som vi ska formalisera under kandidatarbetet . Planen är
+att vi ska ha valt en algoritm eller ett bevis att arbeta med redan den första
+veckan i mars.
+
+Resten av tiden fram till den maj kommer vi att lägga på att formalisera den
+valda algoritmen eller beviset och om detta skulle bli klart i förtid så väljer
+vi nya algoritmer.eller bevis  Under arbetets gång så kommer vi  dokumentera
+och skriva om det vi gör.
+
+Maj kommer att läggas på att färdigställa arbetet och skriva en rapport och vi
+har bestämt en egen deadline den 14 maj då arbetet i princip ska vara klart.
+Den sista veckan kommer att läggas på att läsa igenom och finputsa rapporten.
+
+\end{document}
+
+% vim: set fdm=marker fmr=(fold),(end) :
