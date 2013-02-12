@@ -42,7 +42,7 @@ Tactic Notation "omega_false" :=
 
 (* A custom tactic to unfold / eta-expand pairs. *)
 Ltac pair_tac :=
-  match goal with 
+  match goal with
    | [ |-  context [match ?l with (x,y) => (?a::x,?b::y) end] ]
           => replace (let (x,y):=l in (a::x,b::y))
                  with (a::fst l,b::snd l); simpl;
@@ -166,7 +166,7 @@ Section sort.
       inversion Hs; auto.
     apply IH; auto || inversion Hs; auto.
   Qed.
-   
+
 
   Lemma perm_singl: forall (a:A) l, Permutation (a::nil) l -> l=a::nil.
   Proof.
@@ -317,10 +317,10 @@ Section sort.
       in
       match l1 with
         nil    => l2
-      | h1::t1 => 
+      | h1::t1 =>
             match l2 with
               nil    => l1
-            | h2::t2 => if h1 << h2 
+            | h2::t2 => if h1 << h2
                         then h1 :: merge (t1,l2)
                         else h2 :: merge (l1,t2)
             end
@@ -366,7 +366,7 @@ Section sort.
           rewrite H; simpl; [idtac|inversion Hs2]; auto with sort order.
     Qed.
 
-    (** Some trivial lemmas about divide. **) 
+    (** Some trivial lemmas about divide. **)
     Lemma lemma_divide_fst: forall (l:list A),
       1<length l -> length (fst (divide l)) < length l.
     Proof.
@@ -448,7 +448,7 @@ Section sort.
       rewrite (Permutation_cons_app _ _ _ IH); do 2 pair_tac; reflexivity.
     Qed.
 
-    (** Some trivial lemmas about split. **) 
+    (** Some trivial lemmas about split. **)
     Lemma lemma_split_fst: forall x (l:list A),
       length (fst (split x l)) <= length l.
     Proof.
@@ -491,7 +491,7 @@ Section sort.
       match l with
           nil => nil
       | h::t  => let (ll,lg) := split h t
-                 in quick_sort ll ++ h :: quick_sort lg 
+                 in quick_sort ll ++ h :: quick_sort lg
       end.
     Proof.
       intros; pair_tac; eapply le_lt_trans; [apply lemma_split_snd | simpl; auto].
@@ -504,7 +504,7 @@ Section sort.
       intro l; functional induction quick_sort l as [| ? ? ? ? ? ? ? IH1 IH2];
         simpl; try reflexivity.
       rewrite <- IH1; rewrite <- IH2.
-     pair_tac; apply Permutation_cons_app; apply split_perm. 
+     pair_tac; apply Permutation_cons_app; apply split_perm.
     Qed.
 
     (* Correction. *)
