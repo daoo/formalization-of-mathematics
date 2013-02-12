@@ -445,7 +445,7 @@ Fixpoint combine' {X Y : Type} (lx : list X) (ly : list Y)
 Fixpoint split {X Y : Type} (l : list (X*Y)) : (list X * list Y) :=
   match l with
   | [] => ([],[])
-  | (a, b) :: t => let (xs, ys) := split t in (a :: xs, b :: ys)
+  | (a, b) :: t => (a :: (fst (split t)), b :: (snd (split t)))
   end.
 
 Example test_split:
@@ -1593,17 +1593,40 @@ Proof.
 
 (** **** Exercise: 3 stars, recommended (combine_split) *)
 
-Theorem combine_split : forall X Y (l : list (X * Y)) l1 l2,
-  split l = (l1, l2) -> combine l1 l2 = l.
+Lemma tails_alike_headstails_alike :
+  forall X (l1 l2 : list X) (h : X),
+  l1 = l2 -> h :: l1 = h :: l2.
+Proof.
+  intros X l1 l2 h H. rewrite <- H. reflexivity.
+Qed.
+
+Lemma combine_split_lemma : forall X Y (l : list (X * Y)),
+  l = combine (fst (split l)) (snd (split l)).
 Proof.
   intros X Y l. induction l as [| [x y] l'].
-    Case "l = []".
-      intros l1 l2 H. inversion H. reflexivity.
-    Case "l = (x, y) :: l'".
-      intros l1 l2 eq.
+  Case "l = nil".
+    reflexivity.
+  Case "l = (x,y) :: l'".
+     simpl.
+     rewrite <- IHl'.
+     reflexivity.
+Qed.
 
-
-Admitted.
+Theorem combine_split : forall X Y (l : list (X * Y)) l1 l2,
+  split l = (l1, l2) ->
+  combine l1 l2 = l.
+Proof.
+  intros X Y l. induction l as [| [x y] t].
+  Case "l = nil".
+    intros l1 l2 H. simpl in H. inversion H.
+    reflexivity.
+  Case "l = (x,y) :: t".
+    intros j1 j2 H. simpl in H. inversion H.
+    simpl.
+    rewrite <- combine_split_lemma.
+    apply tails_alike_headstails_alike.
+    reflexivity.
+Qed.
 
 (** [] *)
 
