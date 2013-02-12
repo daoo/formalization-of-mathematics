@@ -445,7 +445,7 @@ Fixpoint combine' {X Y : Type} (lx : list X) (ly : list Y)
 Fixpoint split {X Y : Type} (l : list (X*Y)) : (list X * list Y) :=
   match l with
   | [] => ([],[])
-  | (a, b) :: t => match split t with (xs, ys) => (a :: xs, b :: ys) end
+  | (a, b) :: t => let (xs, ys) := split t in (a :: xs, b :: ys)
   end.
 
 Example test_split:
