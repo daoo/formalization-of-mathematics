@@ -2026,6 +2026,31 @@ End MumbleBaz.
     Prove that [existsb'] and [existsb] have the same behavior.
 *)
 
+Fixpoint forallb {X: Type} (f: X -> bool) (l: list X) : bool :=
+  match l with
+  | []      => true
+  | x :: xs => andb (f x) (forallb f xs)
+  end.
+
+Fixpoint existsb {X: Type} (f: X -> bool) (l: list X) : bool :=
+  match l with
+  | []      => false
+  | x :: xs => orb (f x) (existsb f xs)
+  end.
+
+Definition existsb' {X: Type} (f: X -> bool) (l: list X) : bool :=
+  negb (forallb (fun x => negb (f x)) l).
+
+Theorem forall_exists_challange: forall (X: Type), forall (f: X -> bool) (l: list X),
+  existsb f l = existsb' f l.
+Proof.
+  intros X f l. induction l as [| x xs].
+    simpl. unfold existsb'. simpl. reflexivity.
+    unfold existsb'. simpl.
+    rewrite <- de_morgan_orb_negb. rewrite -> negb_involutive.
+    rewrite -> IHxs. unfold existsb'. reflexivity.
+Qed.
+
 (** [] *)
 
 (** **** Exercise: 2 stars, optional (index_informal) *)
@@ -2037,7 +2062,8 @@ End MumbleBaz.
      end.
    Write an informal proof of the following theorem:
    forall X n l, length l = n -> @index X (S n) l = None.
-(* FILL IN HERE *)
+
+Formal proof in Gen.
 *)
 (** [] *)
 
