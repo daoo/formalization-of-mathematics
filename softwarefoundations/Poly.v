@@ -445,7 +445,7 @@ Fixpoint combine' {X Y : Type} (lx : list X) (ly : list Y)
 Fixpoint split {X Y : Type} (l : list (X*Y)) : (list X * list Y) :=
   match l with
   | [] => ([],[])
-  | (a, b) :: t => (a :: (fst (split t)), b :: (snd (split t)))
+  | (x, y) :: t => let (xs, ys) := split t in (x :: xs, y :: ys)
   end.
 
 Example test_split:
@@ -1600,18 +1600,6 @@ Proof.
   intros X l1 l2 h H. rewrite <- H. reflexivity.
 Qed.
 
-Lemma combine_split_lemma : forall X Y (l : list (X * Y)),
-  l = combine (fst (split l)) (snd (split l)).
-Proof.
-  intros X Y l. induction l as [| [x y] l'].
-  Case "l = nil".
-    reflexivity.
-  Case "l = (x,y) :: l'".
-     simpl.
-     rewrite <- IHl'.
-     reflexivity.
-Qed.
-
 Theorem combine_split : forall X Y (l : list (X * Y)) l1 l2,
   split l = (l1, l2) ->
   combine l1 l2 = l.
@@ -1621,10 +1609,12 @@ Proof.
     intros l1 l2 H. simpl in H. inversion H.
     reflexivity.
   Case "l = (x,y) :: t".
-    intros j1 j2 H. simpl in H. inversion H.
-    simpl.
-    rewrite <- combine_split_lemma.
+    intros j1 j2 H.
+    simpl in H.
+    destruct (split t) as [a b].
+    inversion H. simpl.
     apply tails_alike_headstails_alike.
+    apply IHt.
     reflexivity.
 Qed.
 
