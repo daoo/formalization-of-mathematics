@@ -105,7 +105,9 @@ Section Tree.
         auto with bst.
         apply lt_leaf.
         apply gt_leaf.
-        
+        simpl. remember (nat_compare x y) as eq. destruct eq.
+           apply bst_node.
+    Admitted.
   End Search.
 
   Section AVL.
