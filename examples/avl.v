@@ -1,4 +1,4 @@
-Require Import Arith ZArith Compare_dec.
+Require Import Arith ZArith.
 
 Section Tree.
   Inductive tree (X: Type) : Type :=
