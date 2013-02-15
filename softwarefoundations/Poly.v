@@ -2035,10 +2035,18 @@ Theorem forall_exists_challange: forall (X: Type), forall (f: X -> bool) (l: lis
   existsb f l = existsb' f l.
 Proof.
   intros X f l. induction l as [| x xs].
-    simpl. unfold existsb'. simpl. reflexivity.
-    unfold existsb'. simpl.
-    rewrite <- de_morgan_orb_negb. rewrite -> negb_involutive.
-    rewrite -> IHxs. unfold existsb'. reflexivity.
+    simpl.
+    unfold existsb'.
+    simpl.
+    reflexivity.
+
+    unfold existsb'.
+    simpl.
+    rewrite <- de_morgan_orb_negb.
+    rewrite -> negb_involutive.
+    rewrite -> IHxs.
+    unfold existsb'.
+    reflexivity.
 Qed.
 
 (** [] *)

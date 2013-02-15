@@ -1285,18 +1285,28 @@ Theorem mult_1_plus_l : forall m n : nat,
   m * (S n) = m + m * n.
 Proof.
   intros m n. induction m as [| m'].
-  Case "m = 0". reflexivity.
+  Case "m = 0".
+    reflexivity.
   Case "m = S m'".
-    simpl. rewrite -> IHm'. rewrite -> plus_swap. reflexivity.  Qed.
+    simpl.
+    rewrite -> IHm'.
+    rewrite -> plus_swap.
+    reflexivity.
+Qed.
 
 Theorem mult_comm : forall m n : nat,
  m * n = n * m.
 Proof.
   intros m n. induction m as [| m'].
   Case "m = 0".
-    rewrite -> mult_0_r. reflexivity.
+    rewrite -> mult_0_r.
+    reflexivity.
   Case "m = S m'".
-    rewrite -> mult_1_plus. rewrite -> IHm'. rewrite -> mult_1_plus_l. reflexivity.  Qed.
+    rewrite -> mult_1_plus.
+    rewrite -> IHm'.
+    rewrite -> mult_1_plus_l.
+    reflexivity.
+Qed.
 
 
 (** [] *)
