@@ -368,5 +368,8 @@ Proof.
   induction l as [| h t].
     intros n H. simpl. rewrite <- H. reflexivity.
     intros n H.
+    simpl.
+    simpl in H.
+    (* TODO *)
 Admitted.
 (** [] *)

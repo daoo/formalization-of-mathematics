@@ -1121,7 +1121,7 @@ Proof.
     [rewrite].  Are there situations where both can usefully be
     applied?
 
-  (* FILL IN HERE *)
+apply also solves the goal
 *)
 (** [] *)
 

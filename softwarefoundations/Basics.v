@@ -1027,7 +1027,7 @@ Proof.
   intros n m. induction n as [| n'].
   Case "n = 0". rewrite -> plus_0_r. reflexivity.
   Case "n = S n'".
-    simpl. rewrite -> IHn'. rewrite -> plus_n_Sm. reflexivity.  Qed.
+    simpl. rewrite -> IHn'. rewrite <- plus_n_Sm. reflexivity.  Qed.
 (** [] *)
 
 Fixpoint double (n:nat) :=
@@ -1049,7 +1049,7 @@ Proof.
 (** Briefly explain the difference between the tactics
     [destruct] and [induction].
 
-(* FILL IN HERE *)
+(* destruct only splits the goal with all constructors, induction is recursive *)
 
 *)
 (** [] *)
@@ -1157,9 +1157,25 @@ Proof.
 (** **** Exercise: 2 stars (plus_comm_informal) *)
 (** Translate your solution for [plus_comm] into an informal proof. *)
 
-(** Theorem: Addition is commutative.
+(** Theorem: forall n m : nat, n + m = m + n.
 
-    Proof: (* FILL IN HERE *)
+    Proof: By induction on n.
+
+    - Base case, n = 0, show that
+        0 + m = m + 0
+      This follows from the definition of +.
+
+    - Next, n = S n', and assume that
+        n' + m = m + n'
+      We must show
+        (S n') + m = m + (S n')
+      By definition
+        (S n') + m = S (n' + m)
+      Thus
+        S (n' + m) = m + (S n')
+      Rewrite using the IH
+        S (m + n') = m + (S n')
+      Which is equal by definition.
 []
 *)
 
@@ -1170,7 +1186,19 @@ Proof.
 
     Theorem: [true = beq_nat n n] for any [n].
 
-    Proof: (* FILL IN HERE *)
+    Proof: By induction on n.
+
+    - Base case, n = 0, show that
+        beq_nat 0 0 = true
+      This follows by definition
+
+    - Next let, n = S n', and assume that
+        beq_nat n' n' = true
+      We must show
+        beq_nat (S n') (S n') = ture
+      We can unfold beq_nat once:
+        beq_nat n' n' = ture
+      Which is true by the IH.
 []
  *)
 
