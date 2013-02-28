@@ -331,7 +331,15 @@ Proof.
   Case "l = x :: l'".
     simpl.
     intros n eq.
-
+    destruct n.
+    SCase "n = 0".
+      inversion eq.
+    SCase "n = S n'".
+      inversion eq.
+      rewrite -> H0.
+      rewrite -> (IHl' n H0).
+      reflexivity.
+Qed.
 (** [] *)
 
 (** **** Exercise: 3 stars (app_length_cons) *)
@@ -359,6 +367,29 @@ Qed.
 (** **** Exercise: 4 stars, optional (app_length_twice) *)
 (** Prove this by induction on [l], without using app_length. *)
 
+Theorem app_length_cons' : forall (X : Type) (l1 l2 : list X) (x : X) (n : nat),
+  S (length (l1 ++ l2)) = n ->
+  length (l1 ++ (x :: l2)) = n.
+Proof.
+  intros X l1.
+  induction l1 as [| x l1'].
+  Case "l1 = []".
+    simpl.
+    intros l2 x' n Eq.
+    apply Eq.
+  Case "l1 = x :: l1'".
+    intros l2 x' n Eq.
+    destruct n.
+    SCase "n = 0".
+      inversion Eq.
+    SCase "n = S n'".
+      inversion Eq.
+      simpl.
+      rewrite -> (IHl1' l2 x' n H0).
+      rewrite -> H0.
+      reflexivity.
+Qed.
+
 Theorem app_length_twice : forall (X:Type) (n:nat) (l:list X),
      length l = n ->
      length (l ++ l) = n + n.
@@ -366,10 +397,24 @@ Proof.
   intros X n l.
   generalize dependent n.
   induction l as [| h t].
-    intros n H. simpl. rewrite <- H. reflexivity.
-    intros n H.
+  Case "l = []".
+    intros n Eq.
     simpl.
-    simpl in H.
-    (* TODO *)
-Admitted.
+    rewrite <- Eq.
+    reflexivity.
+  Case "l = h :: t".
+    intros n Eq.
+    destruct n.
+    SCase "n = 0".
+      inversion Eq.
+    SCase "n = S n'".
+      inversion Eq.
+      rewrite -> H0.
+      simpl.
+      rewrite <- plus_n_Sm.
+      rewrite -> (app_length_cons' X t t h (S (n + n))).
+      reflexivity.
+    rewrite -> (IHt n H0).
+    reflexivity.
+Qed.
 (** [] *)
