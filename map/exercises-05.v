@@ -8,28 +8,38 @@ Unset Printing Implicit Defensive.
 
 (* Solve the following equations. Search is your best friend. *)
 Lemma ex5_arit1 n m : n + (m * n + 0) = n * m.+1.
-
+Proof.
+  by rewrite addn0 -add1n mulnDr muln1 mulnC.
+Qed.
 
 Lemma ex5_arit2 n m : n %/ 2 + m = (2 * m + n) %/ 2.
-
+Proof.
+  rewrite divnDr. rewrite mulKn.
+  by rewrite addnC.
+  by [].
+Admitted.
 
 Lemma ex5_arit3 n m p : 0 < p ->  p %| n -> n %/ p + m = (p * m + n) %/ p.
-
+Proof.
+  move=> Hp Hpn.
+  rewrite divnDr. rewrite mulKn.
+  by rewrite addnC.
+  by apply Hp.
+  by apply Hpn.
+Qed.
 
 (* Prove this by induction. *)
 Lemma size_iota_sumn l : sumn (map (addn 1) l) = size l + sumn l.
 Proof.
-
-
+  elim l => //= x xs IH.
+  by rewrite !addSn [x + _]addnC addnA -IH // add0n addnC.
 Qed.
 
 (* Prove the following Theorem by induction. *)
 Theorem ex5_gauss n : (n * n.-1) %/ 2 = sumn (iota 0 n).
-
-
-
-
-Qed.
+Proof.
+  elim n => //= n' IH.
+Admitted.
 
 (* Advanced part *)
 
