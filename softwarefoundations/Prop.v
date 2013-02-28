@@ -411,7 +411,16 @@ Inductive gorgeous : nat -> Prop :=
 (** Write out the definition of gorgeous numbers using the _inference
     rule_ notation.
 
-(* FILL IN HERE *)
+----------        (g_0)
+gorgeous 0
+
+gorgeous n
+----------------  (g_plus3)
+gorgeous (3 + n)
+
+gorgeous n
+----------------  (g_plus5)
+gorgeous (5 + n)
 []
 *)
 
@@ -451,27 +460,55 @@ Admitted.
 Theorem gorgeous_plus13: forall n,
   gorgeous n -> gorgeous (13+n).
 Proof.
-   (* FILL IN HERE *) Admitted.
+  intros n H.
+  induction H as [|n'|n'].
+    apply g_plus3; apply g_plus5; apply g_plus5; apply g_0.
+    apply g_plus3; apply IHgorgeous.
+    apply g_plus5; apply IHgorgeous.
+  Show Proof.
+Qed.
+
 (** [] *)
 
 (** **** Exercise: 2 stars (gorgeous_plus13_po):
 Give the proof object for theorem [gorgeous_plus13] above. *)
 
 Definition gorgeous_plus13_po: forall n, gorgeous n -> gorgeous (13+n):=
-   (* FILL IN HERE *) admit.
+  (fun (n : nat) (H : gorgeous n) =>
+ gorgeous_ind (fun n0 : nat => gorgeous (13 + n0))
+   (g_plus3 10 (g_plus5 5 (g_plus5 0 g_0)))
+   (fun (n' : nat) (_ : gorgeous n') (IHgorgeous : gorgeous (13 + n')) =>
+    g_plus3 (S (S (S (S (S (S (S (S (S (S (3 + n'))))))))))) IHgorgeous)
+   (fun (n' : nat) (_ : gorgeous n') (IHgorgeous : gorgeous (13 + n')) =>
+    g_plus5 (S (S (S (S (S (S (S (S (5 + n'))))))))) IHgorgeous) n H).
 (** [] *)
 
 (** **** Exercise: 2 stars (gorgeous_sum) *)
 Theorem gorgeous_sum : forall n m,
   gorgeous n -> gorgeous m -> gorgeous (n + m).
 Proof.
- (* FILL IN HERE *) Admitted.
+  intros n m Hn Hm.
+  induction Hn as [|n'|n'].
+    apply Hm.
+    apply g_plus3; apply IHHn.
+    apply g_plus5; apply IHHn.
+Qed.
+    
 (** [] *)
 
 (** **** Exercise: 3 stars (beautiful__gorgeous) *)
 Theorem beautiful__gorgeous : forall n, beautiful n -> gorgeous n.
 Proof.
- (* FILL IN HERE *) Admitted.
+  intros n H.
+  induction H.
+    apply g_0.
+    apply g_plus3; apply g_0.
+    apply g_plus5; apply g_0.
+    apply gorgeous_sum.
+    apply IHbeautiful1.
+    apply IHbeautiful2.
+Qed.
+    
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (b_times2) *)
@@ -480,13 +517,26 @@ Proof.
 
 Lemma helper_g_times2 : forall x y z, x + (z + y)= z + x + y.
 Proof.
-   (* FILL IN HERE *) Admitted.
+  intros x y z.
+  rewrite -> plus_swap.
+  rewrite -> plus_assoc.
+  reflexivity.
+Qed.
 
 Theorem g_times2: forall n, gorgeous n -> gorgeous (2*n).
 Proof.
-   intros n H. simpl.
+   intros n H. simpl. rewrite -> plus_0_r.
    induction H.
-   (* FILL IN HERE *) Admitted.
+   Case "H = g_0".
+     apply g_0.
+   Case "H = g_plus3".
+     rewrite -> helper_g_times2.
+     apply g_plus3; apply g_plus3; apply IHgorgeous.
+   Case "H = g_plus5".
+     rewrite -> helper_g_times2.
+     apply g_plus5; apply g_plus5; apply IHgorgeous.
+Qed.
+
 (** [] *)
 
 
@@ -525,7 +575,12 @@ Inductive ev : nat -> Prop :=
 Theorem double_even : forall n,
   ev (double n).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n.
+  induction n as [| n'].
+    apply ev_0.
+    apply ev_SS. apply IHn'.
+Qed.
+
 (** [] *)
 
 (** **** Exercise: 4 stars, optional (double_even_pfobj) *)
@@ -632,7 +687,11 @@ Qed.
 Theorem ev_sum : forall n m,
    ev n -> ev m -> ev (n+m).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m Hn Hm.
+  induction Hn.
+    apply Hm.
+    apply ev_SS; apply IHHn.
+Qed.
 (** [] *)
 
 (** Here's another situation where we want to analyze evidence for
@@ -668,7 +727,7 @@ Theorem SSev__even : forall n,
 Proof.
   intros n E. inversion E as [| n' E']. apply E'. Qed.
 
-(* Print SSev__even. *)
+Print SSev__even.
 
 (** This use of [inversion] may seem a bit mysterious at first.
     Until now, we've only used [inversion] on equality
@@ -700,7 +759,11 @@ Proof.
 Theorem SSSSev__even : forall n,
   ev (S (S (S (S n)))) -> ev n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n H.
+  inversion H as [| n' H'].
+  inversion H' as [| n'' H''].
+  apply H''.
+Qed.
 
 (** The [inversion] tactic can also be used to derive goals by showing
     the absurdity of a hypothesis. *)
@@ -708,7 +771,10 @@ Proof.
 Theorem even5_nonsense :
   ev 5 -> 2 + 2 = 9.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros H. inversion H. inversion H1.
+  inversion H3.
+Qed.
+
 (** [] *)
 
 (** We can generally use [inversion] on inductive propositions.
@@ -731,7 +797,14 @@ Proof.
 Theorem ev_ev__ev : forall n m,
   ev (n+m) -> ev n -> ev m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m Hnm Hn.
+  induction Hn.
+    apply Hnm.
+    apply IHHn.
+    inversion Hnm.
+    apply H0.
+Qed.
+    
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (ev_plus_plus) *)
@@ -743,7 +816,20 @@ Proof.
 Theorem ev_plus_plus : forall n m p,
   ev (n+m) -> ev (n+p) -> ev (m+p).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m p Enm.
+  rewrite (plus_comm m p).
+  apply ev_ev__ev.
+  rewrite (plus_comm n p).
+  rewrite plus_swap.
+  rewrite plus_assoc.
+  rewrite plus_assoc.
+  rewrite <- plus_assoc.
+  apply ev_sum.
+  rewrite <- double_plus.
+  apply double_even.
+  apply Enm.
+Qed.  
+  
 (** [] *)
 
 (* ##################################################### *)
@@ -934,7 +1020,11 @@ Proof.
 Theorem plus_one_r' : forall n:nat,
   n + 1 = S n.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  apply nat_ind.
+    reflexivity.
+    intros n IH.
+    simpl. rewrite IH. reflexivity.
+Qed.
 (** [] *)
 
 (** The induction principles that Coq generates for other datatypes
@@ -972,6 +1062,9 @@ Inductive rgb : Type :=
   | red : rgb
   | green : rgb
   | blue : rgb.
+
+(* rgb_ind: forall P: rgb -> Prop, P red -> P green -> P blue -> forall x: rgb, P x *)
+
 Check rgb_ind.
 (** [] *)
 
@@ -999,6 +1092,7 @@ Inductive natlist1 : Type :=
   | nsnoc1 : natlist1 -> nat -> natlist1.
 
 (** Now what will the induction principle look like? *)
+Check natlist1_ind.
 (** [] *)
 
 (** From these examples, we can extract this general rule:
