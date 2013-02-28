@@ -92,7 +92,7 @@ Require Export Poly.
 (** **** Exercise: 1 star (varieties_of_beauty) *)
 (** How many different ways are there to show that [8] is beautiful? *)
 
-(* FILL IN HERE *)
+(* many > 4 *)
 (** [] *)
 
 (** In Coq, we can express the definition of [beautiful] as
@@ -271,10 +271,13 @@ Print eight_is_beautiful'''.
 Theorem six_is_beautiful :
   beautiful 6.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  apply b_sum with (n:=3) (m:=3).
+  apply b_3.
+  apply b_3.
+Qed.
 
 Definition six_is_beautiful' : beautiful 6 :=
-  (* FILL IN HERE *) admit.
+  b_sum 3 3 b_3 b_3.
 (** [] *)
 
 (** **** Exercise: 1 star (nine_is_beautiful) *)
@@ -283,12 +286,14 @@ Definition six_is_beautiful' : beautiful 6 :=
 Theorem nine_is_beautiful :
   beautiful 9.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  apply b_sum with (n:=3) (m:=6).
+  apply b_3.
+  apply six_is_beautiful.
+Qed.
 
 Definition nine_is_beautiful' : beautiful 9 :=
-  (* FILL IN HERE *) admit.
+  b_sum 3 6 b_3 six_is_beautiful.
 (** [] *)
-
 
 (* ##################################################### *)
 (** ** Implications and Functions *)
@@ -337,19 +342,33 @@ Check b_plus3''.
 (** **** Exercise: 2 stars (b_times2) *)
 Theorem b_times2: forall n, beautiful n -> beautiful (2*n).
 Proof.
-    (* FILL IN HERE *) Admitted.
+  intros n H.
+  apply b_sum.
+  apply H.
+  rewrite -> plus_0_r.
+  apply H.
+Qed.
+  
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (b_times2') *)
 (** Write a proof object corresponding to [b_times2] above *)
 
 Definition b_times2': forall n, beautiful n -> beautiful (2*n) :=
-  (* FILL IN HERE *) admit.
+  fun n => fun H: beautiful n =>
+    b_sum n (n + 0) H (eq_ind_r (fun n0: nat => beautiful n0) H (plus_0_r n)).
 
 (** **** Exercise: 2 stars (b_timesm) *)
 Theorem b_timesm: forall n m, beautiful n -> beautiful (m*n).
 Proof.
-   (* FILL IN HERE *) Admitted.
+  intros n m H.
+  induction m as [| m'].
+    simpl. apply b_0.
+    simpl.
+    apply b_sum.
+    apply H.
+    apply IHm'.
+Qed.
 (** [] *)
 
 (* ####################################################### *)
