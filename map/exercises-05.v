@@ -14,8 +14,8 @@ Qed.
 
 Lemma ex5_arit2 n m : n %/ 2 + m = (2 * m + n) %/ 2.
 Proof.
-  rewrite divnDr. rewrite mulKn.
-Admitted.
+  by rewrite mulnC divnMDl // addnC.
+Qed.
 
 Lemma ex5_arit3 n m p : 0 < p ->  p %| n -> n %/ p + m = (p * m + n) %/ p.
 Proof.
@@ -36,14 +36,10 @@ Qed.
 Theorem ex5_gauss n : (n * n.-1) %/ 2 = sumn (iota 0 n).
 Proof.
   elim n => //= n' IH.
-    rewrite (iota_addl 1 0) add0n size_iota_sumn.
-    rewrite -IH{IH}.
-    rewrite size_iota.
-    rewrite -[X in X + _](@mulnK _ 2) //.
-    rewrite -divnDl.
-    rewrite ?dvdn_mull //.
-    (*by rewrite [_ * _.-1]mulnC !mulnS muln0 addn0 -addnA -!mulSn; case: n.*)
-Admitted.
+    rewrite (iota_addl 1 0) add0n size_iota_sumn -IH{IH} size_iota.
+    rewrite -{3}[n'](@mulnK _ 2) // -divnDl ?dvdn_mull //.
+    by rewrite [_ * _.-1]mulnC !mulnS muln0 addn0 -addnA; case: n'.
+Qed.
 
 (* Advanced part *)
 
