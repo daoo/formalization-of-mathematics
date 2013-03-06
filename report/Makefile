@@ -6,8 +6,11 @@ pdfs    = $(patsubst %.tex,$(outdir)/%.pdf, $(sources))
 
 all: $(pdfs)
 
-$(outdir)/%.pdf: %.tex
+$(outdir)/%.pdf: %.tex build
 	pdflatex $(options) $<
+
+$(outdir):
+	mkdir -p $(outdir)
 
 clean:
 	$(RM) $(outdir)/*
