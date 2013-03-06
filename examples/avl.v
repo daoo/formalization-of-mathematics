@@ -98,15 +98,21 @@ Section Tree.
       BST t -> BST (insert x t).
     Proof.
       intros x t H. induction t as [| y l IHl r IHr].
-        simpl.
-        apply bst_node.
-        auto with bst.
-        auto with bst.
-        auto with bst.
+        apply bst_node; auto with bst.
         apply lt_leaf.
         apply gt_leaf.
         simpl. remember (nat_compare x y) as eq. destruct eq.
-           apply bst_node.
+          symmetry in Heqeq. apply nat_compare_eq in Heqeq.
+          apply bst_node.
+            inversion H; auto.
+            inversion H; auto.
+            rewrite Heqeq. inversion H; auto.
+            rewrite Heqeq. inversion H; auto.
+
+          symmetry in Heqeq. apply nat_compare_lt in Heqeq.
+          apply bst_node.
+            inversion H; auto.
+            inversion H; auto.
     Admitted.
   End Search.
 
