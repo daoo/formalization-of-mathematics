@@ -1119,8 +1119,9 @@ Check natlist1_ind.
     Give an [Inductive] definition of [ExSet]: *)
 
 Inductive ExSet : Type :=
-  (* FILL IN HERE *)
-.
+  | con1: bool -> ExSet
+  | con2: nat -> ExSet -> ExSet.
+Check ExSet_ind.
 (** [] *)
 
 (** What about polymorphic datatypes?
@@ -1168,6 +1169,11 @@ Check tree_ind.
                forall n : nat, P (constr3 X m n)) ->
             forall m : mytype X, P m
 *)
+Inductive mytype (X: Type) : Type :=
+  | constr1: X -> mytype X
+  | constr2: nat -> mytype X
+  | constr3: mytype X -> nat -> mytype X.
+Check mytype_ind.
 (** [] *)
 
 (** **** Exercise: 1 star, optional (foo) *)
@@ -1181,7 +1187,13 @@ Check tree_ind.
                (forall n : nat, P (f1 n)) -> P (quux X Y f1)) ->
              forall f2 : foo X Y, P f2
 *)
+Inductive foo (X Y: Type) : Type :=
+  | bar: X -> foo X Y
+  | baz: Y -> foo X Y
+  | guux: (nat -> foo X Y) -> foo X Y.
+Check foo_ind.
 (** [] *)
+
 
 (** **** Exercise: 1 star, optional (foo') *)
 (** Consider the following inductive definition: *)
