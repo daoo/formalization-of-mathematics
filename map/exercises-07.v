@@ -25,8 +25,17 @@ Proof.
 Qed. 
 
 Lemma ord_to_nat : forall n p (i : 'I_n.+1) (j : 'I_p.+1), i + j < (n + p).+1.
+Proof.
+  move=> n p [i il] [j jl] /=.
+  move: il jl; rewrite !ltnS => il jl.
+  by apply leq_add.
+Qed.
 
 Lemma ord_to_nat2 : forall n (i : 'I_n), i + n < 2 * n.
+Proof.
+  move=> n [i il] /=.
+  by rewrite mulSn mul1n ltn_add2r.
+Qed.
 
 End arith.
 
