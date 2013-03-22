@@ -30,9 +30,7 @@ Definition split_poly n p := (rdivp p 'X^n, rmodp p 'X^n).
 (* Main property of split_poly *)
 Lemma split_polyP n p : p = (split_poly n p).1 * 'X^n + (split_poly n p).2.
 Proof.
-  rewrite /split_poly //=.
-  apply: rdivp_eq.
-  by rewrite monicE lead_coefXn.
+  by rewrite /split_poly -rdivp_eq // monicE lead_coefXn.
 Qed.
 
 Lemma div_mod_poly n p : p = rdivp p 'X^n * 'X^n + rmodp p 'X^n.
