@@ -31,7 +31,7 @@ Definition split_poly n p := (rdivp p 'X^n, rmodp p 'X^n).
 Lemma split_polyP n p : p = (split_poly n p).1 * 'X^n + (split_poly n p).2.
 Proof.
   rewrite /split_poly //=.
-  apply rdivp_eq.
+  apply: rdivp_eq.
   by rewrite monicE lead_coefXn.
 Qed.
 
@@ -87,31 +87,21 @@ Proof.
   set q1 := rdivp (R:=R) q 'X^d.
   set q2 := rmodp (R:=R) q 'X^d.
 
-  have expand: ((p1 + p2) * (q1 + q2) = p1 * q1 + p1 * q2 + p2 * q1 + p2 * q2)
-    by rewrite mulrDl mulrDr mulrDr addrA.
-  rewrite expand. move {expand}.
+  have -> : ((p1 + p2) * (q1 + q2) = p1 * q1 + p1 * q2 + (p2 * q1 + p2 * q2))
+    by rewrite mulrDl ?mulrDr.
 
   rewrite -?addrA.
 
-  have remove: (p2 * q2 + (- (p1 * q1) - p2 * q2) = - (p1 * q1))
+  have -> : (p2 * q2 + (- (p1 * q1) - p2 * q2) = - (p1 * q1))
     by rewrite addrC -?addrA addNr addr0.
-  rewrite remove. move {remove}.
 
-  have remove: (p1 * q1 + (p1 * q2 + (p2 * q1 - p1 * q1)) = p1 * q2 + p2 * q1)
+  have -> : (p1 * q1 + (p1 * q2 + (p2 * q1 - p1 * q1)) = p1 * q2 + p2 * q1)
     by rewrite addrC -?addrA addNr addr0 addrC.
-  rewrite remove. move {remove}.
 
-  have test: (p1 * q1 * 'X^(2 * d) = p1 * q1 * 'X^d * 'X^d)
+  have -> : (p1 * q1 * 'X^(2 * d) = p1 * q1 * 'X^d * 'X^d)
     by rewrite mul2n -addnn exprD mulrA.
-  rewrite test. move {test}.
 
-  rewrite ?addrA.
-
-  have extractX: (p1 * q1 * 'X^d * 'X^d + (p1 * q2 + p2 * q1) * 'X^d = (p1 * q1 * 'X^d + (p1 * q2 + p2 * q1)) * 'X^d).
-    by rewrite -mulrDl.
-  rewrite extractX. move {extractX}.
-
-  rewrite ?addrA.
+  rewrite ?addrA -mulrDl ?addrA.
 
   have extractp: (forall (a b c : {poly R}), a * b * 'X^d + a * c = a * (b * 'X^d + c)).
     by move=> a b c; rewrite -mulrA -mulrDr.
@@ -143,7 +133,7 @@ Lemma karatsubaP p q : karatsuba p q = p * q.
 Proof.
 (* This proof should be very very easy now that you have proved the recursive
    part correct *)
-  by rewrite /karatsuba karatsuba_recP.
+  exact: karatsuba_recP.
 Qed.
 
 End karatsuba.
