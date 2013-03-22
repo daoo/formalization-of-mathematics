@@ -1,0 +1,8 @@
+  * Formalisering av matematik
+  * Typteori
+  * Coq
+  * Proof assistant
+
+  * Exempel
+    * Fyrfärgssatsen
+    * CompCert
