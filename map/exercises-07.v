@@ -22,7 +22,7 @@ Proof.
   apply/andP; split; last by rewrite -subn_gt0.
   move: H2 {H1}. case: k => //.
   by rewrite subn0 ltnn.
-Qed. 
+Qed.
 
 Lemma ord_to_nat : forall n p (i : 'I_n.+1) (j : 'I_p.+1), i + j < (n + p).+1.
 Proof.
@@ -58,11 +58,10 @@ Variable T: finType.
 E ∪ F = (E − F) ∪ (E ∩ F) ∪ (F − E).   *)
 
 
-(* state and prove that 
+(* state and prove that
 card(E ∪ F) = card E + card F - card(E ∩ F). *)
 
 Lemma adds: forall (a b : T) (E : {set T}), a != b -> a \notin E -> b \notin E ->
 #| a |:  (b |: E)| = #|E| + 2.
 
 End finset.
-
