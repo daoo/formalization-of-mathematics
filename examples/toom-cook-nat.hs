@@ -38,7 +38,23 @@ pointwise [] []         = []
 pointwise (p:ps) (q:qs) = p `toomCook3` q : pointwise ps qs
 pointwise _ _           = error "pointwise: not the same length"
 
-between n a b = n >= a && n <= b
+interpolate :: [Integer] -> [Integer]
+interpolate [ r0, r1, rn1, rn2, rinf ] =
+  let s0 = r0
+      s4 = rinf
+      s3 = (rn2 - r1) `div` 3
+      s1 = (r1 - rn1) `div` 2
+      s2 = rn1 - r0
+      s3' = (s2 - s3) `div` 2 + 2 * rinf
+      s2' = s2 + s1 - s4
+      s1' = s1 - s3'
+   in [ s0, s1', s2', s3', s4 ]
+
+recompose :: Integer -> [Integer] -> Integer
+recompose b = go 1
+  where
+    go _ []      = 0
+    go b' (r:rs) = b' * r + go (b * b') rs
 
 toomCook3 :: Integer -> Integer -> Integer
 toomCook3 n m | n < 0 && m < 0 = toomCook3 (abs n) (abs m)
@@ -58,24 +74,6 @@ toomCook3 n m =
 badMul :: Integer -> Integer -> Integer
 badMul 0 _ = 0
 badMul n m = m + badMul (n - 1) m
-
-interpolate :: [Integer] -> [Integer]
-interpolate [ r0, r1, rn1, rn2, rinf ] =
-  let s0 = r0
-      s4 = rinf
-      s3 = (rn2 - r1) `div` 3
-      s1 = (r1 - rn1) `div` 2
-      s2 = rn1 - r0
-      s3' = (s2 - s3) `div` 2 + 2 * rinf
-      s2' = s2 + s1 - s4
-      s1' = s1 - s3'
-   in [ s0, s1', s2', s3', s4 ]
-
-recompose :: Integer -> [Integer] -> Integer
-recompose b = go 1
-  where
-    go _ []      = 0
-    go b' (r:rs) = b' * r + go (b * b') rs
 
 propToomCook3Commutative :: Integer -> Integer -> Bool
 propToomCook3Commutative n m = toomCook3 n m == toomCook3 m n
