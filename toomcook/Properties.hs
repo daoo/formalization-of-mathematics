@@ -10,12 +10,9 @@ genK = choose (2, 10)
 genNum :: Gen Integer
 genNum = choose (100000000, 999999999)
 
-toomCookWiki :: Integer -> Integer -> Integer
-toomCookWiki = toomCook wikiSettings
-
-propToomCookWikiCorrect :: Property
-propToomCookWikiCorrect = forAll genNum $ \n -> forAll genNum $ \m ->
-  toomCookWiki n m == n * m
+propToomCookCorrect :: ToomCook -> Property
+propToomCookCorrect t = forAll genNum $ \n -> forAll genNum $ \m ->
+  toomCook t n m == n * m
 
 propSplitCorrect :: Property
 propSplitCorrect = forAll genK $ \k -> forAll genNum $ \n ->
