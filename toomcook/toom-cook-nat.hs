@@ -68,11 +68,12 @@ recompose b = go 1
 
 toomCook :: ToomCook -> Integer -> Integer -> Integer
 toomCook t n m | n < 0 && m < 0 = toomCook t (abs n) (abs m)
-toomCook t n m | n < 0          = negate $ toomCook t (abs n) m
-toomCook t n m | m < 0          = negate $ toomCook t n (abs m)
+               | n < 0          = negate $ toomCook t (abs n) m
+               | m < 0          = negate $ toomCook t n (abs m)
 
-toomCook _ n m | n <= 100 || m <= 100 = n * m
+               | n <= 100 || m <= 100 = n * m
 
+               | otherwise =
   let b   = 10^(baseExponent (toomK t) n m)
       n'  = split (toomK t) b n
       m'  = split (toomK t) b m
