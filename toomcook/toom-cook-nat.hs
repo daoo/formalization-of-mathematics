@@ -4,6 +4,27 @@ module ToomCookNat where
 import Data.Ratio
 import Test.QuickCheck
 
+data ToomCook = ToomCook
+  { toomK :: Int
+  , toomMat :: [[Integer]]
+  , toomInvMat :: [[Rational]]
+  }
+
+wikiSettings :: ToomCook
+wikiSettings = ToomCook 3
+  [ [1, 0, 0]
+  , [1, 1, 1]
+  , [1, -1, 1]
+  , [1, -2, 4]
+  , [0, 0, 1]
+  ]
+  [ [ 1   , 0   ,  0   ,  0    ,  0]
+  , [ 1%2 , 1%3 , -1   ,  1%6  , -2]
+  , [-1   , 1%2 ,  1%2 ,  0    , -1]
+  , [-1%2 , 1%6 ,  1%2 , -1%6  ,  2]
+  , [ 0   , 0   ,  0   ,  0    ,  1]
+  ]
+
 matVecMul :: Num a => [[a]] -> [a] -> [a]
 matVecMul mat vec = map (sum . zipWith (*) vec) mat
 
@@ -11,24 +32,10 @@ unsafeToInteger :: Rational -> Integer
 unsafeToInteger r | denominator r == 1 = numerator r
                   | otherwise          = error $ show r
 
-wikiK :: Int
-wikiK = 3
-
-wikiN, wikiM, wikiB :: Integer
+wikiN, wikiM :: Integer
 wikiN = 987654321987654321098
 wikiM = 1234567890123456789012
-wikiB = 10^baseExponent wikiK wikiN wikiM
 
-wikiMat :: [[Integer]]
-wikiMat = [[1, 0, 0], [1, 1, 1], [1, -1, 1], [1, -2, 4], [0, 0, 1]]
-
-wikiMatInv :: [[Rational]]
-wikiMatInv = [ [ 1   , 0   ,  0   ,  0    ,  0]
-             , [ 1%2 , 1%3 , -1   ,  1%6  , -2]
-             , [-1   , 1%2 ,  1%2 ,  0    , -1]
-             , [-1%2 , 1%6 ,  1%2 , -1%6  ,  2]
-             , [ 0   , 0   ,  0   ,  0    ,  1]
-             ]
 
 degree :: Integer -> Integer
 degree = go 0
@@ -64,21 +71,21 @@ recompose b = go 1
     go _ []      = 0
     go b' (r:rs) = b' * r + go (b * b') rs
 
-toomCook :: Int -> Integer -> Integer -> Integer
-toomCook k n m | n < 0 && m < 0 = toomCook k (abs n) (abs m)
-toomCook k n m | n < 0          = negate $ toomCook k (abs n) m
-toomCook k n m | m < 0          = negate $ toomCook k n (abs m)
+toomCook :: ToomCook -> Integer -> Integer -> Integer
+toomCook t n m | n < 0 && m < 0 = toomCook t (abs n) (abs m)
+toomCook t n m | n < 0          = negate $ toomCook t (abs n) m
+toomCook t n m | m < 0          = negate $ toomCook t n (abs m)
 
 toomCook _ n m | n <= 100 || m <= 100 = n * m
 
-toomCook k n m =
+toomCook t n m =
   let b   = 10^(baseExponent 3 n m)
       n'  = split 3 b n
       m'  = split 3 b m
-      n'' = evaluate wikiMat n'
-      m'' = evaluate wikiMat m'
-      r   = zipWith (toomCook k) n'' m''
-      r'  = interpolate wikiMatInv r
+      n'' = evaluate (toomMat t) n'
+      m'' = evaluate (toomMat t) m'
+      r   = zipWith (toomCook t) n'' m''
+      r'  = interpolate (toomInvMat t) r
    in recompose b r'
 
 slowMult :: Integer -> Integer -> Integer
@@ -91,17 +98,12 @@ genK = choose (2, 10)
 genNum :: Gen Integer
 genNum = choose (100000, 1000000000)
 
-propToomCookNCommutative :: Property
-propToomCookNCommutative = forAll genK $ \k -> forAll genNum $ \n -> forAll genNum $ \m ->
-  toomCook k n m == toomCook k m n
+toomCookWiki :: Integer -> Integer -> Integer
+toomCookWiki = toomCook wikiSettings
 
-propToomCookNAssociative :: Property
-propToomCookNAssociative = forAll genK $ \k -> forAll genNum $ \n -> forAll genNum $ \m -> forAll genNum $ \p ->
-  toomCook k n (toomCook k m p) == toomCook k (toomCook k n m) p
-
-propToomCookNCorrect :: Property
-propToomCookNCorrect = forAll genK $ \k -> forAll genNum $ \n -> forAll genNum $ \m ->
-  toomCook k n m == n * m
+propToomCookWikiCorrect :: Property
+propToomCookWikiCorrect = forAll genNum $ \n -> forAll genNum $ \m ->
+  toomCookWiki n m == n * m
 
 propSplitCorrect :: Property
 propSplitCorrect = forAll genK $ \k -> forAll genNum $ \n ->
