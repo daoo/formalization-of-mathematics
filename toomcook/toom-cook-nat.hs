@@ -32,10 +32,6 @@ unsafeToInteger :: Rational -> Integer
 unsafeToInteger r | denominator r == 1 = numerator r
                   | otherwise          = error $ show r
 
-wikiN, wikiM :: Integer
-wikiN = 987654321987654321098
-wikiM = 1234567890123456789012
-
 degree :: Integer -> Integer
 degree = go 0
   where
