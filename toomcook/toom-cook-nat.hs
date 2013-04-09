@@ -73,10 +73,9 @@ toomCook t n m | m < 0          = negate $ toomCook t n (abs m)
 
 toomCook _ n m | n <= 100 || m <= 100 = n * m
 
-toomCook t n m =
-  let b   = 10^(baseExponent 3 n m)
-      n'  = split 3 b n
-      m'  = split 3 b m
+  let b   = 10^(baseExponent (toomK t) n m)
+      n'  = split (toomK t) b n
+      m'  = split (toomK t) b m
       n'' = evaluate (toomMat t) n'
       m'' = evaluate (toomMat t) m'
       r   = zipWith (toomCook t) n'' m''
