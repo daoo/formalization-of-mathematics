@@ -2,28 +2,12 @@
 module ToomCookNat where
 
 import Data.Ratio
-import Test.QuickCheck
 
 data ToomCook = ToomCook
   { toomK :: Int
   , toomMat :: [[Integer]]
   , toomInvMat :: [[Rational]]
   }
-
-wikiSettings :: ToomCook
-wikiSettings = ToomCook 3
-  [ [1, 0, 0]
-  , [1, 1, 1]
-  , [1, -1, 1]
-  , [1, -2, 4]
-  , [0, 0, 1]
-  ]
-  [ [ 1   , 0   ,  0   ,  0    ,  0]
-  , [ 1%2 , 1%3 , -1   ,  1%6  , -2]
-  , [-1   , 1%2 ,  1%2 ,  0    , -1]
-  , [-1%2 , 1%6 ,  1%2 , -1%6  ,  2]
-  , [ 0   , 0   ,  0   ,  0    ,  1]
-  ]
 
 matVecMul :: Num a => [[a]] -> [a] -> [a]
 matVecMul mat vec = map (sum . zipWith (*) vec) mat
@@ -49,10 +33,7 @@ split k b = go k []
                    in go (k' - 1) (x' : acc) m'
 
 merge :: Integer -> [Integer] -> Integer
-merge b = go 1 0 . reverse
-  where
-    go _  acc []     = acc
-    go b' acc (x:xs) = go (b' * b) (acc + b' * x) xs
+merge b = recompose b . reverse
 
 evaluate :: [[Integer]] -> [Integer] -> [Integer]
 evaluate mat vec = matVecMul mat (reverse vec)
@@ -61,10 +42,10 @@ interpolate :: [[Rational]] -> [Integer] -> [Integer]
 interpolate mat = map unsafeToInteger . matVecMul mat . map toRational
 
 recompose :: Integer -> [Integer] -> Integer
-recompose b = go 1
+recompose b = go 1 0
   where
-    go _ []      = 0
-    go b' (r:rs) = b' * r + go (b * b') rs
+    go _  acc []     = acc
+    go b' acc (x:xs) = go (b * b') (acc + b' * x) xs
 
 toomCook :: ToomCook -> Integer -> Integer -> Integer
 toomCook t n m | n < 0 && m < 0 = toomCook t (abs n) (abs m)
@@ -82,24 +63,3 @@ toomCook t n m | n < 0 && m < 0 = toomCook t (abs n) (abs m)
       r   = zipWith (toomCook t) n'' m''
       r'  = interpolate (toomInvMat t) r
    in recompose b r'
-
-slowMult :: Integer -> Integer -> Integer
-slowMult 0 _ = 0
-slowMult n m = m + slowMult (n - 1) m
-
-genK :: Gen Int
-genK = choose (2, 10)
-
-genNum :: Gen Integer
-genNum = choose (100000000, 999999999)
-
-toomCookWiki :: Integer -> Integer -> Integer
-toomCookWiki = toomCook wikiSettings
-
-propToomCookWikiCorrect :: Property
-propToomCookWikiCorrect = forAll genNum $ \n -> forAll genNum $ \m ->
-  toomCookWiki n m == n * m
-
-propSplitCorrect :: Property
-propSplitCorrect = forAll genK $ \k -> forAll genNum $ \n ->
-  let b = 10^baseExponent k n n in n == merge b (split k b n)
