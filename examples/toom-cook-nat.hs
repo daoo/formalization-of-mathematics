@@ -1,16 +1,17 @@
 {-# LANGUAGE LambdaCase #-}
 module ToomCookNat where
 
-import Debug.Trace
 import Test.QuickCheck
 
-n = 987654321987654321098
-m = 1234567890123456789012
+wikiN, wikiM :: Integer
+wikiN = 987654321987654321098
+wikiM = 1234567890123456789012
 
 degree :: Integer -> Integer
-degree = \case
-  0 -> 0
-  n -> 1 + degree (n `div` 10)
+degree = go 0
+  where
+    go acc 0 = acc
+    go acc n = go (acc + 1) (n `div` 10)
 
 baseExponent :: Integer -> Integer -> Integer
 baseExponent n m = 1 + max (degree n `div` 3) (degree m `div` 3)
@@ -34,9 +35,7 @@ evaluate [n2, n1, n0] =
   ]
 
 pointwise :: [Integer] -> [Integer] -> [Integer]
-pointwise [] []         = []
-pointwise (p:ps) (q:qs) = p `toomCook3` q : pointwise ps qs
-pointwise _ _           = error "pointwise: not the same length"
+pointwise = zipWith toomCook3
 
 interpolate :: [Integer] -> [Integer]
 interpolate [ r0, r1, rn1, rn2, rinf ] =
@@ -67,19 +66,22 @@ toomCook3 n m =
   let b = 10^(baseExponent n m)
       n' = split b n
       m' = split b m
-      r  = pointwise (evaluate n') (evaluate m')
+      n'' = evaluate n'
+      m'' = evaluate m'
+      r   = pointwise n'' m''
       r' = interpolate r
    in recompose b r'
 
-badMul :: Integer -> Integer -> Integer
-badMul 0 _ = 0
-badMul n m = m + badMul (n - 1) m
+slowMult :: Integer -> Integer -> Integer
+slowMult 0 _ = 0
+slowMult n m = m + slowMult (n - 1) m
 
 propToomCook3Commutative :: Integer -> Integer -> Bool
 propToomCook3Commutative n m = toomCook3 n m == toomCook3 m n
 
 propToomCook3Associative :: Integer -> Integer -> Integer -> Bool
-propToomCook3Associative n m p = toomCook3 n (toomCook3 m p) == toomCook3 (toomCook3 n m) p
+propToomCook3Associative n m p =
+  toomCook3 n (toomCook3 m p) == toomCook3 (toomCook3 n m) p
 
 propToomCook3Correct :: Integer -> Integer -> Bool
 propToomCook3Correct n m = n * m == toomCook3 n m
