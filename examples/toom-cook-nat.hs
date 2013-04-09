@@ -1,11 +1,34 @@
 {-# LANGUAGE LambdaCase #-}
 module ToomCookNat where
 
+import Data.Ratio
 import Test.QuickCheck
 
-wikiN, wikiM :: Integer
+matVecMul :: Num a => [[a]] -> [a] -> [a]
+matVecMul mat vec = map (sum . zipWith (*) vec) mat
+
+unsafeToInteger :: Rational -> Integer
+unsafeToInteger r | denominator r == 1 = numerator r
+                  | otherwise          = error $ show r
+
+wikiK :: Int
+wikiK = 3
+
+wikiN, wikiM, wikiB :: Integer
 wikiN = 987654321987654321098
 wikiM = 1234567890123456789012
+wikiB = 10^baseExponent wikiK wikiN wikiM
+
+wikiMat :: [[Integer]]
+wikiMat = [[1, 0, 0], [1, 1, 1], [1, -1, 1], [1, -2, 4], [0, 0, 1]]
+
+wikiMatInv :: [[Rational]]
+wikiMatInv = [ [ 1   , 0   ,  0   ,  0    ,  0]
+             , [ 1%2 , 1%3 , -1   ,  1%6  , -2]
+             , [-1   , 1%2 ,  1%2 ,  0    , -1]
+             , [-1%2 , 1%6 ,  1%2 , -1%6  ,  2]
+             , [ 0   , 0   ,  0   ,  0    ,  1]
+             ]
 
 degree :: Integer -> Integer
 degree = go 0
@@ -13,41 +36,27 @@ degree = go 0
     go acc 0 = acc
     go acc n = go (acc + 1) (n `div` 10)
 
-baseExponent :: Integer -> Integer -> Integer
-baseExponent n m = 1 + max (degree n `div` 3) (degree m `div` 3)
+baseExponent :: Int -> Integer -> Integer -> Integer
+baseExponent k n m = 1 + max (degree n `div` fromIntegral k) (degree m `div` fromIntegral k)
 
-split :: Integer -> Integer -> [Integer]
-split b n = let (n', x0)  = n `divMod` b
-                (n'', x1) = n' `divMod` b
-                (_, x2)   = n'' `divMod` b
-             in [x2, x1, x0]
+split :: Int -> Integer -> Integer -> [Integer]
+split k b = go k []
+  where
+    go 0 acc _  = acc
+    go k' acc m = let (m', x') = m `divMod` b
+                   in go (k' - 1) (x' : acc) m'
 
 merge :: Integer -> [Integer] -> Integer
-merge b [x2, x1, x0] = x0 + (x1 * b) + (x2 * b * b)
+merge b = go 1 0 . reverse
+  where
+    go _  acc []     = acc
+    go b' acc (x:xs) = go (b' * b) (acc + b' * x) xs
 
-evaluate :: [Integer] -> [Integer]
-evaluate [n2, n1, n0] =
-  [ n0
-  , n0 + n1 + n2
-  , n0 - n1 + n2
-  , n0 - 2*n1 + 4*n2
-  , n2
-  ]
+evaluate :: [[Integer]] -> [Integer] -> [Integer]
+evaluate mat vec = matVecMul mat (reverse vec)
 
-pointwise :: [Integer] -> [Integer] -> [Integer]
-pointwise = zipWith toomCook3
-
-interpolate :: [Integer] -> [Integer]
-interpolate [ r0, r1, rn1, rn2, rinf ] =
-  let s0 = r0
-      s4 = rinf
-      s3 = (rn2 - r1) `div` 3
-      s1 = (r1 - rn1) `div` 2
-      s2 = rn1 - r0
-      s3' = (s2 - s3) `div` 2 + 2 * rinf
-      s2' = s2 + s1 - s4
-      s1' = s1 - s3'
-   in [ s0, s1', s2', s3', s4 ]
+interpolate :: [[Rational]] -> [Integer] -> [Integer]
+interpolate mat = map unsafeToInteger . matVecMul mat . map toRational
 
 recompose :: Integer -> [Integer] -> Integer
 recompose b = go 1
@@ -55,36 +64,45 @@ recompose b = go 1
     go _ []      = 0
     go b' (r:rs) = b' * r + go (b * b') rs
 
-toomCook3 :: Integer -> Integer -> Integer
-toomCook3 n m | n < 0 && m < 0 = toomCook3 (abs n) (abs m)
-toomCook3 n m | n < 0          = negate $ toomCook3 (abs n) m
-toomCook3 n m | m < 0          = negate $ toomCook3 n (abs m)
+toomCook :: Int -> Integer -> Integer -> Integer
+toomCook k n m | n < 0 && m < 0 = toomCook k (abs n) (abs m)
+toomCook k n m | n < 0          = negate $ toomCook k (abs n) m
+toomCook k n m | m < 0          = negate $ toomCook k n (abs m)
 
-toomCook3 n m | n <= 100 || m <= 100 = n * m
+toomCook _ n m | n <= 100 || m <= 100 = n * m
 
-toomCook3 n m =
-  let b = 10^(baseExponent n m)
-      n' = split b n
-      m' = split b m
-      n'' = evaluate n'
-      m'' = evaluate m'
-      r   = pointwise n'' m''
-      r' = interpolate r
+toomCook k n m =
+  let b   = 10^(baseExponent 3 n m)
+      n'  = split 3 b n
+      m'  = split 3 b m
+      n'' = evaluate wikiMat n'
+      m'' = evaluate wikiMat m'
+      r   = zipWith (toomCook k) n'' m''
+      r'  = interpolate wikiMatInv r
    in recompose b r'
 
 slowMult :: Integer -> Integer -> Integer
 slowMult 0 _ = 0
 slowMult n m = m + slowMult (n - 1) m
 
-propToomCook3Commutative :: Integer -> Integer -> Bool
-propToomCook3Commutative n m = toomCook3 n m == toomCook3 m n
+genK :: Gen Int
+genK = choose (2, 10)
 
-propToomCook3Associative :: Integer -> Integer -> Integer -> Bool
-propToomCook3Associative n m p =
-  toomCook3 n (toomCook3 m p) == toomCook3 (toomCook3 n m) p
+genNum :: Gen Integer
+genNum = choose (100000, 1000000000)
 
-propToomCook3Correct :: Integer -> Integer -> Bool
-propToomCook3Correct n m = n * m == toomCook3 n m
+propToomCookNCommutative :: Property
+propToomCookNCommutative = forAll genK $ \k -> forAll genNum $ \n -> forAll genNum $ \m ->
+  toomCook k n m == toomCook k m n
 
-propSplitCorrect :: Positive Integer -> Bool
-propSplitCorrect (Positive n) = n == merge 10 (split 10 n)
+propToomCookNAssociative :: Property
+propToomCookNAssociative = forAll genK $ \k -> forAll genNum $ \n -> forAll genNum $ \m -> forAll genNum $ \p ->
+  toomCook k n (toomCook k m p) == toomCook k (toomCook k n m) p
+
+propToomCookNCorrect :: Property
+propToomCookNCorrect = forAll genK $ \k -> forAll genNum $ \n -> forAll genNum $ \m ->
+  toomCook k n m == n * m
+
+propSplitCorrect :: Property
+propSplitCorrect = forAll genK $ \k -> forAll genNum $ \n ->
+  let b = 10^baseExponent k n n in n == merge b (split k b n)
