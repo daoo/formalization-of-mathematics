@@ -95,7 +95,7 @@ genK :: Gen Int
 genK = choose (2, 10)
 
 genNum :: Gen Integer
-genNum = choose (100000, 1000000000)
+genNum = choose (100000000, 999999999)
 
 toomCookWiki :: Integer -> Integer -> Integer
 toomCookWiki = toomCook wikiSettings
