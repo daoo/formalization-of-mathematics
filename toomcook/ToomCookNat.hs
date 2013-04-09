@@ -28,9 +28,9 @@ baseExponent k n m = 1 + max (degree n `div` fromIntegral k) (degree m `div` fro
 split :: Int -> Integer -> Integer -> [Integer]
 split k b = go k []
   where
-    go 0 acc _  = acc
-    go k' acc m = let (m', x') = m `divMod` b
-                   in go (k' - 1) (x' : acc) m'
+    go 0  acc _ = acc
+    go k' acc n = let (n', x') = n `divMod` b
+                   in go (k' - 1) (x' : acc) n'
 
 merge :: Integer -> [Integer] -> Integer
 merge b = recompose b . reverse
