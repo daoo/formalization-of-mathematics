@@ -11,18 +11,19 @@ Open Scope ring_scope.
 Section toomCook.
 
 Variable R : comRingType.
-Implicit Types k : nat.
+Implicit Types k : nat. (* Number of splits in Toom-n *)
 Implicit Types p q : {poly R}.
 
-Definition base_exponent (k: nat) p q : nat :=
+Definition exponent (k: nat) p q : nat :=
   maxn (divn (size p) k) (divn (size q) k) .+1.
 
 (*
-m(0) = (p / x^0b) % x^b
-m(1) = (p / x^1b) % x^b
-m(2) = (p / x^2b) % x^b
-m(3) = (p / x^3b) % x^b
-...
+ * m is a k by 1 matrix
+ * m(0, 0) = (p / x^0b) % x^b
+ * m(1, 0) = (p / x^1b) % x^b
+ * m(2, 0) = (p / x^2b) % x^b
+ * m(3, 0) = (p / x^3b) % x^b
+ * ...
 *)
 Definition split k (b: nat) p : 'M[{poly R}]_(k, 1) :=
   \matrix_k (fun i => rmodp (rdivp p 'X^(i * b)) 'X^b).
@@ -41,7 +42,7 @@ Fixpoint toom_cook_rec (n k: nat) p q :=
   match n with
   | 0%N   => p * q
   | n'.+1 =>
-    let b   := base_exponent k p q in
+    let b   := exponent k p q in
     let p'  := split k b p in
     let q'  := split k b q in
     let p'' := evaluate p' in
