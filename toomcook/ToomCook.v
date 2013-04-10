@@ -11,16 +11,21 @@ Open Scope ring_scope.
 Section toomCook.
 
 Variable R : comRingType.
+Implicit Types k : nat.
 Implicit Types p q : {poly R}.
 
 Definition base_exponent (k: nat) p q : nat :=
   maxn (divn (size p) k) (divn (size q) k) .+1.
 
-Definition split {m} (k : nat) (p : poly R) (M : 'M[poly R]_(m, 1)) : 'M[poly R]_(m+1, 1) :=
-  match k with
-  | O    => herp
-  | S k' => derp
-  end.
+(*
+m(0) = (p / x^0b) % x^b
+m(1) = (p / x^1b) % x^b
+m(2) = (p / x^2b) % x^b
+m(3) = (p / x^3b) % x^b
+...
+*)
+Definition split k (b: nat) p : 'M[{poly R}]_(k, 1) :=
+  \matrix_k (fun i => rmodp (rdivp p 'X^(i * b)) 'X^b).
 
 Definition evaluate {m n p} (A : 'M_(m, n)) (B : 'M_(n, p)) : 'M[R]_(m, p) :=
   mulmx A B.
