@@ -12,6 +12,7 @@ Section toomCook.
 
 Variable R : comRingType.
 Implicit Types k : nat. (* Number of splits in Toom-n *)
+Implicit Types s : nat. (* Number of evaluation points *)
 Implicit Types p q : {poly R}.
 
 Definition exponent (k: nat) p q : nat :=
@@ -25,18 +26,22 @@ Definition exponent (k: nat) p q : nat :=
  * m(3, 0) = (p / x^3b) % x^b
  * ...
 *)
-Definition split k (b: nat) p : 'M[{poly R}]_(k, 1) :=
-  \matrix_k (fun i => rmodp (rdivp p 'X^(i * b)) 'X^b).
 
-Definition evaluate {m n p} (A : 'M_(m, n)) (B : 'M_(n, p)) : 'M[R]_(m, p) :=
-  mulmx A B.
+Definition split k (e: nat) p : Vector {poly R} k :=
+  matrix_of_fun k 1 (fun i _ => rmodp (rdivp p 'X^(i * e)) 'X^b).
 
-Definition interpolate {m n p} (A : 'M_(m, n)) (B : 'M_(n, p)) : 'M[R]_(m, p) :=
-  mulmx A B.
+Definition evaluate (mat: Matrix R s k) (vec: Vector {poly R} k) : Vector {poly R} s :=
+  mulmx mat vec. (* TODO: vec must have correct order, in the haskell implementation we reverse the vector (list) *)
 
-Definition pointwise := herp.
+Definition interpolate (invmat: Matrix R s) (vec : Vector {poly R} k) : Vector {poly R} s :=
+  mulmx invmat vec.
 
-Definition recompose := derp.
+Definition pointwise k (n: nat) (A B: Vector {poly R} s) :=
+  zipWith (toom_cook_rec n k) A B.
+
+(* inversion of split *)
+Definition recompose (e: nat) (A: Vector {poly R} s) :=
+  snd (fold (fun (i, sum) p => (i + 1, sum + p * 'X^(i * e))) (0, 0) A).
 
 Fixpoint toom_cook_rec (n k: nat) p q :=
   match n with
