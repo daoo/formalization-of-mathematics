@@ -11,8 +11,10 @@ Open Scope ring_scope.
 Section toomCook.
 
 Variable R : comRingType.
-Implicit Types k : nat. (* Number of splits in Toom-n *)
-Implicit Types s : nat. (* Number of evaluation points *)
+Variable k : nat. (* Number of splits in Toom-n *)
+Variable s : nat. (* Number of evaluation points *)
+Variable evaluation_mat : 'M[{poly R}]_(s, k).
+Variable interpolation_mat : 'M[{poly R}]_(s, s).
 Implicit Types p q : {poly R}.
 
 Definition exponent (k: nat) p q : nat :=
@@ -27,37 +29,35 @@ Definition exponent (k: nat) p q : nat :=
  * ...
 *)
 
-Definition split k (e: nat) p : Vector {poly R} k :=
-  matrix_of_fun k 1 (fun i _ => rmodp (rdivp p 'X^(i * e)) 'X^b).
+Definition split (e: nat) p : 'rV[{poly R}]_k :=
+  \row_i rmodp (rdivp p 'X^(i * e)) 'X^e.
 
-Definition evaluate (mat: Matrix R s k) (vec: Vector {poly R} k) : Vector {poly R} s :=
-  mulmx mat vec. (* TODO: vec must have correct order, in the haskell implementation we reverse the vector (list) *)
+Definition evaluate (vec: 'cV[{poly R}]_k) : 'cV[{poly R}]_s :=
+  (* TODO: vec must have correct order, in the haskell implementation we reverse the vector (list) *)
+  mulmx evaluation_mat vec.
 
-Definition interpolate (invmat: Matrix R s) (vec : Vector {poly R} k) : Vector {poly R} s :=
-  mulmx invmat vec.
-
-Definition pointwise k (n: nat) (A B: Vector {poly R} s) :=
-  zipWith (toom_cook_rec n k) A B.
+Definition interpolate (vec: 'cV[{poly R}]_s) : 'cV[{poly R}]_s :=
+  mulmx interpolation_mat vec.
 
 (* inversion of split *)
-Definition recompose (e: nat) (A: Vector {poly R} s) : poly R :=
-  mulmx A (matrix_of_fun 1 s (fun _ j => X^(j * e))).
+Definition recompose (e: nat) (vec: 'cV[{poly R}]_s) : {poly R} :=
+  mulmx (\row_i 'X^(i * e)) vec ord0 ord0.
 
-Fixpoint toom_cook_rec (n k: nat) p q :=
+Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
   match n with
   | 0%N   => p * q
   | n'.+1 =>
-    let b   := exponent k p q in
-    let p'  := split k b p in
-    let q'  := split k b q in
-    let p'' := evaluate p' in
-    let q'' := evaluate q' in
-    let r   := pointwise toom_cook_rec n' k p'' q'' in
+    let e   := exponent k p q in
+    let p'  := split e p in
+    let q'  := split e q in
+    let p'' := evaluate p'^T in
+    let q'' := evaluate q'^T in
+    let r   := \col_i (toom_cook_rec n' (p'' i ord0) (q'' i ord0)) in
     let r'  := interpolate r
-     in recompose b r'
+     in recompose e r'
   end.
 
-Definition toom_cook (k: nat) p q :=
-  toom_cook_rec (maxnn (size p) (size q)) k p q.
+Definition toom_cook p q : {poly R} :=
+  toom_cook_rec (maxn (size p) (size q)) p q.
 
 End toomCook.
