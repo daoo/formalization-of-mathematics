@@ -1,6 +1,5 @@
 module Properties where
 
-import Examples
 import Test.QuickCheck
 import ToomCookNat
 
