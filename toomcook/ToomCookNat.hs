@@ -1,6 +1,7 @@
 {-# LANGUAGE LambdaCase #-}
 module ToomCookNat where
 
+import Data.List
 import Data.Ratio
 
 data ToomCook = ToomCook
@@ -42,10 +43,7 @@ interpolate :: [[Rational]] -> [Integer] -> [Integer]
 interpolate mat = map unsafeToInteger . matVecMul mat . map toRational
 
 recompose :: Integer -> [Integer] -> Integer
-recompose b = go 1 0
-  where
-    go _  acc []     = acc
-    go b' acc (x:xs) = go (b * b') (acc + b' * x) xs
+recompose b = snd . foldl' (\(b', sum) x -> (b * b', sum + b' * x)) (1, 0)
 
 toomCook :: ToomCook -> Integer -> Integer -> Integer
 toomCook t n m | n < 0 && m < 0 = toomCook t (abs n) (abs m)
