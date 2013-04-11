@@ -40,8 +40,8 @@ Definition pointwise k (n: nat) (A B: Vector {poly R} s) :=
   zipWith (toom_cook_rec n k) A B.
 
 (* inversion of split *)
-Definition recompose (e: nat) (A: Vector {poly R} s) :=
-  snd (fold (fun (i, sum) p => (i + 1, sum + p * 'X^(i * e))) (0, 0) A).
+Definition recompose (e: nat) (A: Vector {poly R} s) : poly R :=
+  mulmx A (matrix_of_fun 1 s (fun _ j => X^(j * e))).
 
 Fixpoint toom_cook_rec (n k: nat) p q :=
   match n with
