@@ -1,5 +1,5 @@
 Require Import ssreflect ssrfun ssrbool eqtype ssrnat div seq matrix.
-Require Import path choice fintype tuple finset ssralg poly polydiv.
+Require Import path choice fintype tuple finset ssralg poly polydiv bigop.
 
 Set Implicit Arguments.
 Unset Strict Implicit.
