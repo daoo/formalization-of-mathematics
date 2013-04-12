@@ -29,8 +29,8 @@ Definition exponent (k: nat) p q : nat :=
  * ...
 *)
 
-Definition split (e: nat) p : 'rV[{poly R}]_k :=
-  \row_i rmodp (rdivp p 'X^(i * e)) 'X^e.
+Definition split (e: nat) p : 'cV[{poly R}]_k :=
+  \col_i rmodp (rdivp p 'X^(i * e)) 'X^e.
 
 Definition evaluate (vec: 'cV[{poly R}]_k) : 'cV[{poly R}]_s :=
   (* TODO: vec must have correct order, in the haskell implementation we reverse the vector (list) *)
@@ -50,8 +50,8 @@ Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
     let e   := exponent k p q in
     let p'  := split e p in
     let q'  := split e q in
-    let p'' := evaluate p'^T in
-    let q'' := evaluate q'^T in
+    let p'' := evaluate p' in
+    let q'' := evaluate q' in
     let r   := \col_i (toom_cook_rec n' (p'' i ord0) (q'' i ord0)) in
     let r'  := interpolate r
      in recompose e r'
