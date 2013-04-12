@@ -14,7 +14,7 @@ Variable R : comRingType.
 Variable k : nat. (* Number of splits in Toom-n *)
 Variable s : nat. (* Number of evaluation points *)
 Variable evaluation_mat : 'M[{poly R}]_(s, k).
-Variable interpolation_mat : 'M[{poly R}]_(s, s).
+Variable interpolation_mat : 'M[{poly R}]_s.
 Implicit Types p q : {poly R}.
 
 Definition exponent (k: nat) p q : nat :=
@@ -34,14 +34,13 @@ Definition split (e: nat) p : 'cV[{poly R}]_k :=
 
 Definition evaluate (vec: 'cV[{poly R}]_k) : 'cV[{poly R}]_s :=
   (* TODO: vec must have correct order, in the haskell implementation we reverse the vector (list) *)
-  mulmx evaluation_mat vec.
+  evaluation_mat *m vec.
 
 Definition interpolate (vec: 'cV[{poly R}]_s) : 'cV[{poly R}]_s :=
-  mulmx interpolation_mat vec.
+  interpolation_mat *m vec.
 
-(* inversion of split *)
 Definition recompose (e: nat) (vec: 'cV[{poly R}]_s) : {poly R} :=
-  mulmx (\row_i 'X^(i * e)) vec ord0 ord0.
+  ((\row_i 'X^(i * e)) *m vec) ord0 ord0.
 
 Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
   match n with
