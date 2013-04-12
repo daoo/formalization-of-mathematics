@@ -29,7 +29,7 @@ Definition exponent (k: nat) p q : nat :=
  * ...
 *)
 
-Definition split (e: nat) p : 'cV[{poly R}]_k :=
+Definition split (n e: nat) p : 'cV[{poly R}]_n :=
   \col_i rmodp (rdivp p 'X^(i * e)) 'X^e.
 
 Definition evaluate (vec: 'cV[{poly R}]_k) : 'cV[{poly R}]_s :=
@@ -39,7 +39,7 @@ Definition evaluate (vec: 'cV[{poly R}]_k) : 'cV[{poly R}]_s :=
 Definition interpolate (vec: 'cV[{poly R}]_s) : 'cV[{poly R}]_s :=
   interpolation_mat *m vec.
 
-Definition recompose (e: nat) (vec: 'cV[{poly R}]_s) : {poly R} :=
+Definition recompose (n e: nat) (vec: 'cV[{poly R}]_n) : {poly R} :=
   ((\row_i 'X^(i * e)) *m vec) ord0 ord0.
 
 Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
@@ -47,8 +47,8 @@ Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
   | 0%N   => p * q
   | n'.+1 =>
     let e   := exponent k p q in
-    let p'  := split e p in
-    let q'  := split e q in
+    let p'  := split k e p in
+    let q'  := split k e q in
     let p'' := evaluate p' in
     let q'' := evaluate q' in
     let r   := \col_i (toom_cook_rec n' (p'' i ord0) (q'' i ord0)) in
@@ -58,5 +58,13 @@ Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
 
 Definition toom_cook p q : {poly R} :=
   toom_cook_rec (maxn (size p) (size q)) p q.
+
+Theorem apa: forall (n e: nat) p,
+  recompose e (split n.+1 e p) = p.
+Proof.
+  move=> n e p.
+  rewrite /recompose /split.
+  rewrite !mxE //=.
+Qed.
 
 End toomCook.
