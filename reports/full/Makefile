@@ -1,13 +1,20 @@
 outdir  = build
-options = -file-line-error -halt-on-error -output-directory $(outdir)
+options = -file-line-error -halt-on-error
 
-sources = report.tex
-pdfs    = $(patsubst %.tex,$(outdir)/%.pdf, $(sources))
+all: $(outdir)/report.pdf
 
-all: $(pdfs)
+$(outdir)/report.pdf: $(outdir) $(outdir)/report.tex $(outdir)/report.bib
+	cd $(outdir); \
+		pdflatex $(options) report.tex; \
+		bibtex report.aux; \
+		pdflatex $(options) report.tex; \
+		pdflatex $(options) report.tex
 
-$(outdir)/%.pdf: %.tex build
-	pdflatex $(options) $<
+$(outdir)/report.tex: report.tex
+	cp report.tex $(outdir)/report.tex
+
+$(outdir)/report.bib: report.bib
+	cp report.bib $(outdir)/report.bib
 
 $(outdir):
 	mkdir -p $(outdir)

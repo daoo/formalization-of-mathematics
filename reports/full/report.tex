@@ -1,19 +1,34 @@
 \documentclass[a4paper]{article}
+\usepackage[fixlanguage]{babelbib}
 \usepackage[swedish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{authblk}
 \usepackage{fancyhdr}
+\usepackage[sort]{natbib}
 
 \pagestyle{fancy}
+\selectbiblanguage{swedish}
 
-\begin{document}
-\author{Grupp 11}
 \title{Formalisering av Algoritmer och Matematiska Bevis}
+
+\author[1]{Jesper Andersson}
+\author[1]{Daniel Oom}
+\author[1]{Niclas Ståhl}
+\author[2]{Åsa Lideström}
+\author[2]{Anders Sjöberg}
+\affil[1]{Datateknik, Chalmers}
+\affil[2]{Mattematik, Göteborgs Universitet}
+
+\renewcommand\Authands{ och }
+
 \date{\today}
 
 \lhead{Formalisering av Algoritmer och Matematiska Bevis}
 \rhead{Grupp 11}
 
+\begin{document}
 \begin{abstract}
 Todo
 \end{abstract}
@@ -40,15 +55,19 @@ bevis.
 
 \subsection{Inlärning}
 Den första delen av vårt projekt går ut på att lära oss Coq och SSReflect. För
-att göra detta använde vi oss i huvudsak av kursmaterial från andra
-universitet, nämligen
-
+att göra detta använde vi oss av följande kursmaterial från andra universitet:
 \begin{itemize}
   \item Software Foundations av Benjamin. C. Pierce från University of
-    Pennsylvania - En kursbok för Coq
-  \item MAP Spring School organiserad av Inria - En introduktionskurs i
-    SSReflect
+    Pennsylvania
+  \item MAP Spring School organiserad av Inria
 \end{itemize}
+Samt ett antal artiklar:
+\begin{itemize}
+  \item Coq in a Hurry
+  \item Coq Master
+  \item SSReflect Tutorial
+\end{itemize}
+\citet{bertot2006coq}
 
 \subsection{Test av Kunskaper}
 Bevisa Karatsuba. Implementation i Haskell.
@@ -56,6 +75,10 @@ Bevisa Karatsuba. Implementation i Haskell.
 \subsection{Implementation och Bevis}
 
 \section{Resultat}
+
+\bibliography{report}
+\bibliographystyle{alpha}
+\nocite{*}
 \end{document}
 
 % vim: set fdm=marker fmr=(fold),(end) :
