@@ -24,7 +24,9 @@ degree = go 0
     go acc n = go (acc + 1) (n `div` 10)
 
 baseExponent :: Int -> Integer -> Integer -> Integer
-baseExponent k n m = 1 + max (degree n `div` fromIntegral k) (degree m `div` fromIntegral k)
+baseExponent k n m = 1 + max
+  (degree n `div` fromIntegral k)
+  (degree m `div` fromIntegral k)
 
 split :: Int -> Integer -> Integer -> [Integer]
 split k b = go k []
