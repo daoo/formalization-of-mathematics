@@ -1,17 +1,23 @@
 outdir  = build
 options = -file-line-error -halt-on-error
 
-all: $(outdir)/report.pdf
+sources = report.tex inledning.tex metod.tex resultat.tex karatsuba-proof.tex \
+		toomcook-nat.tex toomcook-coq.tex
 
-$(outdir)/report.pdf: $(outdir) $(outdir)/report.tex $(outdir)/report.bib
+target_tex = $(patsubst %,$(outdir)/%, $(sources))
+target_pdf = $(patsubst %.tex,$(outdir)/%.pdf, $(sources))
+
+all: $(outdir) $(target_tex) $(outdir)/report.bib $(outdir)/report.pdf
+
+$(outdir)/%.pdf:
 	cd $(outdir); \
 		pdflatex $(options) report.tex; \
 		bibtex report.aux; \
 		pdflatex $(options) report.tex; \
 		pdflatex $(options) report.tex
 
-$(outdir)/report.tex: report.tex
-	cp report.tex $(outdir)/report.tex
+$(outdir)/%.tex: %.tex
+	cp $< $@
 
 $(outdir)/report.bib: report.bib
 	cp report.bib $(outdir)/report.bib

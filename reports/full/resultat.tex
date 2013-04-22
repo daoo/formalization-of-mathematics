@@ -1,0 +1,182 @@
+\section{Resultat}
+\subsection{Definition av Toom - Cook m}
+Låt R vara ett integritetsområde och låt $p, q \in R[x]$, där $p(x)= a_0 + a_1 x + ... + a_n x^n$ och
+$q(x) = b_0 + b_1 x + ... + b_s x^s$, med $0 \leq s \leq n$. I detta stycke definierar vi Toom-Cook m $(p, q)$, där
+$m \in \mathbb{N}$ och $m \geq 3$, som resultatet av algoritmen nedan.
+
+\subsubsection{Gradkontroll}
+Om $grad \; p = n \leq 2$, låt Toom-Cook $m (p, q) = p \cdot q$, annars gå till steg 2.
+
+\subsubsection{Uppdelning}
+Låt $b=\displaystyle \lfloor \frac{1 + grad \; p}{m}\rfloor + 1 = \lfloor \frac{1 + n}{m}\rfloor + 1$.
+Låt för $f \in R[x] \; f / x^k$ beteckna kvoten vid division av $f$ med $x^k$, det vill säga $f/x^k = q$ om $f = q x^k + r$
+och $r = 0$ eller $grad \;r \leq grad \; x^k = k$.
+Nu definierar vi $u, v \in R[x][y]$. Låt $u(y)=u_0 + u_1 y + ... + u_{m-1} y^{m-1}$ där $u_k = p / x^{bk}$ mod $x^b$ och
+ $v(y)=v_0 + v_1 y + ... + v_{m-1} y^{m-1}$ där $v_k = q / x^{bk}$ mod $x^b$. Vi vill att $u(x^b)=p(x)$ och $v(x^b)=q(x)$.
+
+\subsubsection{Evaluering}
+Nu ska vi beräkna $w = u \cdot v$. Vi gör detta genom att beräkna $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$
+för $d + 1$ punkter $\alpha_0, ...,  \alpha_d$, där $\alpha_i \in R$ och därmed $u(\alpha_i), v(\alpha_i) \in R[x]$
+och $d = m - 1 + m -1 = 2m-2 \geq grad \; w = grad \; u + grad \; v$. Därefter bestäms koefficienterna i $w$ genom interpolation.
+
+I detta steg beräknar vi $u(\alpha_i)$ och $v(\alpha_i)$. Låt
+
+\begin{equation}
+\label{eq:NAME}
+V_e =
+\begin{pmatrix}
+  \alpha_0^0 & \alpha_0^1 & ... & \alpha_0^{m-1}\\
+  \vdots & \vdots & & \vdots \\
+  \alpha_d^0 & \alpha_d^1 & ... & \alpha_d^{m-1}
+\end{pmatrix}.
+\end{equation}
+Då får vi
+\begin{equation}
+\label{eq:NAME2}
+V_e \cdot
+\begin{pmatrix}
+  u_0\\
+  \vdots \\
+  u_{m-1}
+\end{pmatrix}
+ =
+\begin{pmatrix}
+ u(\alpha_0)\\
+ \vdots \\
+ u(\alpha_d)
+\end{pmatrix}
+\end{equation}
+och motsvarande för $v$.
+
+\subsubsection{Rekusiv multiplikation}
+Vi beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för n $= 0, ... , d$ rekursivt genom att anropa algoritmen
+med $u(\alpha_i)$ och $v(\alpha_i)$ som argument.
+
+\subsubsection{Interpolation}
+Vi bestämmer koefficienterna i $w(y)=w_0 + w_1 + \ldots + w_d$ genom interpolation. Om
+
+\begin{equation}
+\label{eq:NAME3}
+V_I =
+\begin{pmatrix}
+  \alpha_0^0 & \alpha_0^1 & ... & \alpha_0^d\\
+  \vdots & \vdots & & \vdots \\
+  \alpha_d^0 & \alpha_d^1 & ... & \alpha_d^d
+\end{pmatrix}
+\end{equation}
+
+så är
+
+\begin{equation}
+\label{eq:NAME4}
+V_I \cdot
+\begin{pmatrix}
+  w_0\\
+  \vdots\\
+  w_d
+\end{pmatrix}
+=
+\begin{pmatrix}
+  w(\alpha_0)\\
+  \vdots\\
+  w(\alpha_d)
+\end{pmatrix}
+\end{equation}
+
+och därmed
+
+\begin{equation}
+\label{eq:NAME5}
+\begin{pmatrix}
+  w_0\\
+  \vdots\\
+  w_d
+\end{pmatrix} =
+V_I^{-1} \cdot
+\begin{pmatrix}
+  w(\alpha_0)\\
+  \vdots\\
+  w(\alpha_d)
+\end{pmatrix}
+\end{equation}
+
+om $V_I$ är inverterbar. Eftersom $V_I$ är en Vandermondematris så är
+\begin{equation}
+ \label{eq:NAME6}
+det \; V_I = \prod_{0 \leq i < j \leq d} (\alpha_i - \alpha_j)
+\end{equation},
+
+och $V_I$ är inverterbar om $det \; V_I$ är ett inverterbart element i $R$ [referens].
+
+\subsubsection{Sammansättning}
+Vi får slutligen det önskade resultatet $p(x) \cdot q(x)$ genom att evaluera $w$ i $x^b$.
+
+\subsection{Bevis av algoritmens korrekthet}
+I detta stycke visar vi att för $p, q \in R[x]$ så är $p \cdot q =$ Toom-Cook m $(p, q)$.
+
+\begin{proposition}
+ Antag att $R$ är ett integritetsområde och att $p, q \in R[x]$. Om det finns
+$\alpha_0, ...,  \alpha_{2m-2} \in R$ så att $ \prod_{0 \leq i < j \leq d} (\alpha_i - \alpha_j)$
+är inverterbar i $R$, så är
+
+\begin{equation}
+  \label{eq:name7}
+  \text{Toom-Cook m} \; (p, q) =  p \cdot q.
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Vi visar propositionen med induktion över $grad \; p$.
+
+Basfall. När $n = grad \; p \leq 2$ så gäller (\ref{eq:name7}) enligt steg 1 i algoritmen.
+
+Induktionssteg. Antag att $p, q \in R[x]$, där $p(x)= a_0 + a_1 x + ... + a_n x^n$ och
+$q(x) = b_0 + b_1 x + ... + b_s x^s$, med $0 \leq s \leq n$. Antag också att $n > 2$ och att (\ref{eq:name7}) gäller
+för polynom av $grad \; < n$. Eftersom $n > 2$ så går vi vidare till steg 2 i algoritmen och skapar $u$ och $v$.
+När detta är gjort evaluerar vi i steg 3 $u$ och $v$ i punkterna $\alpha_0, ...,  \alpha_{2m-2}$. I steg 4 anropar
+vi Toom-Cook m med argumenten $u(\alpha_i) \cdot v(\alpha_i)$ för $i = 0, \ldots , 2m-2$. Eftersom $grad \; u(\alpha_i)$
+och $grad \; v(\alpha_i) < n$ enligt lemma 2.2 så är Toom-Cook m $(u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot v(\alpha_i)$ enligt
+induktionsantagnandet.
+I steg 5 skall vi bestämma koefficienterna i $w(y)=u(y) \cdot v(y)$. Detta gör vi genom att lösa matrisekvationen (\ref{eq:NAME4})
+Eftersom interpolationsmatrisen $V_I$ enligt antagande är inverterbar så ges koefficienterna entydigt av (\ref{eq:NAME5}).
+I steg 6 evaluerar vi $w(y)$ i $x^b$. Lemma 2.3 ger att $u(x^b)=p(x)$ och att $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är
+$w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
+\end{proof}
+
+\begin{lemma}
+ Antag att $p(x) \in R[x]$ och att $grad \; p \geq 1$. Antag också att $u(y)$ är definierad enligt steg 2 i algoritmen och att $\alpha \in R$.
+Då är $grad \; u(\alpha) < grad \; p$.
+\end{lemma}
+\begin{proof}
+ Eftersom $\alpha \in R$ så är $grad \; u(\alpha) = grad u_0 + u_1 \alpha + ... + u_{m-1}\alpha^{m-1} = max \; grad \; u_k$ där $k={0,1,...,m-1}$.
+$u_k = p(x)/x^{xb}$ mod $x^b < b = \lfloor \frac{1 + n}{m}\rfloor + 1 < grad \; p(x) = n$ ty $n-b = $
+\end{proof}
+
+\begin{lemma}
+ Antag att $p(x) \in R[x]$ och att $b$ och $u(y)$ är definierad enligt steg 2 i algoritmen. Då är $u(x^b)=p(x)$.
+\end{lemma}
+\begin{proof}
+
+
+\begin{align*}
+u(x^b) &= \sum_{i = 0}^{m-1} p(x)/x^{bi} \; (mod \; x^b) x^{bi} \\
+&= \sum_{i = 0}^{m-2} p(x)/x^{bi} \; (mod \; x^b) x^{bi} + p(x)/x^{b(m-1)} \; (mod \; x^b) x^{b(m-1)}.
+\end{align*}
+
+Påstående 1. Den sista termen i $u$ kan skrivas om till $p(x)/x^{b(m-1)} x^{b(m-1)}$ eftersom $n - b(m-1) < b$.
+
+Vi har att
+\begin{align*}
+ b - (n - b(m-1)) &= m b - n \\
+&= m (\lfloor \frac{1 + n}{m}\rfloor + 1) - n \\
+&= m( \frac{1 + n}{m} -\{ \frac{1 + n}{m}\} ) + m - n \\
+&= 1 + n - m \{ \frac{1 + n}{m}\} + m - n \\
+&= 1 + m(1 - \{ \frac{1 + n}{m}\}) > 0
+\end{align*}
+eftersom $0 \leq \{ k \} < 1$ för alla heltal $k$. Graden av $p(x)/x^{b(m-1)}$ är $n - b(m-1) < b$,
+och därmed är $p(x)/x^{b(m-1)} \; mod \; x^b = p(x)/x^{b(m-1)}$, vilket visar Påstående 1. Så
+\begin{align*}
+u(x^b) &= \sum_{i = 0}^{m-2} p(x)/x^{bi} \; (mod \; x^b) x^{bi} + p(x)/x^{b(m-1)} \; x^{b(m-1)}.
+\end{align*}
+\end{proof}
