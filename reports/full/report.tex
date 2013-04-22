@@ -1,3 +1,4 @@
+% (fold) header
 \documentclass[a4paper]{article}
 \usepackage[fixlanguage]{babelbib}
 \usepackage[numbers,sort]{natbib}
@@ -37,18 +38,23 @@
 
 \lhead{Formalisering av Algoritmer och Matematiska Bevis}
 \rhead{Grupp 11}
+% (end)
 
 \begin{document}
+
+% (fold) abstract
 \begin{abstract}
 Todo
 \end{abstract}
-
+% (end)
+% (fold) title
 \maketitle
 \thispagestyle{empty}
 \newpage
 \tableofcontents
 \newpage
-
+% (end)
+% (fold) inledning
 \section{Inledning}
 Formalisering av matematik
 
@@ -82,7 +88,8 @@ som Python,C och .NET.
 HOL är en av de första teorem bevisarna och HOL-light som är en utveckling av
 det används idag av Intel för att bevisa att vissa hårdvarukomponenter fungerar
 korrekt.
-
+% (end)
+% (fold) metod
 \section{Metod}
 Målet med vårt projekt är att bevisa en algoritm i Coq med hjälp av SSReflect.
 För att uppnå detta behöver vi först lära oss Coq och SSReflect. Vårt projekt
@@ -120,7 +127,8 @@ ett bevis och föreslog att vi också skulle göra det.
 Bevisa Karatsuba. Implementation i Haskell.
 
 \subsection{Implementation och Bevis}
-
+% (end)
+% (fold) resultat
 \section{Resultat}
 \subsection{Definition av Toom - Cook m}
 Låt R vara ett integritetsområde och låt $p, q \in R[x]$, där $p(x)= a_0 + a_1 x + ... + a_n x^n$ och
@@ -303,11 +311,13 @@ och därmed är $p(x)/x^{b(m-1)} \; mod \; x^b = p(x)/x^{b(m-1)}$, vilket visar 
 u(x^b) &= \sum_{i = 0}^{m-2} p(x)/x^{bi} \; (mod \; x^b) x^{bi} + p(x)/x^{b(m-1)} \; x^{b(m-1)}.
 \end{align*}
 \end{proof}
-
+% (end)
+% (fold) referenser
 \bibliographystyle{plainnat}
 \bibliography{report}
 \nocite{*}
-
+% (end)
+% (fold) appendix
 \appendix
 \section{Karatsuba Proof}
 \begin{verbatim}
@@ -661,6 +671,8 @@ Definition toom_cook p q : {poly R} :=
 
 End toomCook.
 \end{verbatim}
+% (end)
+
 \end{document}
 
 % vim: set fdm=marker fmr=(fold),(end) :
