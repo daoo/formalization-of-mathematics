@@ -1,12 +1,12 @@
 \documentclass[a4paper]{article}
 \usepackage[fixlanguage]{babelbib}
+\usepackage[numbers,sort]{natbib}
 \usepackage[swedish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{a4wide}
 \usepackage{amsmath}
 \usepackage{authblk}
 \usepackage{fancyhdr}
-\usepackage[sort]{natbib}
 
 \pagestyle{fancy}
 \selectbiblanguage{swedish}
@@ -59,27 +59,36 @@ detta krävdes utbilndningsmaterial och eftersom bevisassistenter var helt nytt
 för oss visste vi inte vad vi skulle leta efter. Men vår handledare hjälpte oss
 att komma igång med kursmaterial från andra universitet och ett par artiklar:
 \begin{itemize}
-  \item \cite{pierce2010software}
+  \item Software Foundations
   \item Coq in a Hurry
   \item Coq Master
 \end{itemize}
-Samt ett antal artiklar:
+Detta material innhåller övningar som vi studerade huvudsaklingen enskilt och
+sedan jämförde våra lösningar i gruppmöten.
+
+När vi fått en grundläggande förståelse av Coq började vi ge oss in på
+SSReflect. Samma arbetsgång användes som för Coq, övningar och inläsning fast
+med ett annat, SSReflect-inriktat, material:
 \begin{itemize}
   \item MAP Spring School organiserad av Inria
   \item SSReflect Tutorial
 \end{itemize}
-Detta material innhåller övningar som vi studerade enskilt och sedan jämförde
-våra lösningar i gruppmöten.
+I detta skede började vi även också titta på och försöka förstå Toom-Cook.
 
 \subsection{Test av Kunskaper}
+Nästa del i arbetet var ett mer praktiskt test av vad vi lyckats lära oss.
+Detta genom att bevisa en enklare algorithm, Karatsuba, i Coq och SSReflect.
+Karatsuba är ett specialfall av Toom-Cook och vår handledare hade redan gjort
+ett bevis och föreslog att vi också skulle göra det.
+
 Bevisa Karatsuba. Implementation i Haskell.
 
 \subsection{Implementation och Bevis}
 
 \section{Resultat}
 
+\bibliographystyle{plainnat}
 \bibliography{report}
-\bibliographystyle{alpha}
 \nocite{*}
 \end{document}
 
