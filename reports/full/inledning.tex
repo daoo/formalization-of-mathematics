@@ -31,3 +31,98 @@ som Python,C och .NET.
 HOL är en av de första teorem bevisarna och HOL-light som är en utveckling av
 det används idag av Intel för att bevisa att vissa hårdvarukomponenter fungerar
 korrekt.
+
+\subsection{Tillämpningar av Coq}
+De tre största tillämpningarna av Coq är formaliseringen av Fyrfärgssatsen och
+Feit-Thompsonsatsen samt en C-kompilator som är skriven och bevisad i Coq.
+
+\subsubsection{Fyrfärgssatsen}
+Fyrfärgssatsen säger att, givet varje möjlig uppdelning av ett plan i
+sammanhängande regioner, så krävs det högst fyra färger för att färglägga alla
+regionerna så att inga angränsande regioner har samma färg. Två regioner anses
+vara angränsande om de delar en gemensam kant som inte är ett hörn.
+
+Satsen lades fram för första gången 1852 men visades först 1976 av Kenneth
+Appel och Wolfgang Haken. De använde sig av en dator till hjälp när de bevisade
+satsen vilket gjorde att beviset inte accepterades bland alla matematiker
+eftersom det inte direkt enkelt kunde kontrolleras av en människa. År 1995
+konstruerade Neil Robertson, Daniel Sanders, Paul Seymor och Robin Thomas ett
+enklare bevis som var baserat på samma idé vilket blåste bort en del tvivel.
+Detta bevis använde dock fortfarande datorer till hjälp och även om det gick
+att kontrollera de delarna av beviset skrivet i text så kvarstod problemet med
+att verifiera att koden var korrekt. En lösning till det här problemet är att
+skriva ett formellt bevis för att bevisa att programmet är korrekt.
+
+År 2000 försökte en forskningsgrupp ledd av Georges Gonthier att formellt
+bevisa delar av koden i det förenklade beviset från 1995. De lyckades med
+detta, men var sedan intresserade av att undersöka om hela beviset var korrekt,
+vilket skulle innebära att de var tvungna att formalisera hela beviset, inte
+bara koden. År 2005 var de klara med att formalisera hela beviset för
+fyrfärgssatsen.
+
+Referens: (Gonthier, Georges (2008), "Formal Proof—The Four-Color Theorem",
+Notices of the American Mathematical Society 55 (11): 1382–1393)
+
+\subsubsection{CompCerts C-kompilator}
+CompCert\cite{compcert} är ett projekt som utforskar möjligheten att utveckla
+formellt bevisade kompilatorer. Att kompilatorn är formellt bevisad innebär att
+det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
+för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
+Rent konkret innebär detta att man är garanterad att den exekverbara koden inte
+innehåller buggar som är skapade av kompilatorn.
+
+Huvudresultatet av detta projekt är en fungerande C-kompilator som är skriven
+och bevisad i Coq. Kompilatorn stödjer hela ANSI C med följande undantag:
+\begin{itemize}
+  \item Ostrukturerade switch-satser (t. ex Duffs maskin) är inte tillåtna.
+  \item Alla funktioner måste ha en funktionsprototyp.
+  \item Det går inte att definiera funktioner som kan ta ett
+    varierande antal argument.
+  \item Det finns ingen garanti för att longjmp och setjmp fungerar.
+\end{itemize}
+Vad beträffar prestanda så är den exekverbara koden genererad av
+CompCerts C-kompilator något snabbare än den genererad av
+C-kompilatorn i GCC (GNU Compiler Collection) utan optimeringar
+(\texttt{-O0}) och något långsammare än den genererad av
+C-kompilatorn i GCC med optimeringsnivå 1 (\texttt{-O1}). CompCerts
+C-kompilators huvudsakliga syfte är dock inte att konkurrera mot
+andra kompilatorer vad gäller prestanda utan utmärker sig genom
+att vara fri från kompileringsfel.
+
+\subsubsection{Feit-Thompsons sats}
+Feit-Thompsons är en sats inom matematisk gruppteori som säger att en ändlig
+grupp alltid är lösbar om dess ordning är udda. Denna sats bevisades av Walter
+Feit och John Griggs Thompson 1963.
+
+Beviset för Feit-Thompsons sats är stort och sträcker sig över två volymer, det
+är mycket material för en person att sätta sig in i och verifiera för hand.
+Storleken på beviset och därmed möjligheten till någon dold miss i beviset är
+en av anledningarna till varför beviset för Feit-Thompsons sats är intressant
+att formalisera i Coq. Feit-Thompsons sats är också intressant på det sättet
+att det är en milstolpe på vägen att formalisera beviset för klassificeringen
+av ändliga simpla grupper. Klassificeringen av ändliga simpla grupper är en
+sats vars bevis består av tiotusentals sidor av flera hundra artiklar.
+
+Efter att Georges Gonthier och hans forskningsgrupp var klara med det formella
+beviset för fyrfärgssatsen så började de konstruera ett formellt bevis i Coq
+för Feit-Thompsons sats. Detta var ett stort projekt som tog sex år och de var
+färdiga med att formalisera hela beviset 2012.
+
+I samband med formaliseringen av beviset så har även en stor del av matematisk
+gruppteori verifierats.
+
+Referens:
+\begin{itemize}
+  \item http://research.microsoft.com/en-us/news/features/gonthierproof-101112.aspx
+  \item Aschbacher, Michael (2004). "The Status of the Classification of the
+    Finite Simple Groups". Notices of the American Mathematical Society.
+\end{itemize}
+
+\subsection{SSReflect}
+SSReflect är ett tillägg till Coq som utvecklades i samband med formaliseringen
+av beviset för fyrfärgssatsen.
+
+\begin{itemize}
+  \item Small Scale Reflection
+  \item Tre typer av steg
+\end{itemize}

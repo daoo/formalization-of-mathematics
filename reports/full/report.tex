@@ -1,7 +1,5 @@
 % (fold) header
 \documentclass[a4paper]{article}
-\usepackage[fixlanguage]{babelbib}
-\usepackage[numbers,sort]{natbib}
 \usepackage[swedish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{a4wide}
@@ -9,7 +7,10 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{authblk}
+\usepackage{biblatex}
+\usepackage{csquotes}
 \usepackage{fancyhdr}
+\usepackage{url}
 
 \selectlanguage{swedish}
 
@@ -20,7 +21,8 @@
 \newtheorem{corollary}[theorem]{Korollarium}
 
 \pagestyle{fancy}
-\selectbiblanguage{swedish}
+
+\addbibresource{report.bib}
 
 \title{Formalisering av Algoritmer och Matematiska Bevis}
 
@@ -56,9 +58,7 @@ Todo
 \include{metod}
 \include{resultat}
 
-\bibliographystyle{plainnat}
-\bibliography{report}
-\nocite{*}
+\printbibliography
 
 \appendix
 \include{karatsuba-proof}
