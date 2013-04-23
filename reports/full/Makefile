@@ -8,12 +8,12 @@ target_tex = $(patsubst %,$(outdir)/%, $(sources))
 target_pdf = $(patsubst %.tex,$(outdir)/%.pdf, $(sources))
 
 all: $(outdir)
-	latexmk -auxdir=$(outdir) report.tex
+	latexmk -outdir=$(outdir) -pdf report.tex
 
 $(outdir):
 	mkdir -p $(outdir)
 
 clean:
-	$(RM) $(outdir)/*
+	latexmk -outdir=$(outdir) -c
 
 .PHONY: clean all

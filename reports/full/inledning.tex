@@ -37,10 +37,11 @@ De tre största tillämpningarna av Coq är formaliseringen av Fyrfärgssatsen o
 Feit-Thompsonsatsen samt en C-kompilator som är skriven och bevisad i Coq.
 
 \subsubsection{Fyrfärgssatsen}
-Fyrfärgssatsen säger att, givet varje möjlig uppdelning av ett plan i
-sammanhängande regioner, så krävs det högst fyra färger för att färglägga alla
-regionerna så att inga angränsande regioner har samma färg. Två regioner anses
-vara angränsande om de delar en gemensam kant som inte är ett hörn.
+Fyrfärgssatsen\autocite{gonthier2008formal} säger att, givet varje möjlig
+uppdelning av ett plan i sammanhängande regioner, så krävs det högst fyra
+färger för att färglägga alla regionerna så att inga angränsande regioner har
+samma färg. Två regioner anses vara angränsande om de delar en gemensam kant
+som inte är ett hörn.
 
 Satsen lades fram för första gången 1852 men visades först 1976 av Kenneth
 Appel och Wolfgang Haken. De använde sig av en dator till hjälp när de bevisade
@@ -60,11 +61,8 @@ vilket skulle innebära att de var tvungna att formalisera hela beviset, inte
 bara koden. År 2005 var de klara med att formalisera hela beviset för
 fyrfärgssatsen.
 
-Referens: (Gonthier, Georges (2008), "Formal Proof—The Four-Color Theorem",
-Notices of the American Mathematical Society 55 (11): 1382–1393)
-
 \subsubsection{CompCerts C-kompilator}
-CompCert\cite{compcert} är ett projekt som utforskar möjligheten att utveckla
+CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att utveckla
 formellt bevisade kompilatorer. Att kompilatorn är formellt bevisad innebär att
 det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
 för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
@@ -91,8 +89,8 @@ att vara fri från kompileringsfel.
 
 \subsubsection{Feit-Thompsons sats}
 Feit-Thompsons är en sats inom matematisk gruppteori som säger att en ändlig
-grupp alltid är lösbar om dess ordning är udda. Denna sats bevisades av Walter
-Feit och John Griggs Thompson 1963.
+grupp alltid är lösbar om dess ordning är udda\cite{aschbacher2004status}.
+Denna sats bevisades av Walter Feit och John Griggs Thompson 1963.
 
 Beviset för Feit-Thompsons sats är stort och sträcker sig över två volymer, det
 är mycket material för en person att sätta sig in i och verifiera för hand.
@@ -105,18 +103,11 @@ sats vars bevis består av tiotusentals sidor av flera hundra artiklar.
 
 Efter att Georges Gonthier och hans forskningsgrupp var klara med det formella
 beviset för fyrfärgssatsen så började de konstruera ett formellt bevis i Coq
-för Feit-Thompsons sats. Detta var ett stort projekt som tog sex år och de var
-färdiga med att formalisera hela beviset 2012.
+för Feit-Thompsons sats\autocite{gonthierfinished}. Detta var ett stort projekt
+som tog sex år och de var färdiga med att formalisera hela beviset 2012.
 
 I samband med formaliseringen av beviset så har även en stor del av matematisk
 gruppteori verifierats.
-
-Referens:
-\begin{itemize}
-  \item http://research.microsoft.com/en-us/news/features/gonthierproof-101112.aspx
-  \item Aschbacher, Michael (2004). "The Status of the Classification of the
-    Finite Simple Groups". Notices of the American Mathematical Society.
-\end{itemize}
 
 \subsection{SSReflect}
 SSReflect är ett tillägg till Coq som utvecklades i samband med formaliseringen
