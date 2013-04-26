@@ -16,7 +16,6 @@ Implicit Types p q : {poly R}.
 
 Variable number_points number_splits : nat.
 Definition m : nat := number_splits.
-Definition d : nat := number_points.-1.
 Variable inter_points : 'cV[R]_(number_points).
 
 Definition V_e : 'M[{poly R}]_(number_points, m) :=
