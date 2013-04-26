@@ -14,18 +14,19 @@ Section toomCook.
 Variable R : comUnitRingType.
 Implicit Types p q : {poly R}.
 
-Variable number_points m : nat.
+Variable number_points number_splits : nat.
+Definition m : nat := number_splits.
 Definition d : nat := number_points.-1.
-Variable inter_points : 'cV[R]_(d + 1).
+Variable inter_points : 'cV[R]_(number_points).
 
-Definition V_e : 'M[{poly R}]_(d+1, m) :=
-  \matrix_(i < (d + 1), j < m) ((inter_points i ord0) %:P)^+j.
+Definition V_e : 'M[{poly R}]_(number_points, m) :=
+  \matrix_(i < number_points, j < m) ((inter_points i ord0) %:P)^+j.
 
-Definition V_I : 'M[R]_(d + 1) :=
-  \matrix_(i < d + 1, j < d + 1) ((inter_points i ord0))^+j.
+Definition V_I : 'M[R]_(number_points) :=
+  \matrix_(i < number_points, j < number_points) ((inter_points i ord0))^+j.
 
-Definition V_I_inv : 'M[{poly R}]_(d + 1) :=
-  \matrix_(i < d + 1, j < d + 1) ((invmx V_I) i j) %:P.
+Definition V_I_inv : 'M[{poly R}]_(number_points) :=
+  \matrix_(i < number_points, j < number_points) ((invmx V_I) i j) %:P.
 
 Definition exponent (m: nat) p q : nat :=
   maxn (divn (size p) m) (divn (size q) m) .+1.
@@ -33,7 +34,7 @@ Definition exponent (m: nat) p q : nat :=
 Definition split (n b: nat) p : {poly {poly R}} :=
   \poly_(i < n) rmodp (rdivp p 'X^(i * b)) 'X^b.
 
-Definition evaluate (u : {poly {poly R}}) : 'cV[{poly R}]_(d + 1) :=
+Definition evaluate (u : {poly {poly R}}) : 'cV[{poly R}]_(number_points) :=
   V_e *m (poly_rV u)^T.
 
 Definition interpolate (u : 'cV[{poly R}]_(number_points)) : {poly {poly R}} :=
