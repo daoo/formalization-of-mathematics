@@ -36,7 +36,7 @@ Definition split (n b: nat) p : {poly {poly R}} :=
 Definition evaluate (u : {poly {poly R}}) : 'cV[{poly R}]_(d + 1) :=
   V_e *m (poly_rV u)^T.
 
-Definition interpolate (u : 'cV[{poly R}]_(d + 1)) : {poly {poly  :=
+Definition interpolate (u : 'cV[{poly R}]_(number_points)) : {poly {poly R}} :=
   rVpoly (V_I_inv *m u)^T.
 
 Definition recompose (b: nat) (w: {poly {poly R}}) : {poly R} :=
