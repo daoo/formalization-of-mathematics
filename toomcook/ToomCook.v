@@ -35,27 +35,8 @@ Definition V_I : 'M[{poly R}]_(number_points) :=
 
 Hypothesis unitV_I : unitmx V_I.
 
-Definition V_IT : 'M[{poly R}]_(number_points) :=
- \matrix_(i < number_points, j < number_points) ((inter_points j ord0))^+i.
-
-Definition V_I_inv : 'M[{poly R}]_(number_points) :=
-  invmx V_I.
-
 Lemma V_eTr_eq_V_eT : V_e^T = V_eT.
 Proof. by apply/matrixP => i j; rewrite 3!mxE. Qed.
-
-Lemma V_ITT_V_I : V_I^T = V_IT.
-Proof. by apply/matrixP => i j; rewrite 3!mxE. Qed.
-
-Lemma unitV_IT : unitmx V_IT.
-Proof.
-  by rewrite /unitmx -unitmxE -unitmx_tr -V_ITT_V_I trmxK; apply unitV_I.
-Qed.
-
-Lemma unitV_I_inv : unitmx V_I_inv.
-Proof.
-  by rewrite /V_I_inv /unitmx -unitmxE -unitmx_inv invmxK; apply unitV_I.
-Qed.
 
 Definition exponent (m: nat) p q : nat :=
   (maxn (divn (size p) m) (divn (size q) m)).+1.
