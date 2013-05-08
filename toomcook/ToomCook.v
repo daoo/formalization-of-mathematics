@@ -12,6 +12,13 @@ Unset Printing Implicit Defensives.
 Import GRing.Theory Pdiv.Ring Pdiv.CommonRing Pdiv.RingMonic.
 Open Scope ring_scope.
 
+Section missingLemmas.
+Lemma leq_pred_pred : forall (m n: nat), m <= n -> m.-1 <= n.-1.
+Proof.
+  move=> m n leqH. rewrite -2!subn1. by apply/(leq_sub2r 1): leqH.
+Qed.
+End missingLemmas.
+
 Section toomCook.
 
 Variable R : idomainType.
@@ -25,13 +32,13 @@ Variable inter_points : 'cV[{poly R}]_(number_points).
 Hypothesis m_geq3 : 3 <= m.
 
 Definition V_e : 'M[{poly R}]_(number_points, m) :=
-  \matrix_(i < number_points, j < m) ((inter_points i ord0))^+j.
+  \matrix_(i < number_points, j < m) ((inter_points i 0))^+j.
 
 Definition V_eT : 'M[{poly R}]_(m, number_points) :=
-  \matrix_(i < m, j < number_points) ((inter_points j ord0))^+i.
+  \matrix_(i < m, j < number_points) ((inter_points j 0))^+i.
 
 Definition V_I : 'M[{poly R}]_(number_points) :=
- \matrix_(i < number_points, j < number_points) ((inter_points i ord0))^+j.
+ \matrix_(i < number_points, j < number_points) ((inter_points i 0))^+j.
 
 Hypothesis unitV_I : unitmx V_I.
 
@@ -65,7 +72,7 @@ Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
         let v := split m b q in
         let u_a := evaluate u in
         let v_a:= evaluate v in
-        let w_a := \col_i toom_cook_rec n' (u_a i ord0) (v_a i ord0) in
+        let w_a := \col_i toom_cook_rec n' (u_a i 0) (v_a i 0) in
         let w := interpolate w_a
          in recompose b w
   end.
@@ -78,7 +85,7 @@ Proof.
 Qed.
 
 Lemma matrix_evaluationT : forall (p: {poly R}) (b: nat) (i: 'I_number_points),
-  evaluateT (split m b p) ord0 i = (split m b p).[(inter_points i ord0)].
+  evaluateT (split m b p) 0 i = (split m b p).[(inter_points i 0)].
 Proof.
   move=> p b t.
   rewrite /evaluateT /mulmx /V_eT /poly_rV /split.
@@ -90,29 +97,29 @@ Proof.
 Qed.
 
 Lemma matrix_evaluation : forall p (b: nat) (i: 'I_number_points),
-  evaluate (split m b p) i ord0 = (split m b p).[(inter_points i ord0)].
+  evaluate (split m b p) i 0 = (split m b p).[(inter_points i 0)].
 Proof.
   move=> p b t.
   by rewrite eval_T_eq_evalT mxE matrix_evaluationT.
 Qed.
 
 Lemma matrix_evaluation2 : forall p (b: nat),
-  evaluate (split m b  p) = \col_j (split m b p).[(inter_points j ord0)].
+  evaluate (split m b  p) = \col_j (split m b p).[(inter_points j 0)].
 Proof.
   move=> u t.
   apply/colP => i.
-  by rewrite ord1 [X in _ = X]mxE -matrix_evaluation.
+  by rewrite [X in _ = X]mxE -matrix_evaluation.
 Qed.
 
 Lemma toom_cook_interpol_lemma0 : forall (f: {poly {poly R}}),
   size f <= number_points ->
   unitmx V_I ->
-  invmx V_I *m \col_i f.[inter_points i ord0] = (poly_rV f)^T.
+  invmx V_I *m \col_i f.[inter_points i 0] = (poly_rV f)^T.
 Proof.
   move=> f fsizeH unitV_I2.
   rewrite -[X in _ = X](mulKmx unitV_I2).
 
-  have->: \col_i f.[inter_points i ord0] = V_I *m (poly_rV f)^T.
+  have->: \col_i f.[inter_points i 0] = V_I *m (poly_rV f)^T.
     apply/matrixP => i j.
     rewrite !mxE (@horner_coef_wide _ number_points).
     apply: eq_bigr => k _.
@@ -124,7 +131,7 @@ Qed.
 
 Lemma toom_cook_interpol : forall (f: {poly {poly R}}) (k: nat),
   size f <= number_points -> unitmx V_I ->
-  (interpolate (\col_i (f.[(inter_points i ord0)]))) = f.
+  (interpolate (\col_i (f.[(inter_points i 0)]))) = f.
 Proof.
   move=> f k leq unitV_I2.
   by rewrite -{2}(poly_rV_K leq) /interpolate (toom_cook_interpol_lemma0 leq unitV_I2) trmxK.
@@ -270,11 +277,9 @@ Proof.
   by apply: (ltn_trans J m_geq3).
 Qed.
 
-Lemma exponentC : forall p q,
-          exponent m p q = exponent m q p.
+Lemma exponentC : forall p q, exponent m p q = exponent m q p.
 Proof.
-  move=> p q.
-  by rewrite /exponent maxnC.
+  by move=> p q; rewrite /exponent maxnC.
 Qed.
 
 Lemma split_size_leq_m: forall (p: {poly R}) (b: nat),
@@ -288,57 +293,40 @@ Lemma size_split_mul : forall p q,
 Proof.
   move=> p q.
   set b := (exponent m p q).
-  move: (split_size_leq_m p b) (split_size_leq_m q b).
   set u := split m b p.
   set v := split m b q.
+  move: (split_size_leq_m p b) (split_size_leq_m q b).
   move: (size_mul_leq u v) => sizeH sizeu sizev.
   rewrite /number_points mul2n -addnn.
   rewrite (leq_trans sizeH) //.
-
-  have ->: (forall (m n: nat), m <= n -> predn m <= predn n).
-    move=> k n.
-    rewrite -2!subn1.
-    move=> leqH.
-    by apply/(leq_sub2r 1): leqH.
-  done.
-
-  by apply: (leq_add sizeu sizev).
+  by apply: leq_pred_pred (leq_add sizeu sizev).
 Qed.
 
 Lemma toom_cook_rec_correct : forall (n : nat) p q,
   unitmx V_I -> toom_cook_rec n p q = p * q.
 Proof.
-  elim=> [ // | n IHn p q V_invbar ].
-    rewrite /=.
+  elim=> [ // | n IHn p q V_invbar ] /=.
     case: ifP => [ // | H ].
-      have V_invbar2: (unitmx V_I) by apply/V_invbar.
-      move/IHn: V_invbar2 => IH2.
+      move/IHn: V_invbar => IH2.
 
       set b := (exponent m p q).
       set u := split m b p.
       set v := split m b q.
 
       have ->:
-        (\col_i toom_cook_rec n
-        (fun_of_matrix (evaluate u) i ord0)
-        (fun_of_matrix (evaluate v) i ord0))=
-        \col_i ((fun_of_matrix (evaluate u) i ord0) *
-        (fun_of_matrix (evaluate v) i ord0)).
+        \col_i toom_cook_rec n ((evaluate u) i 0) ((evaluate v) i 0) =
+        \col_i ((evaluate u) i 0 * (evaluate v) i 0).
           apply/colP => j.
-          by rewrite ord1 mxE [X in _ = X]mxE IH2.
+          by rewrite mxE [X in _ = X]mxE IH2.
 
       rewrite /recompose.
       rewrite !matrix_evaluation2.
 
       have ->:
-        \col_i (
-        fun_of_matrix
-        (\col_j u.[(fun_of_matrix inter_points j ord0)])i ord0 *
-        fun_of_matrix
-        (\col_j v.[(fun_of_matrix inter_points j ord0)])i ord0) =
-        \col_i ((u * v).[(inter_points i ord0)]).
+        \col_i ((\col_j u.[inter_points j 0]) i 0 * (\col_j v.[inter_points j 0]) i 0) =
+        \col_i (u * v).[(inter_points i 0)].
           apply/colP => k.
-          by rewrite ord1 4!mxE -hornerM.
+          by rewrite 4!mxE -hornerM.
 
       rewrite toom_cook_interpol ?hornerM ?recompose_split.
       done.
