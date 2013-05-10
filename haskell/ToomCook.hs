@@ -16,9 +16,12 @@ data ToomCook = ToomCook
 matVecMul :: Num a => [[a]] -> [a] -> [a]
 matVecMul mat vec = map (sum . zipWith (*) vec) mat
 
-{-# INLINE unsafeToInteger #-}
-unsafeToInteger :: Rational -> Integer
-unsafeToInteger r = assert (denominator r == 1) $ numerator r
+matVecMul' :: [[Rational]] -> [Integer] -> [Integer]
+matVecMul' mat vec = map (sum . zipWith f vec) mat
+  where
+    f a b = let n = numerator b
+                d = denominator b
+             in n*a `quotInteger` d
 
 log10 :: Integer -> Integer
 log10 = go 0
@@ -48,7 +51,7 @@ evaluate :: [[Integer]] -> [Integer] -> [Integer]
 evaluate mat vec = matVecMul mat (reverse vec)
 
 interpolate :: [[Rational]] -> [Integer] -> [Integer]
-interpolate mat = map unsafeToInteger . matVecMul mat . map toRational
+interpolate mat = matVecMul' mat
 
 recompose :: Integer -> [Integer] -> Integer
 recompose b = go 1 0
