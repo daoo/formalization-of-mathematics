@@ -1,9 +1,11 @@
-{-# LANGUAGE LambdaCase, BangPatterns #-}
+{-# LANGUAGE LambdaCase, BangPatterns, MagicHash, UnboxedTuples #-}
 module ToomCookNat where
 
 import Control.Exception (assert)
 import Data.List
 import Data.Ratio
+import GHC.Base
+import GHC.Integer
 
 data ToomCook = ToomCook
   { toomK :: Int
@@ -22,19 +24,20 @@ degree :: Integer -> Integer
 degree = go 0
   where
     go !acc  0 = acc
-    go !acc !n = go (acc + 1) (n `div` 10)
+    go !acc !n = go (acc + 1) (n `quot` 10)
 
 baseExponent :: Int -> Integer -> Integer -> Integer
-baseExponent k n m = 1 + max
-  (degree n `div` fromIntegral k)
-  (degree m `div` fromIntegral k)
+baseExponent k n m = assert (k > 0) $
+  1 + max
+    (degree n `quotInteger` fromIntegral k)
+    (degree m `quotInteger` fromIntegral k)
 
 split :: Int -> Integer -> Integer -> [Integer]
-split k b = go k []
+split k b = assert (b > 0) $ go k []
   where
-    go  0  acc  _ = acc
-    go !k' acc !n = let (n', x') = n `divMod` b
-                     in go (k' - 1) (x' : acc) n'
+    go  0  acc _ = acc
+    go !k' acc n = case n `quotRemInteger` b of
+      (# n', x' #) -> go (k' - 1) (x' : acc) n'
 
 merge :: Integer -> [Integer] -> Integer
 merge b = recompose b . reverse
