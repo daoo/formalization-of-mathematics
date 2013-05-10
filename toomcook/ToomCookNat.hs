@@ -1,6 +1,7 @@
 {-# LANGUAGE LambdaCase, BangPatterns #-}
 module ToomCookNat where
 
+import Control.Exception (assert)
 import Data.List
 import Data.Ratio
 
@@ -15,8 +16,7 @@ matVecMul mat vec = map (sum . zipWith (*) vec) mat
 
 {-# INLINE unsafeToInteger #-}
 unsafeToInteger :: Rational -> Integer
-unsafeToInteger r | denominator r == 1 = numerator r
-                  | otherwise          = error $ show r
+unsafeToInteger r = assert (denominator r == 1) (numerator r)
 
 degree :: Integer -> Integer
 degree = go 0
