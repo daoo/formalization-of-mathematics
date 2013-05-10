@@ -18,19 +18,20 @@ matVecMul mat vec = map (sum . zipWith (*) vec) mat
 
 {-# INLINE unsafeToInteger #-}
 unsafeToInteger :: Rational -> Integer
-unsafeToInteger r = assert (denominator r == 1) (numerator r)
+unsafeToInteger r = assert (denominator r == 1) $ numerator r
 
-degree :: Integer -> Integer
-degree = go 0
+log10 :: Integer -> Integer
+log10 = go 0
   where
     go !acc  0 = acc
     go !acc !n = go (acc + 1) (n `quot` 10)
 
+{-# INLINE baseExponent #-}
 baseExponent :: Int -> Integer -> Integer -> Integer
 baseExponent k n m = assert (k > 0) $
   1 + max
-    (degree n `quotInteger` fromIntegral k)
-    (degree m `quotInteger` fromIntegral k)
+    (log10 n `quotInteger` fromIntegral k)
+    (log10 m `quotInteger` fromIntegral k)
 
 split :: Int -> Integer -> Integer -> [Integer]
 split k b = assert (b > 0) $ go k []
@@ -39,6 +40,7 @@ split k b = assert (b > 0) $ go k []
     go !k' acc n = case n `quotRemInteger` b of
       (# n', x' #) -> go (k' - 1) (x' : acc) n'
 
+{-# INLINE merge #-}
 merge :: Integer -> [Integer] -> Integer
 merge b = recompose b . reverse
 
