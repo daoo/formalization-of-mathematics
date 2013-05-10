@@ -1,5 +1,5 @@
 {-# LANGUAGE LambdaCase, BangPatterns, MagicHash, UnboxedTuples #-}
-module ToomCookNat where
+module ToomCook where
 
 import Control.Exception (assert)
 import Data.List

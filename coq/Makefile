@@ -1,0 +1,2 @@
+coq:
+	coqc ToomCook.v

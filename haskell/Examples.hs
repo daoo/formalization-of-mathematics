@@ -1,7 +1,7 @@
 module Examples where
 
 import Data.Ratio
-import ToomCookNat
+import ToomCook
 
 wikiSettings :: ToomCook
 wikiSettings = ToomCook 3
