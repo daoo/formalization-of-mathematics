@@ -1,5 +1,6 @@
 module Properties where
 
+import Examples
 import Test.QuickCheck
 import ToomCookNat
 
@@ -16,3 +17,9 @@ propToomCookCorrect t = forAll genNum $ \n -> forAll genNum $ \m ->
 propSplitCorrect :: Property
 propSplitCorrect = forAll genK $ \k -> forAll genNum $ \n ->
   let b = 10^baseExponent k n n in n == merge b (split k b n)
+
+main :: IO ()
+main = do
+  quickCheck (propToomCookCorrect test2Settings)
+  quickCheck (propToomCookCorrect wikiSettings)
+  quickCheck propSplitCorrect
