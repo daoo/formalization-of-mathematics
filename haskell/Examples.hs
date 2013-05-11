@@ -3,8 +3,22 @@ module Examples where
 import Data.Ratio
 import ToomCook
 
-wikiSettings :: ToomCook
-wikiSettings = ToomCook 3
+toom1 :: ToomCook
+toom1 = ToomCook 1 [[1]] [[1]]
+
+karatsuba :: ToomCook
+karatsuba = ToomCook 2
+  [ [ 1 , 0 ]
+  , [ 1 , 1 ]
+  , [ 0 , 1 ]
+  ]
+  [ [1  , 0 , 0  ]
+  , [-1 , 1 , -1 ]
+  , [0  , 0 , 1  ]
+  ]
+
+toom3 :: ToomCook
+toom3 = ToomCook 3
   [ [ 1 , 0  , 0 ]
   , [ 1 , 1  , 1 ]
   , [ 1 , -1 , 1 ]
@@ -18,8 +32,8 @@ wikiSettings = ToomCook 3
   , [ 0    , 0   , 0   , 0    , 1  ]
   ]
 
-test1Settings :: ToomCook
-test1Settings = ToomCook 4
+toom4 :: ToomCook
+toom4 = ToomCook 4
   [ [ 1 , 0  , 0 , 0  ]
   , [ 1 , 1  , 1 , 1  ]
   , [ 1 , -1 , 1 , -1 ]
@@ -35,15 +49,4 @@ test1Settings = ToomCook 4
   , [ 1%4   , -1%6  , -1%6  , 1%24   , 1%24  , 0     , -5  ]
   , [ -1%12 , 1%12  , 1%24  , -1%120 , -1%24 , 1%120 , -3  ]
   , [ 0     , 0     , 0     , 0      , 0     , 0     , 1   ]
-  ]
-
-test2Settings :: ToomCook
-test2Settings = ToomCook 2
-  [ [ 1 , 0 ]
-  , [ 1 , 1 ]
-  , [ 0 , 1 ]
-  ]
-  [ [1  , 0 , 0  ]
-  , [-1 , 1 , -1 ]
-  , [0  , 0 , 1  ]
   ]

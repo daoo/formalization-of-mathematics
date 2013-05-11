@@ -20,6 +20,7 @@ propSplitCorrect = forAll genK $ \k -> forAll genNum $ \n ->
 
 main :: IO ()
 main = do
-  quickCheck (propToomCookCorrect test2Settings)
-  quickCheck (propToomCookCorrect wikiSettings)
+  quickCheck (propToomCookCorrect karatsuba)
+  quickCheck (propToomCookCorrect toom3)
+  quickCheck (propToomCookCorrect toom4)
   quickCheck propSplitCorrect
