@@ -27,18 +27,106 @@ Vårt projekt har haft som mål att studera datorassisterad formalisering och
 sedan formalisera en matematisk algoritm för att få en inblick i detta
 forskningsområdet.
 
-\subsection{Formalisering med datorhjälp}
+\subsection{Bevisassistent och programmeringsspråket Coq}
 Formalisering är ett aktivt forskningsområde och det finns flertalet
 datorverktyg för formalisering och verifiering av formella bevis som är under
-aktiv utveckling.
+aktiv utveckling. Vi har valt att använda verktyget Coq. Coq är ett
+beroenedetypat funktionellt programmeringsspråk inte helt olikt Haskell. Men
+till skillnad från Haskell är Coq även en \emph{interaktiv} bevisassistent som
+kan användas till att utveckla formella bevis. Viktigt att notera här är att
+Coq är interaktivt, det vill säga Coq bevisar inget automatiskt utan man måste
+själv styra varje logiskt steg i bevisen.
 
-Vi valde verktyget Coq. Coq är ett funktionellt programmeringsspråk inte helt
-olikt Haskell. Men till skillnad från Haskell är Coq även en interaktiv
-bevisassistent. Utöver detta ska vi även använda biblioteket SSReflect som är
-en utökning av Coq.
+\subsubsection{Coq's Historia}
+Skrivet av Anders
+
+\subsubsection{Tillämpningar}
+Coq har, som redan nämnts, använts till att bevisa olika stora satser och även
+en del andra programvaror. Det har skett genom stora forskningsprojekt.
+
+\begin{itemize}
+
+\item Fyrfärgssatsen\autocite{gonthier2008formal} säger att, givet varje möjlig
+uppdelning av ett plan i sammanhängande regioner, så krävs det högst fyra
+färger för att färglägga alla regionerna så att inga angränsande regioner har
+samma färg. Två regioner anses vara angränsande om de delar en gemensam kant
+som inte är ett hörn.
+
+Under årens lopp har det förekommit många olika bevis och motbevis som har
+bevisats vara falska och  det var först 1976 som det första korrekta beviset
+kom. Stora delar av beviset var då gjorda i en dator och det gick inte att
+bekräfta att dessa delar var korrekta. För att bevisa att datordelarna av
+beviset var korrekta så formaliserades beviset i Coq och detta ledde till
+utvecklandet av SSReflect.
+
+\item CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att
+utveckla formellt bevisade kompilatorer. Anledningen att man vill ha en
+formellt bevisad kompilator är att vid vissa optimeringar så kan kompilatorn
+skapa buggar och beräkningsfel. Att kompilatorn är formellt bevisad innebär att
+det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
+för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
+Rent konkret innebär detta att man är garanterad att den exekverbara koden inte
+innehåller buggar som är skapade av kompilatorn. Detta projektet resulterade i
+en fungerande C-kompilator som stödjer hela ANSI C med ett få undantag och som
+faktiskt är snabbare än GCC utan några optimeringar.
+
+\item Feit-Thompsons är en sats inom matematisk gruppteori som säger att en
+ändlig grupp alltid är lösbar om dess ordning är
+udda\cite{aschbacher2004status}. Denna sats bevisades av Walter Feit och John
+Griggs Thompson 1963. Beviset för Feit-Thompsons sats är stort och sträcker sig
+över två volymer, det är mycket material för en person att sätta sig in i och
+verifiera för hand. Storleken på beviset och därmed möjligheten till någon dold
+miss i beviset är en av anledningarna till varför beviset för Feit-Thompsons
+sats är intressant att formalisera i Coq. I samband med formaliseringen av
+beviset så har även en stor del av matematisk gruppteori verifierats.
+
+\end{itemize}
+
+\subsubsection{Alternativ till Coq}
+Det finns många olika program och språk för att formalisera och bevisa olika
+former av matematik eller logik. En sak som de flesta har gemensamt är att de
+är uppbyggd på funktionella programmerings paradigmer.
+
+\begin{itemize}
+\item Agda är utvecklat på Chalmers och påminner till stor del om Haskell. Till
+skillnad mot Coq så finns det inga inbyggda taktiker.  Agda är inte lika
+matematiskt inriktad som Coq utan används mer till att bevisa korrekthet hos
+program. En fördel med Agda är att alla Unicodetecken är tillåtna vilket gör
+det enkelt att skriva sina program och bevis på samma sätt som man skulle göra
+det på papper.
+
+\item Z3 är ett språk som har utvecklats av Microsoft för att förenkla och bevisa
+olika teorem. Kan användas tillsammans med flera stora ickefunktionella språk
+som Python, C och .NET.
+
+\item HOL, Högre Ordningens Logik är en av de första interaktiva teorembevisarna och
+HOL-light som är en vidareutveckling av det används idag av Intel för att
+bevisa att vissa hårdvarukomponenter fungerar korrekt.
+
+\item F* är en vidareutveckling av F\# och används för att verifiera och bevisa
+egenskaper hos program. En av de större skillnaderna från F\# är att F* har
+stöd för beroendetyper. F* är en del av .NET vilket gör att bevis och kod som
+är skriven i F* går att använda i all andra .NET språk. Stora delar av F* är
+formaliserade och bevisade i Coq.
+\end{itemize}
+
+\begin{comment}
+Källor och annat material
+HOL http://www.cl.cam.ac.uk/~jrh13/hol-light/
+Z3 http://research.microsoft.com/en-us/um/redmond/projects/z3/old/
+F* http://research.microsoft.com/en-us/projects/fstar/
+\end{comment}
 
 \subsection{Multiplikation av polynom}
-För att få tillämpning
+Vi har valt att implementera och bevisa Toom-Cook algoritmen för multiplikation
+av polynom. Toom-Cook är generell och fungerar för polynom, men anledningen
+till att den är intressant är att heltal är ett specialfall av polynom där
+basen är känd. Vidare är Toom-Cook snabbare för väldigt stora polynom än den
+multiplikationsmetoden man lär sig i grundskolan som vi kallar lång
+multiplikation. Det finns även en annan algoritm för polynommultiplikation som
+heter Karatsuba som också är snabbare än lång multiplikation och även enklare
+än Toom-Cook. Men den är redan formaliserad av vår handledare och därför är det
+mer intressant att formalisera Toom-Cook.
 
 \subsection{Mål}
 Målet med vårat projekt är således att lära oss hur man använder Coq och dess
