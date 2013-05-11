@@ -1,6 +1,6 @@
-module Properties where
+module Main where
 
-import Examples
+import Settings
 import Test.QuickCheck
 import ToomCook
 

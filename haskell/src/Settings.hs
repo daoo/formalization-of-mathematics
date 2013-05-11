@@ -1,4 +1,4 @@
-module Examples where
+module Settings where
 
 import Data.Ratio
 import ToomCook
