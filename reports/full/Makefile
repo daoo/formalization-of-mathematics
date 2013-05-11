@@ -1,19 +1,13 @@
-outdir  = build
 options = -file-line-error -halt-on-error
 
-sources = report.tex inledning.tex metod.tex resultat.tex karatsuba-proof.tex \
-		toomcook-nat.tex toomcook-coq.tex
+all:
+	mkdir -p build
+	latexmk -outdir=build -bibtex -pdf report.tex
 
-target_tex = $(patsubst %,$(outdir)/%, $(sources))
-target_pdf = $(patsubst %.tex,$(outdir)/%.pdf, $(sources))
-
-all: $(outdir)
-	latexmk -outdir=$(outdir) -pdf report.tex
-
-$(outdir):
-	mkdir -p $(outdir)
+run: all
+	cp build/report.pdf $(HOME)/dropbox/public/report.pdf
 
 clean:
-	latexmk -outdir=$(outdir) -c
+	latexmk -outdir=build -c
 
 .PHONY: clean all
