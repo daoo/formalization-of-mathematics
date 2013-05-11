@@ -1,0 +1,215 @@
+\subsection{Coq}
+\subsubsection{Vad är Coq}
+
+Coq är en interaktiv theorembevisare som innehåller ett
+beroendetypat funktionellt programmeringsspråk. Coq används för
+formalisera matematik och för att verifiera program. Det är viktigt
+att påpeka att Coq inte är en automatisk bevishanterare vilket innebär
+att Coq löser ingenting automatiskt utan det är upp till användaren att
+bevisa och verifiera sina bevis.
+
+\subsubsection{Coq's Historia}
+   Skrivet av Anders
+
+\subsubsection{Tillämpningar}
+\begin{itemize}
+
+\item[Fyrfärgssatsen]
+
+Fyrfärgssatsen\autocite{gonthier2008formal} säger att, givet varje möjlig
+uppdelning av ett plan i sammanhängande regioner, så krävs det högst fyra
+färger för att färglägga alla regionerna så att inga angränsande regioner
+har samma färg. Två regioner anses vara angränsande om de delar en
+gemensam kant som inte är ett hörn.
+
+
+Under årens lopp har det förekommit många olika bevis och motbevis som har
+bevisats vara falska och  det var först 1976 som det första korrekta
+beviset kom. Stora delar av beviset var då gjorda i en dator och det
+gick inte att bekräfta att dessa delar var korrekta.
+
+För att bevisa att datordelarna av beviset var korrekta så formaliserades
+beviset i Coq och detta ledde till utvecklandet av SSReflect.
+
+\item[CompCerts C-kompilator]
+
+CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att
+utveckla formellt bevisade kompilatorer. Anledningen att man vill ha en formellt
+bevisad kompilator är att vid vissa optimeringar så kan kompilatorn skapa
+buggar och beräkningsfel.
+
+Att kompilatorn är formellt bevisad innebär att det finns ett matematiskt bevis,
+som kan kontrolleras genom en mekanisk check, för att den exekverbara koden
+beter sig så som står föreskrivet i källkoden. Rent konkret innebär detta att
+man är garanterad att den exekverbara koden inte innehåller buggar
+som är skapade av kompilatorn.
+
+Detta projektet resulterade i en fungerande C-kompilator som stödjer
+hela ANSI C med ett få undantag och som faktiskt är snabbare än
+GCC utan några optimeringar.
+
+\item[Feit-Thompsons sats]
+
+Feit-Thompsons är en sats inom matematisk gruppteori som säger att en ändlig
+grupp alltid är lösbar om dess ordning är udda\cite{aschbacher2004status}.
+Denna sats bevisades av Walter Feit och John Griggs Thompson 1963.
+
+Beviset för Feit-Thompsons sats är stort och sträcker sig över två volymer,
+det är mycket material för en person att sätta sig in i och verifiera för hand.
+Storleken på beviset och därmed möjligheten till någon dold miss i beviset är
+en av anledningarna till varför beviset för Feit-Thompsons sats är intressant
+att formalisera i Coq.
+
+I samband med formaliseringen av beviset så har även en stor del av
+matematisk gruppteori verifierats.
+\end{itemize}
+
+
+\subsubsection{Logik (Konstruktiv)}
+        Tror att det är bättre om någon från matte gör det här
+
+\subsubsection{Curry-Howard isomorphism}
+
+Enligt Curry Howard isomorpismen så är propositioner samma sak
+som typer och bevis är samma sak som program.
+Om vi tar en närmare titt på funktionsdefinitionen
+$a \rightarrow b$ så kan vi tolka det som
+att givet ett bevis för a så får vi ett bevis för b.
+
+$$ Propositions = Types $$
+$$ Proofs = Programs $$
+
+\subsubsection{Polymorphism}
+En enkel förklaring till polymorphism är att en funktion
+kan appliceras på flera olika typer av parametrar.
+
+En lite mer komplicerad förklaring är att en polymorphisk funktion är uppbygd av
+två olika lambda uttryck där det första har typer som parametrar och det andra
+uttrycket har termer som beror av de angivna typerna som parametrar.
+
+\begin{equation}
+\lambda_{Typer} \rightarrow (\lambda_{Termer} \rightarrow x)
+\label{polymorphsk funktion}
+\end{equation}
+
+Den yttre $\lambda$-funktionen tar en eller flera typer som parametrar och
+ger tillbaks en ny $\lambda$-funktion som nu har sina parametrar bundna till
+de typer som angavs i den yttre $\lambda$-funktionen.
+
+\subsubsection{Polymorphism i Coq}
+\subsubsection{Ad hoc polymorphism}
+Som de flesta funktionella programmeringspråk så har Coq stöd för ad hoc
+polymorphism som även kallas överlagring. Då coq är ett strikt typat
+språk används typklasser.
+\subsubsection{Kanoniska strukturer}
+Även då Coq har fullt stöd för typklasser och överlagring så används detta
+inte så mycket utan istället används kanoniska strukturer
+{\it (Eng Canonical Structures)}. Kanoniska strukturer är för komplicerade för
+att ingå i detta kandidatarbete men de är värda att nämnas då de ofta används
+för att lösa polymorphism i Coq.
+\subsubsection{Exempel på polymorphism i Coq}
+\begin{verbatim}
+Inductive list (X:Type) : Type :=
+  | nil  : list X
+  | cons : X -> list X -> list X .
+
+Fixpoint append (X:Type) (l : list X) (x : X) : list X :=
+  match l with
+  | nil       => cons X x (nil X)
+  | cons a l' => cons X a (append l' x)
+  end.
+\end{verbatim}
+
+\subsubsection{Beroendetyper}
+I en polymorphisk funktion så kan en parametertyp bero på vilka
+typer de tidigare parametrarna har haft. I beroendetypning så
+går vi ett steg längre och låter typerna bero på värdet av en
+tidigare parameter
+
+\subsubsection{Exempel}
+Funktionsdefinition för en funktion som gör om en lista till en vector
+\begin{verbatim}
+toVec: {a : Type} (list : List a) : Vec a (lenght list)
+\end{verbatim}
+
+Det är inte bara funktionella språk som det finns beroendetypade funktioner.
+Ett exempel på beroendetypning som de flesta antagligen är bekanta
+med är \texttt{printf} i C. I funktionen \texttt{printf} beror antalet
+parametrar och deras typer på värdet av den första parametern.
+
+\begin{verbatim}
+printf("%s is %d years old and %f.1cm long", name ,age , lenght)
+\end{verbatim}
+
+\begin{comment}
+CoqArt
+http://mattam.org/research/publications/Programming_with_Dependent_Types_in_Coq-PPS-260209.pdf
+** DONE Grund och taktikspråk
+   CLOSED: [2013-05-10 fre 10:41]
+\end{comment}
+
+
+\subsubsection{Grund och taktikspråk}
+Coq består av två olika delspråk. Grundspråket kallas
+Gallina och liknar till viss del OCaml. Det är i Gallina som
+de definitioner och funktioner som ska bevisas skrivs.
+
+Coq innehåller också ett taktikspråk som heter Ltac och innehåller olika
+taktiker för att påverka de hypoteser och mål som ska bevisas.
+Ltac gör det möjligt att använda samma metoder i Coq som man använder
+när man skapar ett pappersbevis.
+
+Coq är en interaktiv teorembevisare så när en viss taktik används uppdateras
+de hypoteser och mål som ska bevisas och användaren anger då en ny taktik
+och detta fortsätter tills alla målen är lösta.
+
+
+\subsubsection{Extrahering av program}
+Det inte går att köra program i Coq utan bara att bevisa korrektheten hos
+dem. Däremot så går det att exportera program skrivna Coq till OCaml, Haskell
+eller Scheme. Programmen går tyvärr inte att köra dirrekt effter extraktionen
+utan den generarade koden kan behövas städas upp och viss form av
+initialisering kan behövas.
+
+
+\subsubsection{Alternativ till Coq}
+Det finns många olika program och språk för att formallisera och bevisa olika
+former av matematik eller logik. En sak som de flesta har gemensamt är att de är
+uppbyggd på funktionella programmerings paradigmer.
+
+\begin{itemize}
+
+\item[Agda]
+Agda är utvecklat på chalmers och påminner till stor del om Haskell. Till
+skillnad mot Coq så finns det inga inbyggda taktiker.  Agda är inte lika
+matematiskt inriktad som Coq utan används mer till att bevisa korrekthet hos
+program. En fördel med Agda är att alla Unicode tecken är tillåtna vilket gör
+det enkelt att skriva sina program och bevis på samma sätt som man skulle göra
+det på paper.
+\item[Z3]
+Z3 är ett språk som har utvecklats av Microsoft för att förenkla och bevisa
+olika theorem. Kan användas tillsammans med flera stora ickefunktionella
+språk som Python,C och .NET.
+
+
+\item[HOL-light]
+HOL, Högre Ordningens Logik är en av de första interaktiva teorem bevisarna och
+HOL-light som är en vidareutveckling av det används idag av Intel för att bevisa
+att vissa hårdvarukomponenter fungerar korrekt.
+
+\item[F*]
+F\* är en vidareutveckling av F\# och används för att verifiera och bevisa
+egenskaper hos program. En av de större skillnaderna från F\# är att F\*
+har stöd för beroendetyper. F\* är en del av .Net vilket gör att bevis och kod
+som är skriven i F\* går att använda i all andra .Net språk.
+Stora delar av F\* är formaliserade och bevisade i Coq.
+\end{itemize}
+
+
+\begin{comment}
+Källor och annat material
+HOL http://www.cl.cam.ac.uk/~jrh13/hol-light/
+Z3 http://research.microsoft.com/en-us/um/redmond/projects/z3/old/
+F* http://research.microsoft.com/en-us/projects/fstar/
+\end{comment}
+
