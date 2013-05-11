@@ -14,22 +14,14 @@ data ToomCook = ToomCook
   , toomInvMat :: [[Rational]]
   }
 
-{-# INLINE ratMulUnsafe #-}
-ratMulUnsafe :: Integer -> Rational -> Integer
-ratMulUnsafe a b = assert (denominator r == 1) (numerator r)
-  where r = (fromIntegral a) * b
-
 matVecMul :: Num a => [[a]] -> [a] -> [a]
 matVecMul mat vec = map (sum . zipWith (*) vec) mat
-
-matVecMul' :: [[Rational]] -> [Integer] -> [Integer]
-matVecMul' mat vec = map (sum . zipWith ratMulUnsafe vec) mat
 
 log10 :: Integer -> Integer
 log10 = go 0
   where
     go !acc  0 = acc
-    go !acc !n = go (acc + 1) (n `quot` 10)
+    go !acc !n = go (acc + 1) (n `quotInteger` 10)
 
 {-# INLINE baseExponent #-}
 baseExponent :: Int -> Integer -> Integer -> Integer
@@ -43,7 +35,7 @@ split k b = assert (b > 0) $ go k []
   where
     go  0  acc _ = acc
     go !k' acc n = case n `quotRemInteger` b of
-      (# n', x' #) -> go (k' - 1) (x' : acc) n'
+      (# n', x' #) -> go (k'-1) (x':acc) n'
 
 {-# INLINE merge #-}
 merge :: Integer -> [Integer] -> Integer
@@ -53,7 +45,7 @@ evaluate :: [[Integer]] -> [Integer] -> [Integer]
 evaluate mat vec = matVecMul mat (reverse vec)
 
 interpolate :: [[Rational]] -> [Integer] -> [Integer]
-interpolate = matVecMul'
+interpolate mat vec = map numerator $ matVecMul mat $ map fromIntegral vec
 
 recompose :: Integer -> [Integer] -> Integer
 recompose b = go 1 0
