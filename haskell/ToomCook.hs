@@ -1,4 +1,5 @@
-{-# LANGUAGE LambdaCase, BangPatterns, MagicHash, UnboxedTuples #-}
+{-# LANGUAGE LambdaCase, BangPatterns,
+             MagicHash, UnboxedTuples #-}
 module ToomCook where
 
 import Control.Exception (assert)
@@ -13,16 +14,16 @@ data ToomCook = ToomCook
   , toomInvMat :: [[Rational]]
   }
 
+{-# INLINE ratMulUnsafe #-}
+ratMulUnsafe :: Integer -> Rational -> Integer
+ratMulUnsafe a b = assert (denominator r == 1) (numerator r)
+  where r = (fromIntegral a) * b
+
 matVecMul :: Num a => [[a]] -> [a] -> [a]
 matVecMul mat vec = map (sum . zipWith (*) vec) mat
 
 matVecMul' :: [[Rational]] -> [Integer] -> [Integer]
-matVecMul' mat vec = map (sum . zipWith f vec) mat
-  where
-    f a b = let n = numerator b
-                d = denominator b
-             in assert (n*a `remInteger` d == 0) $
-                  n*a `quotInteger` d
+matVecMul' mat vec = map (sum . zipWith ratMulUnsafe vec) mat
 
 log10 :: Integer -> Integer
 log10 = go 0
@@ -52,7 +53,7 @@ evaluate :: [[Integer]] -> [Integer] -> [Integer]
 evaluate mat vec = matVecMul mat (reverse vec)
 
 interpolate :: [[Rational]] -> [Integer] -> [Integer]
-interpolate mat = matVecMul' mat
+interpolate = matVecMul'
 
 recompose :: Integer -> [Integer] -> Integer
 recompose b = go 1 0
