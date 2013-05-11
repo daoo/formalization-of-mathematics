@@ -2,8 +2,6 @@
              MagicHash, UnboxedTuples #-}
 module ToomCook where
 
-import Control.Exception (assert)
-import Data.List
 import Data.Ratio
 import GHC.Base
 import GHC.Integer
