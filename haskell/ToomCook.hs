@@ -21,7 +21,8 @@ matVecMul' mat vec = map (sum . zipWith f vec) mat
   where
     f a b = let n = numerator b
                 d = denominator b
-             in n*a `quotInteger` d
+             in assert (n*a `remInteger` d == 0) $
+                  n*a `quotInteger` d
 
 log10 :: Integer -> Integer
 log10 = go 0
