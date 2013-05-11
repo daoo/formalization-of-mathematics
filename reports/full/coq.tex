@@ -13,45 +13,41 @@ Skrivet av Anders
 
 \begin{itemize}
 
-\item
-Fyrfärgssatsen\autocite{gonthier2008formal} säger att, givet varje möjlig
+\item Fyrfärgssatsen\autocite{gonthier2008formal} säger att, givet varje möjlig
 uppdelning av ett plan i sammanhängande regioner, så krävs det högst fyra
-färger för att färglägga alla regionerna så att inga angränsande regioner
-har samma färg. Två regioner anses vara angränsande om de delar en
-gemensam kant som inte är ett hörn.
+färger för att färglägga alla regionerna så att inga angränsande regioner har
+samma färg. Två regioner anses vara angränsande om de delar en gemensam kant
+som inte är ett hörn.
 
 Under årens lopp har det förekommit många olika bevis och motbevis som har
 bevisats vara falska och  det var först 1976 som det första korrekta beviset
 kom. Stora delar av beviset var då gjorda i en dator och det gick inte att
-bekräfta att dessa delar var korrekta.
-För att bevisa att datordelarna av beviset var korrekta så formaliserades
-beviset i Coq och detta ledde till utvecklandet av SSReflect.
+bekräfta att dessa delar var korrekta. För att bevisa att datordelarna av
+beviset var korrekta så formaliserades beviset i Coq och detta ledde till
+utvecklandet av SSReflect.
 
-\item
-CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att
+\item CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att
 utveckla formellt bevisade kompilatorer. Anledningen att man vill ha en
 formellt bevisad kompilator är att vid vissa optimeringar så kan kompilatorn
-skapa buggar och beräkningsfel.
-Att kompilatorn är formellt bevisad innebär att det finns ett matematiskt
-bevis, som kan kontrolleras genom en mekanisk check, för att den exekverbara
-koden beter sig så som står föreskrivet i källkoden. Rent konkret innebär detta
-att man är garanterad att den exekverbara koden inte innehåller buggar som är
-skapade av kompilatorn.
-Detta projektet resulterade i en fungerande C-kompilator som stödjer hela ANSI
-C med ett få undantag och som faktiskt är snabbare än GCC utan några
-optimeringar.
+skapa buggar och beräkningsfel. Att kompilatorn är formellt bevisad innebär att
+det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
+för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
+Rent konkret innebär detta att man är garanterad att den exekverbara koden inte
+innehåller buggar som är skapade av kompilatorn. Detta projektet resulterade i
+en fungerande C-kompilator som stödjer hela ANSI C med ett få undantag och som
+faktiskt är snabbare än GCC utan några optimeringar.
 
-\item
-Feit-Thompsons är en sats inom matematisk gruppteori som säger att en ändlig
-grupp alltid är lösbar om dess ordning är udda\cite{aschbacher2004status}.
-Denna sats bevisades av Walter Feit och John Griggs Thompson 1963.
-Beviset för Feit-Thompsons sats är stort och sträcker sig över två volymer, det
-är mycket material för en person att sätta sig in i och verifiera för hand.
-Storleken på beviset och därmed möjligheten till någon dold miss i beviset är
-en av anledningarna till varför beviset för Feit-Thompsons sats är intressant
-att formalisera i Coq.
-I samband med formaliseringen av beviset så har även en stor del av matematisk
-gruppteori verifierats.
+\item Feit-Thompsons är en sats inom matematisk gruppteori som säger att en
+ändlig grupp alltid är lösbar om dess ordning är
+udda\cite{aschbacher2004status}. Denna sats bevisades av Walter Feit och John
+Griggs Thompson 1963. Beviset för Feit-Thompsons sats är stort och sträcker sig
+över två volymer, det är mycket material för en person att sätta sig in i och
+verifiera för hand. Storleken på beviset och därmed möjligheten till någon dold
+miss i beviset är en av anledningarna till varför beviset för Feit-Thompsons
+sats är intressant att formalisera i Coq. I samband med formaliseringen av
+beviset så har även en stor del av matematisk gruppteori verifierats.
+
+\end{itemize}
 
 \subsubsection{Logik (Konstruktiv)}
 Tror att det är bättre om någon från matte gör det här
