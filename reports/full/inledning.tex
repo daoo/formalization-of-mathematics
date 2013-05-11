@@ -4,15 +4,24 @@ penna och papper är ofta inte realiserbart. Datorer kan i dessa fall utnyttjas
 som hjälpmedel för att verifiera varje logiskt steg i bevisen. Flera satser har
 formaliserat och två exempel är Fyrfärgssatsen\cite{gonthier2008formal} och
 Feit-Thompsons sats\cite{something}. För att bevisen ska vara korrekta har man
-formaliserat all matematik som satserna beror på.
-
-Vidare gör bevisens komplexitet även att enbart områdesexperter klarar av att
-granska och verifiera bevisen. Fermats stora sats är ett exempel på detta
-problemet då man rapporterade beviset som korrekt 1993 men ett fel hittades
-sedan 2 år senare\cite{something}.
+formaliserat all matematik som satserna beror på. Vidare gör bevisens
+komplexitet även att enbart områdesexperter klarar av att granska och verifiera
+bevisen. Fermats stora sats är ett exempel på detta problemet då man
+rapporterade beviset som korrekt 1993 men ett fel hittades sedan 2 år
+senare\cite{something}.
 
 Formaliseringen har utvecklats ur ett område som tidigare enbart intresserat
-datavetare.
+datavetare, närmare bestämt logik. De verktyg man använder bygger på logik och
+kan utöver att verifiera matematiska bevis även verifiera programkod. Formella
+metoder är såldes intressant för programmerare och inte bara matematiker.
+Dagens stora och komplexa programvaror skulle kunna utnyttja formella metoder.
+Det kan också vara användbart i kritiska system som inte får gå fel eller som
+inte kan uppdateras i efterhand. De metoder som används idag för att
+kontrollera kod bygger på att testa om olika värden och undersöka om resultaten
+är korrekta. Detta kan visa att koden innehåller fel, men inte att koden saknar
+fel eftersom det är omöjligt att testa alla kombinationer av värden. Formella
+metoder skulle i dessa fall kunna användas till att garantera korrekthet hos
+koden.
 
 Vårt projekt har haft som mål att studera datorassisterad formalisering och
 sedan formalisera en matematisk algoritm för att få en inblick i detta
@@ -34,4 +43,5 @@ För att få tillämpning
 \subsection{Mål}
 Målet med vårat projekt är således att lära oss hur man använder Coq och dess
 tillägg SSReflect. Vidare skall vi också använda dessa verktyg för att
-formalisera ett bevis av Toom-Cook algoritmen.
+formalisera ett bevis av Toom-Cook algoritmen. Den här rapporten presenterar
+våra resultat och diskuterar hur bevisassistenter kan användas.
