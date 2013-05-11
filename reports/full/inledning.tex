@@ -1,119 +1,34 @@
 \section{Inledning}
-Formalisering av matematik
+Komplexiteten hos matematiska bevis har med tiden ökat markant och bevis med
+penna och papper är ofta inte realiserbart. Datorer kan i dessa fall utnyttjas
+som hjälpmedel för att verifiera varje logiskt steg i bevisen. Flera satser har
+formaliserat och två exempel är Fyrfärgssatsen\cite{gonthier2008formal} och
+Feit-Thompsons sats\cite{something}. För att bevisen ska vara korrekta har man
+formaliserat all tillhörande matematik.
 
-\subsection{Verktyg för formalisering av matematik}
-Det finns många olika program och språk för att formallisera och bevisa
-olika former av matematik eller logik. En sak som de flesta har gemensamt är
-att de är uppbyggd på funktionella programmerings paradigmer.
+Vidare gör bevisens komplexitet även att enbart områdesexperter klarar av att
+granska och verifiera bevisen. Fermats stora sats är ett exempel på detta
+problemet då man rapporterade beviset som korrekt 1993 men ett fel hittades
+sedan 2 år senare\cite{something}.
 
-\subsubsection{Agda}
-Agda är utveckladat på chalmers och påminner till stor del om Haskell. Till
-skillnad mot Coq så finns det inga inbyggda taktiker. Istället för att skriva
-bevis med taktiker så skrivs bevisen på samma sätt som vanliga funktioner.
-Detta gör att det är lättare att se att program och bevis är samma sak. Agda är
-inte lika matematiskt inriktad som Coq utan används mer till att bevisa
-korrekthet hos program. En fördel med Agda är att alla Unicode tecken är
-tillåtna vilket gör det enkelt att skriva sina program och bevis på samma sätt
-som man skulle göra det på paper.
+Vårt projekt har haft som mål att studera datorassisterad formalisering och
+sedan formalisera en matematisk algoritm för att få en inblick i detta
+forskningsområdet.
 
-\subsubsection{Z3}
-Z3 är ett språk som har utvecklats av Microsoft för att förenkla och bevisa
-olika theorem. Kan användas tillsammans med flera stora ickefunktionella språk
-som Python,C och .NET.
+\subsection{Formalisering med datorhjälp}
+Formalisering är ett aktivt forskningsområde och det finns flertalet
+datorverktyg för formalisering och verifiering av formella bevis som är under
+aktiv utveckling.
 
-\begin{itemize}
-  \item Utvecklat av MIcrosoft
-  \item ''Theorem prover''
-  \item Används mest för att testa och verifiera program
-\end{itemize}
+Vi valde verktyget Coq. Coq är ett funktionellt programmeringsspråk inte helt
+olikt Haskell. Men till skillnad från Haskell är Coq även en interaktiv
+bevisassistent. Utöver detta ska vi även använda biblioteket SSReflect som är
+en utökning av Coq.
 
-\subsubsection{HOL-light}
-HOL är en av de första teorem bevisarna och HOL-light som är en utveckling av
-det används idag av Intel för att bevisa att vissa hårdvarukomponenter fungerar
-korrekt.
+\subsection{Multiplikation av polynom}
+För att få tillämpning
 
-\subsection{Tillämpningar av Coq}
-De tre största tillämpningarna av Coq är formaliseringen av Fyrfärgssatsen och
-Feit-Thompsonsatsen samt en C-kompilator som är skriven och bevisad i Coq.
-
-\subsubsection{Fyrfärgssatsen}
-Fyrfärgssatsen\autocite{gonthier2008formal} säger att, givet varje möjlig
-uppdelning av ett plan i sammanhängande regioner, så krävs det högst fyra
-färger för att färglägga alla regionerna så att inga angränsande regioner har
-samma färg. Två regioner anses vara angränsande om de delar en gemensam kant
-som inte är ett hörn.
-
-Satsen lades fram för första gången 1852 men visades först 1976 av Kenneth
-Appel och Wolfgang Haken. De använde sig av en dator till hjälp när de bevisade
-satsen vilket gjorde att beviset inte accepterades bland alla matematiker
-eftersom det inte direkt enkelt kunde kontrolleras av en människa. År 1995
-konstruerade Neil Robertson, Daniel Sanders, Paul Seymor och Robin Thomas ett
-enklare bevis som var baserat på samma idé vilket blåste bort en del tvivel.
-Detta bevis använde dock fortfarande datorer till hjälp och även om det gick
-att kontrollera de delarna av beviset skrivet i text så kvarstod problemet med
-att verifiera att koden var korrekt. En lösning till det här problemet är att
-skriva ett formellt bevis för att bevisa att programmet är korrekt.
-
-År 2000 försökte en forskningsgrupp ledd av Georges Gonthier att formellt
-bevisa delar av koden i det förenklade beviset från 1995. De lyckades med
-detta, men var sedan intresserade av att undersöka om hela beviset var korrekt,
-vilket skulle innebära att de var tvungna att formalisera hela beviset, inte
-bara koden. År 2005 var de klara med att formalisera hela beviset för
-fyrfärgssatsen.
-
-\subsubsection{CompCerts C-kompilator}
-CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att utveckla
-formellt bevisade kompilatorer. Att kompilatorn är formellt bevisad innebär att
-det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
-för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
-Rent konkret innebär detta att man är garanterad att den exekverbara koden inte
-innehåller buggar som är skapade av kompilatorn.
-
-Huvudresultatet av detta projekt är en fungerande C-kompilator som är skriven
-och bevisad i Coq. Kompilatorn stödjer hela ANSI C med följande undantag:
-\begin{itemize}
-  \item Ostrukturerade switch-satser (t. ex Duffs maskin) är inte tillåtna.
-  \item Alla funktioner måste ha en funktionsprototyp.
-  \item Det går inte att definiera funktioner som kan ta ett
-    varierande antal argument.
-  \item Det finns ingen garanti för att longjmp och setjmp fungerar.
-\end{itemize}
-Vad beträffar prestanda så är den exekverbara koden genererad av
-CompCerts C-kompilator något snabbare än den genererad av
-C-kompilatorn i GCC (GNU Compiler Collection) utan optimeringar
-(\texttt{-O0}) och något långsammare än den genererad av
-C-kompilatorn i GCC med optimeringsnivå 1 (\texttt{-O1}). CompCerts
-C-kompilators huvudsakliga syfte är dock inte att konkurrera mot
-andra kompilatorer vad gäller prestanda utan utmärker sig genom
-att vara fri från kompileringsfel.
-
-\subsubsection{Feit-Thompsons sats}
-Feit-Thompsons är en sats inom matematisk gruppteori som säger att en ändlig
-grupp alltid är lösbar om dess ordning är udda\cite{aschbacher2004status}.
-Denna sats bevisades av Walter Feit och John Griggs Thompson 1963.
-
-Beviset för Feit-Thompsons sats är stort och sträcker sig över två volymer, det
-är mycket material för en person att sätta sig in i och verifiera för hand.
-Storleken på beviset och därmed möjligheten till någon dold miss i beviset är
-en av anledningarna till varför beviset för Feit-Thompsons sats är intressant
-att formalisera i Coq. Feit-Thompsons sats är också intressant på det sättet
-att det är en milstolpe på vägen att formalisera beviset för klassificeringen
-av ändliga simpla grupper. Klassificeringen av ändliga simpla grupper är en
-sats vars bevis består av tiotusentals sidor av flera hundra artiklar.
-
-Efter att Georges Gonthier och hans forskningsgrupp var klara med det formella
-beviset för fyrfärgssatsen så började de konstruera ett formellt bevis i Coq
-för Feit-Thompsons sats\autocite{gonthierfinished}. Detta var ett stort projekt
-som tog sex år och de var färdiga med att formalisera hela beviset 2012.
-
-I samband med formaliseringen av beviset så har även en stor del av matematisk
-gruppteori verifierats.
-
-\subsection{SSReflect}
-SSReflect är ett tillägg till Coq som utvecklades i samband med formaliseringen
-av beviset för fyrfärgssatsen.
-
-\begin{itemize}
-  \item Small Scale Reflection
-  \item Tre typer av steg
-\end{itemize}
+\subsection{Mål}
+Målet med vårat projekt är således att lära oss hur man använder Coq och dess
+tillägg SSReflect. Vidare skall vi också använda dessa verktyg för att
+formalisera ett bevis av Toom-Cook algoritmen.
