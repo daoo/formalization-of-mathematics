@@ -2,7 +2,7 @@ module Properties where
 
 import Examples
 import Test.QuickCheck
-import ToomCookNat
+import ToomCook
 
 genK :: Gen Int
 genK = choose (2, 10)
