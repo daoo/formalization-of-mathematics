@@ -1,15 +1,18 @@
-\section{Toom-Cook}
+\subsection{Toom-Cook}
 Toom-Cook är en algoritm för att multiplicera två polynom och är namngiven
-efter Andrei Toom och Stephen Cook. Algoritmen är intressant eftersom den har
-en bättre asymptotisk tidskomplexitet än naiv polynommultiplikation där man
-multiplicerar varje term i det ena polynomet med varje term i det andra
-polynomet vilket har den asymptotiska tidskomplexiteten $O\left(n^2\right)$.
-Eftersom problemet att multiplicera två heltal kan reduceras till att
-multiplicera två polynom kan algoritmen även användas för
-heltalsmultiplikation, denna reduktion kan göras utan att den asymptotiska
-tidskomplexiteten försämras. Detta innebär att man kan uppnå en bättre
-asymptotisk tidskomplexitet än den för naiv heltalsmultiplikation som lärs ut i
-grundskolan och har den asymptotiska tidskomplexiteten $O\left(n^2\right)$.
+efter Andrei Toom och Stephen Cook.
+
+Algoritmen är intressant eftersom den har en bättre asymptotisk tidskomplexitet
+än naiv polynommultiplikation där man multiplicerar varje term i det ena
+polynomet med varje term i det andra polynomet vilket har den asymptotiska
+tidskomplexiteten $O\left(n^2\right)$. Eftersom problemet att multiplicera två
+heltal kan reduceras till att multiplicera två polynom kan algoritmen även
+användas för heltalsmultiplikation, denna reduktion kan göras utan att den
+asymptotiska tidskomplexiteten försämras. Detta innebär att man kan uppnå en
+bättre asymptotisk tidskomplexitet än den för naiv heltalsmultiplikation som
+lärs ut i grundskolan och har den asymptotiska tidskomplexiteten
+$O\left(n^2\right)$.
+
 Toom-Cook är en $"$divide and conquer$"$-algoritm och bygger på att man delar
 upp polynomen som skall multipliceras i mindre delar, dessa delar får sedan stå
 som koefficienter i två nya polynom som evalueras i olika punkter för att sedan
@@ -17,7 +20,9 @@ punktvis multipliceras och därefter interpoleras tillbaka till ett nytt
 polynom. Genom att evaluera det nya polynomet i en punkt som svarar mot hur
 stora delar de ursprungliga polynomen delades upp i så får man slutligen
 produkten. Detta är dock bara de ingående stegen, för en mer detaljerad
-beskrivning av algoritmen se följande undersektion. Det finns flera varianter
+beskrivning av algoritmen se följande undersektion.
+
+Det finns flera varianter
 av Toom-Cook. Toom-k är en enskild instans av Toom-Cook som delar polynomen som
 skall multipliceras i k delar. Vanligtvis när man talar om Toom-Cook syftar man
 på Toom-3. Det finns även Toom-versioner som delar upp polynomen i olika antal
@@ -27,40 +32,20 @@ asymptotiska tidskomplexiteten $O(n^{log_2(2 k-1)/log_2 k})$, men konstanten
 som döljs av ordo-notationen växer med k och har en betydande praktisk
 inverkan. För heltalsmultiplikation finns algoritmer som bygger på diskret
 fouriertransform och har en ännu bättre asymptotisk tidskomplexitet, t ex
-Schönhage-Strassen-algoritmen. Både Toom-Cook och algoritmer som bygger på
-diskret fouriertransform används i praktiken. I t ex gmplib, The GNU Multiple
-Precision Arithmetic Library, används Schönhage-Strassen-algoritmen samt olika
-instanser av Toom-Cook-algoritmen för multiplikation av heltal.
+Schönhage-Strassen-algoritmen.
 
-\subsection{Toom-Cook-algoritmen}
----algoritmen---
+Både Toom-Cook och algoritmer som bygger på diskret fouriertransform används i
+praktiken. I t ex gmplib, The GNU Multiple Precision Arithmetic Library,
+används Schönhage-Strassen-algoritmen samt olika instanser av
+Toom-Cook-algoritmen för multiplikation av heltal.
 
-\subsection{Karatsuba}
-Toom-2 är ett specialfall av Toom-Cook och är även känd som
-Karatsuba-algoritmen. I Karatsuba-algoritmen delas multiplikanderna upp på
-samma sätt som i steg 1.2 i Toom-m algoritmen ovan vilket ger oss de två
-polynomen:
-\begin{align*}
-  u(x) &= u_1 y + u_0 \\
-  v(x) &= v_1 y + v_0
-\end{align*}
-Om vi skall multiplicera polynomen med naiv polynommultiplikation krävs det
-fyra multiplikationer:
-\begin{equation*}
-  u_1 v_1 y^2 + (u_1 v_0+v_1 u_0) y + u_0 v_0
-\end{equation*}
-Genom att skriva om uttrycket krävs dock bara tre distinkta multiplikationer:
-\begin{equation*}
-  u_1 v_1 y^2 + ((u_1 + u_0)(v_1 + v_0) - u_1 v_1 - u_0 v_0) y + u_0 v_0
-\end{equation*}
-Tidskomplexiteten för Karatsuba-algoritmen är då:
-\begin{equation*}
-  T(n) = 3 T(\lceil n/2\rceil) + cn + d
-\end{equation*}
-där n är graden på det största polynomet och c och d är konstanter. Alltså har
-Karatsuba-algoritmen den asymptotiska tidskomplexiteten $O(n^{log_2 3})$
+\subsubsection{Definition av Toom-Cook-$m$}
+I detta avsnitt definierar vi Toom-Cook m $(p, q)$, för $m \in \mathbb{N}$ och
+$m \geq 3$, som resultatet av algoritmen nedan. Versionen av algoritmen som
+presenteras nedan bygger på \cite{bodrato2007a} och presentationen av den
+följer källans. För en introduktion till integritetsområden och polynom, se
+APPENDIX NÅNTING.
 
-\subsection{Definition av Toom - Cook m}
 Låt R vara ett integritetsområde och låt $p, q \in R[x]$, där
 \begin{align*}
   &p(x) = a_0 + a_1 x + ... + a_n x^n, \\
@@ -68,17 +53,11 @@ Låt R vara ett integritetsområde och låt $p, q \in R[x]$, där
 \end{align*}
 med $0 \leq s \leq n$.
 
-I detta avsnitt definierar vi Toom-Cook m $(p, q)$, för $m \in \mathbb{N}$ och
-$m \geq 3$, som resultatet av algoritmen nedan. Versionen av algoritmen som
-presenteras nedan bygger på \cite{bodrato2007a} och presentationen av den
-följer källans. För en introduktion till integritetsområden och polynom, se
-APPENDIX NÅNTING.
-
-\subsubsection{Gradkontroll}
+\paragraph{Gradkontroll}
 Om $\grad p = n \leq 2$, låt Toom-Cook $m (p, q) = p \cdot q$, annars gå vidare
 till steg 2.
 
-\subsubsection{Uppdelning}
+\paragraph{Uppdelning}
 \label{uppdelning}
 Låt
 \begin{align*}
@@ -99,7 +78,7 @@ Låt
 \end{align*}
 Vi vill att $u(x^b)=p(x)$ och $v(x^b)=q(x)$.
 
-\subsubsection{Evaluering}
+\paragraph{Evaluering}
 Nu ska vi beräkna $w = u \cdot v$. Vi gör detta genom interpolation. Vi
 beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för $d + 1$ punkter
 $\alpha_0, ...,  \alpha_d$, där $\alpha_i \in R$ och
@@ -132,12 +111,12 @@ beräknar vi $u(\alpha_i)$ och $v(\alpha_i)$. Låt
 \end{align*}
 och motsvarande för $v$.
 
-\subsubsection{Rekursiv multiplikation}
+\paragraph{Rekursiv multiplikation}
 Vi beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för i $= 0, ... , d$
 rekursivt genom att anropa algoritmen med $u(\alpha_i)$ och $v(\alpha_i)$ som
 argument. Notera att $u(\alpha_i)$, $v(\alpha_i) \in R[x]$.
 
-\subsubsection{Interpolation}
+\paragraph{Interpolation}
 Vi bestämmer koefficienterna i $w(y)=w_0 + w_1 y + \ldots + w_d y^d$ genom
 interpolation. Om
 
@@ -183,11 +162,11 @@ Vandermondematris så är}
   \det V_I &= \prod_{0 \leq i < j \leq d} (\alpha_i - \alpha_j)
 \end{align}
 
-\subsubsection{Sammansättning}
+\paragraph{Sammansättning}
 Vi får slutligen det önskade resultatet $p(x) \cdot q(x)$ genom att evaluera
 $w$ i $x^b$.
 
-\subsection{Bevis av algoritmens korrekthet}
+\subsubsection{Bevis av algoritmens korrekthet}
 I detta stycke visar vi att för $p, q \in R[x]$ så är $p \cdot q =$ Toom-Cook m
 $(p, q)$.
 
@@ -316,3 +295,28 @@ $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(
     \sum_{i = 0}^{k-1} p(x)/x^{bi}  (\modu x^b) x^{bi} &+ (p(x)/x^{b k}) x^{b k}
   \end{align*}
 \end{proof}
+
+\subsubsection{Karatsuba}
+Toom-2 är ett specialfall av Toom-Cook och är även känd som
+Karatsuba-algoritmen. I Karatsuba-algoritmen delas multiplikanderna upp på
+samma sätt som i steg 1.2 i Toom-m algoritmen ovan vilket ger oss de två
+polynomen:
+\begin{align*}
+  u(x) &= u_1 y + u_0 \\
+  v(x) &= v_1 y + v_0
+\end{align*}
+Om vi skall multiplicera polynomen med naiv polynommultiplikation krävs det
+fyra multiplikationer:
+\begin{equation*}
+  u_1 v_1 y^2 + (u_1 v_0+v_1 u_0) y + u_0 v_0
+\end{equation*}
+Genom att skriva om uttrycket krävs dock bara tre distinkta multiplikationer:
+\begin{equation*}
+  u_1 v_1 y^2 + ((u_1 + u_0)(v_1 + v_0) - u_1 v_1 - u_0 v_0) y + u_0 v_0
+\end{equation*}
+Tidskomplexiteten för Karatsuba-algoritmen är då:
+\begin{equation*}
+  T(n) = 3 T(\lceil n/2\rceil) + cn + d
+\end{equation*}
+där n är graden på det största polynomet och c och d är konstanter. Alltså har
+Karatsuba-algoritmen den asymptotiska tidskomplexiteten $O(n^{log_2 3})$
