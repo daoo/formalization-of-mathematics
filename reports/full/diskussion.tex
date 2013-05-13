@@ -3,13 +3,30 @@ Toom-Cook, bevisa dem, och testa deras prestanda. Men arbetets komplexitet
 hindrade oss från att hinna med detta.
 
 \subsection{Är det realistiskt att formalisera bevis och kod?}
-Tidskrävande
+Implementationen av algoritmen och beviset i Coq var mycket tidskrävande, även
+för en relativt liten algoritm med ett kortare matematiskt bevis. Flera veckors
+arbete med flera personer behövdes för att färdigställa beviset. Jämförelsevis
+tog implementationen i Haskell samt testning med QuickCheck tog mindre än en
+dag. Frågan är om detta är en rättvis jämförelse eftersom vi hade mycket mer
+erfarenhet av Haskell än Coq. Även om mer erfarenhet skulle ha kortat ner
+utvecklingstiden markant tar formella bevis flera storleksordningar längre tid
+att utveckla än att implementera algoritmen i till exempel Haskell.
 
-Haskell har kortare utvecklingstid
+Erfarenhet är inte den enda lösningen, Coq är ett forskningsprojekt och lider
+av diverse problem. Till exempel interaktionsproblem med programvaran, de
+grafiska gränssnitten som finns har en del buggar och saknar många funktioner
+Som finns i andra moderna utvecklingsmiljöer för andra språk. Vidare är
+dokumentationen för standardbiblioteket väldigt dålig eller obefintlig. När man
+sitter och bevisar går väldigt mycket tid går åt till att enbart sitta och söka
+i källkoden för att hitta rätt lemma. Om man kan lösa dessa problemen skulle
+tiden som behövs kortas ner avsevärt.
+
+Att använda Coq för att bevisa kod är kanske i dagsläget bara relevant om det
+är väldigt viktigt att koden är korrekt. För matematiker kan det vara ett mer
+relevant verktyg eftersom Coq stoppar direkt när man gjort fel istället för små
+enkla fel smyger sig igenom hela beviset.
 
 \subsection{Coq på Chalmers}
 
-\subsection{Coq och SSRefelect allmänt}
-Coq och SSReflect saknar bra dokumentation
-
-Forskningsprojekt
+\subsection{Mer}
+Kan vi starta företag?
