@@ -27,9 +27,12 @@ uttrycket har termer som beror av de angivna typerna som parametrar.
   \lambda_{Typer} \rightarrow (\lambda_{Termer} \rightarrow x)
   \label{polymorphsk funktion}
 \end{equation}
-Den yttre $\lambda$-funktionen tar en eller flera typer som parametrar och ger
-tillbaks en ny $\lambda$-funktion som nu har sina parametrar bundna till de
-typer som angavs i den yttre $\lambda$-funktionen.
+
+
+Detta betyder att vi först skapar en funktion som tar en eller flera
+typer som parametrar. Denna yttre funktion ger sedan tillbaka en funktion
+där vi har parametrar som nu är bundna till de typerna som vi angav i den
+yttre funktionen.
 
 Som de flesta funktionella programmeringspråk så har Coq stöd för ad hoc
 polymorphism som även kallas överlagring. Detta innebär att typerna i
@@ -61,17 +64,26 @@ Fixpoint append (X:Type) (l : list X) (x : X) : list X :=
 I en polymorphisk funktion så kan en parametertyp bero på vilka typer de
 tidigare parametrarna har haft. I beroendetypning så går vi ett steg längre och
 låter typerna bero på värdet av en tidigare parameter
-Funktionsdefinition för en funktion som gör om en lista till en vector. En
-vector är en lista med en fix längd och när vi gör om en lista till en vector
-så vill vi alltså att den resullterande vectorn har samma längd som listan.
+Nedan finns två funktionsdefinitioner där beroendetypning används. I exemplena
+används en klass som heter Vector och det är inget mer komplicerat en lista med
+fast längd. I det första exemplet så gör vi om en lista till en vektor och
+vektorn ska då ha samma längd som listan. I det andra exemplet har vi en
+funktion som tar bort det första ellementet från en vektor och resultatet blir
+då en vector med ett mindre ellement.
 \begin{verbatim}
-toVec: {a : Type} (list : List a) : Vec a (lenght list)
+toVec: (list : List) : Vector (lenght list)
+\end{verbatim}
+
+\begin{verbatim}
+removeFirst (v : Vector n) : Vector (n-1))
 \end{verbatim}
 
 Det är inte bara funktionella språk som det finns beroendetypade funktioner.
 Ett exempel på beroendetypning som de flesta antagligen är bekanta med är
 \texttt{printf} i C. I funktionen \texttt{printf} beror antalet parametrar och
-deras typer på värdet av den första parametern.
+deras typer på värdet av den första parametern. Här bestäms antalet parametrar
+på antalet \% i den första strängen och vilken typ det ska vara på dessa
+parametrar bestäms av vilken bokstav som står efter \% -tecknet
 
 \begin{verbatim}
 printf("%s is %d years old and %f.1cm long", name ,age , lenght)
