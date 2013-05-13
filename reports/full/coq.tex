@@ -8,27 +8,21 @@ Enligt Curry Howard isomorpismen så är propositioner samma sak som typer och
 bevis är samma sak som program. Om vi tar en närmare titt på
 funktionsdefinitionen $a \rightarrow b$ så kan vi tolka det som att givet ett
 bevis för a så får vi ett bevis för b.
-Enligt Curry Howard isomorpismen så är propositioner samma sak som typer och
-bevis är samma sak som program. Om vi tar en närmare titt på
-funktionsdefinitionen $a \rightarrow b$ så kan vi tolka det som att givet ett
-bevis för a så får vi ett bevis för b.
 \begin{align*}
-Propotioner &= Typer \\
-Bevis &= Programs
+  Propotioner &= Typer \\
+  Bevis       &= Programs
 \end{align*}
 
 \subsubsection{Polymorphism}
 En enkel förklaring till polymorphism är att en funktion kan appliceras på
-flera olika typer av parametrar.
-En lite mer komplicerad förklaring är att en polymorphisk funktion är uppbygd av
-två olika lambda uttryck där det första har typer som parametrar och det andra
-uttrycket har termer som beror av de angivna typerna som parametrar.
+flera olika typer av parametrar. En lite mer komplicerad förklaring är att en
+polymorphisk funktion är uppbygd av två olika lambda uttryck där det första har
+typer som parametrar och det andra uttrycket har termer som beror av de angivna
+typerna som parametrar.
 \begin{equation}
   \lambda_{Typer} \rightarrow (\lambda_{Termer} \rightarrow x)
   \label{polymorphsk funktion}
 \end{equation}
-
-
 Detta betyder att vi först skapar en funktion som tar en eller flera
 typer som parametrar. Denna yttre funktion ger sedan tillbaka en funktion
 där vi har parametrar som nu är bundna till de typerna som vi angav i den
@@ -37,12 +31,11 @@ yttre funktionen.
 Som de flesta funktionella programmeringspråk så har Coq stöd för ad hoc
 polymorphism som även kallas överlagring. Detta innebär att typerna i
 funktionen bestämms av sammanhanget. Då coq är ett strikt typat språk används
-typklasser för att beskriva vilka typer som är tillåtna.
-Även då Coq har fullt stöd för typklasser och överlagring så används detta inte
-så mycket utan istället används kanoniska strukturer {\it (Eng Canonical
-Structures)}. Kanoniska strukturer är för komplicerade för att ingå i detta
-kandidatarbete men de är värda att nämnas då de ofta används för att lösa
-polymorphism i Coq.
+typklasser för att beskriva vilka typer som är tillåtna. Även då Coq har fullt
+stöd för typklasser och överlagring så används detta inte så mycket utan
+istället används kanoniska strukturer {\it (Eng Canonical Structures)}.
+Kanoniska strukturer är för komplicerade för att ingå i detta kandidatarbete
+men de är värda att nämnas då de ofta används för att lösa polymorphism i Coq.
 
 I följande exempel defineras en lista som kan innehålla värden av alla möjliga
 typer. Den undre definitionen i exemplet är en rekursiv funktion som lägger till
@@ -63,37 +56,28 @@ Fixpoint append (X:Type) (l : list X) (x : X) : list X :=
 \subsubsection{Beroendetyper}
 I en polymorphisk funktion så kan en parametertyp bero på vilka typer de
 tidigare parametrarna har haft. I beroendetypning så går vi ett steg längre och
-låter typerna bero på värdet av en tidigare parameter
-Nedan finns två funktionsdefinitioner där beroendetypning används. I exemplena
-används en klass som heter Vector och det är inget mer komplicerat en lista med
-fast längd. I det första exemplet så gör vi om en lista till en vektor och
-vektorn ska då ha samma längd som listan. I det andra exemplet har vi en
-funktion som tar bort det första ellementet från en vektor och resultatet blir
-då en vector med ett mindre ellement.
+låter typerna bero på värdet av en tidigare parameter Nedan finns två
+funktionsdefinitioner där beroendetypning används. I exemplena används en klass
+som heter Vector och det är inget mer komplicerat en lista med fast längd. I
+det första exemplet så gör vi om en lista till en vektor och vektorn ska då ha
+samma längd som listan. I det andra exemplet har vi en funktion som tar bort
+det första ellementet från en vektor och resultatet blir då en vector med ett
+mindre ellement.
 \begin{verbatim}
 toVec: (list : List) : Vector (lenght list)
-\end{verbatim}
 
-\begin{verbatim}
 removeFirst (v : Vector n) : Vector (n-1))
 \end{verbatim}
-
 Det är inte bara funktionella språk som det finns beroendetypade funktioner.
 Ett exempel på beroendetypning som de flesta antagligen är bekanta med är
-\texttt{printf} i C. Här bestäms antalet parametrar i funktionen
-av antalet \% i den första strängen och vilken typ det ska vara på dessa
-parametrar bestäms av vilken bokstav som står efter \%-tecknet.
-
+\texttt{printf} i C. Här bestäms antalet parametrar i funktionen av antalet \%
+i den första strängen och vilken typ det ska vara på dessa parametrar bestäms
+av vilken bokstav som står efter \%-tecknet.
 \begin{verbatim}
 printf("%s is %d years old and %f.1cm long", name ,age , lenght)
 \end{verbatim}
 
-\begin{comment}
-CoqArt
-http://mattam.org/research/publications/Programming_with_Dependent_Types_in_Coq-PPS-260209.pdf
-** DONE Grund och taktikspråk
-   CLOSED: [2013-05-10 fre 10:41]
-\end{comment}
+% http://mattam.org/research/publications/Programming_with_Dependent_Types_in_Coq-PPS-260209.pdf
 
 \subsubsection{Grund och taktikspråk}
 Coq består av två olika delspråk. Grundspråket kallas Gallina och liknar till
@@ -103,7 +87,6 @@ bevisas skrivs.
 Coq innehåller också ett taktikspråk som heter Ltac och innehåller olika
 taktiker för att påverka de hypoteser och mål som ska bevisas. Ltac gör det
 möjligt att använda samma metoder i Coq som man använder när man skapar ett
-pappersbevis.
-Coq är en interaktiv teorembevisare så när en viss taktik används uppdateras de
-hypoteser och mål som ska bevisas och användaren anger då en ny taktik och
-detta fortsätter tills alla målen är lösta.
+pappersbevis. Coq är en interaktiv teorembevisare så när en viss taktik används
+uppdateras de hypoteser och mål som ska bevisas och användaren anger då en ny
+taktik och detta fortsätter tills alla målen är lösta.
