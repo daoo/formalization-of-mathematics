@@ -80,10 +80,9 @@ removeFirst (v : Vector n) : Vector (n-1))
 
 Det är inte bara funktionella språk som det finns beroendetypade funktioner.
 Ett exempel på beroendetypning som de flesta antagligen är bekanta med är
-\texttt{printf} i C. I funktionen \texttt{printf} beror antalet parametrar och
-deras typer på värdet av den första parametern. Här bestäms antalet parametrar
-på antalet \% i den första strängen och vilken typ det ska vara på dessa
-parametrar bestäms av vilken bokstav som står efter \% -tecknet
+\texttt{printf} i C. Här bestäms antalet parametrar i funktionen
+av antalet \% i den första strängen och vilken typ det ska vara på dessa
+parametrar bestäms av vilken bokstav som står efter \%-tecknet.
 
 \begin{verbatim}
 printf("%s is %d years old and %f.1cm long", name ,age , lenght)
