@@ -9,6 +9,7 @@
 \usepackage{biblatex}
 \usepackage{csquotes}
 \usepackage{fancyhdr}
+\usepackage{fancyvrb}
 \usepackage{url}
 \usepackage{verbatim}
 
@@ -19,6 +20,9 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Korollarium}
+
+\DeclareMathOperator*{\grad}{grad}
+\DeclareMathOperator*{\modu}{mod}
 
 \pagestyle{fancy}
 
@@ -54,18 +58,24 @@ Todo
 \tableofcontents
 \newpage
 
+\section{Inledning}
 \input{inledning}
 \section{Teori}
 \input{coq}
+\input{toomcook}
+\section{Metod/Genomförande}
 \input{metod}
+\section{Resultat}
 \input{resultat}
+\section{Diskussion}
 \input{diskussion}
 
 \printbibliography
 
 \appendix
-\section{Bla}
-Bla bla...
+\section{Algebra}
+\include{algebra}
+
 
 \end{document}
 
