@@ -8,6 +8,6 @@ run: all
 	cp build/report.pdf $(HOME)/dropbox/public/report.pdf
 
 clean:
-	latexmk -outdir=build -c
+	rm build/*.*
 
 .PHONY: clean all
