@@ -7,10 +7,10 @@ Algoritmen är implementerad med en rad små funktioner och sedan en rekursiv
 del, där den rekursiva delen är Toom-Cook-algoritmen. Till en början kommer
 alltså många variabler, definitioner och antaganden radas upp, som vi har
 försökt att ge så självförklarande namn som möjligt.
-\begin{verbatim}
+\begin{lstlisting}
 Variable R : idomainType.
 Implicit Types p q : {poly R}.
-\end{verbatim}
+\end{lstlisting}
 Till att börja med skapas själva integritetsområdet, den variabeln kallas för
 R. Därefter skapas två variabler p och q av typen poly R, alltså $R[x]$. Dessa
 deklareras även implicit vilket innebär att när p och q användes så behövs inte
@@ -18,14 +18,13 @@ typen anges igen.
 
 Här definieras variabler som är av typen nat, naturliga tal, som beror på
 antalet splittar av polynomen som görs.
-\begin{verbatim}
+\begin{lstlisting}
 Variable number_splits : nat.
 Definition m : nat := number_splits.
 Definition number_points := (2 * m) .-1.
-\end{verbatim}
+\end{lstlisting}
 Som i pappers algoritmen är m variabeln från Toom-Cook-$m$ och
-\verb+number_points+ är antalet interpolationspunkter.
-
+\C{number_points} är antalet interpolationspunkter.
 Interpolationspunkterna sparas i en kolonnvektor och är typen poly R, vilket
 skiljer sig från pappers algoritmen. Det var viktigt att punkterna tillhörde R
 i pappers algoritmen för att induktionsantagandet över graden skulle kunna
@@ -33,63 +32,60 @@ appliceras, läs !!!!!!!!!!!!, men i beviset i SSReflect så görs induktion öv
 en annan variabel så det problemet uppstår aldrig. Algoritmen blir dock
 snabbare om interpolationspunkterna tillhör R eller är av låg grad i $R[x]$,
 läs !!!!!!!!!!.
-
-\begin{verbatim}
+\begin{lstlisting}
 Variable inter_points : 'cV[{poly R}]_(number_points).
 Hypothesis m_neq_0 : 0 < m.
-\end{verbatim}
+\end{lstlisting}
 I pappers algoritmen har vi som antagande att m är större än 3. !!!!!!!!!!!!!!!
-\begin{verbatim}
+\begin{lstlisting}
 Definition V_e : 'M[{poly R}]_(number_points, m) :=
   \matrix_(i < number_points, j < m) ((inter_points i 0))^+j.
-\end{verbatim}
-Här definieras evalueringsmatrisen \verb+V_e+. Den ska ha dimension
-\verb+number_points x m+ med element av typen poly R. Argumentet
-\verb+(i < number_points, j < m)+ säger just att matrisen är av dimensionen
-\verb+number_points x m+. Det andra argumentet \verb+((inter_points i 0))^+j+
-bestämmer vilket element som ska vara på plats \verb+(i,j)+ i matrisen, vilket
-i det här fallet är det \verb+i+:te elementet ur kolonnvektorn
-\verb+inter_points+ upphöjt i \verb+j+, vilket då blir en Vandermondematris.
-
-\begin{verbatim}
+\end{lstlisting}
+Här definieras evalueringsmatrisen \C{V_e}. Den ska ha dimension
+\C{number_points x m} med element av typen poly R. Argumentet \C{(i <
+number_points, j < m)} säger just att matrisen är av dimensionen
+\C{number_points x m}. Det andra argumentet \C{((inter_points i 0))^+j}
+bestämmer vilket element som ska vara på plats \C{(i,j)} i matrisen, vilket i
+det här fallet är det \C{i}:te elementet ur kolonnvektorn \C{inter_points}
+upphöjt i \C{j}, vilket då blir en Vandermondematris.
+\begin{lstlisting}
 Definition V_I : 'M[{poly R}]_(number_points) :=
   \matrix_(i < number_points, j < number_points) ((inter_points i 0))^+j.
-\end{verbatim}
+\end{lstlisting}
 Här definieras interpolationsmatrisen på motsvarade sätt som
 evalueringsmatrisen, skillnaden är att det blir en matris av dimension
-\verb+number_points * number_points+ istället.
-
-\begin{verbatim}
+\C{number_points * number_points} istället.
+\begin{lstlisting}
 Definition exponent (m: nat) p q : nat :=
   (maxn (divn (size p) m) (divn (size q) m)).+1.
-\end{verbatim}
+\end{lstlisting}
 Här definieras exponent som tar ett naturligt tal m som inparameter och ger ett
 naturligt tal som utparameter. Om inparametern är värdet av m i Toom-Cook-m så
 motsvarar det här b i pappers algoritmen, läs !!!!!, eftersom size tar graden
 av polynomet + 1, divn är heltalsdivision och maxn tar fram det största av två
 tal.
-\begin{verbatim}
+\begin{lstlisting}
 Definition split (n b: nat) p : {poly {poly R}} :=
   \poly_(i < n) rmodp (rdivp p 'X^(i * b)) 'X^b.
-\end{verbatim}
-Split tar två naturliga tal som inparametrar och avger typen \verb+poly poly R+,
-alltså $R[x][y]$. De två funktionerna rmodp och rdivp är redan
+\end{lstlisting}
+Split tar två naturliga tal som inparametrar och avger typen \C{\{poly \{poly
+R\}\}}, alltså $R[x][y]$. De två funktionerna rmodp och rdivp är redan
 implementerade i SSReflects bibliotek och motsvarar exakt vår definition av
 modulusräkning och polynomdivision, läs !!!!!!!!!!.
-\begin{verbatim}
+\begin{lstlisting}
 Definition evaluate (u: {poly {poly R}}) : 'cV[{poly R}]_(number_points) :=
   V_e *m (poly_rV u)^T.
 Definition interpolate (u: 'cV[{poly R}]_(number_points)) : {poly {poly R}} :=
   rVpoly (invmx V_I *m u)^T.
-\end{verbatim}
+\end{lstlisting}
 Här definieras själva matrismultiplikationerna, läs ..... och ...... Funktionen
-\verb+poly_rV+ gör ett polynom u, av typ poly poly R, till en radvektor där
-varje gradtal av polynoment placeras in på respektive rad, och sedan
-transponeras vektorn.
-\begin{verbatim}
+\C{poly_rV} gör ett polynom u, av typ poly poly R, till en radvektor där varje
+gradtal av polynoment placeras in på respektive rad, och sedan transponeras
+vektorn.
+\begin{lstlisting}
 Definition recompose (b: nat) (w: {poly {poly R}}) : {poly R} :=
   w.['X^b].
-\end{verbatim}
+\end{lstlisting}
 Steg 4 i Toom-Cook är en rekusiv del och därmed behövs en rekusiv funktion,
 nämligen Fixpoint för att kunna stega igenom hela algoritmen. I pappers
 algoritmen slutar rekusionen när graden har blivit tillräckligt låg och då
@@ -102,8 +98,7 @@ fungerar så måste algoritmen funka för alla n.
 
 Funktionen match kollar om n är lika med 0 i så fall retunera p gånger q eller
 om den är en efterföljare till något till tal.
-
-\begin{verbatim}
+\begin{lstlisting}
 Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
   match n with
   | 0%N => p * q
@@ -117,7 +112,7 @@ Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
         let w := interpolate w_a
          in recompose b w
   end.
-\end{verbatim}
+\end{lstlisting}
 Här beskrivs det huvudsakliga resultatet av projektet: den formella
 implementationen och beviset av Toom-Cook i Coq/Ssreflect. Den fungerar också
 som en illustration på hur definitioner och bevis ser ut och fungerar i
@@ -153,24 +148,24 @@ intressanta delarna i bevisen av lemmorna.
 \subsubsection{Huvudbeviset}
 Detta är den formella motsvarigheten till prop \ref{prop:1} för den
 implementerade algoritmen.
-\begin{verbatim}
+\begin{lstlisting}
 Lemma toom_cook_correct : forall p q,
-toom_cook p q = p * q.
-\end{verbatim}
-Eftersom \verb+toom_cook+ bara anropar \verb+toom_cook_rec+ med ett visst
-argument så beror dess korrekthet helt på att \verb+toom_cook_rec+, är korrekt:
-\begin{verbatim}
+  toom_cook p q = p * q.
+\end{lstlisting}
+Eftersom \C{toom_cook} bara anropar \C{toom_cook_rec} med ett visst argument så
+beror dess korrekthet helt på att \C{toom_cook_rec}, är korrekt:
+\begin{lstlisting}
 Lemma toom_cook_rec_correct : forall (n : nat) p q,
-unitmx V_I -> toom_cook_rec n p q = p * q.
-\end{verbatim},
+  unitmx V_I -> toom_cook_rec n p q = p * q.
+\end{lstlisting}
 Sedan är beviset för att själva algoritmen, där den rekursiva delen anropas med
 maximum av graden av polynomen som argument, en direkt följd av det ovanstående
 lemmat:
-\begin{verbatim}
+\begin{lstlisting}
 Lemma toom_cook_correct : forall p q,
-toom_cook p q = p * q.
+  toom_cook p q = p * q.
 Proof. move=> p q. by apply: toom_cook_rec_correct. Qed.
-\end{verbatim}
+\end{lstlisting}
 Det formella beviset för att den rekursiva delen av algoritmen är korrekt har
 en struktur som liknar beviset av prop \ref{prop:1}. Den största skillnaden att
 induktionen i det formella fallet görs över antalet rekursiva anrop av
@@ -183,9 +178,9 @@ minskar. I båda fallen innebär dock induktionsantagandet att vi antar att
 algoritmen fungerar korrekt för nästa rekursiva anrop. Den andra stora
 skillnaden mellan pappersbeviset och det formella beviset är att många tekniska
 detaljer, som kan tas för givna i ett informellt bevis måste visas explicit.
-\begin{Verbatim}[numbers=left]
+\begin{lstlisting}
 Lemma toom_cook_rec_correct : forall (n : nat) p q,
-unitmx V_I -> toom_cook_rec n p q = p * q.
+  unitmx V_I -> toom_cook_rec n p q = p * q.
 Proof.
 elim=> [ // | n IHn p q V_inver] /=.
   set b := exponent m p q.
@@ -211,20 +206,20 @@ elim=> [ // | n IHn p q V_inver] /=.
     by apply: exp_m_degree.
     by apply: exp_m_degree.
 Qed.
-\end{Verbatim}
-Rad \verb+4+ anger med \verb+elim=>+ att beviset kommer göras med induktion
-över den variabel som står först i lemmat, \verb=n=. Basfallet är trivialt
-precis som i prop \ref{prop:1} eftersom \verb=toom_cook_rec= är vanlig
-multiplikation när n är 0 och delmålet det utgör avslutas direkt med hjälp av
-\verb=//=. I induktionssteget som börjar till höger om \verb+|+ instansieras
-variabeln \verb=n'= där \verb=n' + 1=  = \verb=n=, induktionsantagnandet
-\verb=IHn=, polynomen \verb=p= och \verb=q= och antagandet \verb=V_inver= om
-att interpolationsmatrisen är inverterbar. Till sist skriver \verb+/=+ om målet
-genom att utveckla \verb+toom_cook_rec+ till funktionens definition.
+\end{lstlisting}
+Rad \C{4} anger med \C{elim=>} att beviset kommer göras med induktion över den
+variabel som står först i lemmat, \C{n}. Basfallet är trivialt precis som i
+prop \ref{prop:1} eftersom \C{toom_cook_rec} är vanlig multiplikation när n är
+0 och delmålet det utgör avslutas direkt med hjälp av \C{//}. I
+induktionssteget som börjar till höger om \C{|} instansieras variabeln \C{n'}
+där \C{n' + 1}  = \C{n}, induktionsantagnandet \C{IHn}, polynomen \C{p} och
+\C{q} och antagandet \C{V_inver} om att interpolationsmatrisen är inverterbar.
+Till sist skriver \C{/=} om målet genom att utveckla \C{toom_cook_rec} till
+funktionens definition.
 
-Raderna \verb+5+ till \verb+7+ sätter kortare beteckningar på några av
+Raderna \C{5} till \C{7} sätter kortare beteckningar på några av
 uttrycken i målet för att öka bevisets läslighet. Då har målet och kontexten:
-\begin{verbatim}
+\begin{lstlisting}
 n' : nat
 IHn : forall p q, unitmx V_I -> toom_cook_rec n' p q = p * q
 p : {poly R}
@@ -242,54 +237,53 @@ recompose b
 (\col_i
 toom_cook_rec n' ((evaluate u) i 0) ((evaluate v) i 0)))) =
 p * q
-\end{verbatim}
-\verb=if ... then ... else= - satsen säger att uttrycket i vänsterledet är lika
-med \verb+p * q+ om graden av p eller q är mindre än 2 (eftersom multiplikation
+\end{lstlisting}
+\C{if ... then ... else} - satsen säger att uttrycket i vänsterledet är lika
+med \C{p * q} om graden av p eller q är mindre än 2 (eftersom multiplikation
 i algoritmen då utförs direkt) och annars lika med det mer komplicerade
-uttrycket som står efter \verb+else+. Dessa två uttryck skulle motsvarat
+uttrycket som står efter \C{else}. Dessa två uttryck skulle motsvarat
 basfallet och induktionssteget om induktionen hade gjort över graden av p och
-q, som i prop \ref{prop:1}. Nu görs i stället på rad 6 med \verb=ifP= en
-falluppdelning över \verb=if ... then ... else=-uttrycket som inte ger oss
+q, som i prop \ref{prop:1}. Nu görs i stället på rad 6 med \C{ifP} en
+falluppdelning över \C{if ... then ... else}-uttrycket som inte ger oss
 något nytt induktionsantagende. I det första fallet när
-\verb+(size p <= 2) || (size q <= 2)+ är höger- och vänsterled i målet trivialt
-lika och löses liksom det triviala målet på rad \verb+4+ direkt med \verb+//+.
+\C{(size p <= 2) || (size q <= 2)} är höger- och vänsterled i målet trivialt
+lika och löses liksom det triviala målet på rad \C{4} direkt med \C{//}.
 När det är gjort är målet:
-\begin{verbatim}
-recompose b
-(interpolate
-(\col_i
-toom_cook_rec n' ((evaluate u) i 0) ((evaluate v) i 0))) =
-p * q
-\end{verbatim}
+\begin{lstlisting}
+recompose b (interpolate (\col_i toom_cook_rec n'
+  ((evaluate u) i 0)
+  ((evaluate v) i 0)))
+  = p * q
+\end{lstlisting}
 och vi vill använda induktionsantagandet
-\begin{verbatim}
+\begin{lstlisting}
 IHn : forall p q, unitmx V_I -> toom_cook_rec n' p q = p * q
-\end{verbatim}
-och antagandet \verb+V_inver+ om att \verb+V_I+ är inverterbar för att skriva om
-\begin{verbatim}
+\end{lstlisting}
+och antagandet \C{V_inver} om att \C{V_I} är inverterbar för att skriva om
+\begin{lstlisting}
 toom_cook_rec n' ((evaluate u) i 0) ((evaluate v) i 0)
-\end{verbatim}
-till \verb=((evaluate u) i 0) * ((evaluate v) i 0)= inne i kolonnvektorn
-\begin{verbatim}
+\end{lstlisting}
+till \C{((evaluate u) i 0) * ((evaluate v) i 0)} inne i kolonnvektorn
+\begin{lstlisting}
 \col_i toom_cook_rec n' ((evaluate u) i 0)((evaluate v) i 0)
-\end{verbatim}
-Eftersom definitionen \verb=\col_i= är låst för beräkning??? i Ssreflect och
-uttrycket beror av indexet \verb+i+ i kolonnvektorn kan vi inte direkt skriva
-om uttrycket, se AVSNITT DET OCH DET (DETTA KANSKE ÄR SANT). Så för att kunna
-göra det öppnar vi ett nytt delmål med taktiken \verb=have= på rad \verb+9+ där
-vi bara arbetar med denna del av vänsterledet. Där använder vi på rad \verb+12+
-lemmat \verb=colP= som låter oss visa att två vektorer är lika genom att visa
-att elementen på motsvarande platser är lika i båda vektorerna. (Då vektorer är
+\end{lstlisting}
+Eftersom definitionen \C{\\col_i} är låst för beräkning??? i Ssreflect och
+uttrycket beror av indexet \C{i} i kolonnvektorn kan vi inte direkt skriva om
+uttrycket, se AVSNITT DET OCH DET (DETTA KANSKE ÄR SANT). Så för att kunna göra
+det öppnar vi ett nytt delmål med taktiken \C{have} på rad \C{9} där vi bara
+arbetar med denna del av vänsterledet. Där använder vi på rad \C{12} lemmat
+\C{colP} som låter oss visa att två vektorer är lika genom att visa att
+elementen på motsvarande platser är lika i båda vektorerna. (Då vektorer är
 implementerade i SSREFLECT som funktioner från mängden av index till mängden av
 element i vektorn säger lemmat mer specifikt att två vektorer är lika om de
 extensionellt sett är samma funktion, dvs om de antar samma värden för samma
-argument.) På rad \verb+13+ kan vi sedan slutligen skriva om uttrycket med
-hjälp av induktionshypotesen och målet har då blivit:
-\begin{verbatim}
-recompose b
-(interpolate (\col_i ((evaluate u) i 0 * (evaluate v) i 0))) =
-p * q
-\end{verbatim}
+argument.) På rad \C{13} kan vi sedan slutligen skriva om uttrycket med hjälp
+av induktionshypotesen och målet har då blivit:
+\begin{lstlisting}
+recompose b (interpolate (\col_i
+  ((evaluate u) i 0 * (evaluate v) i 0)))
+  = p * q
+\end{lstlisting}
 Det återstår nu att visa tre saker: För det första att evalueringsfunktionen
 faktiskt ger tillbaka en vektor att polynomens värden i
 interpolationspunkterna, för det andra att interpolationsfunktionen givet dessa
@@ -299,55 +293,57 @@ varandras inverser.
 
 Det första och det andra är enkla följder av definitionen av
 matrismultiplikation och invers och visas inte explicit i pappersbeviset. I det
-formella beviset visas detta i två lemman, \verb=matrix_evaluation= och
-\verb=toom_cook_interpol=, som används på rad \verb+14+ respektive rad
-\verb+15+ till \verb+20+ för att skriva om målet i huvudbeviset till
-\begin{verbatim}
+formella beviset visas detta i två lemman, \C{matrix_evaluation} och
+\C{toom_cook_interpol}, som används på rad \C{14} respektive rad \C{15} till
+\C{20} för att skriva om målet i huvudbeviset till
+\begin{lstlisting}
 recompose b
 (interpolate (\col_i (u * v).[inter_points i 0])) =
 p * q
-\end{verbatim}
+\end{lstlisting}
 och sedan till
-\begin{verbatim}
+\begin{lstlisting}
 recompose b (u * v) = p * q
-\end{verbatim}
-För att matrismultiplikationen ska fungera Lemmat \verb=toom_cook_interpol= har
+\end{lstlisting}
+För att matrismultiplikationen ska fungera Lemmat \C{toom_cook_interpol} har
 som antagande att graden på det polynom som ska interpoleras, $u \cdot v$, är
 mindre än antalet interpolationspunkter, så när det åberopas uppkommer ett till
 delmål att visa:
-\begin{verbatim}
+\begin{lstlisting}
 ______________________________________(2/3)
 size (u * v) <= number_points
-\end{verbatim}
-Det görs på rad \verb+20+ genom lemmat \verb=size_split_mul=. Detta är
+\end{lstlisting}
+Det görs på rad \C{20} genom lemmat \C{size_split_mul}. Detta är
 ytterligare något som är självklart på pappret, eftersom det är så vi har
 definiterat $u$ och $v$. Vi behöver också visa att interpolationsmatrisen
-\verb=V_I= är inverterbar, men eftersom det är ett av antagandena i kontexten
-är det trivialt och visas på rad \verb+20+ med \verb=//=.
+\C{V_I} är inverterbar, men eftersom det är ett av antagandena i kontexten
+är det trivialt och visas på rad \C{20} med \C{//}.
 
-Sedan utvecklar vi på rad \verb+22+ definitionen av \verb=recompose= och
-använder lemmat \verb=hornerM= som säger att $(p \cdot q)(x) = p(x) \cdot
-q(x)$, för att skriva om målet till: \begin{verbatim} u.['X^b] * v.['X^b] = p *
-q \end{verbatim} Då kan vi på rad \verb+23+ använda lemmat
-\verb=recompose_split=, som motsvarar lemma \ref{lemma:2} i pappersbeviset, för
-att visa att sammansättningen att de uppdelade polynomen genom att evaluera i
-$x^b$ är korrekt och därmed skriva om \verb=u.['X^b]= till \verb=p= och
-\verb=v.['X^b]= till \verb=q=. Då har vi visat att vänsterledet i det
-ursprungliga målet är lika med högerledet \verb+p * q+.
+Sedan utvecklar vi på rad \C{22} definitionen av \C{recompose} och använder
+lemmat \C{hornerM} som säger att $(p \cdot q)(x) = p(x) \cdot q(x)$, för att
+skriva om målet till:
+\begin{lstlisting}
+u.['X^b] * v.['X^b] = p * q
+\end{lstlisting}
+Då kan vi på rad \C{23} använda lemmat \C{recompose_split}, som motsvarar lemma
+\ref{lemma:2} i pappersbeviset, för att visa att sammansättningen att de
+uppdelade polynomen genom att evaluera i $x^b$ är korrekt och därmed skriva om
+\C{u.['X^b]} till \C{p} och \C{v.['X^b]} till \C{q}. Då har vi visat att
+vänsterledet i det ursprungliga målet är lika med högerledet \C{p * q}.
 
 Det som återstår är sedan att bevisa motsvarigheten till Påstående 1 i lemma
-\ref{lemma:2}, som gör att villkoren för att \verb=recompose_split= ska kunna
-användas på \verb+p+ och \verb+q+ är uppfyllda.
-\begin{verbatim}
+\ref{lemma:2}, som gör att villkoren för att \C{recompose_split} ska kunna
+användas på \C{p} och \C{q} är uppfyllda.
+\begin{lstlisting}
 ______________________________________(1/2)
 size q <= m * b
 ______________________________________(2/2)
 size p <= m * b
-\end{verbatim}
-Det görs på rad \verb+25+ till \verb+26+ med lemmat \verb=exp_m_degree= efter
-att först på rad \verb+24+ ha skrivit om det ena av målet med ett lemma för att
-funktionen \verb=exponent= är kommutativ, vilket avslutar det formella beviset
-för att Toom Cook ger ett korrekt resultat.
+\end{lstlisting}
+Det görs på rad \C{25} till \C{26} med lemmat \C{exp_m_degree} efter att först
+på rad \C{24} ha skrivit om det ena av målet med ett lemma för att funktionen
+\C{exponent} är kommutativ, vilket avslutar det formella beviset för att Toom
+Cook ger ett korrekt resultat.
 
 \subsubsection{Lemman till huvudbeviset}
 Det här stycket är lite ogenomtänkt än. Jag måste nog se det på papper och få
@@ -355,63 +351,57 @@ lite avstånd till det innan jag kommer på vad jag ska ta med. Förutom de 50-t
 lemman ur Ssreflectbiblioteken som har används i huvudbeviset har ett 15-tal
 specifika lemman till huvudsatsen formulerats och bevisats. Här presenteras
 några av dem. Det viktigaste lemmat är
-\begin{verbatim}
+\begin{lstlisting}
 Lemma recompose_split : forall (f: {poly R}) (b: nat),
-size f <= m * b ->
-(split m b f).['X^b] = f.
-\end{verbatim}
-som säger att \verb=recompose= (som evaluerar ett polynom i $x^b$) är
-vänsterinvers till \verb=split= för polynom som har tillräckligt låg grad
-jämfört med argumenten \verb=m= och \verb=b=. Lemmat motsvarar ungefär lemma
-\ref{lemma:2} från efter Påstående 1. Beviset av \verb=recompose_split= bygger
-på 5 mindre lemman. \verb=recompose_split_lemma1= används för att visa
-\verb=recompose_split_lemma2= som sedan används för att visa
-\verb=recompose_split_lemma3= som används för att visa huvudlemmat tillsammans
-med motsvarigheten till Påstående 1, som visas separat i
-\begin{verbatim}
+  size f <= m * b -> (split m b f).['X^b] = f.
+\end{lstlisting}
+som säger att \C{recompose} (som evaluerar ett polynom i $x^b$) är
+vänsterinvers till \C{split} för polynom som har tillräckligt låg grad jämfört
+med argumenten \C{m} och \C{b}. Lemmat motsvarar ungefär lemma \ref{lemma:2}
+från efter Påstående 1. Beviset av \C{recompose_split} bygger på 5 mindre
+lemman. \C{recompose_split_lemma1} används för att visa
+\C{recompose_split_lemma2} som sedan används för att visa
+\C{recompose_split_lemma3} som används för att visa huvudlemmat tillsammans med
+motsvarigheten till Påstående 1, som visas separat i
+\begin{lstlisting}
 Lemma exp_m_degree_lemma : forall p,
-m > 0 ->
-size p <= m * succn (size p %/ m).
-\end{verbatim}
+  m > 0 -> size p <= m * succn (size p %/ m).
+\end{lstlisting}
 Det första lemmat är en specik instans av (\ref{eq:name8}), dvs av att
 \begin{align}
   a(x)= a(x)  \modu x^b + \left(a(x)/x^b\right) x^b \label{eq:name8}
-\end{align}.
-\begin{verbatim}
+\end{align}
+\begin{lstlisting}
 Lemma recompose_split_lemma1 : forall (f: {poly R}) (k b: nat),
-(rmodp (rdivp f 'X^(k*b)) 'X^(b)) * 'X^(k*b) + (rdivp f 'X^(k.+1*b)) * 'X^(k.+1*b) =
-
-(rdivp f 'X^(k*b)) * 'X^(k*b).
-\end{verbatim}
+  (rmodp (rdivp f 'X^(k*b)) 'X^(b)) * 'X^(k*b) + (rdivp f 'X^(k.+1*b)) * 'X^(k.+1*b) =
+  (rdivp f 'X^(k*b)) * 'X^(k*b).
+\end{lstlisting}
 Det andra lemmat motsvarar att (\ref{eq:name9}) = (\ref{eq:name10}), det vill
 säga induktionssteget
 i \ref{lemma:2}.
-\begin{verbatim}
+\begin{lstlisting}
 Lemma recompose_split_lemma2 : forall (f: {poly R}) (k b: nat),
-
-\big[+%R/0]_(i < k.+1) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
-(rdivp f 'X^(k.+1*b))*'X^(k.+1*b) =
-
-\big[+%R/0]_(i < k) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
-
-(rdivp f 'X^(k*b))*'X^(k*b).
-\end{verbatim}
+  \big[+%R/0]_(i < k.+1) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
+  (rdivp f 'X^(k.+1*b))*'X^(k.+1*b) =
+  \big[+%R/0]_(i < k) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
+  (rdivp f 'X^(k*b))*'X^(k*b).
+\end{lstlisting}
 Det tredje lemmat svarar mot att (\ref{eq:name9}) = $p(x)$, så att givet
-induktionssteget \verb=recompose_split_lemma2= och basfallet
-\verb=recompose_split_lemma1= så gäller
-\begin{verbatim}
+induktionssteget \C{recompose_split_lemma2} och basfallet
+\C{recompose_split_lemma1} så gäller
+\begin{lstlisting}
 Lemma recompose_split_lemma3 : forall (f : {poly R}) (k b : nat),
-\big[+%R/0]_(i < k.+1) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
-(rdivp f 'X^(k.+1*b))*'X^(k.+1*b) = f.
-\end{verbatim}
+  \big[+%R/0]_(i < k.+1) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
+  (rdivp f 'X^(k.+1*b))*'X^(k.+1*b) = f.
+\end{lstlisting}
 Beviset av huvudsatsen byggde detta bygger mer på aritmetiska egenskaper,
 egenskaper hos division hos polynom och egenskaper hos summor.
 
 Precis som beviset av huvudsatsen för att visa likhet mellan vektorer får vi
 här använda liknande trick för att visa likhet mellan summor genom att visa att
 motsvarande term i respektive summa är lika.
-\begin{verbatim}
+\begin{lstlisting}
 Lemma recompose_split_lemma0 p m n :
   rdivp p ('X^m * 'X^n) = rdivp (rdivp p 'X^m) 'X^n.
 Proof.
-\end{verbatim}
+\end{lstlisting}

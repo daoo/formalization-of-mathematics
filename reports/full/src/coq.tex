@@ -41,7 +41,7 @@ I följande exempel defineras en lista som kan innehålla värden av alla möjli
 typer. Den undre definitionen i exemplet är en rekursiv funktion som lägger till
 ett ellement i en lista. Denna funktionen är polymorphisk och fungerar alltså på
 alla listor oberoende vilken typ på värden som listan innehåller.
-\begin{verbatim}
+\begin{lstlisting}
 Inductive list (X:Type) : Type :=
   | nil  : list X
   | cons : X -> list X -> list X .
@@ -51,7 +51,7 @@ Fixpoint append (X:Type) (l : list X) (x : X) : list X :=
   | nil       => cons X x (nil X)
   | cons a l' => cons X a (append l' x)
   end.
-\end{verbatim}
+\end{lstlisting}
 
 \subsubsection{Beroendetyper}
 I en polymorphisk funktion så kan en parametertyp bero på vilka typer de
