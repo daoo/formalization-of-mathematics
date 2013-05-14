@@ -1,6 +1,5 @@
 \begin{definition}
-En ring är en mängd $R$ tillsammans med två operationer på $R$, nämligen
-addition + och multiplikation $\cdot$ s.a.
+En ring är en mängd $R$ tillsammans med två operationer på $R$, nämligen addition + och multiplikation $\cdot$ s.a.
 
 $\bullet$ $a+(b+c) = (a+b)+c$ för alla $a,b,c \in R$.
 
@@ -16,38 +15,69 @@ $\bullet$ $a \cdot (b + c) = a \cdot b + a \cdot c$ för alla $a,b,c \in R$.
 
 \noindent
 Det neutrala elementet $0$ kallas för nolla.
+
 \end{definition}
 
-\noindent\textbf{Exempel.} Betrakta mängden av alla 2x2-matriser vars element
-är reella tal. Mängden, som betecknas
-$M_2(\mathbb{R})= \{
-\begin{pmatrix}
-  a & b\\
-  c & d 
-\end{pmatrix}
-: \; a,b,c,d \in \mathbb{R} \}$, tillsammans med operationerna matrisaddition
-och matrismultiplikation bildar en ring, där det neutrala elementet är $
-\begin{pmatrix}
- 1 & 0 \\
- 0 & 1
-\end{pmatrix}.
-$
+\noindent\textbf{Exempel.} Betrakta mängden av alla 2x2-matriser vars element är reella tal. Mängden tillsammans
+med operationerna matrisaddition och matrismultiplikation bildar en ring, där det neutrala elementet är
+\begin{equation*}
+  \begin{pmatrix}
+  1 & 0 \\
+  0 & 1
+  \end{pmatrix}.
+\end{equation*}
 
 \begin{definition}
-En ring R sägs vara kommutativ om $a \cdot b = b \cdot a$ för alla $a,b \in R$.
+ En ring R sägs vara kommutativ om $a \cdot b = b \cdot a$ för alla $a,b \in R$.
 \end{definition}
 
 \begin{definition}
-Ett element e i R sägs vara en enhet till en ring om
-$e \cdot a = a \cdot e = a$ för varje $a \in R$.
+ Ett element e i R sägs vara en enhet till en ring om $e \cdot a = a \cdot e = a$ för varje $a \in R$.
 \end{definition}
 
 \begin{definition}
-Ett element $a \neq 0$ i en kommutativ ring R sägs vara en nolldelare i R om
-det finns ett elementet $b \neq 0$ s.a. $a \cdot b = 0$.
+ Ett element $a \neq 0$ i en kommutativ ring R sägs vara en nolldelare i R om det finns ett elementet
+$b \neq 0$ s.a. $a \cdot b = 0$.
 \end{definition}
 
 \begin{definition}
-En kommutativ ring med unity $e \neq 0$ och inga nolldelare sägs vara ett
-integritets område.
+ En kommutativ ring med unity $e \neq 0$ och inga nolldelare sägs vara ett integritets område.
 \end{definition}
+
+\begin{definition}
+Låt R vara en kommutativ ring. Ett polynom i variablen x över R är ett uttryck på formen
+
+\begin{align*}
+ a_0+a_1x+a_2x^2+...+a_nx^n
+\end{align*}
+där koefficienterna $a_0, a_1,...,a_n$ är element i R. Om $a_n \neq 0$, då är heltalet n graden av polynomet, och $a_n$ är dess ledande koefficient. Två polynom i x är lika om och endast om
+koefficienterna av samma grad är lika. Mängden av alla polynom i x över R beteckans R[x].
+
+\end{definition}
+
+\begin{definition}
+ Låt
+\begin{align*}
+ p(x)=a_0+a_1x+...+a_mx^m
+\end{align*}
+och
+\begin{align*}
+ q(x)=b_0+b_1x+...+b_nx^n
+\end{align*}
+vara polynom över en kommutativ ring R. Då
+\begin{align*}
+ p(x)q(x)=a_0b_0+(a_0b_1+a_1b_0)x+...+a_mb_nx^{x+n}
+\end{align*}
+koefficienten av $x^k$ är
+\begin{align*}
+ a_0b_k+a_1b_{k-1}+a_2b_{k-2}+...+a_kb_0
+\end{align*}
+
+\end{definition}
+
+\begin{theorem}
+ Om R är ett integritetsområde, då är R[x] ett integritetsområde.
+\end{theorem}
+
+Som följd av den här satsen är även R[x][y] ett integritetsområde.
+
