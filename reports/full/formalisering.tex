@@ -1,0 +1,54 @@
+\subsection{Formalisering av matematik}
+Vanlig matematisk text är en blandning mellan formler och naturligt språk. Ett
+matematiskt bevis i en kursbok eller vetenskaplig artikel kan sägas vara en
+skiss, ett argument, som ska övertyga läsaren om satsen är korrekt och beviset
+är giltigt. Varje litet logiskt bevissteg behöver inte tas med, särskilt inte
+om den avsedda läsaren är van vid typen av bevis det handlar om.
+
+Man låter också många saker framgå av sammanhanget. Symbolen 1 kan till exempel
+stå för bland annat det naturliga talet 1 som är efterföljare till 0, det
+rationella talet $\frac{1}{1}$ eller det multiplikativa enhetselementet i en
+grupp. Oftast är det inga problem att ur sammanhanget förstå vilken betydelse
+av 1 som avses.
+%fast coq kan ju också göra typinferens
+
+När är ett bevis giltigt? En definition är att
+\begin{quote}
+... the correctness of a mathematical text is verified by comparing it, more or
+less explicitly, with the rules of a formalized language\cite{bourbaki}.
+\end{quote}
+
+Så för att ett datorprogram mekaniskt ska kunna kontrollera ett bevis måste det
+\emph{formaliseras}. Sådant som för en mänsklig läsare framgår ur sammanhanget
+måste göras explicit. Bevissteg som är så små så att de ses som självklara
+måste också formuleras.
+
+Datorsystemet kontrollerar sedan om varje steg i beviset följer från föregående
+steg och från axiom genom fastslagna \emph{härledningsregler}. Dessa är enkla
+logiska regler om hur man får gå från givna premisser till slutsatser. Till
+exempel säger regeln \emph{modus ponens} att man ur förutsättningarna $A$ och
+$A \to B$ får dra slutsatsen att $B$ gäller. Den kontrollerar också om de
+uttryck man skriver in är tillåtna.
+$\forall 3^{\frac{+}{\in}} \leftrightarrow =$ är till exempel inget välformat
+uttryck, även om de ingående symbolerna är matematiska och logiska symboler.
+
+För att formalisera matematik måste man alltså bestämma vilka härledningsregler
+som ska vara tillåtna, vilka axiom man skall ha, vilka symboler som ska vara
+tillåtna att skriva och vilka uttryck som är godkända. Eftersom det finns olika
+möjliga val finns det olika \emph{formella språk} eller \emph{logiska system}.
+
+De flesta logiska system som används för att formalisera matematik kan dock
+uttrycka och härleda ungefär samma saker, möjligen på något olika sätt,
+eftersom man har varit intresserad av att fånga och beskriva naturliga logiska
+resonemang.****
+
+En viktig skillnad är dock den mellan intuitionistisk och klassisk logik.
+\emph{Intuitionistisk typteori}\cite{martin1984intuitionistic} är grunden i
+\emph{Coq/Ssreflect}\cite{bertot2004interactive}. Det går att se den som en
+bevisbarhetslogik. I klassisk logik är det en logisk sanning att för alla
+satser $A$ gäller $A \lor \neg A$. Så att om $A$ inte är sann, så måste
+$\neg A$ vara sann. Men i intuitionistisk logik låter vi $A$ är sann betyda
+``det finns ett bevis för $A$''. Och bara för att vi inte har något bevis för
+$A$ betyder det inte att vi har ett bevis för $\not A$. Detta betyder att vissa
+motsägelsebevis som är giltiga i klassisk logik inte är giltiga i
+intuitionistisk logik. \cite{proofdependent}
