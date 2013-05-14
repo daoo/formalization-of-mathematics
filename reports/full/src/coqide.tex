@@ -1,17 +1,14 @@
 \subsection{Kort intruduktion till programmering i \coq och
-Utvecklingsmiljön \coqIde}
+Utvecklingsmiljön \coq IDE}
 
+\subsubsection{Interaktiv beskrivning av \coq IDE}
 
-\subsubsection{Interaktiv beskrivning av \coqIde}
-
-
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=150mm]{../images/Overview}
-  \caption[Översikt av \coqIde]
-   {Översikt av de olika delarna i \coqIde}
+  \includegraphics[width=\textwidth]{images/Overview}
+  \caption[Översikt av \coq IDE]
+   {Översikt av de olika delarna i \coq IDE}
 \end{figure}
-
 
 \begin{enumerate}
 \item Textredigerare. I den här rutan skriver användaren sina program och bevis
@@ -26,7 +23,7 @@ Utvecklingsmiljön \coqIde}
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=150mm]{../images/Kontext}
+  \includegraphics[width=150mm]{images/Kontext}
   \caption[Fönster för kontext och mål]
    {Textfönster för kontext och mål. Detta är en försoring av (2) från
      föregående figur}
@@ -39,7 +36,6 @@ Förstoring av (2)
   användaren arbetar med för tillfället och det är det målet som kommer att
   påverkas av nästkommande taktik.
 \end{enumerate}
-
 
 \subsubsection{Evaluering av kod}
 \coq är uppbygt av satser där varje sats avslutas med en punkt.
@@ -57,46 +53,43 @@ kommer bara nyckelordet \C{lemma} användas i fortsättningen. Ett bevis i
 \coq är uppbyggt på följande sätt
 
 \begin{lstlisting}
-lemma bevisnamn : påstående som ska bevisas.
+Lemma bevisnamn : påstående som ska bevisas.
 Proof.
   taktiker.
 Qed.
-\begin{lstlisting}
+\end{lstlisting}
 
 Här är ett exempel på ett bevis för att följande påstående är en tautalogi.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=100mm]{../images/Proof_part1}
+  \includegraphics[width=100mm]{images/Proof_part1}
   \caption[Exempel på bevis i \coq]
    {Exempel på ett bevis för en tautalogi i \coq}
 \end{figure}
-
 
 Om vi nu stegar igenom beviset så kan vi se att både målet och kontexten
 förändras efter varje steg
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=150mm]{../images/Proof_part2}
-  \caption[Bevis i \coqIde]
+  \includegraphics[width=150mm]{images/Proof_part2}
+  \caption[Bevis i \coq IDE]
    {Vi har nu flyttat hypoteserna A medför B, B medför C och A
     från målet till kontexten och med taktiken move}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=150mm]{../images/Proof_part3}
-  \caption[Bevis i \coqIde]
+  \includegraphics[width=150mm]{images/Proof_part3}
+  \caption[Bevis i \coq IDE]
    {Vi har nu använt oss av Hypotesen B medför C och vi
     kan se att målet nu har ändrat sig från A till B}
 \end{figure}
 
-
 När alla mål är bevisade så talar man om att beviset är klart genom att
-skriva  \C{Qed.} vilket översatt till svenska betyder
+skriva \C{Qed.} vilket översatt till svenska betyder
 "Vilket skulle bevisas"
-
 
 \subsection{Varibler och Funktioner}
 
@@ -105,7 +98,6 @@ När en variabel deklareras på global nivå kan den sedan användas som
 parameter i bevis och funktionsdefinitioner utan att behöva ange typen.
 En variabel kan också ses som en hypotes men mer om detta i stycket om
 Curry Howard isomorphism
-
 
 För att definera funktioner och konstanter så används nyckelordet
 \C{Definition} som sedan sedan följs av funktions namn,
@@ -126,9 +118,7 @@ T(n) = \left\{\begin{matrix} n/2, & \mbox{om }n\equiv0\mbox{ (mod 2)} \\ 3n+1,
                          & \mbox{om }n\equiv1\mbox{ (mod 2)} \end{matrix}\right.
 \end{equation}
 
-
 \subsection{Patternmatching}
-
 Patternmatchning i \coq påminner till stor del om \C{case} i Haskell.
 Skilnaden är att istället för att skriva \C{case x of} som i Haskell
 så skrivs \C{match x with} där x är namnet på variabeln ska matchas i
@@ -137,7 +127,7 @@ börja med symbolen $|$. Matchningssatsen måste även avslutas med \C{end}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=150mm]{../images/Variables_and_Functions}
+  \includegraphics[width=150mm]{images/Variables_and_Functions}
   \caption[Variabler och funktioner]
    {Exempel på hur variabler och funktioner defineras i \coq}
 \end{figure}
