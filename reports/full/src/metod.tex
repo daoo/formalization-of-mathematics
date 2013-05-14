@@ -1,38 +1,21 @@
-Målet med vårt projekt är att bevisa en algoritm i Coq med hjälp av SSReflect.
-För att uppnå detta behöver vi först lära oss Coq och SSReflect. Vårt projekt
-kan därför delas in i tre delar: inlärning, test, samt implementation och
-bevis.
-
-\subsection{Inlärning}
-Den första delen av vårt projekt gick ut på att lära oss Coq och SSReflect. För
-detta krävdes utbilndningsmaterial och eftersom bevisassistenter var helt nytt
-för oss visste vi inte vad vi skulle leta efter. Men vår handledare hjälpte oss
-att komma igång med kursmaterial från andra universitet och ett par artiklar:
-\begin{itemize}
-  \item \citetitle{pierce2012software}
-  \item \citetitle{bertot2006coq}
-  \item ''Coq Master''
-\end{itemize}
-Detta material innhåller övningar som vi studerade huvudsaklingen enskilt och
-sedan jämförde våra lösningar i gruppmöten.
-
-När vi fått en grundläggande förståelse av Coq började vi ge oss in på
-SSReflect. Samma arbetsgång användes som för Coq, övningar och inläsning fast
-med ett annat, SSReflect-inriktat, material:
-\begin{itemize}
-  \item MAP Spring School organiserad av Inria
-  \item \citetitle{gonthier2009ssreflect}
-\end{itemize}
-I detta skede började vi även också titta på och försöka förstå Toom-Cook.
-
-\subsection{Test av Kunskaper}
-Nästa del i arbetet var ett mer praktiskt test av vad vi lyckats lära oss.
-Detta genom att bevisa en enklare algorithm, Karatsuba, i Coq och SSReflect.
-Karatsuba är ett specialfall av Toom-Cook och vår handledare hade redan gjort
-ett bevis och föreslog att vi också skulle göra det.
-
-En andra övning blev att implementera Toom-Cook för naturliga tal i Haskell.
-
-\subsection{Implementation och Bevis}
-Sista delen var att implementera och bevisa Toom-Cook i Coq. Detta genomfördes
-i grupp med mycket diskussion och visade sig vara den svåraste biten av arbetet.
+Följande steg genomfördes under implementationen av algoritmen.
+\begin{enumerate}
+  \item Informell men detaljerad definition av en generell och abstrakt version
+    av algoritmen, informellt men detaljerat bevis för att den är korrekt.
+    \label{it:1}
+    \begin{enumerate}
+      \item Definition av algoritmens
+      \item Huvudbevis av algoritmens korrekthet, men obevisade lemman \label{it:12}
+      \item Bevis av lemmorna från \ref{it:12} \label{it:13}
+    \end{enumerate}
+  \item Implementering av en förenklad men beräkningsbar algoritm. \label{it:2}
+  \item Implementering och bevis av den generella och abstrakta algoritmen i
+    \textsc{Coq/SSReflect}.\label{it:3}
+    \begin{enumerate}
+      \item Implementering av algoritmen.
+      \item Formalisering av beviset i \ref{it:12}
+      \item Formalisering av lemmorna i \ref{it:13} och bevis av ytterligare
+        lemman som krävs för det formella beviset.
+    \end{enumerate}
+\end{enumerate}
+Punkt \ref{it:1} gjordes i Haskell av Toom-Cook 3 för heltal.
