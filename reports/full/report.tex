@@ -1,74 +1,68 @@
-% (fold) header
-\documentclass[a4paper]{article}
-
-\usepackage[swedish]{babel}
+\RequirePackage[l2tabu,orthodox]{nag}
+\documentclass[bachelors,a4paper,gu]{chalmers-thesis}
+\usepackage[firstinits=true,style=alphabetic,backend=biber]{biblatex}
+\usepackage[swedish,english]{babel}
 \usepackage[utf8]{inputenc}
-
-\usepackage{authblk}
-\usepackage{fancyhdr}
-
-\usepackage{amsfonts}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{mathtools}
-
+\usepackage{amsfonts,amsmath,amsthm}
+\usepackage{caption}
 \usepackage{color}
-\usepackage{fancyvrb}
+\usepackage{csquotes}
+\usepackage{hyperref}
 \usepackage{listings}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{subfig}
+\usepackage{subfiles}
+\usepackage{tikz}
+\usepackage{url}
 \usepackage{verbatim}
 
-\usepackage{url}
-\usepackage{biblatex}
-\usepackage{csquotes}
+\title{Formalisering av Algoritmer och Matematiska Bevis}
+\subtitle{And stuff...}
+\author{Jesper Andersson\and Daniel Oom\and Niclas Ståhl\and Åsa Lideström\and Anders Sjöberg}
+\thesisin{Computer Science}
+\department{Department of Stuff}
+\division{Divsion...?}
+\reportno{2013:11}
+\copyrightyear{2013}
 
-\selectlanguage{swedish}
+\coverfigure{\includegraphics[width=\textwidth,height=\paperheight,keepaspectratio]{figures/Tupp}}
+\covercaption{Some explanation}
 
-\input{macro}
+\firstabstract{Apa}
+\keywords{Some stuff, More stuff, Stuff}
 
-\newtheorem{theorem}{Sats}[section]
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Korollarium}
+\preface{Apa}
+\acknowledgements{Apa}
 
-\DeclareMathOperator*{\grad}{grad}
-\DeclareMathOperator*{\modu}{mod}
+\extrafrontmatter{\presectiontitle{Nomenclature} Test}
 
-\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
-\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
-
-\pagestyle{fancy}
+\DeclareFieldFormat[article]{title}{#1}
+\DeclareFieldFormat[article]{volume}{\mkbibbold{#1}}
+\renewbibmacro{in:}{}
+\DeclareFieldFormat[article]{pages}{#1}
+\renewbibmacro*{journal+issuetitle}{
+  \usebibmacro{shortjournal}
+  \setunit*{\addspace}
+  \iffieldundef{series}{}{\newunit\printfield{series}\setunit{\addspace}}
+  \usebibmacro{volume+number+eid}
+  \setunit{\addspace}
+  \usebibmacro{issue+date}
+  \setunit{\addcolon\space}
+  \usebibmacro{issue}
+  \newunit}
 
 \addbibresource{report.bib}
 
-\title{Formalisering av Algoritmer och Matematiska Bevis}
+%\pagestyle{fancy}
+%\lhead{Formalisering av Algoritmer och Matematiska Bevis}
+%\rhead{Grupp 11}
 
-\author[1]{Jesper Andersson}
-\author[1]{Daniel Oom}
-\author[1]{Niclas Ståhl}
-\author[2]{Åsa Lideström}
-\author[2]{Anders Sjöberg}
-\affil[1]{Datateknik, Chalmers}
-\affil[2]{Mattematik, Göteborgs Universitet}
-
-\renewcommand\Authands{ och }
-
-\date{\today}
-
-\lhead{Formalisering av Algoritmer och Matematiska Bevis}
-\rhead{Grupp 11}
-% (end)
+\input{macro}
 
 \begin{document}
-
-\begin{abstract}
-\end{abstract}
-
+\selectlanguage{swedish}
 \maketitle
-\thispagestyle{empty}
-\newpage
-\tableofcontents
-\newpage
 
 \section{Inledning}
 \input{inledning}
@@ -84,6 +78,7 @@
 \section{Diskussion}
 \input{diskussion}
 
+\nocite{*} % Cites everything from the bibliography
 \printbibliography
 
 \appendix
@@ -91,5 +86,3 @@
 \include{algebra}
 
 \end{document}
-
-% vim: set fdm=marker fmr=(fold),(end) :

@@ -1,10 +1,6 @@
 \newcommand{\coq}{{\sc Coq}}
 \newcommand{\ssr}{{\sc SSReflect}}
 \newcommand{\C}[1]{\mbox{\lstinline`#1`}}
-\newcommand\N[1]{\langle\mbox{\itshape\rmfamily\small #1}\rangle}
-\newcommand{\iitem}{{\it i-item}}
-\newcommand{\ditem}{{\it d-item}}
-
 \let\L=\lstinline
 
 \definecolor{dkblue}{rgb}{0,0.1,0.5}
@@ -25,6 +21,16 @@
 %\theorembodyfont{\upshape}
 %\newshadetheorem{exercise}{Exercise}[subsection]
 
-\newcommand\bigO[1]{\mathcal{O}(#1)}
-\newcommand\lline[1]{\multicolumn{1}{|c}{#1}}
-\newcommand\rline[1]{\multicolumn{1}{c|}{#1}}
+\newcommand{\Ordo}{\mathcal{O}}
+
+\newtheorem{theorem}{Sats}[section]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Korollarium}
+
+\DeclareMathOperator*{\grad}{grad}
+\DeclareMathOperator*{\modu}{mod}
+
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
