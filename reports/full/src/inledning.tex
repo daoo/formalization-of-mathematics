@@ -100,9 +100,12 @@ det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
 för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
 Rent konkret innebär detta att man är garanterad att den exekverbara koden inte
 innehåller buggar som är skapade av kompilatorn. Huvudresultatet av detta
-är en fungerande C-kompilator som stödjer hela ANSI C med ett få undantag.
+är en fungerande C-kompilator som stödjer hela ANSI C (som är den första
+standardiserade veritionen av C) med ett få undantag.
 Vad gäller prestanda så är CompCert's kompilator snabbare än
-GCC's (Gnu Compiler Collection) C-kompilator utan några optimeringar.
+GCC's (Gnu Compiler Collection) C-kompilator när denna inte
+har några optimeringar.
+
 
 \item Feit-Thompsons är en sats inom matematisk gruppteori som säger att en
 ändlig grupp alltid är lösbar om dess ordning är
