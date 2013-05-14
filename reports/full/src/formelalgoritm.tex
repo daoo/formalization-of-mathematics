@@ -1,0 +1,194 @@
+\subsection{Den formella algoritmen}
+I det här kapitlet förklaras hur beviset av Toom-Cook, som gjorts i SSReflect,
+fungerar och överrenstämmer med pappersbeviset. Hela implementation ligger som
+ett appendix, !!!!!!!!!.
+
+Algoritmen är implementerad med en rad små funktioner och sedan en rekursiv
+del. Till en början kommer alltså många variabler, definitioner och antaganden
+radas upp, som vi har försökt att ge så självförklarande namn som möjligt.
+
+\begin{lstlisting}
+Variable R : idomainType.
+Implicit Types p q : {poly R}.
+\end{lstlisting}
+
+Det här raderna säger att R betecknar ett integritetsområde och att p och q är
+polynom i detta område.
+
+Här definieras variabler av typen nat, naturliga tal, vars värde beror på
+antalet splittar som görs av polynomet. Precis som i pappersalgoritmen är \C{m}
+variabeln från Toom-Cook-$m$ och \C{number_points} är antalet
+interpolationspunkter.
+
+\begin{lstlisting}
+Variable number_splits : nat.
+Definition m : nat := number_splits.
+Definition number_points := (2 * m) .-1.
+\end{lstlisting}
+
+Vi låter \C{inter_points} beteckna en kolonnvektor vars element tillhör $R[x]$,
+vilket faktiskt skiljer sig från pappersalgoritmen. Det var avgörandet för
+pappersalogritmen att punkterna tillhörde R för att induktionsantagandet över
+graden skulle kunna appliceras, se !!!!!!!!, men i beviset i SSReflect görs
+induktion över en annan variabel så det problemet uppstår aldrig. Algoritmen
+blir dock snabbare om interpolationspunkterna tillhör R eller är av låg grad i
+$R[x]$, se !!!!!!!!!!.
+
+\begin{lstlisting}
+Variable inter_points : 'cV[{poly R}]_(number_points).
+Hypothesis m_neq_0 : 0 < m.
+\end{lstlisting}
+
+I pappersalgoritmen har vi som antagande att \C{m} är större än två och här kan
+vi återigen uttnyttja att induktionen görs över en annan variabel än graden, då
+kommer vi runt problemet i lemma (\ref{lemma:1}), och kan vi få ner kravet till
+att \C{m} måste vara större än noll.
+
+\begin{lstlisting}
+Definition V_e : 'M[{poly R}]_(number_points, m) :=
+  \matrix_(i < number_points, j < m) ((inter_points i 0))^+j.
+\end{lstlisting}
+
+Här definieras evalueringsmatrisen \C{V_e}. Den ska ha dimension
+\C{number_points} x \C{m} med element som tillhör $R[x]$. Argumentet \C{(i <
+number_points, j < m)} säger just att matrisen är av dimensionen
+\C{number_points} x \C{m}. Det andra argumentet \C{((inter_points i 0))^+j}
+bestämmer vilket element som ska vara på plats \C{(i,j)} i matrisen, vilket i
+det här fallet är det \C{i}:te elementet ur kolonnvektorn \C{inter_points}
+upphöjt i \C{j}, vilket då blir en Vandermondematris.
+
+\begin{lstlisting}
+Definition V_I : 'M[{poly R}]_(number_points) :=
+  \matrix_(i < number_points, j < number_points) ((inter_points i 0))^+j.
+\end{lstlisting}
+
+Här definieras interpolationsmatrisen på motsvarade sätt som
+evalueringsmatrisen, skillnaden är att det blir en matris av dimension
+\C{number_points} x \C{number_points} istället.
+
+\begin{lstlisting}
+Definition exponent (m: nat) p q : nat :=
+  (maxn (divn (size p) m) (divn (size q) m)).+1.
+\end{lstlisting}
+
+Här definieras exponent som tar ett naturligt tal \C{m} som inparameter och ger
+ett naturligt tal som utparameter. Om inparametern är värdet av m i Toom-Cook-m
+så motsvarar det här b i pappers algoritmen, se !!!!!, eftersom \C{size} tar
+graden av polynomet + 1, \C{divn} är heltalsdivision och \C{maxn} tar fram det
+största av två tal.
+
+\begin{lstlisting}
+Definition split (n b: nat) p : {poly {poly R}} :=
+  \poly_(i < n) rmodp (rdivp p 'X^(i * b)) 'X^b.
+\end{lstlisting}
+
+Split tar två naturliga tal som inparametrar och returnera ett polynom som
+tillhör $R[x][y]$. De två funktionerna \C{rmodp} och \C{rdivp} är redan
+implementerade i SSReflects bibliotek och motsvarar exakt vår definition av
+modulusräkning och polynomdivision, se !!!!!!!!!!. Inparametern n säger att
+polynomet är som högst av grad n-1.
+
+\begin{lstlisting}
+Definition evaluate (u: {poly {poly R}}) : 'cV[{poly R}]_(number_points) :=
+  V_e *m (poly_rV u)^T.
+Definition interpolate (u: 'cV[{poly R}]_(number_points)) : {poly {poly R}} :=
+  rVpoly (invmx V_I *m u)^T.
+\end{lstlisting}
+
+Här definieras själva matrismultiplikationerna, se ..... och ...... Funktionen
+\C{poly_rV} gör ett polynom u, som tillhör R[x][y], till en radvektor där varje
+koefficient av polynoment placeras in på respektive rad. Vektorn transponeras
+för att kunna multipliceras med evalueringsmatrisen.
+
+\begin{lstlisting}
+Definition recompose (b: nat) (w: {poly {poly R}}) : {poly R} :=
+  w.['X^b].
+\end{lstlisting}
+
+Steg 4 i Toom-Cook-algoritmen är en rekusiv del och därmed behövs en rekusiv
+funktion, nämligen Fixpoint, för att kunna stega igenom hela algoritmen. I
+pappersalgoritmen slutar rekusionen när graden har blivit tillräckligt låg och
+då utförs direktmultiplikation. Coq behöver få bevisat att rekusionen terminar
+så istället för att visa att graden sjunker för varje steg så skickas ett
+naturligt tal n, som inparameter, som minskar vid varje rekusion och slutar när
+n är lika med noll, då utförs direkt multiplikation, eller när graden har
+blivit mindre än 2 på någotdera av polynomen. Så för att visa att
+Toom-Cook-algoritmen fungerar så måste algoritmen funka för alla n, eftersom
+fixpoint-funktion bara kommer motsvara Toom-Cook om n är tillräckligt stort
+eftersom tillräckligt många rekusioner måste göras.
+
+Funktionen match kollar om n är lika med 0 i så fall retunera p gånger q eller
+om den är en efterföljare till något till tal.
+
+\begin{lstlisting}
+Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
+  match n with
+  | 0%N => p * q
+  | n'.+1 => if (size p <= 2) || (size q <= 2) then p * q else
+        let b := exponent m p q in
+        let u := split m b p in
+        let v := split m b q in
+        let u_a := evaluate u in
+        let v_a:= evaluate v in
+        let w_a := \col_i toom_cook_rec n' (u_a i 0) (v_a i 0) in
+        let w := interpolate w_a
+         in recompose b w
+  end.
+\end{lstlisting}
+
+\begin{lstlisting}
+n'.+1 => if (size p <= 2) || (size q <= 2) then p * q else
+\end{lstlisting}
+
+Om en \C{n} då är en efterföljare till ett naturligt tal, med andra ord skiljt
+från noll, så sker gradkontrollen, se !!!!!!!!!!, och direkt multiplikation
+sker. Om båda polynomen är av högre grad än två så stegar vi vidare i
+algoritmen.
+
+\begin{lstlisting}
+let b := exponent m p q in
+\end{lstlisting}
+
+Här låter vi \C{b} få värdet från funktionen exponent vilket blir det värdet
+som i pappersalgoritmen, se !!!!!, eftersom \C{m} är antalet splittar, p och q
+är polynomen i $R[x]$.
+
+\begin{lstlisting}
+let u := split m b p in
+let v := split m b q inR[x][y]
+\end{lstlisting}
+
+Här låter vi u och v vara de polynom som funktionen split retunerar, som
+tillhör $R[x][y]$. Inparametern \C{m} är antalet splittar, \C{b} bestämdes i
+raden före, p och q är återigen polynomen i $R[x]$ så blir u och v motsvarande
+u och v i pappersalgoritmen, se !!!!!!. Det här motsvarar alltså steg 2 i
+algoritmen.
+
+\begin{lstlisting}
+let u_a := evaluate u in
+let v_a:= evaluate v in
+\end{lstlisting}
+
+Här sker tredje steget i alogritmen, nämligen matrismultiplikationen mellan
+evalueringsmatrisen och de olika polynomen u och v som representeras som
+vektorer i evalueringen.
+
+\begin{lstlisting}
+let w_a := \col_i toom_cook_rec n' (u_a i 0) (v_a i 0) in
+\end{lstlisting}
+
+4:e steget i algoritmen, rekusionens multiplikation. Då anropar funktion
+fixpoint sig själv med \C{n'}, vilket har värdet n-1, och de två polynomen u
+och v, representerade som kolonnvektor, från evalueringssteget som
+inparametrar.
+
+\begin{lstlisting}
+let w := interpolate w_a
+in recompose b w
+\end{lstlisting}
+
+När rekusionssteget är klart så sker interpolerationssteget, se !!!!!!!!!!, där
+inversen av interpolationsmatrisen multipliceras med kolonnvektorn \C{w_a} och
+retunerar polynomet \C{w} som är produkten av polynomen \C{u} och \C{v}.
+Slutligen sker sammansättningen, se !!!!!!!, där \C{b} anger vilken exponent
+\C{x} får som sätts in polynomet \C{w}.
