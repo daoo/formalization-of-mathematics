@@ -1,9 +1,9 @@
-\subsection{Coq}
+\section{Coq}
 
-\subsubsection{Logik (Konstruktiv)}
+\subsection{Logik (Konstruktiv)}
 Tror att det är bättre om någon från matte gör det här
 
-\subsubsection{Curry-Howard isomorphism}
+\subsection{Curry-Howard isomorphism}
 Enligt Curry Howard isomorpismen så är propositioner samma sak som typer och
 bevis är samma sak som program. Om vi tar en närmare titt på
 funktionsdefinitionen $a \rightarrow b$ så kan vi tolka det som att givet ett
@@ -13,7 +13,7 @@ bevis för a så får vi ett bevis för b.
   Bevis       &= Programs
 \end{align*}
 
-\subsubsection{Polymorphism}
+\subsection{Polymorphism}
 En enkel förklaring till polymorphism är att en funktion kan appliceras på
 flera olika typer av parametrar. En lite mer komplicerad förklaring är att en
 polymorphisk funktion är uppbygd av två olika lambda uttryck där det första har
@@ -53,7 +53,7 @@ Fixpoint append (X:Type) (l : list X) (x : X) : list X :=
   end.
 \end{lstlisting}
 
-\subsubsection{Beroendetyper}
+\subsection{Beroendetyper}
 I en polymorphisk funktion så kan en parametertyp bero på vilka typer de
 tidigare parametrarna har haft. I beroendetypning så går vi ett steg längre och
 låter typerna bero på värdet av en tidigare parameter Nedan finns två
@@ -79,7 +79,7 @@ printf("%s is %d years old and %f.1cm long", name ,age , lenght)
 
 % http://mattam.org/research/publications/Programming_with_Dependent_Types_in_Coq-PPS-260209.pdf
 
-\subsubsection{Grund och taktikspråk}
+\subsection{Grund och taktikspråk}
 Coq består av två olika delspråk. Grundspråket kallas Gallina och liknar till
 viss del OCaml. Det är i Gallina som de definitioner och funktioner som ska
 bevisas skrivs.

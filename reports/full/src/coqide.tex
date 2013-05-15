@@ -1,7 +1,7 @@
-\subsection{Kort intruduktion till programmering i \coq och
+\section{Kort intruduktion till programmering i \coq och
 Utvecklingsmiljön \coq IDE}
 
-\subsubsection{Interaktiv beskrivning av \coq IDE}
+\subsection{Interaktiv beskrivning av \coq IDE}
 
 \begin{figure}[H]
   \centering
@@ -37,14 +37,14 @@ Förstoring av (2)
   påverkas av nästkommande taktik.
 \end{enumerate}
 
-\subsubsection{Evaluering av kod}
+\subsection{Evaluering av kod}
 \coq är uppbygt av satser där varje sats avslutas med en punkt.
 Koden evaluers sedan en sats i taget och de delar av koden som
 har blivit evaluerade markeras med en grön färg och det går inte längre
 att göra några ändringar i dessa. Om man skulle vilja göra en ändring så
 får man i så fall stega tillbaks i programet och göra ändringen.
 
-\subsubsection{Bevis}
+\subsection{Bevis}
 Det finns flera olika nyckelord för att starta ett bevis bland annat
 \C{theorem} och \C{lemma}. Det är ingen skillnad på vilket
 av dessa orden man använder för att påbörja ett bevis utan de är bara
@@ -91,7 +91,7 @@ När alla mål är bevisade så talar man om att beviset är klart genom att
 skriva \C{Qed.} vilket översatt till svenska betyder
 "Vilket skulle bevisas"
 
-\subsection{Varibler och Funktioner}
+\section{Varibler och Funktioner}
 
 Det går att definera varibler i \coq med nyckelordet \C{Varible}
 När en variabel deklareras på global nivå kan den sedan användas som
@@ -118,7 +118,7 @@ T(n) = \left\{\begin{matrix} n/2, & \mbox{om }n\equiv0\mbox{ (mod 2)} \\ 3n+1,
                          & \mbox{om }n\equiv1\mbox{ (mod 2)} \end{matrix}\right.
 \end{equation}
 
-\subsection{Patternmatching}
+\section{Patternmatching}
 Patternmatchning i \coq påminner till stor del om \C{case} i Haskell.
 Skilnaden är att istället för att skriva \C{case x of} som i Haskell
 så skrivs \C{match x with} där x är namnet på variabeln ska matchas i

@@ -1,4 +1,4 @@
-\subsection{Toom-Cook}
+\section{Toom-Cook}
 Toom-Cook är en algoritm för att multiplicera två polynom och är namngiven
 efter Andrei Toom och Stephen Cook.
 
@@ -39,7 +39,7 @@ praktiken. I t ex gmplib, The GNU Multiple Precision Arithmetic Library,
 används Schönhage-Strassen-algoritmen samt olika instanser av
 Toom-Cook-algoritmen för multiplikation av heltal.
 
-\subsubsection{Definition av Toom-Cook-$m$}
+\subsection{Definition av Toom-Cook-$m$}
 I detta avsnitt definierar vi Toom-Cook m $(p, q)$, för $m \in \mathbb{N}$ och
 $m \geq 3$, som resultatet av algoritmen nedan. Versionen av algoritmen som
 presenteras nedan bygger på \cite{bodrato2007a} och presentationen av den
@@ -53,11 +53,11 @@ Låt R vara ett integritetsområde och låt $p, q \in R[x]$, där
 \end{align*}
 med $0 \leq s \leq n$.
 
-\paragraph{Gradkontroll}
+\subsubsection{Gradkontroll}
 Om $\grad p = n \leq 2$, låt Toom-Cook $m (p, q) = p \cdot q$, annars gå vidare
 till steg 2.
 
-\paragraph{Uppdelning}
+\subsubsection{Uppdelning}
 \label{uppdelning}
 Låt
 \begin{align*}
@@ -78,7 +78,7 @@ Låt
 \end{align*}
 Vi vill att $u(x^b)=p(x)$ och $v(x^b)=q(x)$.
 
-\paragraph{Evaluering}
+\subsubsection{Evaluering}
 Nu ska vi beräkna $w = u \cdot v$. Vi gör detta genom interpolation. Vi
 beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för $d + 1$ punkter
 $\alpha_0, ...,  \alpha_d$, där $\alpha_i \in R$ och
@@ -111,12 +111,12 @@ beräknar vi $u(\alpha_i)$ och $v(\alpha_i)$. Låt
 \end{align*}
 och motsvarande för $v$.
 
-\paragraph{Rekursiv multiplikation}
+\subsubsection{Rekursiv multiplikation}
 Vi beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för i $= 0, ... , d$
 rekursivt genom att anropa algoritmen med $u(\alpha_i)$ och $v(\alpha_i)$ som
 argument. Notera att $u(\alpha_i)$, $v(\alpha_i) \in R[x]$.
 
-\paragraph{Interpolation}
+\subsubsection{Interpolation}
 Vi bestämmer koefficienterna i $w(y)=w_0 + w_1 y + \ldots + w_d y^d$ genom
 interpolation. Om
 
@@ -162,11 +162,11 @@ Vandermondematris så är}
   \det V_I &= \prod_{0 \leq i < j \leq d} (\alpha_i - \alpha_j)
 \end{align}
 
-\paragraph{Sammansättning}
+\subsubsection{Sammansättning}
 Vi får slutligen det önskade resultatet $p(x) \cdot q(x)$ genom att evaluera
 $w$ i $x^b$.
 
-\subsubsection{Bevis av algoritmens korrekthet}
+\subsection{Bevis av algoritmens korrekthet}
 I detta stycke visar vi att för $p, q \in R[x]$ så är $p \cdot q =$ Toom-Cook m
 $(p, q)$.
 
@@ -296,7 +296,7 @@ $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(
   \end{align*}
 \end{proof}
 
-\subsubsection{Karatsuba}
+\subsection{Karatsuba}
 Toom-2 är ett specialfall av Toom-Cook och är även känd som
 Karatsuba-algoritmen. I Karatsuba-algoritmen delas multiplikanderna upp på
 samma sätt som i steg 1.2 i Toom-m algoritmen ovan vilket ger oss de två
