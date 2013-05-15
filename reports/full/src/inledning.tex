@@ -1,170 +1,41 @@
-Komplexiteten hos matematiska bevis har med tiden ökat markant och bevis med
-penna och papper är ofta inte realiserbart. Datorer kan i dessa fall utnyttjas
-som hjälpmedel för att verifiera varje logiskt steg i bevisen. Flera satser har
-formaliserats och två exempel är Fyrfärgssatsen\cite{gonthier2008formal} och
-Feit-Thompsons sats\cite{something}. För att bevisen ska vara korrekta har man
-formaliserat all matematik som satserna beror på. Vidare gör bevisens
-komplexitet även att enbart områdesexperter klarar av att granska och verifiera
-bevisen. Fermats stora sats är ett exempel på detta problemet då man
-rapporterade beviset som korrekt 1993 men ett fel hittades sedan 2 år
-senare\cite{something}.
+Under senare år har några mycket långa och komplexa matematiska bevis
+presenterats. Vissa bevis har också byggt på en mycket omfattande analys av
+tusentals fall utförd av datorprogram. Det är mycket tidsödande och svårt, om
+ens praktiskt möjligt att för hand kontrollera varje steg ett sådant bevis. Få
+matematiker har tid, lust och den speciella kompetensen inom just det specifika
+matematiska området som gör att de kan eller vill att ägna år åt att
+kontrollera att ett sådant bevis är korrekt. Dessutom finns risken för att ett
+fel i ett bevis ändå inte upptäcks vid kontroll om beviset är hundratals- eller
+tusentals sidor långt.\cite{harrison2008formal}
 
-Formaliseringen har utvecklats ur ett område som tidigare enbart intresserat
-datavetare, närmare bestämt logik. De verktyg man använder bygger på logik och
-kan utöver att verifiera matematiska bevis även verifiera programkod. Formella
-metoder är således intressant för programmerare och inte bara matematiker.
-Dagens stora och komplexa programvaror skulle kunna utnyttja formella metoder.
-Det kan också vara användbart i kritiska system som inte får gå fel eller som
-inte kan uppdateras i efterhand. De metoder som används idag för att
-kontrollera kod bygger på att testa om olika värden och undersöka om resultaten
-är korrekta. Detta kan visa att koden innehåller fel, men inte att koden saknar
-fel eftersom det är omöjligt att testa alla kombinationer av värden. Formella
-metoder skulle i dessa fall kunna användas till att garantera korrekthet hos
-koden.
+Bevisassistenter, datorsystem för att formalisera och verifiera varje logiskt
+steg i bevis, kan användas för att kontrollera bevis och därmed öka tilltron
+till att de är korrekta och minska risken för att de innehåller fel.
 
-Vårt projekt har haft som mål att studera datorassisterad formalisering och
-sedan formalisera en matematisk algoritm för att få en inblick i detta
-forskningsområdet.
+Fyrfärgssatsen\cite{gonthier2008formal} och Feit-Thompsons
+sats\cite{aschbacher2004status} är två exempel på satser vars bevis har
+formaliserats och kontrollerats i bevisassistenter. För att kunna kontrollera
+själva bevisen har också all den matematik som bevisen bygger på formaliserats.
+%Lite mer om fyrfärgssatsen här?
+%Lite mer om Odd order theorem här?
 
+De verktyg som används vid formalisering och datorverifiering kan även användas
+för att verifiera programkod. Formella metoder är således intressant för både
+för programmerare och matematiker. Dagens stora och komplexa programvaror
+skulle kunna utnyttja formella metoder. Det kan också vara användbart i
+kritiska system, till exempel medicinsk utrustning,  där det inte får bli fel
+eller som inte kan uppdateras i efterhand. De mest använda metoderna idag för
+att kontrollera kod bygger på att testa om koden ger korrekt resultat för olika
+indata. På detta sätt har man en chans att upptäcka om koden innehåller fel,
+men det visar inte att koden saknar fel eftersom det i många fall är omöjligt
+att testa alla kombinationer av indata. Formella metoder skulle i dessa fall
+kunna användas till att garantera korrekthet hos koden.
 
-\subsection{Vad är en bevisassistent?}
-En bevisassisten är ett datorsystem som låter användaren
-sätta upp matematiska teorier, definera egenskaper och utföra logiska
-resonemang. I bevisassistenter ingår inte automatiska teorembevisare som
-med hjälp av formulerade regler kan lösa vissa sorters bevis automatiskt.
+Matematisk programvara som MATLAB spelar en stor roll för beräkningar inom
+forskning och industri och det finns därmed ett stort intresse av att de är
+pålitliga. De är dock inte buggfria. Ett sätt att göra dem mer pålitliga skulle
+vara att formalisera de ingående algoritmerna och visa att de är korrekt
+implementerade.\cite{mortberg2012}
 
-Det är inte bara inom matematiken som bevisassistenter kan användas utan
-även inom datavetenskap där man kan formulera program matematiskt och sedan
-bevisa deras korrekthet. När man bevisar något i en bevisassisten så gör
-man ofta beviset på papper först och sen översätter man pappersbeviset till
-datorn. Bevisassistenten kontrollerar då att alla stegen i beviset är korrekt.
-Det låter kanske som om en bevisassisten inte är till så stor hjälp om man
-måste bevisa allt på papper först men dels kan pappersbeviset läggas på en
-högre abstraktionsnivå och bevisassistenten kan även hitta slarvfel och
-felaktiga antaganden. Ett bevis som gjort i en bevisassistent ger
-därför en viss trovärdighet och det är lättare att övertyga resten av värden
-att ens bevis är korrekta om de är formaliserat i en bevisassistent.
-
-
-
-
-\subsection{Bevisassistent och programmeringsspråket Coq}
-Formalisering är ett aktivt forskningsområde och det finns flertalet
-datorverktyg för formalisering och verifiering av formella bevis som är under
-aktiv utveckling. Vi har valt att använda verktyget Coq. Coq är ett
-beroenedetypat funktionellt programmeringsspråk inte helt olikt Haskell. Men
-till skillnad från Haskell är Coq även en \emph{interaktiv} bevisassistent som
-kan användas till att utveckla formella bevis. Viktigt att notera här är att
-Coq är interaktivt, det vill säga Coq bevisar inget automatiskt utan man måste
-själv styra varje logiskt steg i bevisen. Program och bevis som är skrivna i
-Coq går att exportera till Haskell,OCaml and Scheme vilket gör att man kan
-skriva och bevisa de mest kritiska delarna i ett program och sedan exportera det
-och köra det tillsammas med icke bevisad kod i till exempel Haskell.
-
-\subsubsection{Coq's Historia}
-Det är i huvudsak två vetenskaper som ligger till grund för Coq, nämligen
-datavetenskap (eng. computer science) och formellbevisföring. Datavetenskapens
-vagga startar med en avhandling av Don Knuth, professor på Stanfords
-Universitet, år 1968. Det skulle visa sig ta 30 år av forskning efter
-avhandligen att fastställa ett rigoröst område. På liknande sätt var även den
-rigorösa grunden av formellbevisföring under utveckling under denna tidsepok.
-De största genombrotten gjordes dock under 1930-talet av Gentzen, Gödel och
-Herbrand. 70 år senare stod Coq som slutprodukt efter en lång serie av projekt.
-
-\subsubsection{Tillämpningar}
-Coq har, som redan nämnts, använts till att bevisa olika stora satser och även
-en del andra programvaror. Det har skett genom stora forskningsprojekt.
-
-\begin{itemize}
-
-\item Fyrfärgssatsen\autocite{gonthier2008formal} säger att, givet varje möjlig
-uppdelning av ett plan i sammanhängande regioner, så krävs det högst fyra
-färger för att färglägga alla regionerna så att inga angränsande regioner har
-samma färg. Två regioner anses vara angränsande om de delar en gemensam kant
-som inte är ett hörn.
-
-Under årens lopp har det förekommit många olika bevis och motbevis som har
-bevisats vara falska och  det var först 1976 som det första korrekta beviset
-kom. Stora delar av beviset var då gjorda i en dator och det gick inte att
-bekräfta att dessa delar var korrekta. För att bevisa att datordelarna av
-beviset var korrekta så formaliserades beviset i Coq och detta ledde till
-utvecklandet av SSReflect.
-
-\item CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att
-utveckla formellt bevisade kompilatorer. Anledningen att man vill ha en
-formellt bevisad kompilator är att vid vissa optimeringar så kan kompilatorn
-skapa buggar och beräkningsfel. Att kompilatorn är formellt bevisad innebär att
-det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
-för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
-Rent konkret innebär detta att man är garanterad att den exekverbara koden inte
-innehåller buggar som är skapade av kompilatorn. Huvudresultatet av detta
-är en fungerande C-kompilator som stödjer hela ANSI C (som är den första
-standardiserade veritionen av C) med ett få undantag.
-Vad gäller prestanda så är CompCert's kompilator snabbare än
-GCC's (Gnu Compiler Collection) C-kompilator när denna inte
-har några optimeringar.
-
-
-\item Feit-Thompsons är en sats inom matematisk gruppteori som säger att en
-ändlig grupp alltid är lösbar om dess ordning är
-udda\cite{aschbacher2004status}. Denna sats bevisades av Walter Feit och John
-Griggs Thompson 1963. Beviset för Feit-Thompsons sats är stort och sträcker sig
-över två volymer, det är mycket material för en person att sätta sig in i och
-verifiera för hand. Storleken på beviset och därmed möjligheten till någon dold
-miss i beviset är en av anledningarna till varför beviset för Feit-Thompsons
-sats är intressant att formalisera i Coq. I samband med formaliseringen av
-beviset så har även en stor del av matematisk gruppteori verifierats.
-
-\end{itemize}
-
-\subsubsection{Alternativ till Coq}
-Det finns många olika program och språk för att formalisera och bevisa olika
-former av matematik eller logik. En sak som de flesta har gemensamt är att de
-är uppbyggd på funktionella programmerings paradigmer.
-
-\begin{itemize}
-\item Agda är utvecklat på Chalmers och påminner till stor del om Haskell. Till
-skillnad mot Coq så finns det inga inbyggda taktiker.  Agda är inte lika
-matematiskt inriktad som Coq utan används mer till att bevisa korrekthet hos
-program. En fördel med Agda är att alla Unicodetecken är tillåtna vilket gör
-det enkelt att skriva sina program och bevis på samma sätt som man skulle göra
-det på papper.
-
-\item Z3 är ett språk som har utvecklats av Microsoft för att förenkla och bevisa
-olika teorem. Kan användas tillsammans med flera stora ickefunktionella språk
-som Python, C och .NET.
-
-\item HOL, Högre Ordningens Logik är en av de första interaktiva teorembevisarna och
-HOL-light som är en vidareutveckling av det används idag av Intel för att
-bevisa att vissa hårdvarukomponenter fungerar korrekt.
-
-\item F* är en vidareutveckling av F\# och används för att verifiera och bevisa
-egenskaper hos program. En av de större skillnaderna från F\# är att F* har
-stöd för beroendetyper. F* är en del av .NET vilket gör att bevis och kod som
-är skriven i F* går att använda i all andra .NET språk. Stora delar av F* är
-formaliserade och bevisade i Coq.
-\end{itemize}
-
-\begin{comment}
-Källor och annat material
-HOL http://www.cl.cam.ac.uk/~jrh13/hol-light/
-Z3 http://research.microsoft.com/en-us/um/redmond/projects/z3/old/
-F* http://research.microsoft.com/en-us/projects/fstar/
-\end{comment}
-
-\subsection{Multiplikation av polynom}
-Vi har valt att implementera och bevisa Toom-Cook algoritmen för multiplikation
-av polynom. Toom-Cook är generell och fungerar för polynom, men anledningen
-till att den är intressant är att heltal är ett specialfall av polynom där
-basen är känd. Vidare är Toom-Cook snabbare för väldigt stora polynom än den
-multiplikationsmetoden man lär sig i grundskolan som vi kallar lång
-multiplikation. Det finns även en annan algoritm för polynommultiplikation som
-heter Karatsuba som också är snabbare än lång multiplikation och även enklare
-än Toom-Cook. Men den är redan formaliserad av vår handledare och därför är det
-mer intressant att formalisera Toom-Cook.
-
-\subsection{Mål}
-Målet med vårat projekt är således att lära oss hur man använder Coq och dess
-tillägg SSReflect. Vidare skall vi också använda dessa verktyg för att
-formalisera ett bevis av Toom-Cook algoritmen. Den här rapporten presenterar
-våra resultat och diskuterar hur bevisassistenter kan användas.
+Vårt projekt går ut på att lära oss formalisering med bevisassistenten \coq och
+sedan formalisera och bevisa en matematisk algoritm i \coq.
