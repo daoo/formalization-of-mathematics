@@ -24,15 +24,19 @@ för att verifiera programkod. Formella metoder är således intressant för bå
 för programmerare och matematiker. Dagens stora och komplexa programvaror
 skulle kunna utnyttja formella metoder. Det kan också vara användbart i
 kritiska system, till exempel medicinsk utrustning,  där det inte får bli fel
-eller som inte kan uppdateras i efterhand. De mest använda metoderna idag för
+eller i system som inte kan uppdateras i efterhand som hårvarunära mjukvara
+på ROM-minnen. De mest använda metoderna idag för
 att kontrollera kod bygger på att testa om koden ger korrekt resultat för olika
 indata. På detta sätt har man en chans att upptäcka om koden innehåller fel,
 men det visar inte att koden saknar fel eftersom det i många fall är omöjligt
-att testa alla kombinationer av indata. Formella metoder skulle i dessa fall
+att testa alla kombinationer av indata.
+% + Svårt att hitta kända resultat?
+Formella metoder skulle i dessa fall
 kunna användas till att garantera korrekthet hos koden.
 
 Matematisk programvara som MATLAB spelar en stor roll för beräkningar inom
 forskning och industri och det finns därmed ett stort intresse av att de är
+% känns som det kan finnas bättre ord än buggfria
 pålitliga. De är dock inte buggfria. Ett sätt att göra dem mer pålitliga skulle
 vara att formalisera de ingående algoritmerna och visa att de är korrekt
 implementerade.\cite{mortberg2012}

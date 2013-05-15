@@ -22,6 +22,9 @@ Så för att ett datorprogram mekaniskt ska kunna kontrollera ett bevis måste d
 \emph{formaliseras}. Sådant som för en mänsklig läsare framgår ur sammanhanget
 måste göras explicit. Bevissteg som är så små så att de ses som självklara
 måste också formuleras.
+% Måste även gå att skapa en modell för att representera mattematiken i datorn
+% irrationella tal till exempel
+
 
 Datorsystemet kontrollerar sedan om varje steg i beviset följer från föregående
 steg och från axiom genom fastslagna \emph{härledningsregler}. Dessa är enkla
@@ -29,6 +32,9 @@ logiska regler om hur man får gå från givna premisser till slutsatser. Till
 exempel säger regeln \emph{modus ponens} att man ur förutsättningarna $A$ och
 $A \to B$ får dra slutsatsen att $B$ gäller. Den kontrollerar också om de
 uttryck man skriver in är tillåtna.
+% Hänger inte riktigtigt ihop här
+% Menar du att bevisassistentern sätter upp regler som måste följas
+% vilket gör det lättare för alla att läsa och förstå bevisen?
 $\forall 3^{\frac{+}{\in}} \leftrightarrow =$ är till exempel inget välformat
 uttryck, även om de ingående symbolerna är matematiska och logiska symboler.
 
@@ -37,11 +43,13 @@ som ska vara tillåtna, vilka axiom man skall ha, vilka symboler som ska vara
 tillåtna att skriva och vilka uttryck som är godkända. Eftersom det finns olika
 möjliga val finns det olika \emph{formella språk} eller \emph{logiska system}.
 
+% Lite förklaring om vad ett logiskt system innebär?
 De flesta logiska system som används för att formalisera matematik kan dock
 uttrycka och härleda ungefär samma saker, möjligen på något olika sätt,
 eftersom man har varit intresserad av att fånga och beskriva naturliga logiska
 resonemang.****
 
+% Bra skrivet den sista biten!
 En viktig skillnad är dock den mellan intuitionistisk och klassisk logik.
 \emph{Intuitionistisk typteori}\cite{martin1984intuitionistic} är grunden i
 \emph{Coq/Ssreflect}\cite{bertot2004interactive}. Det går att se den som en
