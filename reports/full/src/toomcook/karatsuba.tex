@@ -18,7 +18,7 @@ Genom att skriva om uttrycket krävs dock bara tre distinkta multiplikationer:
 \end{equation*}
 Tidskomplexiteten för Karatsuba-algoritmen är då:
 \begin{equation*}
-  T(n) = 3 T(\lceil n/2\rceil) + cn + d
+  T(n) = 3 T(\ceil{n/2}) + cn + d
 \end{equation*}
 där n är graden på det största polynomet och c och d är konstanter. Alltså har
 Karatsuba-algoritmen den asymptotiska tidskomplexiteten $O(n^{log_2 3})$

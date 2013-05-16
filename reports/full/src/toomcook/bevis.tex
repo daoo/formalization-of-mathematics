@@ -64,9 +64,9 @@ $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(
   \bigskip\noindent
   $u_k = p(x)/x^{k b} \modu x^b$, så enligt definition av mod så är $\grad u_k
   < b$. Nu återstår att visa att $b < \grad p = n$. Vi har definierat $b =
-  \lfloor \frac{1 + n}{m}\rfloor + 1$. Om $n \geq 3$ och $m \geq 3$ så är
+  \floor[\big]{\frac{1 + n}{m}} + 1$. Om $n \geq 3$ och $m \geq 3$ så är
   \begin{align*}
-    n-b &= n-(\lfloor \frac{1 + n}{m}\rfloor + 1) \geq \frac{2n-4}{3} > 0,
+    n-b &= n - \left( \floor[\bigg]{\frac{1 + n}{m}} + 1 \right) \geq \frac{2n-4}{3} > 0,
   \end{align*}
   så $b < \grad p(x) = n$.
 \end{proof}
@@ -89,13 +89,13 @@ $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(
   Med $\grad p = n$ har vi att
   \begin{align*}
     b - (n - b(m-1)) &= m b - n \\
-                     &= m (\lfloor \frac{1 + n}{m}\rfloor + 1) - n \\
-                     &= m( \frac{1 + n}{m} -\{ \frac{1 + n}{m}\} ) + m - n \\
-                     &= 1 + n - m \{ \frac{1 + n}{m}\} + m - n \\
-                     &= 1 + m(1 - \{ \frac{1 + n}{m}\}) > 0
+                     &= m \left( \floor[\bigg]{\frac{1 + n}{m}} + 1 \right) - n \\
+                     &= m \left( \frac{1 + n}{m} - \left\{ \frac{1 + n}{m} \right\} \right) + m - n \\
+                     &= 1 + n - m \left\{ \frac{1 + n}{m} \right\} + m - n \\
+                     &= 1 + m \left( 1 - \left\{ \frac{1 + n}{m} \right\} \right) > 0
   \end{align*}
   eftersom $0 < 1 - \{ x \} \leq 1$ för alla reella tal $x$ \footnote{$\{x\}$
-  betecknar $x-\lfloor x \rfloor$. Se \cite{concrete}.}. Graden av
+  betecknar $x-\floor{x}$. Se \cite{concrete}.}. Graden av
   $p(x)/x^{b(m-1)}$ är $\max (n - b(m-1),0)$ som är mindre än $b$, och därmed är
   $p(x)/x^{b(m-1)}  \modu x^b = p(x)/x^{b(m-1)}$, vilket visar Påstående 1. Så
   \begin{align*}
