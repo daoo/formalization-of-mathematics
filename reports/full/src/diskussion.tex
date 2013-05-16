@@ -38,9 +38,31 @@ vad den ska göra. Denna motivering gäller generellt för typsystem och kan syf
 på till exempel Haskell. Men det gäller även för beroendetypade system då
 beroendetypning är ett generellare system.
 
-Beroendetypning är bra, matrismultiplikation
+Ett exempel är matriser med dimensionerna i typen som gör att man inte kan
+tappa bort en dimension eller av misstag vända på dem. För matrismultiplikation
+vet vi till exempel att om man multiplicerar en $m \times n$-matris och en
+$n \times o$-matris får man en $m \times o$-matris. Med denna kunskapen kan
+man definera multiplikations-rutinen på följande vis:
 
-Man slipper tänka, kompilatorn säger ifrån
+\begin{verbatim}
+matMul :: Matrix m n -> Matrix n o -> Matrix m o
+matMul = ...
+\end{verbatim}
+
+Denna definitionen ger två fördelar:
+
+\begin{itemize}
+  \item Det går inte att skicka in fel sorts matriser. Den andra matrisen måste
+    ha lika många rader som den första matrisen har kolumner, annars kompilerar
+    koden inte.
+  \item När man implementerar själva multiplikationen är man tvungen att få rätt
+    dimensioner på resultatmatrisen.
+\end{itemize}
+
+Till skillnad från en definition med en lista av listor som i vår Haskell kod.
+När man gör fel med den definitionen kraschar programmet vid körning med något
+mindre hjälpsamt felmeddelande i stil med ''index out of bounds''. Eller så går
+det ännu värre och funktionen kastar bort hälften av det tänkta resultatet.
 
 \section{Coq på Chalmers}
 
