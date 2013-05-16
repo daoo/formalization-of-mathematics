@@ -1,0 +1,24 @@
+\section{Karatsuba}
+Toom-2 är ett specialfall av Toom-Cook och är även känd som
+Karatsuba-algoritmen. I Karatsuba-algoritmen delas multiplikanderna upp på
+samma sätt som i steg 1.2 i Toom-m algoritmen ovan vilket ger oss de två
+polynomen:
+\begin{align*}
+  u(x) &= u_1 y + u_0 \\
+  v(x) &= v_1 y + v_0
+\end{align*}
+Om vi skall multiplicera polynomen med naiv polynommultiplikation krävs det
+fyra multiplikationer:
+\begin{equation*}
+  u_1 v_1 y^2 + (u_1 v_0+v_1 u_0) y + u_0 v_0
+\end{equation*}
+Genom att skriva om uttrycket krävs dock bara tre distinkta multiplikationer:
+\begin{equation*}
+  u_1 v_1 y^2 + ((u_1 + u_0)(v_1 + v_0) - u_1 v_1 - u_0 v_0) y + u_0 v_0
+\end{equation*}
+Tidskomplexiteten för Karatsuba-algoritmen är då:
+\begin{equation*}
+  T(n) = 3 T(\lceil n/2\rceil) + cn + d
+\end{equation*}
+där n är graden på det största polynomet och c och d är konstanter. Alltså har
+Karatsuba-algoritmen den asymptotiska tidskomplexiteten $O(n^{log_2 3})$

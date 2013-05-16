@@ -1,0 +1,130 @@
+\section{Bevis av algoritmens korrekthet}
+I detta stycke visar vi att för $p, q \in R[x]$ så är $p \cdot q =$ Toom-Cook m
+$(p, q)$.
+
+\begin{proposition}
+  \label{prop:1}
+  Antag att $R$ är ett integritetsområde och att $p, q \in R[x]$. Om det finns
+  $\alpha_0, ...,  \alpha_{2m-2} \in R$ så att $ \prod_{0 \leq i < j \leq d}
+  (\alpha_i - \alpha_j)$ är inverterbar i $R$, så är med dessa punkter som
+  evalueringspunkter
+
+  \begin{equation}
+    \label{eq:name7}
+    \text{Toom-Cook m} (p, q) =  p \cdot q.
+  \end{equation}
+\end{proposition}
+
+\begin{proof}
+Vi visar propositionen med induktion över $\grad p$.
+
+\noindent\textbf{Basfall}. När $n = \grad p \leq 2$ så gäller (\ref{eq:name7})
+enligt steg 1 i algoritmen eftersom att vi räknar ut produkt direkt.
+
+\bigskip\noindent
+\textbf{Induktionssteg}. Antag att $p, q \in R[x]$, där
+\begin{align*}
+  &p(x) = a_0 + a_1 x + ... + a_n x^n, \\
+  &q(x) = b_0 + b_1 x + ... + b_s x^s
+\end{align*}
+med $0 \leq s \leq n$.
+
+\bigskip\noindent
+Antag också att $n > 2$ och att Toom-Cook $m (f, g) =  f \cdot g$ gäller för
+polynom av grad mindre än $n$. Eftersom $n > 2$ så går vi vidare till steg 2 i
+algoritmen och skapar $u$ och $v$ från $p$ och $q$. När detta är gjort
+evaluerar vi i steg 3 $u$ och $v$ i punkterna $\alpha_0, ...,  \alpha_{2m-2}$
+genom att multiplicera vektorn av deras koefficienter med evalueringsmatrisen.
+I steg 4 anropar vi Toom-Cook m  igen, nu med argumenten $u(\alpha_i) \cdot
+v(\alpha_i)$ för $i = 0, \ldots , 2m-2$. Eftersom $\grad u(\alpha_i)$, $\grad
+v(\alpha_i) < n$ enligt lemma \ref{lemma:1} så är Toom-Cook m $(u(\alpha_i),
+v(\alpha_i)) = u(\alpha_i) \cdot v(\alpha_i)$ enligt induktionsantagnandet. I
+steg 5 skall vi bestämma koefficienterna i $w(y)=u(y) \cdot v(y)$. Detta gör vi
+genom att lösa matrisekvationen (\ref{eq:NAME4}). Eftersom
+interpolationsmatrisen $V_I$ enligt antagande är inverterbar så ges
+koefficienterna entydigt av (\ref{eq:NAME5}). I steg 6 evaluerar vi $w(y)=u(y)
+\cdot v(y)$ i $x^b$. Lemma \ref{lemma:2} ger att $u(x^b)=p(x)$ och att
+$v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x)
+\cdot q(x)$.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:1}
+  Antag att $p(x) \in R[x]$ och att $\grad p \geq 3$. Antag också att $u(y)$ är
+  definierad enligt steg \ref{uppdelning}, uppdelning, i algoritmen och att
+  $\alpha \in R$. Då är $\grad u(\alpha) < \grad p$.
+\end{lemma}
+\begin{proof}
+  Eftersom $\alpha \in R$ så är
+  \begin{align*}
+    \grad u(\alpha) &= \grad (u_0 + u_1 \alpha + ... + u_{m-1}\alpha^{m-1}) = \max \grad u_k,
+  \end{align*}
+  där $k={0,1,...,m-1}$.
+
+  \bigskip\noindent
+  $u_k = p(x)/x^{k b} \modu x^b$, så enligt definition av mod så är $\grad u_k
+  < b$. Nu återstår att visa att $b < \grad p = n$. Vi har definierat $b =
+  \lfloor \frac{1 + n}{m}\rfloor + 1$. Om $n \geq 3$ och $m \geq 3$ så är
+  \begin{align*}
+    n-b &= n-(\lfloor \frac{1 + n}{m}\rfloor + 1) \geq \frac{2n-4}{3} > 0,
+  \end{align*}
+  så $b < \grad p(x) = n$.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:2}
+  Antag att $p(x) \in R[x]$ och att $b$ och $u(y)$ är definierade som i steg 2 i
+  algoritmen. Då är $u(x^b)=p(x)$.
+\end{lemma}
+\begin{proof}
+  Vi har att
+  \begin{align*}
+    u(x^b) &= \sum_{i = 0}^{m-1} p(x)/x^{bi} (\modu x^b) x^{bi} \\
+           &= \sum_{i = 0}^{m-2} p(x)/x^{bi} (\modu x^b) x^{bi} + p(x)/x^{b(m-1)} (\modu x^b) x^{b (m-1)}.
+  \end{align*}
+  \bigskip\noindent
+  \textbf{Påstående 1.} Den sista termen i $u(x^b)$ kan skrivas om till
+  $p(x)/x^{b (m-1)} x^{b (m-1)}$ eftersom $\grad p - b (m-1) < b$.
+
+  Med $\grad p = n$ har vi att
+  \begin{align*}
+    b - (n - b(m-1)) &= m b - n \\
+                     &= m (\lfloor \frac{1 + n}{m}\rfloor + 1) - n \\
+                     &= m( \frac{1 + n}{m} -\{ \frac{1 + n}{m}\} ) + m - n \\
+                     &= 1 + n - m \{ \frac{1 + n}{m}\} + m - n \\
+                     &= 1 + m(1 - \{ \frac{1 + n}{m}\}) > 0
+  \end{align*}
+  eftersom $0 < 1 - \{ x \} \leq 1$ för alla reella tal $x$ \footnote{$\{x\}$
+  betecknar $x-\lfloor x \rfloor$. Se \cite{concrete}.}. Graden av
+  $p(x)/x^{b(m-1)}$ är $\max (n - b(m-1),0)$ som är mindre än $b$, och därmed är
+  $p(x)/x^{b(m-1)}  \modu x^b = p(x)/x^{b(m-1)}$, vilket visar Påstående 1. Så
+  \begin{align*}
+    u(x^b) &= \sum_{i = 0}^{m-2} p(x)/x^{bi} (\modu x^b) x^{bi} + p(x)/x^{b(m-1)} x^{b(m-1)}.
+  \end{align*}
+  För alla polynom $a(x)$ gäller att
+  \begin{align}
+    a(x) = a(x) \modu x^b + \left(a(x)/x^b\right) x^b \label{eq:name8}
+  \end{align}
+  då $a(x) \modu x^b$ och $p(x)/x^{b}$ är resten respektive kvoten vid division
+  med $x^b$. Så om vi kan visa att $u(x^b) =  p(x) \modu x^b + p(x)/x^{b}  x^{b}$
+  så är $u(x^b) = p(x)$. Och om sedan
+  \begin{align}
+    \sum_{i = 0}^{k} p(x)/x^{bi}  (\modu x^b) x^{bi} + (p(x)/x^{b(k + 1)})  x^{b(k + 1)} = \label{eq:name9} \\
+    \sum_{i = 0}^{k-1} p(x)/x^{bi}  (\modu x^b) x^{bi} + (p(x)/x^{b k})  x^{b k} \label{eq:name10}
+  \end{align}
+  för $k \geq 1$ så ger induktion över $k$ att $u(x^b) =  p(x)$. Nu återstår
+  alltså bara att visa att (\ref{eq:name9}) = (\ref{eq:name10}).
+
+  \begin{align*}
+    \sum_{i = 0}^{k} p(x)/x^{bi} (\modu x^b) x^{bi} &+ p(x)/x^{b(k + 1)}  x^{b(k + 1)} =\\
+    \sum_{i = 0}^{k-1} p(x)/x^{bi} (\modu x^b) x^{bi} &+
+    \left(p(x)/x^{b k} \modu x^b\right) x^{b k} + \left(p(x)/x^{b(k + 1)}\right)  x^{b(k + 1)} = \\
+    \sum_{i = 0}^{k-1} p(x)/x^{bi} (\modu x^b) x^{bi} &+
+    \left(p(x)/x^{b k} \modu x^b + \left(p(x)/x^{b(k + 1)}\right)  x^b \right) x^{b k} = \\
+    \sum_{i = 0}^{k-1} p(x)/x^{bi} (\modu x^b) x^{bi} &+
+    (p(x)/x^{b k} \modu x^b + ((p(x)/x^{b k})/x^b)  x^b) x^{b k} =
+    \tag{på grund av (\ref{eq:name8})}\\
+    \sum_{i = 0}^{k-1} p(x)/x^{bi}  (\modu x^b) x^{bi} &+ (p(x)/x^{b k}) x^{b k}
+  \end{align*}
+\end{proof}
+

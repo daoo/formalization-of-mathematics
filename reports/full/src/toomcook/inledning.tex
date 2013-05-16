@@ -1,0 +1,39 @@
+Toom-Cook är en algoritm för att multiplicera två polynom och är namngiven
+efter Andrei Toom och Stephen Cook.
+
+Algoritmen är intressant eftersom den har en bättre asymptotisk tidskomplexitet
+än naiv polynommultiplikation där man multiplicerar varje term i det ena
+polynomet med varje term i det andra polynomet vilket har den asymptotiska
+tidskomplexiteten $O\left(n^2\right)$. Eftersom problemet att multiplicera två
+heltal kan reduceras till att multiplicera två polynom kan algoritmen även
+användas för heltalsmultiplikation, denna reduktion kan göras utan att den
+asymptotiska tidskomplexiteten försämras. Detta innebär att man kan uppnå en
+bättre asymptotisk tidskomplexitet än den för naiv heltalsmultiplikation som
+lärs ut i grundskolan och har den asymptotiska tidskomplexiteten
+$O\left(n^2\right)$.
+
+Toom-Cook är en $"$divide and conquer$"$-algoritm och bygger på att man delar
+upp polynomen som skall multipliceras i mindre delar, dessa delar får sedan stå
+som koefficienter i två nya polynom som evalueras i olika punkter för att sedan
+punktvis multipliceras och därefter interpoleras tillbaka till ett nytt
+polynom. Genom att evaluera det nya polynomet i en punkt som svarar mot hur
+stora delar de ursprungliga polynomen delades upp i så får man slutligen
+produkten. Detta är dock bara de ingående stegen, för en mer detaljerad
+beskrivning av algoritmen se följande undersektion.
+
+Det finns flera varianter
+av Toom-Cook. Toom-k är en enskild instans av Toom-Cook som delar polynomen som
+skall multipliceras i k delar. Vanligtvis när man talar om Toom-Cook syftar man
+på Toom-3. Det finns även Toom-versioner som delar upp polynomen i olika antal
+delar. Två intressanta specialfall av Toom-Cook är Toom-1 som svarar mot naiv
+polynommultiplikation och Toom-2, Karatsuba-algoritmen. Toom-k har den
+asymptotiska tidskomplexiteten $O(n^{log_2(2 k-1)/log_2 k})$, men konstanten
+som döljs av ordo-notationen växer med k och har en betydande praktisk
+inverkan. För heltalsmultiplikation finns algoritmer som bygger på diskret
+fouriertransform och har en ännu bättre asymptotisk tidskomplexitet, t ex
+Schönhage-Strassen-algoritmen.
+
+Både Toom-Cook och algoritmer som bygger på diskret fouriertransform används i
+praktiken. I t ex gmplib, The GNU Multiple Precision Arithmetic Library,
+används Schönhage-Strassen-algoritmen samt olika instanser av
+Toom-Cook-algoritmen för multiplikation av heltal.
