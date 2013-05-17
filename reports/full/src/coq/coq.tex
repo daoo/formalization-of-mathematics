@@ -57,20 +57,22 @@ i en lista så skulle det finnas en specifik heltalsliste-typ som det bara
 gick att lagra heltal i.
 
 \subsection{Beroendetyper}
-I en polymorphisk funktion så kan en parametertyp bero på vilka typer de
-tidigare parametrarna har haft. I beroendetypning så går vi ett steg längre och
-låter parameter- och retur-typerna bero på värdet av en tidigare parameter.
+I en polymorphisk funktion så kan en parameter- eller retur-typ bero på vilka
+typer de tidigare parametrarna har haft. I beroendetypning så går vi ett steg
+längre och låter parameter- och retur-typerna bero på värdet av en
+tidigare parameter.
 Nedan finns två funktionsdefinitioner där beroendetypning används.
 I exemplena används en klass som heter Vector som är en lista med fast längd. I
 det första exemplet så gör vi om en lista till en vektor och vektorn ska då ha
 samma längd som listan. I det andra exemplet har vi en funktion som tar bort
 det första ellementet från en vektor och resultatet blir då en vektor med ett
-mindre ellement.
+mindre ellement. I \coq notation:
 \begin{verbatim}
 toVector: (list : List) : Vector (lenght list)
 
 removeFirst (v : Vector n) : Vector (n-1))
 \end{verbatim}
+
 Det är inte bara funktionella språk som det finns beroendetypade funktioner.
 Ett exempel på beroendetypning som de flesta antagligen är bekanta med är
 \texttt{printf} i C. Här bestäms antalet parametrar i funktionen av antalet
@@ -90,6 +92,6 @@ bevisas skrivs.
 Coq innehåller också ett taktikspråk som heter Ltac och innehåller olika
 taktiker för att påverka de hypoteser och mål som ska bevisas. Ltac gör det
 möjligt att använda samma metoder i Coq som man använder när man skapar ett
-pappersbevis. Coq är en interaktiv teorembevisare så när en viss taktik används
-uppdateras de hypoteser och mål som ska bevisas och användaren anger då en ny
-taktik och detta fortsätter tills alla målen är lösta.
+pappersbevis. Då \coq är en interaktiv teorembevisare så när en viss taktik
+används uppdateras de hypoteser och mål som ska bevisas och användaren
+anger då en ny taktik och detta fortsätter tills alla målen är lösta.
