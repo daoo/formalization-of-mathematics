@@ -52,7 +52,7 @@ Ett exempel är matriser med dimensionerna i typen som gör att man inte kan
 tappa bort en dimension eller av misstag vända på dem. För matrismultiplikation
 vet vi till exempel att om man multiplicerar en $m \times n$-matris och en
 $n \times o$-matris får man en $m \times o$-matris. Med denna kunskapen kan
-man definera multiplikations-rutinen på följande vis:
+man definera multiplikations-rutinen i stil med:
 
 \begin{verbatim}
 matMul :: Matrix m n -> Matrix n o -> Matrix m o
@@ -73,6 +73,7 @@ Till skillnad från en definition med en lista av listor som i vår Haskell kod.
 När man gör fel med den definitionen kraschar programmet vid körning med något
 mindre hjälpsamt felmeddelande i stil med ''index out of bounds''. Eller så går
 det ännu värre och funktionen kastar bort hälften av det tänkta resultatet.
+Dessa problem kan man slippa när man använder beroendetypning.
 
 \section{Coq på Chalmers}
 
