@@ -1,94 +1,16 @@
-\section{Coq's Historia}
-Det är i huvudsak två vetenskaper som ligger till grund för Coq, nämligen
-datavetenskap (eng. computer science) och formellbevisföring. Datavetenskapens
-vagga startar med en avhandling av Don Knuth, professor på Stanfords
-Universitet, år 1968. Det skulle visa sig ta 30 år av forskning efter
-avhandligen att fastställa ett rigoröst område. På liknande sätt var även den
-rigorösa grunden av formellbevisföring under utveckling under denna tidsepok.
-De största genombrotten gjordes dock under 1930-talet av Gentzen, Gödel och
-Herbrand. 70 år senare stod Coq som slutprodukt efter en lång serie av projekt.
+Formalisering är ett aktivt forskningsområde och det finns flera datorverktyg
+för formalisering och verifiering av formella bevis som är under aktiv
+utveckling. Det här projektet använder verktyget \coq. \coq är ett
+beroenedetypat funktionellt programmeringsspråk som i vissa avseenden liknar
+det välkända funktionella programmeringsspråket Haskell. Men till skillnad från
+Haskell är \coq även en \emph{interaktiv bevisassistent} som kan användas till
+att utveckla formella bevis. Program och bevis som är skrivna i Coq går att
+exportera till programspråken Haskell, OCaml and Scheme vilket gör att man kan
+skriva och bevisa de mest kritiska delarna i ett program i \coq och sedan
+exportera dem och köra dem tillsammas med icke bevisad kod i till exempel
+Haskell.
 
-\section{Tillämpningar}
-Coq har, som redan nämnts, använts till att bevisa olika stora satser och även
-en del andra programvaror. Det har skett genom stora forskningsprojekt.
-
-\begin{itemize}
-
-\item Fyrfärgssatsen\autocite{gonthier2008formal} säger att, givet varje möjlig
-uppdelning av ett plan i sammanhängande regioner, så krävs det högst fyra
-färger för att färglägga alla regionerna så att inga angränsande regioner har
-samma färg. Två regioner anses vara angränsande om de delar en gemensam kant
-som inte är ett hörn.
-
-Under årens lopp har det förekommit många olika bevis och motbevis som har
-bevisats vara falska och  det var först 1976 som det första korrekta beviset
-kom. Stora delar av beviset var då gjorda i en dator och det gick inte att
-bekräfta att dessa delar var korrekta. För att bevisa att datordelarna av
-beviset var korrekta så formaliserades beviset i Coq och detta ledde till
-utvecklandet av SSReflect.
-
-\item CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att
-utveckla formellt bevisade kompilatorer. Anledningen att man vill ha en
-formellt bevisad kompilator är att vid vissa optimeringar så kan kompilatorn
-skapa buggar och beräkningsfel. Att kompilatorn är formellt bevisad innebär att
-det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
-för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
-Rent konkret innebär detta att man är garanterad att den exekverbara koden inte
-innehåller buggar som är skapade av kompilatorn. Huvudresultatet av detta
-är en fungerande C-kompilator som stödjer hela ANSI C (som är den första
-standardiserade veritionen av C) med ett få undantag.
-Vad gäller prestanda så är CompCert's kompilator snabbare än
-GCC's (Gnu Compiler Collection) C-kompilator när denna inte
-har några optimeringar.
-
-\item Feit-Thompsons är en sats inom matematisk gruppteori som säger att en
-ändlig grupp alltid är lösbar om dess ordning är
-udda\cite{aschbacher2004status}. Denna sats bevisades av Walter Feit och John
-Griggs Thompson 1963. Beviset för Feit-Thompsons sats är stort och sträcker sig
-över två volymer, det är mycket material för en person att sätta sig in i och
-verifiera för hand. Storleken på beviset och därmed möjligheten till någon dold
-miss i beviset är en av anledningarna till varför beviset för Feit-Thompsons
-sats är intressant att formalisera i Coq. I samband med formaliseringen av
-beviset så har även en stor del av matematisk gruppteori verifierats.
-
-\end{itemize}
-
-\section{Alternativ till Coq}
-Det finns många olika program och språk för att formalisera och bevisa olika
-former av matematik eller logik. En sak som de flesta har gemensamt är att de
-är uppbyggd på funktionella programmerings paradigmer.
-
-\begin{itemize}
-\item Agda är utvecklat på Chalmers och påminner till stor del om Haskell. Till
-skillnad mot Coq så finns det inga inbyggda taktiker.  Agda är inte lika
-matematiskt inriktad som Coq utan används mer till att bevisa korrekthet hos
-program. En fördel med Agda är att alla Unicodetecken är tillåtna vilket gör
-det enkelt att skriva sina program och bevis på samma sätt som man skulle göra
-det på papper.
-
-\item Z3 är ett språk som har utvecklats av Microsoft för att förenkla och bevisa
-olika teorem. Kan användas tillsammans med flera stora ickefunktionella språk
-som Python, C och .NET.
-
-\item HOL, Högre Ordningens Logik är en av de första interaktiva teorembevisarna och
-HOL-light som är en vidareutveckling av det används idag av Intel för att
-bevisa att vissa hårdvarukomponenter fungerar korrekt.
-
-\item F* är en vidareutveckling av F\# och används för att verifiera och bevisa
-egenskaper hos program. En av de större skillnaderna från F\# är att F* har
-stöd för beroendetyper. F* är en del av .NET vilket gör att bevis och kod som
-är skriven i F* går att använda i all andra .NET språk. Stora delar av F* är
-formaliserade och bevisade i Coq.
-\end{itemize}
-
-\begin{comment}
-Källor och annat material
-HOL http://www.cl.cam.ac.uk/~jrh13/hol-light/
-Z3 http://research.microsoft.com/en-us/um/redmond/projects/z3/old/
-F* http://research.microsoft.com/en-us/projects/fstar/
-\end{comment}
-
-\section{Curry-Howard isomorphism}
+\section{Curry-Howard isomorfin}
 Enligt Curry Howard isomorpismen så är propositioner samma sak som typer och
 bevis är samma sak som program. Om vi tar en närmare titt på
 funktionsdefinitionen $a \rightarrow b$ så kan vi tolka det som att givet ett
@@ -98,30 +20,28 @@ bevis för a så får vi ett bevis för b.
   Bevis       &= Programs
 \end{align*}
 
-\section{Polymorphism}
-En kort och enkel förklaring till polymorphism är att en funktion kan appliceras
-på flera olika typer av parametrar.
-En korrektare förklaring till polymorphism är att en polymorpisk funktion
-består av två olika delfunktioner. Den första av dessa funktioner tar
-typer som parametrar och returnerar den andra delfunktionen vars parametertyper
-beror på parametrarna i den första funktionen.
+\section{Polymorfi}
+En kort och enkel förklaring till polymorfi är att en funktion kan appliceras
+på flera olika typer av parametrar. En korrektare förklaring till polymorfi är
+att en polymorfisk funktion består av två olika delfunktioner. Den första av
+dessa funktioner tar typer som parametrar och returnerar den andra
+delfunktionen vars parametertyper beror på parametrarna i den första
+funktionen.
 \begin{equation}
-f_{Typer}(T_1 T_2 ... : Typer)
-\rightarrow f_{Termer}((t_1 : T_1) (t_2 : T_2) ...)
+  f_{Typer}(T_1 T_2 ... : Typer) \rightarrow f_{Termer}((t_1 : T_1) (t_2 : T_2) ...)
 \end{equation}
 
 Som de flesta funktionella programmeringspråk så har Coq stöd för ad hoc
 polymorphism som även kallas överlagring. Detta innebär att typerna i
-funktionen bestämms av sammanhanget användaren behöver då aldrig ge
-Typerna som parametrar till den första funktionen utan kompilatorn sköter
-det.
-Då coq är ett strikt typat språk används
-typklasser för att beskriva vilka typer som är tillåtna.
+funktionen bestämms av sammanhanget användaren behöver då aldrig ge Typerna som
+parametrar till den första funktionen utan kompilatorn sköter det. Då coq är
+ett strikt typat språk används typklasser för att beskriva vilka typer som är
+tillåtna.
 
 I följande exempel defineras en lista som kan innehålla värden av alla möjliga
-typer. Den undre definitionen i exemplet är en rekursiv funktion som lägger till
-ett ellement i en lista. Denna funktionen är polymorphisk och fungerar alltså på
-alla listor oberoende vilken typ på värden som listan innehåller.
+typer. Den undre definitionen i exemplet är en rekursiv funktion som lägger
+till ett ellement i en lista. Denna funktionen är polymorfisk och fungerar
+alltså på alla listor oberoende vilken typ på värden som listan innehåller.
 \begin{lstlisting}
 Inductive list (X:Type) : Type :=
   | nil  : list X
@@ -134,11 +54,10 @@ Fixpoint append (X:Type) (l : list X) (x : X) : list X :=
   end.
 \end{lstlisting}
 
-Om det inte skulle finnas polymorphism i \coq så skulle det inte
-gå att skapa en generell listtyp utan det skulle krävas en specifik
-listtyp för alla andra typer. Till exempel om vi skulle lagra heltal
-i en lista så skulle det finnas en specifik heltalsliste-typ som det bara
-gick att lagra heltal i.
+Om det inte skulle finnas polymorfi i \coq så skulle det inte gå att skapa en
+generell listtyp utan det skulle krävas en specifik listtyp för alla andra
+typer. Till exempel om vi skulle lagra heltal i en lista så skulle det finnas
+en specifik heltalsliste-typ som det bara gick att lagra heltal i.
 
 \section{Beroendetyper}
 I en polymorphisk funktion så kan en parameter- eller retur-typ bero på vilka
@@ -168,7 +87,7 @@ printf("%s is %d years old and %f.1cm long", name, age, lenght)
 
 % http://mattam.org/research/publications/Programming_with_Dependent_Types_in_Coq-PPS-260209.pdf
 
-\section{Grund och taktikspråk}
+\section{Grund- och taktikspråk}
 Coq består av två olika delspråk. Grundspråket kallas Gallina och liknar till
 viss del OCaml. Det är i Gallina som de definitioner och funktioner som ska
 bevisas skrivs.
@@ -179,3 +98,84 @@ möjligt att använda samma metoder i Coq som man använder när man skapar ett
 pappersbevis. Då \coq är en interaktiv teorembevisare så när en viss taktik
 används uppdateras de hypoteser och mål som ska bevisas och användaren
 anger då en ny taktik och detta fortsätter tills alla målen är lösta.
+
+\section{Coq's Historia}
+Det är i huvudsak två vetenskaper som ligger till grund för Coq, nämligen
+datavetenskap (eng. computer science) och formellbevisföring. Datavetenskapens
+vagga startar med en avhandling av Don Knuth, professor på Stanfords
+Universitet, år 1968. Det skulle visa sig ta 30 år av forskning efter
+avhandligen att fastställa ett rigoröst område. På liknande sätt var även den
+rigorösa grunden av formellbevisföring under utveckling under denna tidsepok.
+De största genombrotten gjordes dock under 1930-talet av Gentzen, Gödel och
+Herbrand. 70 år senare stod Coq som slutprodukt efter en lång serie av projekt.
+
+\section{Tillämpningar}
+Coq har, som redan nämnts, använts till att bevisa olika stora satser och även
+en del andra programvaror. Det har skett genom stora forskningsprojekt.
+
+\begin{itemize}
+\item Fyrfärgssatsen \autocite{gonthier2008formal}\cite{gonthier2005computer}
+säger att varje karta kan färgläggas med fyra färger så att inga två
+angränsande länder får samma färg. Den visades 1976 med ett bevis som var över
+hundra sidor långt. Det som innehöll fallanalys av 10000 fall gjord för hand,
+och dessutom en datorprogrammerad fallanalys av miljontals fall. Det gjorde det
+mycket svårt att kontrollera om beviset var korrekt. Beviset formaliserades och
+verifierades i \coq 1995. Detta arbete ledde till utvecklandet av \ssr.
+
+\item CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att
+utveckla formellt bevisade kompilatorer. Anledningen att man vill ha en
+formellt bevisad kompilator är att vid vissa optimeringar så kan kompilatorn
+skapa buggar och beräkningsfel. Att kompilatorn är formellt bevisad innebär att
+det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
+för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
+Rent konkret innebär detta att man är garanterad att den exekverbara koden inte
+innehåller buggar som är skapade av kompilatorn. Huvudresultatet av detta är en
+fungerande C-kompilator som stödjer hela ANSI C (som är den första
+standardiserade veritionen av C) med ett få undantag. Vad gäller prestanda så
+är CompCert's kompilator snabbare än GCC's (Gnu Compiler Collection)
+C-kompilator när denna inte har några optimeringar.
+
+\item Feit-Thompsons eller Odd Order Theorem är en sats inom algebra som säger
+att en ändlig grupp alltid är lösbar om dess ordning är udda
+\cite{Gonthier:2013:EMO:2480359.2429071}. Det ursprungliga beviset är över 200
+sidor långt\cite{feit1963}. Storleken på beviset och därmed risken för någon
+dold miss i det är en av anledningarna till varför det ansågs intressant att
+formalisera i Coq. I samband med formaliseringen av beviset har även en stor
+del av matematisk gruppteori formaliserats och verifierats.
+\end{itemize}
+
+\section{Alternativ till Coq}
+Det finns många olika program och språk för att formalisera och bevisa olika
+former av matematik eller logik. En sak som de flesta har gemensamt är att de
+är uppbyggd på funktionella programmeringsparadigmer.
+
+\begin{itemize}
+\item Agda är utvecklat på Chalmers och påminner till stor del om Haskell. Till
+skillnad mot Coq så finns det inga inbyggda taktiker. Agda är inte lika
+matematiskt inriktad som Coq utan används mer till att bevisa korrekthet hos
+%är vi säkra på det här med matematiskt inriktat?
+program. En fördel med Agda är att alla Unicodetecken är tillåtna vilket gör
+det enkelt att skriva sina program och bevis på samma sätt som man skulle göra
+det på papper.
+
+\item Z3 är ett språk som har utvecklats av Microsoft för att förenkla och
+bevisa olika teorem. Kan användas tillsammans med flera stora ickefunktionella
+språk som Python, C och .NET.
+
+\item HOL, Högre Ordningens Logik är en av de första interaktiva
+teorembevisarna och HOL-light som är en vidareutveckling av det används idag av
+Intel för att bevisa att vissa hårdvarukomponenter fungerar korrekt.
+
+\item F* är en vidareutveckling av F\# och används för att verifiera och bevisa
+egenskaper hos program. En av de större skillnaderna från F\# är att F* har
+stöd för beroendetyper. F* är en del av .NET vilket gör att bevis och kod som
+är skriven i F* går att använda i all andra .NET språk. Stora delar av F* är
+formaliserade och bevisade i Coq.
+\end{itemize}
+
+\begin{comment}
+Källor och annat material
+HOL http://www.cl.cam.ac.uk/~jrh13/hol-light/
+Z3 http://research.microsoft.com/en-us/um/redmond/projects/z3/old/
+F* http://research.microsoft.com/en-us/projects/fstar/
+\end{comment}
