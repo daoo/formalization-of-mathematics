@@ -21,7 +21,7 @@ IDE}
   så evalueras koden som stegas förbi.
 
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
   \includegraphics[width=150mm]{images/Kontext}
   \caption[Fönster för kontext och mål]
@@ -41,17 +41,18 @@ Förstoring av (2)
 \coq är uppbygtt av satser där varje sats avslutas med en punkt. Koden
 evalueras sedan en sats i taget och de delar av koden som har blivit evaluerade
 markeras med en grön färg och det går inte längre att göra några ändringar i
-dessa. Om man skulle vilja göra en ändring så får man i så fall stega tillbaks
+dessa. Om man skulle vilja göra en ändring så får man i så fall stega tillbaka
 i programmet och göra ändringen.
 
 \subsection{Bevis}
 Det finns flera olika nyckelord för att starta ett bevis bland annat
-\C{theorem} och \C{lemma}. Det är ingen skillnad på vilket av dessa orden man
+\C{Theorem} och \C{Lemma}. Det är ingen skillnad på vilket av dessa orden man
 använder för att påbörja ett bevis utan de är bara till för att användaren ska
 kunna gradera sina bevis. För enkelhetens skull kommer bara nyckelordet
-\C{lemma} användas i fortsättningen. Ett bevis i \coq är uppbyggt på följande
+\C{Lemma} användas i fortsättningen. Ett bevis i \coq är uppbyggt på följande
 sätt
 
+% verkar inte fungera med å i lstlisting
 \begin{lstlisting}
 Lemma bevisnamn : påstående som ska bevisas.
 Proof.
@@ -118,9 +119,9 @@ T(n) = \left\{\begin{matrix} n/2, & \mbox{om }n\equiv0\mbox{ (mod 2)} \\ 3n+1,
 \subsection{Mönstermatchning}
 Mönstermatchning i \coq påminner till stor del om \C{case} i Haskell.
 Skillnaden är att istället för att skriva \C{case x of} som i Haskell så skrivs
-\C{match x with} där x är namnet på variabeln ska matchas i båda fallen. I \coq
-så måste även alla efterföljande rader utan den första börja med symbolen $|$.
-Matchningssatsen måste även avslutas med \C{end}.
+\C{match x with} där x är namnet på variabeln som ska matchas i båda fallen.
+I \coq så måste även alla efterföljande rader utan den första börja med symbolen
+$|$. Matchningssatsen måste även avslutas med \C{end}.
 
 \begin{figure}[H]
   \centering
