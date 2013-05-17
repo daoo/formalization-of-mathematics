@@ -1,6 +1,4 @@
-\section{Coq}
-
-\subsection{Coq's Historia}
+\section{Coq's Historia}
 Det är i huvudsak två vetenskaper som ligger till grund för Coq, nämligen
 datavetenskap (eng. computer science) och formellbevisföring. Datavetenskapens
 vagga startar med en avhandling av Don Knuth, professor på Stanfords
@@ -10,7 +8,7 @@ rigorösa grunden av formellbevisföring under utveckling under denna tidsepok.
 De största genombrotten gjordes dock under 1930-talet av Gentzen, Gödel och
 Herbrand. 70 år senare stod Coq som slutprodukt efter en lång serie av projekt.
 
-\subsection{Tillämpningar}
+\section{Tillämpningar}
 Coq har, som redan nämnts, använts till att bevisa olika stora satser och även
 en del andra programvaror. Det har skett genom stora forskningsprojekt.
 
@@ -55,7 +53,7 @@ beviset så har även en stor del av matematisk gruppteori verifierats.
 
 \end{itemize}
 
-\subsection{Alternativ till Coq}
+\section{Alternativ till Coq}
 Det finns många olika program och språk för att formalisera och bevisa olika
 former av matematik eller logik. En sak som de flesta har gemensamt är att de
 är uppbyggd på funktionella programmerings paradigmer.
@@ -90,7 +88,7 @@ Z3 http://research.microsoft.com/en-us/um/redmond/projects/z3/old/
 F* http://research.microsoft.com/en-us/projects/fstar/
 \end{comment}
 
-\subsection{Curry-Howard isomorphism}
+\section{Curry-Howard isomorphism}
 Enligt Curry Howard isomorpismen så är propositioner samma sak som typer och
 bevis är samma sak som program. Om vi tar en närmare titt på
 funktionsdefinitionen $a \rightarrow b$ så kan vi tolka det som att givet ett
@@ -100,7 +98,7 @@ bevis för a så får vi ett bevis för b.
   Bevis       &= Programs
 \end{align*}
 
-\subsection{Polymorphism}
+\section{Polymorphism}
 En kort och enkel förklaring till polymorphism är att en funktion kan appliceras
 på flera olika typer av parametrar.
 En korrektare förklaring till polymorphism är att en polymorpisk funktion
@@ -142,7 +140,7 @@ listtyp för alla andra typer. Till exempel om vi skulle lagra heltal
 i en lista så skulle det finnas en specifik heltalsliste-typ som det bara
 gick att lagra heltal i.
 
-\subsection{Beroendetyper}
+\section{Beroendetyper}
 I en polymorphisk funktion så kan en parameter- eller retur-typ bero på vilka
 typer de tidigare parametrarna har haft. I beroendetypning så går vi ett steg
 längre och låter parameter- och retur-typerna bero på värdet av en
@@ -170,7 +168,7 @@ printf("%s is %d years old and %f.1cm long", name, age, lenght)
 
 % http://mattam.org/research/publications/Programming_with_Dependent_Types_in_Coq-PPS-260209.pdf
 
-\subsection{Grund och taktikspråk}
+\section{Grund och taktikspråk}
 Coq består av två olika delspråk. Grundspråket kallas Gallina och liknar till
 viss del OCaml. Det är i Gallina som de definitioner och funktioner som ska
 bevisas skrivs.
