@@ -1,57 +1,64 @@
 \section{Informellt bevis av Toom-Cook}
-I detta stycke visar vi att för $p, q \in R[x]$ så är $p \cdot q =$ Toom-Cook m
-$(p, q)$.
+\label{informhuvudbevis}
+I detta stycke visar vi att för $p, q \in R[x]$ så är
+$p \cdot q = \toom (p, q)$. Vi gör detta med hjälp av två lemman, vars bevis
+kommer efter beviset av \ref{prop:1}.
 
 \begin{proposition}
   \label{prop:1}
   Antag att $R$ är ett integritetsområde och att $p, q \in R[x]$. Om det finns
-  $\alpha_0, ...,  \alpha_{2m-2} \in R$ så att $ \prod_{0 \leq i < j \leq d}
+  $\alpha_0, \dots, \alpha_{2m-2} \in R$ så att $\prod_{0 \leq i < j \leq d}
   (\alpha_i - \alpha_j)$ är inverterbar i $R$, så är med dessa punkter som
-  evalueringspunkter
+  interpolationspunkter
 
   \begin{equation}
     \label{eq:name7}
-    \text{Toom-Cook m} (p, q) =  p \cdot q.
+    \toom (p, q) =  p \cdot q.
   \end{equation}
 \end{proposition}
 
 \begin{proof}
 Vi visar propositionen med induktion över $\grad p$.
 
-\noindent\textbf{Basfall}. När $n = \grad p \leq 2$ så gäller (\ref{eq:name7})
-enligt steg 1 i algoritmen eftersom att vi räknar ut produkt direkt.
+\paragraph{Basfall.}
+När $n = \grad p \leq 2$ så gäller (\ref{eq:name7}) enligt steg
+\ref{in:gradkontroll} i algoritmen eftersom att vi räknar ut
+produkt direkt.
 
-\bigskip\noindent
-\textbf{Induktionssteg}. Antag att $p, q \in R[x]$, där
+\paragraph{Induktionssteg.}
+\label{in:induktion}
+Antag att $p, q \in R[x]$, där
 \begin{align*}
-  &p(x) = a_0 + a_1 x + ... + a_n x^n, \\
-  &q(x) = b_0 + b_1 x + ... + b_s x^s
+  p(x) &= a_0 + a_1 x + \cdots + a_n x^n, \\
+  q(x) &= b_0 + b_1 x + \cdots + b_s x^s
 \end{align*}
 med $0 \leq s \leq n$.
 
 \bigskip\noindent
-Antag också att $n > 2$ och att Toom-Cook $m (f, g) =  f \cdot g$ gäller för
-polynom av grad mindre än $n$. Eftersom $n > 2$ så går vi vidare till steg 2 i
-algoritmen och skapar $u$ och $v$ från $p$ och $q$. När detta är gjort
-evaluerar vi i steg 3 $u$ och $v$ i punkterna $\alpha_0, ...,  \alpha_{2m-2}$
-genom att multiplicera vektorn av deras koefficienter med evalueringsmatrisen.
-I steg 4 anropar vi Toom-Cook m  igen, nu med argumenten $u(\alpha_i) \cdot
-v(\alpha_i)$ för $i = 0, \ldots , 2m-2$. Eftersom $\grad u(\alpha_i)$, $\grad
-v(\alpha_i) < n$ enligt lemma \ref{lemma:1} så är Toom-Cook m $(u(\alpha_i),
-v(\alpha_i)) = u(\alpha_i) \cdot v(\alpha_i)$ enligt induktionsantagnandet. I
-steg 5 skall vi bestämma koefficienterna i $w(y)=u(y) \cdot v(y)$. Detta gör vi
-genom att lösa matrisekvationen (\ref{eq:NAME4}). Eftersom
-interpolationsmatrisen $V_I$ enligt antagande är inverterbar så ges
-koefficienterna entydigt av (\ref{eq:NAME5}). I steg 6 evaluerar vi $w(y)=u(y)
-\cdot v(y)$ i $x^b$. Lemma \ref{lemma:2} ger att $u(x^b)=p(x)$ och att
-$v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x)
-\cdot q(x)$.
+Antag också att $n > 2$ och att $\toom (f, g) =  f \cdot g$ gäller för polynom
+av grad mindre än $n$. Eftersom $n > 2$ så går vi vidare till steg
+\ref{in:gradkontroll} i algoritmen och skapar $u$ och $v$ från $p$ och $q$.
+När detta är gjort evaluerar vi i steg 3 $u$ och $v$ i punkterna
+$\alpha_0, \dots, \alpha_{2m-2}$ genom att multiplicera vektorn av deras
+koefficienter med evalueringsmatrisen. I steg \ref{in:rekursiv} anropar vi
+$\toom$ igen, nu med argumenten $u(\alpha_i) \cdot v(\alpha_i)$ för
+$i = 0, \ldots , 2m-2$. Dessa är polynom i $R[x]$. Eftersom
+$\grad u(\alpha_i)$, $\grad v(\alpha_i) < n$
+enligt lemma \ref{lemma:1} så är
+$\toom (u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot v(\alpha_i)$ enligt
+induktionsantagnandet. I steg \ref{in:interpol} skall vi bestämma
+koefficienterna i $w(y)=u(y) \cdot v(y)$. Detta gör vi genom att lösa
+matrisekvationen (\ref{eq:NAME4}). Eftersom interpolationsmatrisen $V_I$ enligt
+antagande är inverterbar så ges koefficienterna entydigt av (\ref{eq:NAME5}).
+I steg \ref{in:sammansattning} evaluerar vi $w(y)=u(y) \cdot v(y)$ i $x^b$.
+Lemma \ref{lemma:2} ger att $u(x^b)=p(x)$ och att $v(x^b)=q(x)$. Då
+$w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
 \end{proof}
 
 \begin{lemma}
   \label{lemma:1}
   Antag att $p(x) \in R[x]$ och att $\grad p \geq 3$. Antag också att $u(y)$ är
-  definierad enligt steg \ref{uppdelning}, uppdelning, i algoritmen och att
+  definierad enligt steg \ref{in:uppdelning}, uppdelning, i algoritmen och att
   $\alpha \in R$. Då är $\grad u(\alpha) < \grad p$.
 \end{lemma}
 \begin{proof}
@@ -66,15 +73,15 @@ $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(
   < b$. Nu återstår att visa att $b < \grad p = n$. Vi har definierat $b =
   \floor[\big]{\frac{1 + n}{m}} + 1$. Om $n \geq 3$ och $m \geq 3$ så är
   \begin{align*}
-    n-b &= n - \left( \floor[\bigg]{\frac{1 + n}{m}} + 1 \right) \geq \frac{2n-4}{3} > 0,
+    n-b &= n - \left( \floor[\bigg]{\frac{1 + n}{m}} + 1 \right) \geq \frac{nm-n-m-1}{m} \geq 0,
   \end{align*}
   så $b < \grad p(x) = n$.
 \end{proof}
 
 \begin{lemma}
   \label{lemma:2}
-  Antag att $p(x) \in R[x]$ och att $b$ och $u(y)$ är definierade som i steg 2 i
-  algoritmen. Då är $u(x^b)=p(x)$.
+  Antag att $p(x) \in R[x]$ och att $b$ och $u(y)$ är definierade som i steg 2
+  i algoritmen. Då är $u(x^b)=p(x)$.
 \end{lemma}
 \begin{proof}
   Vi har att
@@ -82,11 +89,10 @@ $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(
     u(x^b) &= \sum_{i = 0}^{m-1} p(x)/x^{bi} (\modu x^b) x^{bi} \\
            &= \sum_{i = 0}^{m-2} p(x)/x^{bi} (\modu x^b) x^{bi} + p(x)/x^{b(m-1)} (\modu x^b) x^{b (m-1)}.
   \end{align*}
-  \bigskip\noindent
-  \textbf{Påstående 1.} Den sista termen i $u(x^b)$ kan skrivas om till
+  \paragraph{Påstående 1.} Den sista termen i $u(x^b)$ kan skrivas om till
   $p(x)/x^{b (m-1)} x^{b (m-1)}$ eftersom $\grad p - b (m-1) < b$.
 
-  Med $\grad p = n$ har vi att
+  Med $\grad p = n$ och $b = \floor[\big]{\frac{1 + n}{m}} + 1$ har vi att
   \begin{align*}
     b - (n - b(m-1)) &= m b - n \\
                      &= m \left( \floor[\bigg]{\frac{1 + n}{m}} + 1 \right) - n \\
@@ -94,10 +100,11 @@ $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(
                      &= 1 + n - m \left\{ \frac{1 + n}{m} \right\} + m - n \\
                      &= 1 + m \left( 1 - \left\{ \frac{1 + n}{m} \right\} \right) > 0
   \end{align*}
-  eftersom $0 < 1 - \{ x \} \leq 1$ för alla reella tal $x$ \footnote{$\{x\}$
-  betecknar $x-\floor{x}$. Se \cite{graham1989concrete}.}. Graden av
-  $p(x)/x^{b(m-1)}$ är $\max (n - b(m-1),0)$ som är mindre än $b$, och därmed är
-  $p(x)/x^{b(m-1)}  \modu x^b = p(x)/x^{b(m-1)}$, vilket visar Påstående 1. Så
+  eftersom $0 < 1 - \{ x \} \leq 1$ för alla reella tal $x$
+  \footnote{$\{x\}$ betecknar $x-\floor{x}$. Se \cite{graham1989concrete}.}.
+  Graden av $p(x)/x^{b(m-1)}$ är $\max (n - b(m-1),0)$ som är mindre än $b$,
+  och därmed är $p(x)/x^{b(m-1)}  \modu x^b = p(x)/x^{b(m-1)}$, vilket visar
+  Påstående 1. Så
   \begin{align*}
     u(x^b) &= \sum_{i = 0}^{m-2} p(x)/x^{bi} (\modu x^b) x^{bi} + p(x)/x^{b(m-1)} x^{b(m-1)}.
   \end{align*}
@@ -106,7 +113,7 @@ $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(
     a(x) = a(x) \modu x^b + \left(a(x)/x^b\right) x^b \label{eq:name8}
   \end{align}
   då $a(x) \modu x^b$ och $p(x)/x^{b}$ är resten respektive kvoten vid division
-  med $x^b$. Så om vi kan visa att $u(x^b) =  p(x) \modu x^b + p(x)/x^{b}  x^{b}$
+  med $x^b$. Så om vi kan visa att $u(x^b) = p(x) \modu x^b + p(x)/x^{b} x^{b}$
   så är $u(x^b) = p(x)$. Och om sedan
   \begin{align}
     \sum_{i = 0}^{k} p(x)/x^{bi}  (\modu x^b) x^{bi} + (p(x)/x^{b(k + 1)})  x^{b(k + 1)} = \label{eq:name9} \\

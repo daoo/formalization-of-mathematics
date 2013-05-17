@@ -1,59 +1,68 @@
-\section{Definition av Toom-Cook-$m$}
-I detta avsnitt definierar vi Toom-Cook m $(p, q)$, för $m \in \mathbb{N}$ och
-$m \geq 3$, som resultatet av algoritmen nedan. Versionen av algoritmen som
-presenteras nedan bygger på \cite{bodrato2007a} och presentationen av den
-följer källans. För en introduktion till integritetsområden och polynom, se
-APPENDIX NÅNTING.
+\section{Definition av $\toom$}
+\label{in:definition}
+Det första steget i formaliseringen av Toom-Cook-algoritmen är en informell men
+detaljerad definition och bevis av algoritmen och att den är korrekt. Detta
+avsnitt är ägnat åt den. Versionen av algoritmen som presenteras bygger på den
+i \cite{bodrato2007a} och presentationen av den följer källans. För en
+introduktion till integritetsområden och polynom, se appendix
+\ref{appendix:matematikteori}.
 
 Låt R vara ett integritetsområde och låt $p, q \in R[x]$, där
 \begin{align*}
-  &p(x) = a_0 + a_1 x + ... + a_n x^n, \\
-  &q(x) = b_0 + b_1 x + ... + b_s x^s
+  p(x) &= a_0 + a_1 x + \cdots + a_n x^n, \\
+  q(x) &= b_0 + b_1 x + \cdots + b_s x^s
 \end{align*}
 med $0 \leq s \leq n$.
+I detta avsnitt definierar vi $\toom (p, q)$, för naturliga tal $m \geq 3$,
+som resultatet av algoritmen nedan.
 
 \subsection{Gradkontroll}
-Om $\grad p = n \leq 2$, låt Toom-Cook $m (p, q) = p \cdot q$, annars gå vidare
-till steg 2.
+\label{in:gradkontroll}
+Om $\grad p = n \leq 2$, låt $\toom (p, q) = p \cdot q$, där $p\cdot q$
+beräknas med naiv polynommultiplikation, annars gå vidare till steg
+\ref{in:uppdelning}.
 
 \subsection{Uppdelning}
-\label{uppdelning}
+\label{in:uppdelning}
 Låt
-\begin{align*}
-  b &= \floor[\bigg]{\frac{1 + \grad p}{m}} + 1 = \floor[\bigg]{\frac{1 + n}{m}} + 1.
+\begin{align}
+  b &= \floor[\bigg]{\frac{1 + \grad p}{m}} + 1 = \floor[\bigg]{\frac{1 + n}{m}} + 1. \label{eq:b}
 \intertext{För $f \in R[x]$ och}
   f &= q x^k + r
 \intertext{med $q, r \in R[x]$ och $r = 0$ eller $\grad r \leq \grad x^k$, låt}
-  f/x^k &= q \\
-  f \modu x^k &= r.
-\intertext{Nu definierar vi $u, v \in R[x][y]$. Låt}
-  u(y)&=u_0 + u_1 y + ... + u_{m-1} y^{m-1}
+  f/x^k       &= q \label{eq:rdiv} \\
+  f \modu x^k &= r. \label{eq:rmod}
+\intertext{Nu definierar vi $u, v \in \left(R[x]\right)[y]$. Låt}
+  u(y) &= u_0 + u_1 y + \cdots + u_{m-1} y^{m-1} \label{eq:u}
 \intertext{där}
-  u_k &= p / x^{bk} \modu x^b
+  u_k &= \left(p / x^{bk} \right) \modu x^b
 \intertext{och}
-  v(y)&=v_0 + v_1 y + ... + v_{m-1} y^{m-1}
+  v(y)&=v_0 + v_1 y + \cdots + v_{m-1} y^{m-1} \label{eq:v}
 \intertext{där}
-  v_k &= q / x^{bk} \modu x^b
-\end{align*}
-Vi vill att $u(x^b)=p(x)$ och $v(x^b)=q(x)$.
+  v_k &= \left(q / x^{bk} \right) \modu x^b
+\end{align}
+Vi vill alltså att $u(x^b)=p(x)$ och $v(x^b)=q(x)$.
 
 \subsection{Evaluering}
-Nu ska vi beräkna $w = u \cdot v$. Vi gör detta genom interpolation. Vi
-beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för $d + 1$ punkter
-$\alpha_0, ...,  \alpha_d$, där $\alpha_i \in R$ och
+\label{in:evaluering}
+Nu ska vi beräkna $w = u \cdot v$. Vi kommer göra detta genom interpolation i
+steg \ref{in:interpol}. Eftersom
+\begin{align*}
+ \grad w \leq \grad u + \grad v \leq m - 1 + m -1 = 2m-2 = d
+\end{align*}
+kan koefficienterna i $w$ bestämmas om vi vet värdet av $w$ i $d + 1$ skiljda
+punkter. Vi evaluerar $w$ i punkterna $\alpha_0, ...,  \alpha_d$, där
+$\alpha_i \in R$. För att göra det beräknar vi i detta steg först $u(\alpha_i)$
+och $v(\alpha_i)$ genom matrismultiplikation. I nästa steg beräknas sen
+$w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$. Låt
 
 \begin{align*}
-  d = m - 1 + m -1 = 2m-2 \geq \grad w = \grad u + \grad v.
-\end{align*}
-Därefter bestäms koefficienterna i $w$ genom interpolation. I detta steg
-beräknar vi $u(\alpha_i)$ och $v(\alpha_i)$. Låt
-\begin{align*}
-  V_e &=
-  \begin{pmatrix}
-    \alpha_0^0 & \alpha_0^1 & ... & \alpha_0^{m-1} \\
-    \vdots     & \vdots     &     & \vdots         \\
-    \alpha_d^0 & \alpha_d^1 & ... & \alpha_d^{m-1}
-  \end{pmatrix}.
+ V_e &=
+\begin{pmatrix}
+  \alpha_0^0 & \alpha_0^1 & \cdots & \alpha_0^{m-1} \\
+  \vdots     & \vdots     & \ddots & \vdots         \\
+  \alpha_d^0 & \alpha_d^1 & \cdots & \alpha_d^{m-1}
+\end{pmatrix}.
 \intertext{Då får vi}
   V_e \cdot
   \begin{pmatrix}
@@ -71,21 +80,23 @@ beräknar vi $u(\alpha_i)$ och $v(\alpha_i)$. Låt
 och motsvarande för $v$.
 
 \subsection{Rekursiv multiplikation}
-Vi beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för i $= 0, ... , d$
-rekursivt genom att anropa algoritmen med $u(\alpha_i)$ och $v(\alpha_i)$ som
+\label{in:rekursiv}
+Vi beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för i $= 0, \dots, d$
+rekursivt genom att anropa $\toom$ med $u(\alpha_i)$ och $v(\alpha_i)$ som
 argument. Notera att $u(\alpha_i)$, $v(\alpha_i) \in R[x]$.
 
 \subsection{Interpolation}
+\label{in:interpol}
 Vi bestämmer koefficienterna i $w(y)=w_0 + w_1 y + \ldots + w_d y^d$ genom
-interpolation. Om
+interpolation. Vi vet värdet av $w(y) = u(y) \cdot v(y)$ i $d + 1$ punkter. Om
 
 \begin{align}
   \label{eq:NAME3}
   V_I &=
   \begin{pmatrix}
-    \alpha_0^0 & \alpha_0^1 & ... & \alpha_0^d \\
-    \vdots     & \vdots     &     & \vdots     \\
-    \alpha_d^0 & \alpha_d^1 & ... & \alpha_d^d
+    \alpha_0^0 & \alpha_0^1 & \cdots & \alpha_0^d \\
+    \vdots     & \vdots     & \ddots & \vdots     \\
+    \alpha_d^0 & \alpha_d^1 & \cdots & \alpha_d^d
   \end{pmatrix}
 \intertext{så är}
   \label{eq:NAME4}
@@ -122,5 +133,6 @@ Vandermondematris så är}
 \end{align}
 
 \subsection{Sammansättning}
-Vi får slutligen det önskade resultatet $p(x) \cdot q(x)$ genom att evaluera
-$w$ i $x^b$.
+\label{in:sammansattning}
+Vi får slutligen $p(x) \cdot q(x)$ genom att evaluera $w$ i $x^b$ eftersom
+$w(x^b) = u(x^b) \cdot v(x^b)$.
