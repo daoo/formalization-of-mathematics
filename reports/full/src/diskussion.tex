@@ -28,15 +28,25 @@ enkla fel smyger sig igenom hela beviset.
 
 \section{Är beroendetypning användbart?}
 Beroendetypning är bra, men innan man kan motivera beroendetypning behöver man
-veta vad som är bra med ett typsystem. Typer specificerar restriktioner för vad
-kod kan göra, kompilatorn kan sedan se till att dessa restriktioner följs. Det
-kan alltså ses som ett verktyg som hjälper till att få koden korrekt. Eftersom
-typer är en slags dokumentation tvingas också programmeraren att tänka på
+veta vad som är bra med ett starkt typsystem.
+Typer specificerar restriktioner för vad kod kan göra, kompilatorn kan sedan se
+till att dessa restriktioner följs. Det kan alltså ses som ett verktyg som
+hjälper till att få koden korrekt. Eftersom typer är en slags dokumentation
+tvingas också programmeraren att tänka på
 \emph{vad} det är koden ska göra istället för \emph{hur} detta ska göras. Det
 ses som positivt då många buggar uppkommer då kod skrivs utan att ha koll på
 vad den ska göra. Denna motivering gäller generellt för typsystem och kan syfta
 på till exempel Haskell. Men det gäller även för beroendetypade system då
 beroendetypning är ett generellare system.
+
+Beroendetypning gör att det ofta framgår exakt vad en funktion gör bara genom
+att läsa typdeklarationen. Detta är en stor fördel när man söker efter en
+specifik funktion som man inte vet namnetpå men man vet vilka typer den ska ha.
+Att typerna ofta förklarar vad funktionerna gör att programmerare inte behöver
+sätta sig in i avancerad kod i funktionen utan det räcker med att läsa vilka
+typer funktionen har. Ett exempel på detta är bevis i \coq där typerna
+specifierar vad som ska bevisas medan funktionskropparna ofta är väldigt
+svårförstådda och inte säger så mycket om vad som bevisas.
 
 Ett exempel är matriser med dimensionerna i typen som gör att man inte kan
 tappa bort en dimension eller av misstag vända på dem. För matrismultiplikation
