@@ -1,21 +1,64 @@
-Följande steg genomfördes under implementationen av algoritmen.
+%Syfte under inledning?
+\subsection{Syfte}
+Syftet med det här projektet är att formalisera och bevisa korrektheten hos en
+generell version av algoritmen Toom-Cook för multiplikation av polynom i \coq/\ssr.
+
+\subsubsection{Avgränsningar}
+\emph{(Detta är en kladd!}
+Fokus har varit att i första hand få praktiska kunskaper för att kunna använda befintliga
+taktiker, typer, funktioner och bevisade resultat i \coq/\ssr för att kunna definiera funktioner och
+bevisa resultat om dem. Vi kommer i de flesta fall beskriva hur
+de strukturer vi använder fungerar för den praktiska användaren, inte hur de exakt är tekniskt implementerade.
+Vi kommer heller inte att implementera en konkret, exekvebar och optimerad algoritm.
+
+-vi fokuserar inte på att verkligen få en snabb algoritm och beräkningskomplexitet nämns bara i förbigående.
+
+- Algoritmen kommer bara implementeras för integritetsområden där det finns interpolationspunkter så att
+  interpolationsmatrisen blir inverterbar
+
+- tidskomplexitet hos algoritmen och optimering av algoritmen kommer bara beröras kort
+
+\subsection{Metod}
+\emph{(Detta är en kladd!)** betyder att det inte är så bra uttryckt.}
+Implementationen av algoritmen **arbetades fram** genom följande steg.
 \begin{enumerate}
-  \item Informell men detaljerad definition av en generell och abstrakt version
-    av algoritmen, informellt men detaljerat bevis för att den är korrekt.
-    \label{it:1}
-    \begin{enumerate}
-      \item Definition av algoritmens
-      \item Huvudbevis av algoritmens korrekthet, men obevisade lemman \label{it:12}
-      \item Bevis av lemmorna från \ref{it:12} \label{it:13}
-    \end{enumerate}
-  \item Implementering av en förenklad men beräkningsbar algoritm. \label{it:2}
-  \item Implementering och bevis av den generella och abstrakta algoritmen i
-    \textsc{Coq/SSReflect}.\label{it:3}
-    \begin{enumerate}
-      \item Implementering av algoritmen.
-      \item Formalisering av beviset i \ref{it:12}
-      \item Formalisering av lemmorna i \ref{it:13} och bevis av ytterligare
-        lemman som krävs för det formella beviset.
-    \end{enumerate}
+\item Informell men detaljerad definition av en generell och abstrakt version av algoritmen,
+informellt men detaljerat bevis för att den är korrekt. \label{it:1}
+\item Implementering av en förenklad men beräkningsbar algoritm. \label{it:2}
+\item Implementering och bevis av den generella och abstrakta algoritmen i \textsc{Coq/SSreflect}.\label{it:3}
 \end{enumerate}
-Punkt \ref{it:1} gjordes i Haskell av Toom-Cook 3 för heltal.
+Steg \ref{it:1} delades upp i följade delsteg.
+\begin{enumerate}
+ \item Definition av algoritmen \label{it:11}, se avsnitt \ref{in:definition}
+ \item Huvudbevis av algoritmens korrekthet, men obevisade lemman \label{it:12}, se prop \ref{prop:1}
+ \item Bevis av lemmorna från steg \ref{it:12} \label{it:13}, se lemma \ref{lemma:1} och \ref{lemma:2}
+\end{enumerate}
+
+Steg \ref{it:2} gjordes i Haskell av Toom-Cook 3 för heltal. Se appendix \ref{appendix:haskellkod} för resultatet.
+
+Steg \ref{it:3} hade delstegen
+\begin{enumerate}
+ \item Implementering av algoritmen.
+ \item Formalisering av beviset i \ref{it:12}
+ \item Formalisering av lemmorna i \ref{it:13} och bevis av ytterligare lemman som det formella beviset krävde.
+\end{enumerate}
+Resultatet av detta beskrivs i avsnitt \ref{resultat:formell}.
+
+\subsubsection{Övervägningar för metodval.}
+\emph{(Detta är en kladd! Det här stycket kommer/borde innehålla: }
+
+Praktiska överväganden:
+-Eftersom ingen i gruppen tidigare kunde \coq/\ssr ägnades mycket tid åt att
+
+Metodvalet har motiverats av
+-behovet av att lära sig coq samtidigt som algoritmen implementerades
+detta gjorde det motiverat att först implementera en föreklad instans av algoritmen för
+att kunna testa om den verkade fungera innan man började med den abstrakta och icke-
+exekverbara versionen i coq.
+
+- genom att först bevisa huvudsatserna och formulera lemman som behövdes för deras bevis
+möjliggjordes arbetsdelning inom gruppen.
+
+- genom att först utarbeta en informell matematisk definition och bevis försäkrar man sig om
+att den formella definitionen som modelleras därefter kommer vara sund, vi får möjlighet
+att kunna verifiera en struktur för beviset utan att förlora oss i detaljer.

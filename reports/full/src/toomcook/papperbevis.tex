@@ -22,8 +22,7 @@ Vi visar propositionen med induktion över $\grad p$.
 
 \paragraph{Basfall.}
 När $n = \grad p \leq 2$ så gäller (\ref{eq:name7}) enligt steg
-\ref{in:gradkontroll} i algoritmen eftersom att vi räknar ut
-produkt direkt.
+\ref{in:gradkontroll} i algoritmen eftersom att vi räknar ut produkt direkt.
 
 \paragraph{Induktionssteg.}
 \label{in:induktion}
@@ -37,27 +36,25 @@ med $0 \leq s \leq n$.
 \bigskip\noindent
 Antag också att $n > 2$ och att $\toom (f, g) =  f \cdot g$ gäller för polynom
 av grad mindre än $n$. Eftersom $n > 2$ så går vi vidare till steg
-\ref{in:gradkontroll} i algoritmen och skapar $u$ och $v$ från $p$ och $q$.
-När detta är gjort evaluerar vi i steg 3 $u$ och $v$ i punkterna
-$\alpha_0, \dots, \alpha_{2m-2}$ genom att multiplicera vektorn av deras
-koefficienter med evalueringsmatrisen. I steg \ref{in:rekursiv} anropar vi
-$\toom$ igen, nu med argumenten $u(\alpha_i) \cdot v(\alpha_i)$ för
-$i = 0, \ldots , 2m-2$. Dessa är polynom i $R[x]$. Eftersom
-$\grad u(\alpha_i)$, $\grad v(\alpha_i) < n$
-enligt lemma \ref{lemma:1} så är
-$\toom (u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot v(\alpha_i)$ enligt
-induktionsantagnandet. I steg \ref{in:interpol} skall vi bestämma
-koefficienterna i $w(y)=u(y) \cdot v(y)$. Detta gör vi genom att lösa
+\ref{in:gradkontroll} i algoritmen och skapar $u$ och $v$ från $p$ och $q$. När
+detta är gjort evaluerar vi i steg 3 $u$ och $v$ i punkterna $\alpha_0, \dots,
+\alpha_{2m-2}$ genom att multiplicera vektorn av deras koefficienter med
+evalueringsmatrisen. I steg \ref{in:rekursiv} anropar vi $\toom$ igen, nu med
+argumenten $u(\alpha_i) \cdot v(\alpha_i)$ för $i = 0, \ldots , 2m-2$. Dessa är
+polynom i $R[x]$. Eftersom $\grad u(\alpha_i)$, $\grad v(\alpha_i) < n$ enligt
+lemma \ref{lemma:1} så är $\toom (u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot
+v(\alpha_i)$ enligt induktionsantagnandet. I steg \ref{in:interpol} skall vi
+bestämma koefficienterna i $w(y)=u(y) \cdot v(y)$. Detta gör vi genom att lösa
 matrisekvationen (\ref{eq:NAME4}). Eftersom interpolationsmatrisen $V_I$ enligt
-antagande är inverterbar så ges koefficienterna entydigt av (\ref{eq:NAME5}).
-I steg \ref{in:sammansattning} evaluerar vi $w(y)=u(y) \cdot v(y)$ i $x^b$.
-Lemma \ref{lemma:2} ger att $u(x^b)=p(x)$ och att $v(x^b)=q(x)$. Då
-$w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
+antagande är inverterbar så ges koefficienterna entydigt av (\ref{eq:NAME5}). I
+steg \ref{in:sammansattning} evaluerar vi $w(y)=u(y) \cdot v(y)$ i $x^b$. Lemma
+\ref{lemma:2} ger att $u(x^b)=p(x)$ och att $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot
+v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
 \end{proof}
 
 \begin{lemma}
   \label{lemma:1}
-  Antag att $p(x) \in R[x]$ och att $\grad p \geq 3$. Antag också att $u(y)$ är
+  Antag att $p(x) \in R[x]$ och att $\grad p \geq 2$. Antag också att $u(y)$ är
   definierad enligt steg \ref{in:uppdelning}, uppdelning, i algoritmen och att
   $\alpha \in R$. Då är $\grad u(\alpha) < \grad p$.
 \end{lemma}
@@ -71,11 +68,11 @@ $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
   \bigskip\noindent
   $u_k = p(x)/x^{k b} \modu x^b$, så enligt definition av mod så är $\grad u_k
   < b$. Nu återstår att visa att $b < \grad p = n$. Vi har definierat $b =
-  \floor[\big]{\frac{1 + n}{m}} + 1$. Om $n \geq 3$ och $m \geq 3$ så är
+  \floor[\big]{\frac{1 + n}{m}} + 1$. Om $n \geq 2$ och $m \geq 3$ så är
   \begin{align*}
     n-b &= n - \left( \floor[\bigg]{\frac{1 + n}{m}} + 1 \right) \geq \frac{nm-n-m-1}{m} \geq 0,
   \end{align*}
-  så $b < \grad p(x) = n$.
+  så $\grad u(\alpha) < b \leq \grad p(x) = n$.
 \end{proof}
 
 \begin{lemma}
@@ -101,8 +98,8 @@ $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
                      &= 1 + m \left( 1 - \left\{ \frac{1 + n}{m} \right\} \right) > 0
   \end{align*}
   eftersom $0 < 1 - \{ x \} \leq 1$ för alla reella tal $x$
-  \footnote{$\{x\}$ betecknar $x-\floor{x}$. Se \cite{graham1989concrete}.}.
-  Graden av $p(x)/x^{b(m-1)}$ är $\max (n - b(m-1),0)$ som är mindre än $b$,
+  \footnote{$\{x\}$ betecknar $x-\lfloor x \rfloor$. Se \cite{graham1989concrete}.}.
+  Graden av $p(x)/x^{b(m-1)}$ är $\max \{n - b(m-1),0\}$ som är mindre än $b$,
   och därmed är $p(x)/x^{b(m-1)}  \modu x^b = p(x)/x^{b(m-1)}$, vilket visar
   Påstående 1. Så
   \begin{align*}
@@ -134,4 +131,3 @@ $w(y)=u(y) \cdot v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
     \sum_{i = 0}^{k-1} p(x)/x^{bi}  (\modu x^b) x^{bi} &+ (p(x)/x^{b k}) x^{b k}
   \end{align*}
 \end{proof}
-

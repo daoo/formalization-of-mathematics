@@ -1,0 +1,33 @@
+\section{Val av interpolationspunkter}
+Interpolationspunkterna är en intressant del i algoritmen. Beroende på vilket m
+i Toom-Cook-m som väljs så avgörs också hur många punkter som behövs, nämligen
+$2m-1$, för att entydigt bestämma koefficienterna i polynomet. Det förutsätter
+att integritetsområdet är tillräckligt stort eftersom punkterna ska vara olika
+och att punkterna väljs så att interpolationsmatrisen blir inverterbar. Om
+integritetsområdet innehåller få element så är en lösning för att få tillgång
+till fler punkter är att vi även tar punkter ur polynomringen. Punkterna bör
+dock vara av så låg grad som möjligt eftersom att polynomen u och v från
+algoritmen, se ekvationerna (\ref {align:u}) och (\ref{align:v}), helst ska
+avta i grad snabbt, för att få så få rekursiva "anrop'' som möjligt, se steg
+\ref{in:rekursiv}, för att algoritmen ska vara effektiv. När polynomen u och v
+evalueras i interpolationspunkterna så tillhör de evaluerade polynomen R[x],
+alltså $u(\alpha_0),...,u(\alpha_{2m-2}),v(\alpha_0),...,v(\alpha_{2m-2} \in
+R[x]$. Graden av dessa polynom avgörs av graden av koefficieterna till u
+respektive v, alltså $u_0,...,u_{m-1},v_0,...v_{m-1} \in R[x]$,  tillsammans
+med graden som interpolationspunkterna bidrar med när de evalueras i respektive
+polynom. Denna grad bör inte vara större än graden av ursprungenspolynomen
+alltså de polynom som skille multipliceras från början för det tar bort lite av
+poängen med algoritmen.
+
+En annan lösning är att definiera polynomen u och v så att de beror på två
+variabler istället för en. Denna definition är tagen ur [boldrato] och lyder
+$u(y,z) = \displaystyle\sum\limits_{i=0}^{n-1} {u_iz^{n-1-i}y^i}$ där $u(x^b,1)
+= u$, analogt för v. Detta leder till att man evaluerar i $RxR$ eller i
+$R[x]xR[x]$ så att interpolationspunkterna är par av element i $R$ eller i
+$R[x]$, t ex evaluera i punkten $(0,1)$ i $u(y,z)$ ger $u_0$ vilket motsvarar
+den konstanta termen i $u(y)$ och $(1,0)$ i $u(y,z)$ ger $u_{n-1}$ som skulle
+motsvara den ledande koefficienten i u(y). Om en punkt $(\alpha,\beta)$ väljs
+så får inte en multipel till denna punkten väljas, alltså
+$(\lambda\alpha,\lambda\beta)$ där $\lambda$ är ett element ringen eller
+polynomringen, eftersom det ger upphov till en linjärt beroende
+interpolationsmatris och då kan den inte inverteras.
