@@ -17,8 +17,8 @@ library
   ghc-options: -Wall
 
 executable bench
-  main-is: src/Benchmark.hs
-  build-depends: toomcook, base
+  main-is: src/Bench.hs
+  build-depends: toomcook, base, criterion
   ghc-options: -Wall
 
 test-suite properties
