@@ -1,7 +1,7 @@
-\section{Implementation av Toom-Cook i Coq}
+\section{Implementation av Toom-Cook i \coq}
 \label{sec:formellimplementation}
 I det här avsnittet förklaras hur Toom-Cook-algoritmen är implementerad i
-SSReflect och hur den överrenstämmer med pappersdefinitionen av algoritmen.
+\ssr och hur den överrenstämmer med pappersdefinitionen av algoritmen.
 Hela implementation ligger som ett appendix \ref{appendix:matematikteori}.
 
 Algoritmen är implementerad med en rad små funktioner och sedan en rekursiv
@@ -22,7 +22,7 @@ Definition m : nat := number_splits.
 Definition number_points := (2 * m) .-1.
 \end{lstlisting}
 
-Här definieras variabler av typen nat, naturliga tal \footnote{I Coq/SSReflect
+Här definieras variabler av typen nat, naturliga tal \footnote{I \coq och \ssr
 är 0 inkluderad bland de naturliga talen}, vars värde beror på antalet splittar
 som görs av polynomet. Precis som i pappersalgoritmen är \C{m} variabeln från
 Toom-Cook-m och \C{number_points} är antalet interpolationspunkter.
@@ -35,7 +35,7 @@ Vi låter \C{inter_points} beteckna en kolonnvektor vars element tillhör $R[x]$
 vilket faktiskt skiljer sig från pappersalgoritmen. Det var avgörandet för
 pappersalogritmen att punkterna tillhörde R för att induktionsantagandet över
 graden skulle kunna appliceras, se (\ref{in:induktion}), men i beviset i
-SSReflect görs induktion över en annan variabel så det problemet uppstår
+\ssr görs induktion över en annan variabel så det problemet uppstår
 aldrig. Algoritmen blir dock snabbare om interpolationspunkterna tillhör R
 eller är av låg grad i $R[x]$, se !!!!!!!!!!.
 
@@ -80,7 +80,7 @@ ett naturligt tal som utparameter. Om inparametern har värdet av m i
 Toom-Cook-m så motsvarar det här b i pappers algoritmen, se ekvationen ,
 eftersom \C{size} tar graden av polynomet + 1, \C{divn} är heltalsdivision och
 \C{maxn} tar fram det största av två tal. Funktionerna \C{size}, \C{divn} och
-\C{maxn} är implementerade i SSReflects bibliotek.
+\C{maxn} är implementerade i \ssr bibliotek.
 
 \begin{lstlisting}
 Definition split (n b: nat) p : {poly {poly R}} :=
@@ -89,7 +89,7 @@ Definition split (n b: nat) p : {poly {poly R}} :=
 
 \C{split} tar två naturliga tal som inparametrar och returnera ett polynom som
 polynom som tillhör $R[x][y]$. De två funktionerna \C{rmodp} och \C{rdivp} är
-redan implementerade i SSReflects bibliotek och motsvarar exakt vår definition
+redan implementerade i \ssr bibliotek och motsvarar exakt vår definition
 av modulusräkning och polynomdivision, se ekvationerna (\ref{align:rmod}) och
 (\ref{align:rdiv}). Inparametern n säger att polynomet är som högst av grad
 $n-1$.
@@ -115,7 +115,7 @@ Definition recompose (b: nat) (w: {poly {poly R}}) : {poly R} :=
 Steg 4, se (\ref{in:rekursiv}), i Toom-Cook-algoritmen är en rekusiv del och
 därmed behövs en rekusiv funktion, nämligen Fixpoint, för att kunna stega
 igenom hela algoritmen. I pappersalgoritmen slutar rekusionen när graden har
-blivit tillräckligt låg och då utförs direktmultiplikation. Coq behöver få
+blivit tillräckligt låg och då utförs direktmultiplikation. \coq behöver få
 bevisat att rekusionen terminar så istället för att visa att graden sjunker för
 varje steg så skickas ett naturligt tal n, som inparameter, som minskar vid
 varje rekusion och slutar när n är lika med noll, då utförs direkt

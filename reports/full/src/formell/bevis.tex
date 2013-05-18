@@ -7,8 +7,8 @@ Variablerna $p$ och $q$ kommer alltid beteckna polynom över ett
 integritetsområde.
 
 Beviset använder sig när så är möjligt av redan tidigare bevisade resultat från
-Ssreflects bibliotek. En lång rad lemman om bland annat grundläggande
-egenskaper hos polynom, naturliga tal, matriser och summor finns tillgängliga.
+\ssr biblioteket. En lång rad lemman om bland annat grundläggande egenskaper
+hos polynom, naturliga tal, matriser och summor finns tillgängliga.
 
 Det formella bevisets struktur är modellerad efter pappersbevisets, med ett
 huvudbevis som bygger på ett flertal lemman. De formella lemmorna är dock många
@@ -18,9 +18,9 @@ arbetsfördelningen inom gruppen, men i första hand på att resonemangssteg som
 pappersbeviset ses som så triviala att de inte ens nämns också måste visas när
 beviset formaliseras. En ytterligare anledning är att det är blir mer
 hanterbart att göra omskrivningar och deduktionssteg på mindre delpåståenden
-separat. Dessutom används ett 50-tal mer generella lemman ur
-SSREFLECT-biblioteket och ett par lemman som tillhandahållits av projektets
-handledare, Anders Mörtberg.
+separat. Dessutom används ett 50-tal mer generella lemman ur \ssr-biblioteket
+och ett par lemman som tillhandahållits av projektets handledare, Anders
+Mörtberg.
 
 Nedan beskrivs huvudbeviset i detalj, och därefter beskrivs några av de mer
 intressanta delarna i bevisen av lemmorna.
@@ -147,18 +147,18 @@ till \C{((evaluate u) i 0) * ((evaluate v) i 0)} inne i kolonnvektorn
 \begin{lstlisting}
 \col_i toom_cook_rec n' ((evaluate u) i 0)((evaluate v) i 0)
 \end{lstlisting}
-Eftersom definitionen \C{\\col_i} är låst för beräkning??? i Ssreflect och
-uttrycket beror av indexet \C{i} i kolonnvektorn kan vi inte direkt skriva om
-uttrycket, se AVSNITT DET OCH DET (DETTA KANSKE ÄR SANT). Så för att kunna göra
-det öppnar vi ett nytt delmål med taktiken \C{have} på rad \C{9} där vi bara
-arbetar med denna del av vänsterledet. Där använder vi på rad \C{12} lemmat
-\C{colP} som låter oss visa att två vektorer är lika genom att visa att
-elementen på motsvarande platser är lika i båda vektorerna. (Då vektorer är
-implementerade i SSREFLECT som funktioner från mängden av index till mängden av
-element i vektorn säger lemmat mer specifikt att två vektorer är lika om de
-extensionellt sett är samma funktion, dvs om de antar samma värden för samma
-argument.) På rad \C{13} kan vi sedan slutligen skriva om uttrycket med hjälp
-av induktionshypotesen och målet har då blivit:
+Eftersom definitionen \C{\\col_i} är låst för beräkning??? i \ssr och uttrycket
+beror av indexet \C{i} i kolonnvektorn kan vi inte direkt skriva om uttrycket,
+se AVSNITT DET OCH DET (DETTA KANSKE ÄR SANT). Så för att kunna göra det öppnar
+vi ett nytt delmål med taktiken \C{have} på rad \C{9} där vi bara arbetar med
+denna del av vänsterledet. Där använder vi på rad \C{12} lemmat \C{colP} som
+låter oss visa att två vektorer är lika genom att visa att elementen på
+motsvarande platser är lika i båda vektorerna. (Då vektorer är implementerade i
+\ssr som funktioner från mängden av index till mängden av element i vektorn
+säger lemmat mer specifikt att två vektorer är lika om de extensionellt sett är
+samma funktion, dvs om de antar samma värden för samma argument.) På rad \C{13}
+kan vi sedan slutligen skriva om uttrycket med hjälp av induktionshypotesen och
+målet har då blivit:
 \begin{lstlisting}
 recompose b (interpolate (\col_i
   ((evaluate u) i 0 * (evaluate v) i 0)))
@@ -228,7 +228,7 @@ Cook ger ett korrekt resultat.
 \subsection{Lemman till huvudbeviset}
 Det här stycket är lite ogenomtänkt än. Jag måste nog se det på papper och få
 lite avstånd till det innan jag kommer på vad jag ska ta med. Förutom de 50-tal
-lemman ur Ssreflectbiblioteken som har används i huvudbeviset har ett 15-tal
+lemman ur \ssr-biblioteket som har används i huvudbeviset har ett 15-tal
 specifika lemman till huvudsatsen formulerats och bevisats. Här presenteras
 några av dem. Det viktigaste lemmat är
 \begin{lstlisting}
