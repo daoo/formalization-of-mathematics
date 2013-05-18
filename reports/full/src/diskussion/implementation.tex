@@ -1,105 +1,105 @@
 \subsection{Implementeringen av Toom-Cook}
-\emph{(Här vill vi berätta om att vi inte bara har blindimplementerat utan är medvetna 
-om att det finns begränsningar med vår implementation och att det finns andra sätt. Jag är 
+\emph{(Här vill vi berätta om att vi inte bara har blindimplementerat utan är medvetna
+om att det finns begränsningar med vår implementation och att det finns andra sätt. Jag är
 lite osäker om det här egentligen passar under diskussion dock. Det är ju inte så himla
 diskuterande. Det går nog att förbättra språket mycket och göra det kortare och mer kärnfullt också.)}
 
-Den version av Toom-Cook som beskrevs i avsnitt \ref{in:definition} och 
-implementerades i avsnitt \ref{section:formalg} var generell och abstrakt, 
-och det gick inte att utföra beräkningar med den eftersom typen av polynom i \ssr är låst, 
+Den version av Toom-Cook som beskrevs i avsnitt \ref{in:definition} och
+implementerades i avsnitt \ref{section:formalg} var generell och abstrakt,
+och det gick inte att utföra beräkningar med den eftersom typen av polynom i \ssr är låst,
 se avsnitt \ref{avsnitt:ssr}. Den var en abstrakt algoritm som var bra att
 visa saker på.
 
 Om det hade funnits tid till det skulle nästa steg i projektet varit att implementera
-en eller flera exekverbara versioner av algoritmen och visa att dessa 
-gav samma resultat vid beräkningar som den abstrakta algoritmen. Det skulle då 
+en eller flera exekverbara versioner av algoritmen och visa att dessa
+gav samma resultat vid beräkningar som den abstrakta algoritmen. Det skulle då
 innebära att de gav
 korrekta resultat, så som diskuteras i avsnitt \ref{disk:formalg}
 
-Nedan diskuteras några  abstrakta 
-algoritmen, dess fördelar och nackdelar, och andra möjliga val av implementeringar. 
-Några möjliga effektiviseringar som skulle kunna göras vid 
+Nedan diskuteras några  abstrakta
+algoritmen, dess fördelar och nackdelar, och andra möjliga val av implementeringar.
+Några möjliga effektiviseringar som skulle kunna göras vid
 implementaion av exekverbara algoritmer tas också upp.
 
 Den abstrakta algorimen som har implementerats använder sig av matrismultiplikation
 och -inverison
 i evaluerings- och interpolationsstegen. Det motiverades delvis av praktiska
-skäl, för att förenkla implementationen av algoritmen gruppen redan kända matematiska 
+skäl, för att förenkla implementationen av algoritmen gruppen redan kända matematiska
 Dessutom finns det många algoritmer för att optimera matrisoperationer som skulle kunna
-användas när en exekverbar algoritm baserad på dem ska implementeras. Detta är dock 
-inte det enda sättet att implementera dessa steg på, och det fungerar inte för 
+användas när en exekverbar algoritm baserad på dem ska implementeras. Detta är dock
+inte det enda sättet att implementera dessa steg på, och det fungerar inte för
 alla integritetsområden.
 
 % velat få en någorlunda enkel algoritm, då de teoretiska grejerna kring
-% polynominterpolation och -evaluering gått bortom projektets ***vad?ramar, gränser, syfte****.  
+% polynominterpolation och -evaluering gått bortom projektets ***vad?ramar, gränser, syfte****.
 
-% Det är ett smidigt sätt att representera 
+% Det är ett smidigt sätt att representera
 % dessa steg, men det fungerar inte för alla integritetsområden
 % och det finns alternativa sätt att implementera detta.
 
-I evalueringssteget \ref{in:evaluation} i algoritmen multipliceras evalueringsmatrisen 
+I evalueringssteget \ref{in:evaluation} i algoritmen multipliceras evalueringsmatrisen
 $V_e$ med vektorn av
 koefficienter till polynomet som ska evalueras. Det är inte den enda möjliga sättet
-att evaluera polynomen på. För att optimera en beräkningsbar version av 
-algoritmen finns möjligheten att välja en ordning på operationerna i 
+att evaluera polynomen på. För att optimera en beräkningsbar version av
+algoritmen finns möjligheten att välja en ordning på operationerna i
 evalueringen som kräver
-färre operationer än direkt matrismultiplikation{bodrato2007towards}. 
+färre operationer än direkt matrismultiplikation{bodrato2007towards}.
 
-I interpolationssteget \ref{in:interpol} antas det att interpolationsmatrisen 
+I interpolationssteget \ref{in:interpol} antas det att interpolationsmatrisen
 $V_I$ är inverterbar. Det
 gör att koefficienterna i polynomet kan fås genom att multiplicera inversen
 av $V_I$ med vektorn av polynomets värden i interpolationspunkterna.
 
 I en kropp (där alla element utom 0 har en multiplikativ invers) kommer $V_I$
-vara inverterbar om och endast om ekvationssystemet som ges av \ref{eq:NAME4} 
-är entydigt lösbart, vilket det kommer vara om  interpolationspunkterna 
+vara inverterbar om och endast om ekvationssystemet som ges av \ref{eq:NAME4}
+är entydigt lösbart, vilket det kommer vara om  interpolationspunkterna
 $\alpha_0, ...,  \alpha_d$ är $d + 1$ skilda punkter.
 
-Detta gäller dock inte generellt i ett integritetsområde. 
+Detta gäller dock inte generellt i ett integritetsområde.
 Då kan ekvationssystemet \ref{eq:NAME4} vara entydigt lösbart
-utan att $V_I$ är inverterbar, eftersom matris över ett integritetsområde 
+utan att $V_I$ är inverterbar, eftersom matris över ett integritetsområde
 är inverterbar om och endast om dess determinant är ett inverterbart
-element\cite{sombatboriboon2011some}. 
+element\cite{sombatboriboon2011some}.
 ($V_I$ kommer dock vara inverterbar i bråkkroppen över integritetsområdet.)
- 
+
 Därför kan man i en del integritetsområden, där det finns för få inverterbara element,
-eller där de element som ger upphov till en inverterbar matris av andra orsaker inte är 
-lämpliga interpolationspunkter, vara lämpligt eller nödvändigt använda andra 
-ekvationslösningsmetoder än direkt matrisinversion. 
+eller där de element som ger upphov till en inverterbar matris av andra orsaker inte är
+lämpliga interpolationspunkter, vara lämpligt eller nödvändigt använda andra
+ekvationslösningsmetoder än direkt matrisinversion.
 
 % För att det alls ska vara möjligt att hitta en
 % inverterbar interpolationsmatris $V_I$ måste det finnas  $\alpha_0, ...,  \alpha_d$ i
 % integritetsområdet så att
 % $\det V_I = \prod_{0 \leq i < j \leq d} (\alpha_i - \alpha_j)$ är inverterbar. Även om
-% det skulle finnas det kanske de inte är de mest lämpliga interpolationspunkterna i 
-% andra avseenden. Ska metoder som bygger på matrisinversion användas i interpolationssteget 
+% det skulle finnas det kanske de inte är de mest lämpliga interpolationspunkterna i
+% andra avseenden. Ska metoder som bygger på matrisinversion användas i interpolationssteget
 
-I de integritetsområden där det fungerar finns också möjligheter att effektivisera 
+I de integritetsområden där det fungerar finns också möjligheter att effektivisera
 ekvationslösningen genom att använda t ex $LU$-faktorisering.
-Bodrato\cite{bodrato2007towards}\cite{bodrato2007b} beskriver en algoritm för att, givet
+Bodrato\cite{bodrato2007towards}\cite{bodrato2007integer} beskriver en algoritm för att, givet
 interpolationspunkterna, söka efter optimala följder av evaluerings- och interpolationsoperationer.
 
 En generell men exekverbar version av Toom-Cook skulle kanske kunna implementeras. Den skulle dock
-kräva en av två saker. Antingen att de önskade interpolationspunkterna gavs som argument vid varje 
+kräva en av två saker. Antingen att de önskade interpolationspunkterna gavs som argument vid varje
 applikation av algoritmen eller att interpolationspunkter för varje möjligt integritetsområde
-sparades eller genererades med hjälp av någon algoritm när Toom-Cook anropades. Eftersom 
-$\toom$ går att definera för alla heltal större än 0 skulle en helt generell implementation 
-kräva att det gick att generera godtyckligt många lämpliga interpolationspunkter. Det går 
-natutligtvis inte i ett ändligt integritetsområde. 
+sparades eller genererades med hjälp av någon algoritm när Toom-Cook anropades. Eftersom
+$\toom$ går att definera för alla heltal större än 0 skulle en helt generell implementation
+kräva att det gick att generera godtyckligt många lämpliga interpolationspunkter. Det går
+natutligtvis inte i ett ändligt integritetsområde.
 
-Vid praktiska tillämpningar är det dock mer rimligt att implementera en eller några 
-instanser av $\toom$, till exempel Toom-Cook-3 och Toom-Cook-5, för något eller några 
+Vid praktiska tillämpningar är det dock mer rimligt att implementera en eller några
+instanser av $\toom$, till exempel Toom-Cook-3 och Toom-Cook-5, för något eller några
 typer av
-%****familjer(jag vill säga att de ska ha en gemensam isomorf delring eller nåt typ)*** av 
-integritetsområden. Bodrato\cite{bodrato2007a}\cite{bodrato2007towards}\cite{bodrato2007b}
-beskriver optimerade implementationer för karaktärestik 2, 3, 5 och 0 av bland 
+%****familjer(jag vill säga att de ska ha en gemensam isomorf delring eller nåt typ)*** av
+integritetsområden. Bodrato\cite{bodrato2007a}\cite{bodrato2007towards}\cite{bodrato2007integer}
+beskriver optimerade implementationer för karaktärestik 2, 3, 5 och 0 av bland
 annat Toom-Cook-3. GNU
 Multiple Precision
-Arithmetic Library använder Toom-Cook-3, 4, 6.5 och 8.5 
+Arithmetic Library använder Toom-Cook-3, 4, 6.5 och 8.5
 (där 6.5 och 8.5 är algoritmer speciellt anpassade för att multiplicera operander
 med stor storleksskillnad) för att
 multiplicera heltal inom olika storleksgränser.
 
-Då kan algoritmen appliceras utan att man behöver ge interpolationspunkter som 
+Då kan algoritmen appliceras utan att man behöver ge interpolationspunkter som
 argument och man behöver inte räkna ut evaluerings- och interpolationsmatriserna
 vid varje applikation.
