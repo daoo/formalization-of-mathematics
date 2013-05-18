@@ -3,31 +3,33 @@ Andrei Toom och Stephen Cook.
 
 Algoritmen är intressant eftersom den har en bättre asymptotisk tidskomplexitet
 än naiv polynommultiplikation där man multiplicerar varje term i det ena
-polynomet med varje term i det andra polynomet vilket har den asymptotiska
-tidskomplexiteten $O\left(n^2\right)$ \footnote{Funktionen $T(n)$ är $O(f(n))$
-om det existerar konstanter $c > 0$ och $n_0 \geq 0$ så att $T(n) \leq c \cdot
-f(n)$ för alla $n \geq n_0$.}, där n är graden på det största av de två
-polynomen som skall multipliceras. Eftersom problemet att multiplicera två
-heltal kan reduceras till att multiplicera två polynom kan algoritmen även
-användas för heltalsmultiplikation, denna reduktion kan göras utan att den
-asymptotiska tidskomplexiteten försämras. Detta innebär att man kan uppnå en
-bättre asymptotisk tidskomplexitet än den för naiv heltalsmultiplikation som
-lärs ut i grundskolan och har den asymptotiska tidskomplexiteten
-$O\left(n^2\right)$, där n är antalet siffror i det största talet.
+polynomet med varje term i det andra polynomet vilket har tidskomplexiteten
+$O\left(n^2\right)$ \footnote{Funktionen $T(n)$ är $O(f(n))$ om det existerar
+konstanter $c > 0$ och $n_0 \geq 0$ så att $T(n) \leq c \cdot f(n)$ för alla $n
+\geq n_0$. $O(\cdot )$-notationen beskriver funktionens asymptotiska beteende,
+det vill säga hur funktionen växer med ökande storlek på argumentet.}, där $n$
+är graden på det största av de två polynomen som skall multipliceras. Eftersom
+problemet att multiplicera två heltal kan reduceras till att multiplicera två
+polynom kan algoritmen även användas för heltalsmultiplikation, denna reduktion
+kan göras utan att den asymptotiska tidskomplexiteten försämras. Detta innebär
+att man kan uppnå en bättre asymptotisk tidskomplexitet än den för naiv
+heltalsmultiplikation som lärs ut i grundskolan och har tidskomplexiteten
+$O\left(n^2\right)$, där $n$ är antalet siffror i det största talet.
 
-Det finns flera varianter av $\toom$. $\toom - k$ är en enskild instans av
+Det finns flera varianter av $\toom$. $\toomp{k}$ är en enskild instans av
 $\toom$ som delar polynomen som skall multipliceras i $k$ delar. Vanligtvis när
-man talar om $\toom$ syftar man på Toom-3. Det finns även Toom-versioner som
-delar upp polynomen i olika antal delar. Ett intressant specialfall av $\toom$
-är Toom-2 som under vissa förutsättningar svarar mot Karatsuba-algoritmen.
+man talar om $\toom$ syftar man på $\toomp{3}$. Det finns även versioner av
+$\toom$ som delar upp polynomen i olika antal delar. Ett intressant specialfall
+av $\toom$ är $\toomp{2}$ som under vissa förutsättningar svarar mot
+Karatsuba-algoritmen.
 
-Toom-$k$ har den asymptotiska tidskomplexiteten $O(n^{log_2(2 k-1)/log_2 k})$,
-men konstanten som döljs av ordo-notationen växer med $k$ och har en betydande
-praktisk inverkan. För heltalsmultiplikation finns algoritmer som bygger på
-diskret fouriertransform och har en ännu bättre asymptotisk tidskomplexitet, t
-ex Schönhage-Strassen-algoritmen.
+$\toomp{k}$ har tidskomplexiteten $O(n^{log_2(2 k-1)/log_2 k})$
+\cite{bodrato2007towards}, men konstanten som döljs av ordo-notationen växer
+med $k$ och har en betydande praktisk inverkan. För heltalsmultiplikation
+finns algoritmer som bygger på diskret fouriertransform och har en ännu bättre
+asymptotisk tidskomplexitet, till exempel Schönhage-Strassen-algoritmen.
 
 Både $\toom$ och algoritmer som bygger på diskret fouriertransform används i
-praktiken. I t ex gmplib, The GNU Multiple Precision Arithmetic Library,
-används Schönhage-Strassen-algoritmen samt olika instanser av
-$\toom$-algoritmen för multiplikation av heltal.
+praktiken. I till exempel gmplib, The GNU Multiple Precision Arithmetic
+Library, används Schönhage-Strassen-algoritmen samt olika instanser av
+$\toom$-algoritmen för multiplikation av heltal \cite{gmpdoc}.
