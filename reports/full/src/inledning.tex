@@ -6,16 +6,20 @@ matematiker har tid, lust och den speciella kompetensen inom just det specifika
 matematiska området som gör att de kan eller vill att ägna år åt att
 kontrollera att ett sådant bevis är korrekt. Dessutom finns risken för att ett
 fel i ett bevis ändå inte upptäcks vid kontroll om beviset är hundratals- eller
-tusentals sidor långt.\cite{harrison2008formal}
+tusentals sidor långt\cite{harrison2008formal}.
 
 Bevisassistenter, datorsystem för att formalisera och verifiera varje logiskt
-steg i bevis, kan användas för att kontrollera bevis och därmed öka tilltron
-till att de är korrekta och minska risken för att de innehåller fel.
+steg i bevis, kan användas för att kontrollera bevis och därmed minska risken
+för att de innehåller fel och öka tilltron till att de är korrekta.
 
 Fyrfärgssatsen\cite{gonthier2008formal} och Feit-Thompsons
 sats\cite{aschbacher2004status} är två exempel på satser vars bevis har
-formaliserats och kontrollerats i bevisassistenter. För att kunna kontrollera
-själva bevisen har också all den matematik som bevisen bygger på formaliserats.
+formaliserats och kontrollerats i bevisassistenter. Fyrfärgssatsen säger att
+varje karta kan färgläggas med fyra färger så att inga regioner med gemensam
+gräns får samma färg. Det ursprungliga beviset var över hundra sidor långt och
+byggde också datorprogrammerad fallanalys av miljontals fall. Detta gjorde
+beviset svårt att kontrollera och kontroversiellt. Beviset formaliserades och
+verifierades i bevisassistenten \coq 1995.
 %Lite mer om fyrfärgssatsen här?
 %Lite mer om Odd order theorem här?
 
@@ -25,17 +29,25 @@ för programmerare och matematiker.
 % Niclas: Den här meningen säger väldigt lite. Varför??
 Dagens stora och komplexa programvaror skulle kunna utnyttja formella metoder.
 %)
-Det kan också vara användbart i
-kritiska system, till exempel medicinsk utrustning,  där det inte får bli fel
-eller i system som inte kan uppdateras i efterhand som hårvarunära mjukvara
-på ROM-minnen. De mest använda metoderna idag för
-att kontrollera kod bygger på att testa om koden ger korrekt resultat för olika
-indata. På detta sätt har man en chans att upptäcka om koden innehåller fel,
-men det visar inte att koden saknar fel eftersom det i många fall är omöjligt
-att testa alla kombinationer av indata.
+Det kan också vara användbart i kritiska system, till exempel medicinsk
+utrustning, där det inte får bli fel eller i system som inte kan uppdateras i
+efterhand som hårdvarunära mjukvara på ROM-minnen.
+
+De mest använda metoderna idag för att kontrollera kod bygger på att testa om
+koden ger korrekt resultat för olika indata. På detta sätt har man en chans att
+upptäcka om koden innehåller fel, men det visar inte att koden saknar fel
+eftersom det i många fall är omöjligt att testa alla kombinationer av indata.
 % Niclas: + Svårt/Krävande att hitta kända resultat?
-Formella metoder skulle i dessa fall
-kunna användas till att garantera korrekthet hos koden.
+Formella metoder skulle i dessa fall kunna användas till att garantera
+korrekthet hos koden.
+
+Ett exempel på projekt för att verifiera kod är CompCert. Det utforskar
+möjligheten att utveckla formellt bevisade kompilatorer. Anledningen att man
+vill ha en formellt bevisad kompilator är att vid vissa optimeringar så kan
+kompilatorn skapa buggar och beräkningsfel. Huvudresultatet av detta är en
+fungerande C-kompilator som är bevisad i \coq och som stödjer hela ANSI C (som
+är den första standardiserade versionen av C) med få
+undantag\autocite{compcert}.
 
 Matematisk programvara som MATLAB spelar en stor roll för beräkningar inom
 forskning och industri och det finns därmed ett stort intresse av att de är
@@ -44,5 +56,24 @@ pålitliga. De är dock inte buggfria. Ett sätt att göra dem mer pålitliga sk
 vara att formalisera de ingående algoritmerna och visa att de är korrekt
 implementerade\cite{denes2012refinement}.
 
-Vårt projekt går ut på att lära oss formalisering med bevisassistenten \coq och
-sedan formalisera och bevisa en matematisk algoritm i \coq.
+Det här projektet går ut på att gruppdeltagarna ska lära sig formalisering med
+bevisassistenten \coq och sedan formalisera och bevisa en matematisk algoritm,
+\toom, i \coq.
+
+\coq är en av flera avancerade bevisassistenter som det bedrivs aktiv forskning
+om. Några andra är Agda, som utvecklats på Chalmers, Z3, som har utvecklats av
+Microsoft och kan användas tillsammans med flera stora ickefunktionella språk
+som Python, C och .NET och HOL-light, som används av Intel för att bevisa att
+vissa hårdvarukomponenter fungerar korrekt och i det pågående projektet att
+formalisera Keplers förmodan \cite{hales2008formal}.
+
+\toom är en algoritm för att multiplicera heltal eller polynom. Den är
+intressant eftersom den har en bättre asymptotisk tidskomplexitet än
+polynommultiplikation utförd direkt enligt definitionen \footnote{För
+definition av polynommultiplikation, se
+appedix~\ref{appendix:matematikteori}.}, där man multiplicerar varje term i det
+ena polynomet med varje term i det andra polynomet vilket har den asymptotiska
+tidskomplexiteten $O\left(n^2\right)$\footnote{Funktionen $T(n)$ är $O(f(n))$
+om det existerar konstanter $c > 0$ och $n_0 \geq 0$ så att $T(n) \leq c \cdot
+f(n)$ för alla $n \geq n_0$.}, där n är graden på det största av de två
+polynomen som skall multipliceras.
