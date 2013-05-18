@@ -19,46 +19,29 @@ användning i implementationen.
 \section{Implementation i Haskell}
 I samband med framtagningen av pappersbeviset utvecklades en praktiskt
 implementation av Toom-Cook för heltal gjordes i Haskell. Den byggdes först för
-Toom-3 men generaliserades sedan till Toom-$n$. Testning gjordes med QuickCheck
-genom att jämföra implementationen av Toom-Cook med heltalsmultiplikationen som
-finns definierad i Haskell.
+Toom-Cook-3 men generaliserades sedan till Toom-Cook-$n$. Testning gjordes med
+QuickCheck genom att jämföra implementationen av Toom-Cook med
+heltalsmultiplikationen som finns definierad i Haskell. Resultatet av denna
+fasen finns i appendix~\ref{app:haskell}.
 
-\section{Implementering av bevis i Coq}
+Anledningen till att en implementation gjordes i Haskell var för att vi i det
+stadiet inte hade tillräckligt med kunskap om \coq för att implementera en ny
+algoritm i språket. Eftersom erfarenhet av Haskell redan fanns kunde algoritmen
+snabbt implementeras och testas, detta gav också en bättre förståelse för hur
+Toom-Cook fungerar.
+
+\section{Implementering och bevis i \coq}
 När pappersbevis och praktisk implementation utfördes implementeringen av
 Toom-Cook och dess bevis i \coq med hjälp av \ssr. Första skapades en
 definition av algoritmen i \coq väldigt lik den i Haskell fast med polynom
 istället för heltal. Denna definition omarbetades senare under bevisningen för
-att det skulle vara lättare att arbeta med beviset. Resultatet av detta
+att det skulle vara lättare att arbeta med beviset. Uppdelningen av lemmana
+gjorde det möjligt Resultatet av detta
 beskrivs i avsnitt~\ref{sec:formellimplementation} och
 avsnitt~\ref{sec:formellbevis}.
 
 \section{Avgränsningar}
-Eftersom ingen i gruppen tidigare kunde \coq eller \ssr ägnades mycket tid åt
-inlärningen.
-
-Metodvalet har motiverats av
--behovet av att lära sig coq samtidigt som algoritmen implementerades
-detta gjorde det motiverat att först implementera en föreklad instans av algoritmen för
-att kunna testa om den verkade fungera innan man började med den abstrakta och icke-
-exekverbara versionen i coq.
-
-- genom att först bevisa huvudsatserna och formulera lemman som behövdes för deras bevis
-möjliggjordes arbetsdelning inom gruppen.
-
-- genom att först utarbeta en informell matematisk definition och bevis försäkrar man sig om
-att den formella definitionen som modelleras därefter kommer vara sund, vi får möjlighet
-att kunna verifiera en struktur för beviset utan att förlora oss i detaljer.
-
-Fokus har varit att i första hand få praktiska kunskaper för att kunna använda
-befintliga taktiker, typer, funktioner och bevisade resultat i \coq/\ssr för
-att kunna definiera funktioner och bevisa resultat om dem. Vi kommer i de
-flesta fall beskriva hur de strukturer vi använder fungerar för den praktiska
-användaren, inte hur de exakt är tekniskt implementerade. Vi kommer heller inte
-att implementera en konkret, exekvebar och optimerad algoritm.
-
--vi fokuserar inte på att verkligen få en snabb algoritm och beräkningskomplexitet nämns bara i förbigående.
-
-- Algoritmen kommer bara implementeras för integritetsområden där det finns interpolationspunkter så att
-  interpolationsmatrisen blir inverterbar
-
-- tidskomplexitet hos algoritmen och optimering av algoritmen kommer bara beröras kort
+Från början var tanken att en optimerad version av Toom-Cook skulle
+implementeras och jämföras med lång multiplikation men i brist på tid gjordes
+aldrig detta. Vår implementation kan såldes inte användas, utan vi \emph{vet}
+bara att den är korrekt.
