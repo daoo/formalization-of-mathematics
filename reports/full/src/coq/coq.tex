@@ -100,11 +100,100 @@ kompilatorer generellt sett inte kan typchecka \texttt{printf} funktionen.
 
 % http://mattam.org/research/publications/Programming_with_Dependent_Types_in_Coq-PPS-260209.pdf
 
-\section{Grund- och taktikspråk}
-\coq består av två olika delspråk. Grundspråket kallas \textsc{Gallina} och
-liknar till viss del \textsc{OCaml}. Det är i \textsc{Gallina} som de
-definitioner och funktioner som ska bevisas skrivs.
+\section{Grundspråk}
+\coq är uppbyggt av två olika programmeringsspråk. Grundspråket som kallas
+\textsc{Gallina} är som vi redan nämnt funktionellt och beroendetypat. Likt
+andra programmeringsspråk definierar man funktioner och deras typ. Dock är det
+i \coq inte tillåtet att definiera funktioner som inte terminerar. Det vill
+säga, i \textsc{Haskell} kan man skriva
+\begin{verbatim}
+loop :: Integer -> Integer
+loop n = loop (n + 1)
+\end{verbatim}
+och kompilatorn kommer glatt kompilera och låta dig köra funktionen. Men
+\verb+loop+ kommer aldrig ge något resultat och kommer snurra i all evighet.
+Kompilatorn till \coq tillåter inte denna typen av definitioner utan kommer
+ge kompileringsfel om den stöter på liknande funktioner.
 
+För att göra en definition i \coq skriver använder man nyckelordet
+\C{Definition}, en definition av funktionskomposition kan se ut såhär:
+\begin{lstlisting}
+  Definition compose (a b c: Type) (f: b -> c) (g: a -> b) (x: a) : c := f (g x).
+\end{lstlisting}
+I definitionen av \C{compose} måste vi först ge typerna \C{a}, \C{b} och \C{c}
+explicit till skillnad från \textsc{Haskell} där de är definierade implicit.
+Parametrarna \C{f}, \C{g} och \C{x} följer sedan direkt. I \coq används punkt
+(.) för att avsluta en definition likt hur man avslutar ett påstående
+(\emph{engelska: statement}) i C med semikolon (;). För att anropa \C{compose}
+måste man ge typer och funktioner och värdet. Till exempel:
+\begin{lstlisting}
+Definition add1 (x: nat) := x + 1.
+Definition mul2 (x: nat) := x * 2.
+
+Definition example : nat := compose nat nat nat add1 mul2 5.
+\end{lstlisting}
+Notera att programmerare är lata och vill gärna skriva så lite som möjligt. I
+\coq kan man därför se till att typ parametrarna \C{a}, \C{b} och \C{c}
+automatiskt stoppas in på rätt ställe i funktionsanroppen. För att göra detta
+behöver man dock ändra på definitionen av \C{compose} och sätta
+klammerparenteser runt parametrarna istället:
+\begin{lstlisting}
+Definition compose' {a b c: Type} (f: b -> c) (g: a -> b) (x: a) : c := f (g x).
+\end{lstlisting}
+Vi kan även använda så kallade lambdauttryck, vilket betyder funktioner
+definierade utan namn som används direkt där man skriver dem. Syntaxen för
+lambdauttryck är \C{fun parameters => application}. Med dessa förändringar kan
+vi skriva
+\begin{lstlisting}
+Definition exempel' : nat := compose' (fun x => x + 1) (fun x => x * 2) 5.
+\end{lstlisting}
+\coq har även data typer och de definieras med hjälp av \C{Inductive}. En definition
+av naturliga tal kan se ut såhär:
+\begin{lstlisting}
+Inductive nat : Type :=
+  | O: nat
+  | S: nat -> nat.
+\end{lstlisting}
+Typen för varje konstruktor måste ges explicit. Vi kan även definiera vektorer, för
+att blanda in lite beroendetypning:
+\begin{lstlisting}
+Inductive vec (X: Type) : nat -> Type :=
+  | empty: vec X O
+  | element: forall n, X -> vec X n -> vec X (S n).
+\end{lstlisting}
+% Notera att jag har fuskat här och inte tagit med Implicit Argument raderna
+% som behövs för att man inte ska behöva ange typerna hela tiden.
+Sedan kan vi definiera en typsäker version av \C{tail} med hjälp av
+mönstermatchning:
+\begin{lstlisting}
+Definition tail (X: Type) (n: nat) (v: vec X (S n)) : vec X n :=
+  match v with
+  | element X _ xs => xs
+  end.
+\end{lstlisting}
+Mönstermatchning innebär att man för något värde tillhörande någon typ
+bestämmer vad som ska göras för varje konstruktor till typen. Notera i det här
+fallet att funktionen bara är definierad för vektorer \C{vec X n} där \C{n >
+0}. Vi behöver således inte hantera tomma vektorer i mönstermatchningen.
+
+För att göra en rekursiv funktion använder vi \C{Fixpoint} istället för
+\C{Definition}:
+\begin{lstlisting}
+Fixpoint concatenate (X: Type) {n m: nat} (a: vec X n) (b: vec X m) : vec X (n+m) :=
+  match a with
+  | empty => b
+  | element _ x xs => element x (concatenate X xs b)
+  end.
+\end{lstlisting}
+
+Detta var en väldigt kort introduktion till \coq som funktionellt
+programmeringsspråk och har därför utelämnat bland annat modulhantering,
+typklasser, kanoniska strukturer, poster, partiell applicering och notationer.
+Dessa ämnen är också viktiga för att förstå \coq men är bortom målet med denna
+rapporten.
+% TODO: Out of scope of this report
+
+\section{Taktikspråk}
 \coq innehåller också ett taktikspråk som heter \textsc{Ltac} och innehåller
 olika taktiker för att påverka de hypoteser och mål som ska bevisas.
 \textsc{Ltac} gör det möjligt att använda samma metoder i \coq som man använder
