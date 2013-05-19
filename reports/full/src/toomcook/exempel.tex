@@ -1,15 +1,15 @@
 \section{Exempel på Toom-3}
-Säg att vi vill multiplicera två polynom $p, q \in \mathbb{Z}_5[x]$\footnote{$\mathbb{Z}_5$ betecknar heltalen modulo 5.}.
-$p, q \in \mathbb{Z}_5[x]$\footnote{$\mathbb{Z}_5$ betecknar heltalen modulo 5.}.
-Vi låter 0, 1, 2, och 4 beteckna elementen i $\mathbb{Z}_5[x]$ och vi låter
+Antag att vi vill multiplicera två polynom $p, q \in
+\Z_5[x]$\footnote{$\Z_5$ betecknar heltalen modulo 5.}. Vi
+låter 0, 1, 2, 3 och 4 beteckna elementen i $\Z_5[x]$ och vi antar
 \begin{align*}
   p(x) &= 4+x+3x^2+3x^3+4x^4 \\
   q(x) &= 1+2x+2x^2+x^3+3x^4
 \end{align*}
 
 \paragraph{Uppdelning}
-Vårt b i uppdelningssteget som säger i hur stora delar vi ska dela upp
-polynomen ges av:
+Vårat $b$ i uppdelningssteget, som säger i hur stora delar vi ska dela upp
+polynomen, ges av
 \begin{equation*}
   b = \floor[\bigg]{\frac{1 + \mbox{grad p}}{\mbox{toom-instans}}} + 1 = \floor[\bigg]{\frac{1 + 4}{3}} + 1 = 2
 \end{equation*}
@@ -21,11 +21,11 @@ delarna vara koefficienter i polynomen $u$ och $v$:
 \end{align*}
 
 \paragraph{Evaluering}
-Om vi väljer evalueringspunkterna:
+Om vi väljer evalueringspunkterna
 \begin{equation*}
   0, 1, 2, 3, 4
 \end{equation*}
-så får vi evalueringsmatrisen:
+så blir evalueringsmatrisen
 \begin{equation*}
   V_e = \begin{pmatrix}
     0^0 & 0^1 & 0^2 \\
@@ -104,8 +104,8 @@ evalueringspunkterna.
 
 \paragraph{Rekursiv multiplikation}
 Genom att multiplicera $u$ och $v$ i de evaluerade punkterna rekursivt får vi
-värdet i evalueringspunkterna av $u \cdot v = w$, det polynom som skall
-interpoleras fram:
+värdet i evalueringspunkterna av $u \cdot v = w$, där $w$ är det polynom som
+skall interpoleras fram
 \begin{equation*}
   \begin{pmatrix}
     w(0) \\
@@ -131,7 +131,7 @@ interpoleras fram:
 \end{equation*}
 
 \paragraph{Interpolation}
-Vi vet att med:
+Vi vet att
 \begin{equation*}
   V_I = \begin{pmatrix}
     0^0 & 0^1 & 0^2 & 0^3 & 0^4 \\
@@ -148,7 +148,7 @@ Vi vet att med:
     1 & 4 & 1 & 4 & 1
   \end{pmatrix}
 \end{equation*}
-Så är:
+och
 \begin{equation*}
   V_I \cdot \begin{pmatrix}
     w_0 \\
@@ -165,16 +165,15 @@ Så är:
     w(4)
   \end{pmatrix}
 \end{equation*}
-Där $w_0, ..., w_4$ är koefficienterna i polynomet $w$. Enligt formeln för en
-Vandermondematris determinant så är
+där $w_0, \dots, w_4$ är koefficienterna i polynomet $w$. Determinanten till en
+Vandermondematris kan räknas ut på följande sätt
 \begin{align*}
  \det V_I &= (0-1)(0-2)(0-3)(0-4)(1-2)(1-3)(1-4)(2-3)(2-4)(3-4) \\
           &= 3  \\
           &\neq 0,
 \end{align*}
-så $V_I$ är inverterbar eftersom varje nollskiljt element i $\mathbb{Z}_5[x]$ har en multiplikativ invers.
-Alltså kan vi få
-koefficienterna i $w$ genom:
+så $V_I$ är inverterbar eftersom varje nollskiljt element i $\Z_5[x]$
+har en multiplikativ invers. Vi får då koefficienterna till $w$ genom att
 \begin{align*}
   \begin{pmatrix}
     w_0 \\
@@ -212,17 +211,16 @@ koefficienterna i $w$ genom:
     2
   \end{pmatrix}
 \end{align*}
-Vi har då att $w$ är:
+Då har vi
 \begin{equation*}
   w(y) = (4 + 4x + 2x^2) + (1 + 2x^2)y + (2 + 3x^2)y^2 + (2 + 3x)y^3 + 2y^4
 \end{equation*}
 
 \paragraph{Sammansättning}
-Produkten $p(x) \cdot q(x)$ fås slutligen genom att beräkna värdet av $w$ i
-$x^b$, alltså i $x^2$ eftersom $b = 2$ i det här fallet:
+Produkten $p(x) \cdot q(x)$ får vi slutligen genom evaluera $w$ i
+$x^b$, alltså i $x^2$.
 \begin{align*}
   w(x^2) =& (4 + 4x + 2x^2) + (1 + 2x^2)x^2 + (2 + 3x^2)(x^2)^2 + (2 + 3x)(x^2)^3 + 2(x^2)^4 \\
          =& 4 + 4x + 2x^2 + x^2 + 2x^4 + 2x^4 + 3x^6 + 2x^6 + 3x^7 + 2x^8 \\
-         =& 4 + 4x + 3x^2 + 4x^4 + 3x^7 + 2x^8,
+         =& 4 + 4x + 3x^2 + 4x^4 + 3x^7 + 2x^8
 \end{align*}
-vilket är samma resultat som vi hade fått vid naiv polynommultiplikation.
