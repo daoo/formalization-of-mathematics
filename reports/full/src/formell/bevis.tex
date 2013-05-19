@@ -44,7 +44,9 @@ Lemma toom_cook_correct : forall p q,
  Proof. move=> p q. by apply: toom_cook_rec_correct. Qed.
 \end{lstlisting}
 Det formella beviset för att den rekursiva delen av algoritmen är korrekt har
-en struktur som liknar beviset av prop~\ref{prop:1}. Den största skillnaden att
+en struktur som liknar beviset av prop~\ref{prop:1}.
+% Konstig mening svårt att förstå vad som menas:
+Den största skillnaden att
 induktionen i det formella fallet görs över antalet rekursiva anrop av
 algoritmen i stället för att som i beviset av prop~\ref{prop:1} görar över
 graden av de polynom som multipliceras. Det beror på att den rekursiva delen av
@@ -130,13 +132,13 @@ blivit:
 Nästa steg är sedan att skriva om målet så att vi kan använda
 induktionsantagandet \C{IHn}.
 
-Förs tar vi hand om \C{if ... then ... else} - uttrycket i vänsterledet.
+Först tar vi hand om \C{if ... then ... else} - uttrycket i vänsterledet.
 Det säger att vänsterledet är lika med \C{p * q} om graden
 av \C{p} eller \C{q} är mindre än 2 (eftersom multiplikation i algoritmen
 då utförs direkt enligt definitionen) och annars
 lika med det mer komplicerade uttrycket som står efter \C{else}. Dessa två
 uttryck skulle motsvarat basfallet och induktionssteget om induktionen hade
-gjort över graden av p och q, som i prop \ref{prop:1}.
+gjorts över graden av p och q, som i prop \ref{prop:1}.
 
 Nu görs i stället på
 rad \C{8} med \C{ifP} en falluppdelning över \C{if ... then ... else}-uttrycket
@@ -226,9 +228,10 @@ skriva om målet till:
 \begin{lstlisting}
 u.['X^b] * v.['X^b] = p * q
 \end{lstlisting}
+% Lång krånglig mening
 Då kan vi på rad \C{23} använda lemmat \C{recompose_split}, som ungefär
 motsvarar lemma~\ref{lemma:2} i det informella beviset, för att visa att
-``sammansättningen'' att de splittade polynomen genom att evaluera i $x^b$ är
+``sammansättningen'' av de splittade polynomen genom att evaluera i $x^b$ är
 korrekt och därmed skriva om \C{u.['X^b]} till \C{p} och \C{v.['X^b]} till
 \C{q}. Då har vi visat att vänsterledet i det ursprungliga målet är lika med
 högerledet \C{p * q}.
