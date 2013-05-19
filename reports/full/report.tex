@@ -19,6 +19,8 @@
 \usepackage{verbatim}
 \usepackage{xspace}
 
+\input{macro}
+
 \title{Formalisering av Algoritmer och Matematiska Bevis}
 \subtitle{And stuff...}
 \author{Jesper Andersson\and Daniel Oom\and Niclas Ståhl\and Åsa Lideström\and Anders Sjöberg}
@@ -30,8 +32,9 @@
 \coverfigure{\includegraphics[width=\textwidth,height=\paperheight,keepaspectratio]{figures/Tupp}}
 \covercaption{Some explanation}
 
-\firstabstract{\input{abstract}}
-\keywords{Formella bevis, \coq, \ssr, Magic}
+\firstabstract{\input{abstract-se}}
+\secondabstract{english}{\input{abstract-en}}
+\keywords{Formalisering, Polynommultiplikation, Toom-Cook, \coq, \ssr}
 
 \DeclareFieldFormat[article]{title}{#1}
 \DeclareFieldFormat[article]{volume}{\mkbibbold{#1}}
@@ -53,8 +56,6 @@
 %\pagestyle{fancy}
 %\lhead{Formalisering av Algoritmer och Matematiska Bevis}
 %\rhead{Grupp 11}
-
-\input{macro}
 
 \begin{document}
 \selectlanguage{swedish}
