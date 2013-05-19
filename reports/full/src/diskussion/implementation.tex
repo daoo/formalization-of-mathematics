@@ -1,4 +1,5 @@
 \subsection{Implementeringen av Toom-Cook}
+% TODO: Dela upp denna sektionen i flera delar?
 Den version av Toom-Cook som beskrevs i avsnitt~\ref{in:definition} och som
 implementerades i avsnitt~\ref{section:formalg} är generell och på abstrakt
 vilket är bra då den ska bevisas. Med vår implementation kan inga beräkningar
@@ -103,11 +104,11 @@ $recompose\_split$ är ett lemma i vårat formella bevis som säger att våran
 uppdelningsfunktion, ``split'', är högerinvers till sammansättningsfunktionen,
 ``recompose''. Trots att det här är ett synnerligen enkelt lemma så är det
 formella beviset relativt långt och komplicerat. Detta beror till stor del på
-att vi har implementerat uppdelningen, ``split'', med polynomdivision och modulo
-för polynom vilket i sin tur ledde till svårigheter då vi behövde arbeta med de
-listor som utgör den underliggande strukturen för polynomtypen. Det bör finnas
-en mer naturlig definition av uppdelningsfunktionen som gör att beviset för
-$recompose\_split$ går att skriva på ett fåtal rader.
+att vi har implementerat uppdelningen, ``split'', med polynomdivision och
+modulo för polynom vilket i sin tur ledde till svårigheter då vi behövde arbeta
+med de listor som utgör den underliggande strukturen för polynomtypen. Det bör
+finnas en mer naturlig definition av uppdelningsfunktionen som gör att beviset
+för $recompose\_split$ går att skriva på ett fåtal rader.
 
 Vi diskuterade en alternativ implementation av split definierad utan
 polynomdivision och modulo för polynom som såg ut på följande vis:
@@ -116,4 +117,3 @@ Definition split (n b: nat) p : {poly {poly R}} :=
   \poly_(i < n) \poly_(j < b) p`_(i*b+j).
 \end{lstlisting}
 Vi lyckades dock inte hitta ett formellt bevis med hjälp av denna definition.
-
