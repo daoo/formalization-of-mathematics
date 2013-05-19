@@ -165,7 +165,7 @@ till \C{((evaluate u) i 0) * ((evaluate v) i 0)} inne i kolonnvektorn
 \begin{lstlisting}
 \col_i toom_cook_rec n' ((evaluate u) i 0)((evaluate v) i 0)
 \end{lstlisting}
-Eftersom definitionen \C{\col_i} är låst för beräkning och uttrycket beror av
+Eftersom definitionen \C{\\col_i} är låst för beräkning och uttrycket beror av
 indexet \C{i} i kolonnvektorn kan vi inte direkt skriva om uttrycket, se
 avsnitt~\ref{ssreflect}. Så för att kunna göra det öppnar vi ett nytt delmål
 med taktiken \C{have} på rad \C{9} där vi bara arbetar med denna del av
