@@ -33,7 +33,7 @@ Variable inter_points : 'cV[{poly R}]_(number_points).
 \end{lstlisting}
 
 Vi låter \C{inter_points} beteckna en kolonnvektor vars element tillhör $R[x]$,
-vilket faktiskt skiljer sig från pappersalgoritmen. Det var avgörandet för
+vilket faktiskt skiljer sig från pappersalgoritmen. Det var avgörande för
 pappersalogritmen att punkterna tillhörde $R$ för att graden garanterat skulle
 avta vilket ledde till att induktionsantagandet över graden kunde appliceras,
 se avsnitt \ref{in:induktion}, men i beviset i\ssr görs induktion över en annan
@@ -89,7 +89,7 @@ Definition split (n b: nat) p : {poly {poly R}} :=
   \poly_(i < n) rmodp (rdivp p 'X^(i * b)) 'X^b.
 \end{lstlisting}
 
-\C{split} tar två naturliga tal som inparametrar och returnera ett polynom som
+\C{split} tar två naturliga tal som inparametrar och returnerar ett polynom som
 polynom som tillhör $R[x][y]$. De två funktionerna \C{rmodp} och \C{rdivp} är
 redan implementerade i \ssr bibliotek och motsvarar exakt vår definition av
 modulusräkning och polynomdivision, se ekvationerna (\ref{eq:rmod}) och
@@ -128,13 +128,15 @@ behöver få bevisat att rekusionen terminar så istället för att visa att gra
 sjunker för varje steg så skickas ett naturligt tal \C{n}, som inparameter, som
 minskar vid varje rekusion och slutar när \C{n} är lika med noll eller när
 graden har blivit mindre än 2 på någotdera av polynomen, och då utförs direkt
-multiplikation. Så för att visa att Toom-Cook-algoritmen fungerar så måste
-algoritmen funka för alla \C{n} eftersom fixpoint-funktion bara kommer motsvara
+multiplikation. Så för att visa att Toom-Cook-algoritmen fungerar måste
+algoritmen fungera för alla \C{n} eftersom fixpoint-funktion bara kommer motsvara
 Toom-Cook om \C{n} är tillräckligt stort, ty tillräckligt många rekursiva anrop
 måste göras.
 
+% Lite skumt skrivet
 Funktionen match kollar om \C{n} är lika med 0 i så fall retunera \C{p} gånger
-\C{q} eller om \C{n} är en efterföljare till något till tal.
+\C{q} eller om \C{n} är en efterföljare till något tal.
+
 
 \begin{lstlisting}
 Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
@@ -171,6 +173,7 @@ vidare i algoritmen.
 let b := exponent m p q in
 \end{lstlisting}
 
+% Lite svårt att förstå. Man måste tänka igenom texten ettpar gånger
 Här låter vi \C{b} få värdet från funktionen \C{exponent} vilket blir det
 värdet som i pappersalgoritmen, se ekvationen (\ref{eq:b}), eftersom \C{m} är
 antalet splittar, \C{p} och \C{q} är polynomen i $R[x]$.

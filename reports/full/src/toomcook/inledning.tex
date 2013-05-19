@@ -10,7 +10,7 @@ konstanter $c > 0$ och $n_0 \geq 0$ så att $T(n) \leq c \cdot f(n)$ för alla $
 det vill säga hur funktionen växer med ökande storlek på argumentet.}, där $n$
 är graden på det största av de två polynomen som skall multipliceras. Eftersom
 problemet att multiplicera två heltal kan reduceras till att multiplicera två
-polynom kan algoritmen även användas för heltalsmultiplikation, denna reduktion
+polynom kan algoritmen även användas för heltalsmultiplikation. Denna reduktion
 kan göras utan att den asymptotiska tidskomplexiteten försämras. Detta innebär
 att man kan uppnå en bättre asymptotisk tidskomplexitet än den för naiv
 heltalsmultiplikation som lärs ut i grundskolan och har tidskomplexiteten
@@ -30,6 +30,6 @@ finns algoritmer som bygger på diskret fouriertransform och har en ännu bättr
 asymptotisk tidskomplexitet, till exempel Schönhage-Strassen-algoritmen.
 
 Både $\toom$ och algoritmer som bygger på diskret fouriertransform används i
-praktiken. I till exempel gmplib, The GNU Multiple Precision Arithmetic
-Library, används Schönhage-Strassen-algoritmen samt olika instanser av
+praktiken. I till exempel GMPlib, The GNU Multiple Precision arithmetic
+library, används Schönhage-Strassen-algoritmen samt olika instanser av
 $\toom$-algoritmen för multiplikation av heltal \cite{gmpdoc}.
