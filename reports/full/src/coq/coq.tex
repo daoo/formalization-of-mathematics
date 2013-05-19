@@ -70,26 +70,22 @@ vill säga listor fast med en bestämd längd. Detta gör vi genom att lägga ti
 en parameter som representerar vektorns längd i typen och öka denna med ett när
 vi lägger till ett element.
 \begin{align*}
-  &\boldsymbol{data}\ Vector\ a\ (n: \mathbb{N})\ \boldsymbol{where} \\
+  &\boldsymbol{data}\ Vector\ a\ (n \in \mathbb{N})\ \boldsymbol{where} \\
   &\ \ Empty : Vector\ a\ 0 \\
-  &\ \ Element : n \to a \to Vector\ a\ n \to Vector\ a\ (n+1)
+  &\ \ Element : a \to (m \in \mathbb{N}) \to Vector\ a\ m \to Vector\ a\ (m+1)
 \end{align*}
-Här är $(n+1)$ ett exempel på en typoperator, $+$, mellan termerna $n$ och $1$
-som är behandlas som typer med hjälp av beroendetypningen.
-
 Sedan kan vi ge typen till funktioner som till exempel att slå ihop två
 vektorer:
 \begin{align*}
   concatenate : Vector\ a\ n \to Vector\ a\ m \to Vector\ a\ (n+m)
 \end{align*}
-eller ta bort första element från en vektor och returnera ``svansen'':
+eller ta bort första element från en vektor och ger tillbaka ``svansen'':
 \begin{align*}
-  tail : n \to Vector\ a\ n \to Vector\ a\ (n-1)
+  tail : (n \in \mathbb{N}) \to Vector\ a\ n \to Vector\ a\ (n-1)
 \end{align*}
 Notera att denna funktionen inte fungerar på tomma vektorer eftersom man inte
-kan ta bort ett element som inte finns. Detta kontrolleras av kompilatorn till
-ditt beroendetypade språk eftersom $(n-1)$ där $n=0$ inte är definierat för
-naturliga tal.
+kan ta bort ett element som inte finns, kompilatorn kan kontrollera detta
+eftersom $(n-1)$ där $n=0$ inte är definierat för naturliga tal.
 
 \section{Programmering i \coq}
 I följande exempel definieras en lista som kan innehålla värden av alla möjliga
