@@ -17,4 +17,4 @@ www:
 clean:
 	rm build/*.*
 
-.PHONY: clean all
+.PHONY: clean build dropbox www
