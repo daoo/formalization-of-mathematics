@@ -1,6 +1,8 @@
-\coq är en \emph{bevisassistent} som används för att formalisera matematik och
-kod och formalisera bevis för att den är korrekt. I det här avsnittet ges en
-informell introduktion till vad ett matematiskt bevis är och vad som menas med
+\coq är en \emph{bevisassistent} som används för att formalisera och bevisa
+matematik och kod.
+% Denna meningen känns lite märklig jag antar "och formalisera bevis för att
+% den är korrekt är kopplad till kod, men det är inte så tydligt //J
+I det här avsnittet ges en introduktion till vad ett matematiskt bevis är och vad som menas med
 formalisering av matematik. Sedan beskrivs vad en bevisassistent är och kan
 göra.
 
@@ -14,8 +16,11 @@ som det handlar om. Dessa steg kan läsaren själv fylla i.
 
 %Exempel andragradsekvation?
 
-Det är också vanligt att man låter många saker framgå av sammanhanget. Till
+Det är också vanligt att många saker får framgå av sammanhanget.
+% Kan man formulera det annorlunda än "låter många saker"? //J
+Till
 exempel kan symbolen 1 kan stå för olika saker, bland annat det naturliga talet
+% Två kan //J
 1 som är efterföljare till 0, det rationella talet $\frac{1}{1}$ eller det
 multiplikativa enhetselementet i en ring\footnote{För en definition av ringar,
 se appendix \ref{appendix:matematikteori}}. Oftast kan en mänsklig läsare ur
@@ -106,18 +111,37 @@ logiskt steg i det formella beviset, medan datorsystemet bara passivt
 kontrollerar att dessa är giltiga.
 
 Senare system ger användaren möjligheten att i stället skriva ett
-\emph{bevisskript}, en rad instruktioner till systemet om hur det formella
-beviset ska byggas upp, om vilka taktiker systemet ska använda, utan att själv
-behöva göra varje enskilt steg. Bevisassistenten bygger steg för steg det
-formella beviset och kontrollerar att instruktionerna från användaren ger
-upphov till ett korrekt bevis. En större eller mindre grad av automatisering är
-också möjlig. Bevisassistenter kan utformas så att användaren kan ange att
+\emph{bevisskript}, som är en rad instruktioner till systemet som
+talar om hur det ska bygga upp det formella beviset, utan att själv
+behöva göra varje enskilt logiskt steg.
+% Vad menas med taktiker, har vi förklarat tactic tidigare? //J
+% Du har rätt, jag försöker få in det.
+Instruktionerna i bevisskripet kan ha formen av \emph{taktiker}, som säger
+till bevisassistenten vilken form av bevisstrategi som ska användas
+under olika steg i beviset.
+Till exempel kan användaren instruera bevisassistenten om att beviset ska
+göras med taktiken induktion över någon parameter i satsen.
+
+Användaren kan skriva bevisskriptet interaktivt. Då ger användaren taktikinstruktionerna
+till systemetet en i taget. Efter varje instruktion
+kontrollerar systemet om taktiken gick att genomföra, och efter
+och varje genomförd taktik uppdaterar systemet informationen som visas för användaren
+om var i beviset man nu befinner sig och vad som återstår att bevisa.
+Bevisassistenten bygger så steg för steg upp det formella beviset efter instruktionerna
+från användaren och kontrollerar efter hand att de ger
+upphov till ett korrekt bevis.
+% Typcheckning av bevisobjektet finns också i vissa bevisassistenter, men jag vet inte
+% om det är så i alla.
+Bevisassistenter kan utformas så att användaren kan ange att
 vissa steg i beviset ska lösas automatiskt eftersom de är så enkla att
 systemet själv kan hitta de härledningsregler och axiom som krävs för att visa
 dem.
 
+% Kan man få in ordet interaktiv och mer tydligt förklara vad det innebär
+% att en bevisassistent är interaktiv. //J Nu har jag försökt. Å
+
 Helt automatiserade bevismaskiner finns också. Då behöver användaren bara
 formulera ett antagande, och systemet söker sedan själv efter ett bevis för
 detta. De klarar dock ofta inte av att hitta komplicerade matematiska bevis
-inom skiljda matematiska områden\cite{geuvers2009proof}.
+inom skiljda matematiska områden\cite{geuvers2009proof}\cite{gonthier2009ssreflect}.
 %Sista meningen är lite luddig, för jag vet egentligen inte vad som gäller.
