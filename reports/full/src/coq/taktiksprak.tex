@@ -1,8 +1,6 @@
 \section{Taktikspråk}
-\coq innehåller också ett taktikspråk som heter \textsc{Ltac} och innehåller
-olika taktiker för att påverka de hypoteser och mål som ska bevisas.
-\textsc{Ltac} gör det möjligt att använda samma metoder i \coq som man använder
-när man skapar ett pappersbevis. \coq är en interaktiv teorembevisare så när
-en viss taktik används uppdateras de hypoteser och mål som ska bevisas och
-användaren anger då en ny taktik. Detta fortsätter tills alla målen är
-lösta.
+Taktikspråk i \coq heter \textsc{Ltac} och är vad som används för att bygga de
+formella bevisen. Kort sagt skriver man bevis genom att först sätta upp en sats
+som man vill bevisa som en likhet. Sedan använder så kallade taktiker för att
+modifierar uttrycket tills uttrycket är lika. Arbetsgången liknar på så sätt
+bevis med papper och penna dock mycket mer detaljerat.
