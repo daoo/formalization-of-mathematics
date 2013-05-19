@@ -87,143 +87,28 @@ Notera att denna funktionen inte fungerar på tomma vektorer eftersom man inte
 kan ta bort ett element som inte finns, kompilatorn kan kontrollera detta
 eftersom $(n-1)$ där $n=0$ inte är definierat för naturliga tal.
 
-\section{Programmering i \coq}
-I följande exempel definieras en lista som kan innehålla värden av alla möjliga
-typer. Den undre definitionen i exemplet är en rekursiv funktion som lägger
-till ett element i en lista. Denna funktionen är polymorfisk och fungerar
-alltså på alla listor oberoende vilken typ på värden som listan innehåller.
-\begin{lstlisting}
-Inductive list (X:Type) : Type :=
-  | nil  : list X
-  | cons : X -> list X -> list X .
-
-Fixpoint append (X:Type) (l : list X) (x : X) : list X :=
-  match l with
-  | nil       => cons X x (nil X)
-  | cons a l' => cons X a (append l' x)
-  end.
-\end{lstlisting}
-
-Om det inte skulle finnas polymorfi i \coq så skulle det inte gå att skapa en
-generell listtyp utan det skulle krävas en specifik listtyp för alla andra
-typer. Till exempel om vi skulle lagra heltal i en lista så skulle det finnas
-en specifik heltalsliste-typ som det bara gick att lagra heltal i.
-
-I en polymorphisk funktion så kan en parameter- eller retur-typ bero på vilka
-typer de tidigare parametrarna har haft. I beroendetypning så går vi ett steg
-längre och låter parameter- och retur-typerna bero på värdet av en tidigare
-parameter. Nedan finns två funktionsdefinitioner där beroendetypning används. I
-exemplena används en klass som heter Vector som är en lista med fast längd. I
-det första exemplet så gör vi om en lista till en vektor och vektorn ska då ha
-samma längd som listan. I det andra exemplet har vi en funktion som tar bort
-det första ellementet från en vektor och resultatet blir då en vektor med ett
-mindre ellement. I \coq notation:
-\begin{verbatim}
-toVector: (list : List) : Vector (lenght list)
-
-removeFirst (v : Vector n) : Vector (n-1))
-\end{verbatim}
-
-Det är inte bara funktionella språk som det finns beroendetypade funktioner.
-Ett exempel på beroendetypning som de flesta antagligen är bekanta med är
-\texttt{printf} i C. Här bestäms antalet parametrar i funktionen av antalet
-\% -tecken i den första strängen och vilken typ det ska vara på dessa
-parametrar bestäms av vilken bokstav som står efter \%-tecknet.
+Värt att notera är att inte bara funktionella språk som har beroendetypade
+funktioner. Ett exempel på beroendetypning som de flesta antagligen är bekanta
+med är \texttt{printf} i \textsc{C}. Här bestäms antalet parametrar i funktionen
+av antalet \% -tecken i den första strängen och vilken typ det ska vara på
+dessa parametrar bestäms av vilken bokstav som står efter \%-tecknet.
 \begin{verbatim}
 printf("%s is %d years old and %f.1cm long", name, age, lenght)
 \end{verbatim}
+Dock stödjer typsystemet i \textsc{C} inte beroendetypning vilket gör att
+kompilatorer generellt sett inte kan typchecka \texttt{printf} funktionen.
 
 % http://mattam.org/research/publications/Programming_with_Dependent_Types_in_Coq-PPS-260209.pdf
 
 \section{Grund- och taktikspråk}
-\coq består av två olika delspråk. Grundspråket kallas Gallina och liknar till
-viss del OCaml. Det är i Gallina som de definitioner och funktioner som ska
-bevisas skrivs.
+\coq består av två olika delspråk. Grundspråket kallas \textsc{Gallina} och
+liknar till viss del \textsc{OCaml}. Det är i \textsc{Gallina} som de
+definitioner och funktioner som ska bevisas skrivs.
 
-\coq innehåller också ett taktikspråk som heter Ltac och innehåller olika
-taktiker för att påverka de hypoteser och mål som ska bevisas. Ltac gör det
-möjligt att använda samma metoder i \coq som man använder när man skapar ett
-pappersbevis. Då \coq är en interaktiv teorembevisare så när en viss taktik
-används uppdateras de hypoteser och mål som ska bevisas och användaren
-anger då en ny taktik och detta fortsätter tills alla målen är lösta.
-
-\section{\coq's Historia}
-Det är i huvudsak två vetenskaper som ligger till grund för \coq, nämligen
-datavetenskap (eng. computer science) och formellbevisföring. Datavetenskapens
-vagga startar med en avhandling av Don Knuth, professor på Stanfords
-Universitet, år 1968. Det skulle visa sig ta 30 år av forskning efter
-avhandligen att fastställa ett rigoröst område. På liknande sätt var även den
-rigorösa grunden av formellbevisföring under utveckling under denna tidsepok.
-De största genombrotten gjordes dock under 1930-talet av Gentzen, Gödel och
-Herbrand. 70 år senare stod \coq som slutprodukt efter en lång serie av projekt.
-
-\section{Tillämpningar}
-\coq har, som redan nämnts, använts till att bevisa olika stora satser och även
-en del andra programvaror. Det har skett genom stora forskningsprojekt.
-
-\begin{itemize}
-\item Fyrfärgssatsen \autocite{gonthier2008formal}\cite{gonthier2005computer}
-säger att varje karta kan färgläggas med fyra färger så att inga två
-angränsande länder får samma färg. Den visades 1976 med ett bevis som var över
-hundra sidor långt. Det som innehöll fallanalys av 10000 fall gjord för hand,
-och dessutom en datorprogrammerad fallanalys av miljontals fall. Det gjorde det
-mycket svårt att kontrollera om beviset var korrekt. Beviset formaliserades och
-verifierades i \coq 1995. Detta arbete ledde till utvecklandet av \ssr.
-
-\item CompCert\autocite{compcert} är ett projekt som utforskar möjligheten att
-utveckla formellt bevisade kompilatorer. Anledningen att man vill ha en
-formellt bevisad kompilator är att vid vissa optimeringar så kan kompilatorn
-skapa buggar och beräkningsfel. Att kompilatorn är formellt bevisad innebär att
-det finns ett matematiskt bevis, som kan kontrolleras genom en mekanisk check,
-för att den exekverbara koden beter sig så som står föreskrivet i källkoden.
-Rent konkret innebär detta att man är garanterad att den exekverbara koden inte
-innehåller buggar som är skapade av kompilatorn. Huvudresultatet av detta är en
-fungerande C-kompilator som stödjer hela ANSI C (som är den första
-standardiserade veritionen av C) med ett få undantag. Vad gäller prestanda så
-är CompCert's kompilator snabbare än GCC's (Gnu Compiler Collection)
-C-kompilator när denna inte har några optimeringar.
-
-\item Feit-Thompsons eller Odd Order Theorem är en sats inom algebra som säger
-att en ändlig grupp alltid är lösbar om dess ordning är udda
-\cite{gonthier2013oddorderproof}. Det ursprungliga beviset är över 200 sidor
-långt\cite{feit1963}. Storleken på beviset och därmed risken för någon dold
-miss i det är en av anledningarna till varför det ansågs intressant att
-formalisera i \coq. I samband med formaliseringen av beviset har även en stor
-del av matematisk gruppteori formaliserats och verifierats.
-\end{itemize}
-
-\section{Alternativ till \coq}
-Det finns många olika program och språk för att formalisera och bevisa olika
-former av matematik eller logik. En sak som de flesta har gemensamt är att de
-är uppbyggd på funktionella programmeringsparadigmer.
-
-\begin{itemize}
-\item Agda är utvecklat på Chalmers och påminner till stor del om Haskell. Till
-skillnad mot \coq så finns det inga inbyggda taktiker. Agda är inte lika
-matematiskt inriktad som \coq utan används mer till att bevisa korrekthet hos
-%är vi säkra på det här med matematiskt inriktat?
-program. En fördel med Agda är att alla Unicodetecken är tillåtna vilket gör
-det enkelt att skriva sina program och bevis på samma sätt som man skulle göra
-det på papper.
-
-\item Z3 är ett språk som har utvecklats av Microsoft för att förenkla och
-bevisa olika teorem. Kan användas tillsammans med flera stora ickefunktionella
-språk som Python, C och .NET.
-
-\item HOL, Högre Ordningens Logik är en av de första interaktiva
-teorembevisarna och HOL-light som är en vidareutveckling av det används idag av
-Intel för att bevisa att vissa hårdvarukomponenter fungerar korrekt.
-
-\item F* är en vidareutveckling av F\# och används för att verifiera och bevisa
-egenskaper hos program. En av de större skillnaderna från F\# är att F* har
-stöd för beroendetyper. F* är en del av .NET vilket gör att bevis och kod som
-är skriven i F* går att använda i all andra .NET språk. Stora delar av F* är
-formaliserade och bevisade i \coq.
-\end{itemize}
-
-\begin{comment}
-Källor och annat material
-HOL http://www.cl.cam.ac.uk/~jrh13/hol-light/
-Z3 http://research.microsoft.com/en-us/um/redmond/projects/z3/old/
-F* http://research.microsoft.com/en-us/projects/fstar/
-\end{comment}
+\coq innehåller också ett taktikspråk som heter \textsc{Ltac} och innehåller
+olika taktiker för att påverka de hypoteser och mål som ska bevisas.
+\textsc{Ltac} gör det möjligt att använda samma metoder i \coq som man använder
+när man skapar ett pappersbevis. Då \coq är en interaktiv teorembevisare så när
+en viss taktik används uppdateras de hypoteser och mål som ska bevisas och
+användaren anger då en ny taktik och detta fortsätter tills alla målen är
+lösta.
