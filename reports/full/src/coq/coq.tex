@@ -2,7 +2,7 @@ I det här avsnittet ges en introduktion till \coq som språk och som
 bevisassistent. \coq är ett beroenedetypat funktionellt programmeringsspråk och
 \emph{interaktiv} bevisassistent som kan användas till att utveckla formella
 bevis. Dessa två delar bygger på ett grundspråk, det vill säga det funktionella
-språket som inte är helt olikt \textsc{Haskell}, samt ett \emph{taktikspråk}
+språket, som inte är helt olikt \textsc{Haskell}, samt ett \emph{taktikspråk}
 som används för att skriva bevis.
 
 Program och bevis som är skrivna i \coq går att exportera till programspråken
@@ -12,46 +12,54 @@ och köra dem tillsammas med icke bevisad kod i till exempel \textsc{Haskell}.
 
 \section{Beroendetypning}
 För att förklara beroendetypning använder vi begreppen \emph{termer} och
-\emph{typer}. Förenklat sett kan man se termer som värden och funktioner, och
-en typ kan man se som en samling, eller mängd, värden eller termer, notera att
-all termer har en typ. Som ett exempel ska vi nu gå igenom hur ett funktionellt
-programmerings språk med beroendetypning kan vara uppbyggt.
+\emph{typer}. Förenklat sett kan man säga att termer är värden eller funktioner
+och typer är samlingar (matematisk mängder) av värden eller termer. Notera att
+varje termer har en typ. Som ett exempel ska vi nu gå igenom hur ett
+funktionellt programmeringsspråk med beroendetypning kan vara uppbyggt.
 
 \subsection{Termer som beror på termer}
 Den grundläggande idén med funktionell programmering är att \emph{termer kan
 bero på termer}. I ett teoretiskt funktionellt språk skulle det kunna innebära
-att givet någon typ, låt oss använda de naturliga talen $\mathbb{N}$ i det här
+att givet någon typ, låt oss använda de naturliga talen $\N$ i det här
 exemplet, skulle man kunna skriva
 \begin{align*}
-  &compose : (\mathbb{N} \to \mathbb{N}) \to (\mathbb{N} \to \mathbb{N}) \to \mathbb{N} \to \mathbb{N} \\
+  &compose : (\N \to \N) \to (\N \to \N) \to \N \to \N \\
   &compose\ f\ g\ x = f\ (g\ x)
 \end{align*}
-där termerna $f$, $g$ och $h$ är funktioner och termen $x$ är ett värde. Här
+där termerna $f$, $g$ och $compose$ är funktioner och termen $x$ är ett värde. Här
 säger man att termen $h$ beror på termerna $f$, $g$ och $x$. Funktionen
-$compose$ definerar förstås funktionskomposition, oftast noterad med en cirkel
+$compose$ definierar förstås funktionskomposition, oftast noterad med en cirkel
 likt $(f \circ g)\ x$, som många lyfter fram som en viktig del av funktionell
 programmering.
 
+% TODO: Explain types in more details, with example definition.
+
 \subsection{Termer som beror på typer}
 Utöver termer som beror på termer kan man även lägga till \emph{termer som
-beror på typer}, vilket är vad som egentligen menas med polymorfism. För att
-bygga vidare på vårt exempel skulle det kunna se ut såhär:
+beror på typer}, vilket brukar kallas polymorfism. För att bygga vidare på vårt
+exempel skulle det kunna se ut såhär:
 \begin{align*}
   &compose' : (b \to c) \to (a \to b) \to a \to c \\
   &compose'\ f\ g\ x = f\ (g\ x)
 \end{align*}
-Här har vi istället för att använda typen $\mathbb{N}$ använt de godtyckliga
-typerna $a$, $b$ och $c$. Det låter oss med samma definition av $compose'$
-anropa funktionen med termer av olika typer.
+Här har vi istället för att använda typen $\N$ använt de godtyckliga
+typerna $a$, $b$ och $c$ vilket innebär att termen $compose'$ beror på typerna
+$a$, $b$ och $c$. Det låter oss med en enda definition av $compose'$ anropa
+funktionen med termer av olika typer, istället för att definiera en funktion
+för varje kombination av typer.
 
-Ytterligare ett exempel på polymorfism är \emph{polymorfiska typer}. Låt
+Ytterligare ett exempel på polymorfism är \emph{polymorfiska typer}. Till
+exempel kan vi skriva
 \begin{align*}
   &\boldsymbol{data}\ List\ a\ \boldsymbol{where} \\
   &\ \ Nil : List\ a \\
   &\ \ Cons : a \to List\ a \to List\ a
 \end{align*}
-Här definierar en polymorfisk datatyp för listor som vi sedan kan använda för
-att lista vilken typ vi vill.
+Där $List\ a$ är en polymorfisk datatyp för listor. Vi skulle sedan kunna ge
+typen för en funktion som ger tillbaka det första elementet ifrån en lista:
+\begin{align*}
+  head : List\ a \to a
+\end{align*}
 
 \subsection{Typer som beror på typer}
 Nästa steg i utvecklingen är att låta \emph{typer bero på typer}. Med denna
@@ -59,46 +67,59 @@ funktionaliteten kan man definiera så kallade typoperatorer. Typoperatorer är
 funktioner som tar in typer som parametrar och ger ut typer som resultat, till
 skillnad från vanliga funktioner som tar in termer som parametrar och ger ut
 termer som resultat.
-% TODO: Exempel på typoperator
+
+Ett exempel på en typoperator kan vara den kartesiska produkten ($\times$).
+Typoperatorn $\times$ tar in två typer och ger ut en ny typ ofta kallad en
+produkttyp. Eftersom typer är mängder blir kartesiska produkten av två typer
+alla möjliga kombinationer av typernas element. Vi skulle även kunna användas
+oss av en typoperator som representerar union av disjunkta mängder ($+$).
+Unionen av två typer skulle ge oss en ny typ, oftka kallad en summatyp, som
+innehåller alla element från båda typerna.
 
 \subsection{Typer som beror på termer}
 Det sista steget i byggandet är att lägga till \emph{typer som beror på
 termer}, även känt som beroendetypning. Beroendetypning innebär väldigt
 förenklat att man på typnivå kan använda samma funktioner och värden som man
 kan använda på termnivå. Detta låter oss till exempel definiera vektorer, det
-vill säga listor fast med en bestämd längd. Detta gör vi genom att lägga till
-en parameter som representerar vektorns längd i typen och öka denna med ett när
-vi lägger till ett element.
+vill säga listor av en bestämd längd. Detta gör vi genom att lägga till en
+parameter som representerar vektorns längd i typen och öka denna med ett när vi
+lägger till ett element.
 \begin{align*}
-  &\boldsymbol{data}\ Vector\ a\ (n \in \mathbb{N})\ \boldsymbol{where} \\
+  &\boldsymbol{data}\ Vector\ a\ (n \in \N)\ \boldsymbol{where} \\
   &\ \ Empty : Vector\ a\ 0 \\
-  &\ \ Element : a \to (m \in \mathbb{N}) \to Vector\ a\ m \to Vector\ a\ (m+1)
+  &\ \ Element : a \to (m \in \N) \to Vector\ a\ m \to Vector\ a\ (m+1)
 \end{align*}
 Sedan kan vi ge typen till funktioner som till exempel att slå ihop två
 vektorer:
 \begin{align*}
   concatenate : Vector\ a\ n \to Vector\ a\ m \to Vector\ a\ (n+m)
 \end{align*}
-eller ta bort första element från en vektor och ger tillbaka ``svansen'':
+eller en funktion som tar ut första elementet på samma sätt som $head$ för
+listor:
 \begin{align*}
-  tail : (n \in \mathbb{N}) \to Vector\ a\ n \to Vector\ a\ (n-1)
+  head' : (n \in \N) \to Vector\ a\ (n+1) \to Vector\ a\ n
 \end{align*}
 Notera att denna funktionen inte fungerar på tomma vektorer eftersom man inte
-kan ta bort ett element som inte finns, kompilatorn kan kontrollera detta
-eftersom $(n-1)$ där $n=0$ inte är definierat för naturliga tal.
+kan ta bort ett element som inte finns, kompilatorn kontrollera detta att
+matcha typen på den inskickade vektorn med värdet $n+1$. Om typen har värdet
+$n = 0$ matchar inte typen eftersom $\nexists m \in \N, m+1 = 0$. Detta till
+skillnad från definitionen av $head$ för listor som helt enkelt inte kan
+definieras för tomma listor och i \textsc{Haskell} kraschar helt enkelt program
+som använder $head$ på tomma listor.
 
 Värt att notera är att inte bara funktionella språk som har beroendetypade
 funktioner. Ett exempel på beroendetypning som de flesta antagligen är bekanta
 med är \texttt{printf} i \textsc{C}. Här bestäms antalet parametrar i funktionen
 av antalet \% -tecken i den första strängen och vilken typ det ska vara på
-dessa parametrar bestäms av vilken bokstav som står efter \%-tecknet.
+dessa parametrar bestäms av vilken bokstav som står efter respektive
+\%-tecknet.
 \begin{verbatim}
 printf("%s is %d years old and %f.1cm long", name, age, lenght)
 \end{verbatim}
 Dock stödjer typsystemet i \textsc{C} inte beroendetypning vilket gör att
 kompilatorer generellt sett inte kan typchecka \texttt{printf} funktionen.
 
-% http://mattam.org/research/publications/Programming_with_Dependent_Types_in_Coq-PPS-260209.pdf
+% TODO: Totalitet
 
 \section{Grundspråk}
 \coq är uppbyggt av två olika programmeringsspråk. Grundspråket som kallas
