@@ -16,24 +16,24 @@ abstrakt version av Toom-Cook. Med abstrakt menas utan hänsyn till om det går
 att implementera. Ett detaljerat bevis gjordes också på papper för senare
 användning i implementationen.
 
-\section{Implementation i Haskell}
+\section{Implementation i \haskell{}}
 I samband med framtagningen av pappersbeviset utvecklades en praktiskt
-implementation av Toom-Cook för heltal gjordes i Haskell. Den byggdes först för
+implementation av Toom-Cook för heltal gjordes i \haskell{}. Den byggdes först för
 Toom-Cook-3 men generaliserades sedan till Toom-Cook-$n$. Testning gjordes med
 QuickCheck genom att jämföra implementationen av Toom-Cook med
-heltalsmultiplikationen som finns definierad i Haskell. Resultatet av denna
+heltalsmultiplikationen som finns definierad i \haskell{}. Resultatet av denna
 fasen finns i appendix~\ref{app:haskell}.
 
-Anledningen till att en implementation gjordes i Haskell var för att vi i det
+Anledningen till att en implementation gjordes i \haskell{} var för att vi i det
 stadiet inte hade tillräckligt med kunskap om \coq{} för att implementera en ny
-algoritm i språket. Eftersom erfarenhet av Haskell redan fanns kunde algoritmen
+algoritm i språket. Eftersom erfarenhet av \haskell{} redan fanns kunde algoritmen
 snabbt implementeras och testas, detta gav också en bättre förståelse för hur
 Toom-Cook fungerar.
 
 \section{Implementering och bevis i \coq{}}
 När pappersbevis och praktisk implementation utfördes implementeringen av
 Toom-Cook och dess bevis i \coq{} med hjälp av \ssr{}. Första skapades en
-definition av algoritmen i \coq{} väldigt lik den i Haskell fast med polynom
+definition av algoritmen i \coq{} väldigt lik den i \haskell{} fast med polynom
 istället för heltal. Denna definition omarbetades senare under bevisningen för
 att det skulle vara lättare att arbeta med beviset. Uppdelningen av lemmana
 gjorde det möjligt Resultatet av detta

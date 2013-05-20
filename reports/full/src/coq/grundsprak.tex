@@ -3,7 +3,7 @@
 \textsc{Gallina} är som vi redan nämnt funktionellt och beroendetypat. Likt
 andra programmeringsspråk definierar man funktioner och deras typ. Dock är det
 i \coq{} inte tillåtet att definiera funktioner som inte terminerar. Det vill
-säga, i \textsc{Haskell} kan man skriva
+säga, i \haskell{} kan man skriva
 \begin{verbatim}
 loop :: Integer -> Integer
 loop n = loop (n + 1)
@@ -19,7 +19,7 @@ För att göra en definition i \coq{} skriver använder man nyckelordet
 Definition compose (a b c: Type) (f: b -> c) (g: a -> b) (x: a) : c := f (g x).
 \end{lstlisting}
 I definitionen av \C{compose} måste vi först ge typerna \C{a}, \C{b} och \C{c}
-explicit till skillnad från \textsc{Haskell} där de är definierade implicit.
+explicit till skillnad från \haskell{} där de är definierade implicit.
 Parametrarna \C{f}, \C{g} och \C{x} följer sedan direkt. I \coq{} används punkt
 (\C{.}) för att avsluta en definition likt hur man avslutar ett påstående
 (\emph{engelska: statement}) i C med semikolon (;). För att anropa \C{compose}
