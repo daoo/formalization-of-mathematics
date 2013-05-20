@@ -51,7 +51,7 @@ rekursiva anrop av algoritmen i stället för att som i beviset av
 prop~\ref{prop:1} görar över graden av de polynom som multipliceras. Det beror
 på att den rekursiva delen av den implementerade algoritmen \C{toom_cook_rec}
 är definierad med en oberoende variabel n, så som beskrivits i
-\ref{section:formrec}. I stället för att induktionen som i det informella
+\ref{sec:formrec}. I stället för att induktionen som i det informella
 beviset bygger på att graden av de polynom som Toom-Cook anropas med minskar
 vid rekursiva anrop av algoritmen bygger den på att variabeln n minskas vid
 rekursiva anrop. I båda fallen innebär dock induktionsantagandet att vi antar
@@ -167,7 +167,7 @@ till \C{((evaluate u) i 0) * ((evaluate v) i 0)} inne i kolonnvektorn
 \end{lstlisting}
 Eftersom definitionen \C{\\col_i} är låst för beräkning och uttrycket beror av
 indexet \C{i} i kolonnvektorn kan vi inte direkt skriva om uttrycket, se
-avsnitt~\ref{ssreflect}. Så för att kunna göra det öppnar vi ett nytt delmål
+avsnitt~\ref{sec:ssr}. Så för att kunna göra det öppnar vi ett nytt delmål
 med taktiken \C{have} på rad~\ref{lst:rad9} där vi bara arbetar med denna del av
 vänsterledet. Där använder vi på rad~\ref{lst:rad12} lemmat \C{colP} som låter oss visa
 att två vektorer är lika genom att visa att elementen på motsvarande platser är
@@ -244,8 +244,8 @@ size q <= m * b
 ______________________________________(2/2)
 size p <= m * b
 \end{lstlisting}
-Det görs på rad~\ref{lst:rad25} till \ref{lst:rad26} med lemmat
-\C{exp_m_degree} efter att först på rad~\ref{lst:rad24} ha skrivit om det ena
+Det görs på rad~\ref{lst:rad22} till \ref{lst:rad23} med lemmat
+\C{exp_m_degree} efter att först på rad~\ref{lst:rad21} ha skrivit om det ena
 av målet med ett lemma för att funktionen \C{exponent} är kommutativ, vilket
 avslutar det formella beviset för att Toom Cook ger ett korrekt resultat.
 
