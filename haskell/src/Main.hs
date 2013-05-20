@@ -1,6 +1,6 @@
 module Main where
 
-import Examples
+import Settings
 import ToomCook
 
 main = do

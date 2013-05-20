@@ -6,20 +6,20 @@ import Data.Ratio
 import GHC.Base
 import GHC.Integer
 
+matVecMul :: Num a => [[a]] -> [a] -> [a]
+matVecMul mat vec = map (sum . zipWith (*) vec) mat
+
+log10 :: Integer -> Integer
+log10 n = assert (n >= 0) $ go 0 n
+  where
+    go !acc  0  = acc
+    go !acc !n' = go (acc + 1) (n' `quotInteger` 10)
+
 data ToomCook = ToomCook
   { toomK :: Int
   , toomMat :: [[Integer]]
   , toomInvMat :: [[Rational]]
   }
-
-matVecMul :: Num a => [[a]] -> [a] -> [a]
-matVecMul mat vec = map (sum . zipWith (*) vec) mat
-
-log10 :: Integer -> Integer
-log10 = go 0
-  where
-    go !acc  0 = acc
-    go !acc !n = go (acc + 1) (n `quotInteger` 10)
 
 {-# INLINE baseExponent #-}
 baseExponent :: Int -> Integer -> Integer -> Integer
@@ -28,6 +28,8 @@ baseExponent k n m = assert (k > 0) $
     (log10 n `quotInteger` fromIntegral k)
     (log10 m `quotInteger` fromIntegral k)
 
+{-# INLINE split #-}
+-- |Split an integer into a big-endian list of integers using a given base
 split :: Int -> Integer -> Integer -> [Integer]
 split k b = assert (b > 0) $ go k []
   where
@@ -35,22 +37,31 @@ split k b = assert (b > 0) $ go k []
     go !k' acc n = case n `quotRemInteger` b of
       (# n', x' #) -> go (k'-1) (x':acc) n'
 
-{-# INLINE merge #-}
+-- |Merge a splitted integer using some base
+-- This is the inverse of split.
 merge :: Integer -> [Integer] -> Integer
 merge b = recompose b . reverse
 
+{-# INLINE evaluate #-}
+-- |Evaluate the splits using the evaluation matrix
+-- Note that since the splitlist is big-endian, either we have
+-- to reverse each row of the evaluation matrix, or reverse the
+-- splitlist.
 evaluate :: [[Integer]] -> [Integer] -> [Integer]
-evaluate mat vec = matVecMul mat (reverse vec)
+evaluate = matVecMul
 
+{-# INLINE interpolate #-}
 interpolate :: [[Rational]] -> [Integer] -> [Integer]
 interpolate mat vec = map numerator $ matVecMul mat $ map fromIntegral vec
 
+{-# INLINE recompose #-}
 recompose :: Integer -> [Integer] -> Integer
 recompose b = go 1 0
   where
     go  _  !acc []     = acc
     go !b' !acc (x:xs) = go (b * b') (acc + b' * x) xs
 
+{-# INLINE toomCook #-}
 toomCook :: ToomCook -> Integer -> Integer -> Integer
 toomCook !t !n !m | n < 0 && m < 0 = toomCook t (abs n) (abs m)
                   | n < 0          = negate $ toomCook t (abs n) m

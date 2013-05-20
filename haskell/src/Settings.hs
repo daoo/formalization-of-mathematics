@@ -3,14 +3,16 @@ module Settings where
 import Data.Ratio
 import ToomCook
 
+-- NOTE: The rows in the evaluation matrices are inverted
+
 toom1 :: ToomCook
 toom1 = ToomCook 1 [[1]] [[1]]
 
 karatsuba :: ToomCook
 karatsuba = ToomCook 2
-  [ [ 1 , 0 ]
-  , [ 1 , 1 ]
-  , [ 0 , 1 ]
+  [ reverse [ 1 , 0 ]
+  , reverse [ 1 , 1 ]
+  , reverse [ 0 , 1 ]
   ]
   [ [1  , 0 , 0  ]
   , [-1 , 1 , -1 ]
@@ -19,11 +21,11 @@ karatsuba = ToomCook 2
 
 toom3 :: ToomCook
 toom3 = ToomCook 3
-  [ [ 1 , 0  , 0 ]
+  [ [ 0 , 0  , 1 ]
   , [ 1 , 1  , 1 ]
   , [ 1 , -1 , 1 ]
-  , [ 1 , -2 , 4 ]
-  , [ 0 , 0  , 1 ]
+  , [ 4 , -2 , 1 ]
+  , [ 1 , 0  , 0 ]
   ]
   [ [ 1    , 0   , 0   , 0    , 0  ]
   , [ 1%2  , 1%3 , -1  , 1%6  , -2 ]
@@ -34,13 +36,13 @@ toom3 = ToomCook 3
 
 toom4 :: ToomCook
 toom4 = ToomCook 4
-  [ [ 1 , 0  , 0 , 0  ]
-  , [ 1 , 1  , 1 , 1  ]
-  , [ 1 , -1 , 1 , -1 ]
-  , [ 1 , -2 , 4 , -8 ]
-  , [ 1 , 2  , 4 , 8  ]
-  , [ 1 , 3  , 9 , 27 ]
-  , [ 0 , 0  , 0 , 1  ]
+  [ reverse [ 1 , 0  , 0 , 0  ]
+  , reverse [ 1 , 1  , 1 , 1  ]
+  , reverse [ 1 , -1 , 1 , -1 ]
+  , reverse [ 1 , -2 , 4 , -8 ]
+  , reverse [ 1 , 2  , 4 , 8  ]
+  , reverse [ 1 , 3  , 9 , 27 ]
+  , reverse [ 0 , 0  , 0 , 1  ]
   ]
   [ [ 1     , 0     , 0     , 0      , 0     , 0     , 0   ]
   , [ -1%3  , 1     , -1%2  , 1%20   , -1%4  , 1%30  , -12 ]
