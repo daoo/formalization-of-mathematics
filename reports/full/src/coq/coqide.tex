@@ -1,13 +1,16 @@
-\section{Kort introduktion till programmering i \coq{} och utvecklingsmiljön
-\coq{} Ide}
+\section{Introduktion utvecklingsmiljön \coq  Ide}
 
-\subsection{Beskrivning av \coq{} Ide}
+För närvarandet finns det två olika utvecklingsmiljöer för \coq.
+Det är \coq Ide och Proof General som är ett emacsläge. Vi väljer att endast
+presentera \coq Ide då vårt projekt endst använder oss av denna utvecklingsmiljö.
 
+
+\subsection{Översikt av \coq Ide}
 
 \coq Ide är en interaktiv utvecklingsmiljö där användaren kan
-formulera bevis och skriva program och få hjälp med att bevisa
+formulera bevis och skriva program samt att få hjälp med att bevisa
 dessa. I följande avsnitt förklaras de viktigaste delarna med
-hjälp av skärmdumpar från olika exempel.
+hjälp av skärmdumpar med exempelkod.
 
 
 Figur~\ref{fig:oversikt} är en översikt av hela utvecklingsmiljön och dess olika delar
@@ -27,7 +30,7 @@ Figur~\ref{fig:oversikt} är en översikt av hela utvecklingsmiljön och dess ol
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/Overview}
-  \caption[Översikt av \coq{} Ide]
+  \caption[Översikt av \coq Ide]
    {Översikt av de olika delarna i \coq{} Ide}
   \label{fig:oversikt}
 \end{figure}
@@ -45,10 +48,10 @@ Figur~\ref{fig:kontext} är är en förstoring av ruta 2 i Figur~\ref{fig:oversi
 \begin{figure}[H]
   \centering
   \includegraphics[width=150mm]{images/Kontext}
-  \label{fig:kontext}
   \caption[Fönster för kontext och mål]
    {Textfönster för kontext och mål. Figuren visar en förstoring av ruta 2 i
     figur 4.1}
+  \label{fig:kontext}
 \end{figure}
 
 
@@ -70,9 +73,9 @@ sanningsvärdena på hypoteserna.
 \begin{figure}[H]
   \centering
   \includegraphics[width=100mm]{images/Proof_part1}
-  \label{fig:bevis1}
   \caption[Exempel på bevis i \coq{}]
    {Exempel på ett bevis för en tautologi i \coq{}}
+  \label{fig:bevis1}
 \end{figure}
 
 Figurerna ~\ref{fig:bevis2} och ~\ref{fig:bevis3} visar den interaktiva
@@ -83,17 +86,17 @@ efter att en taktik används och attden taktik som har evaluerats blir grönmark
 \begin{figure}[H]
   \centering
   \includegraphics[width=150mm]{images/Proof_part2}
-  \label{fig:bevis2}
   \caption[Bevis i \coq{} Ide]
    {Vi har nu flyttat hypoteserna (A $rightarrow$ B), (B $\rightarrow$ C) och A
     från målet till kontexten och med taktiken \C{move}}
+  \label{fig:bevis2}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=150mm]{images/Proof_part3}
-  \label{fig:bevis3}
   \caption[Bevis i \coq{} Ide]
    {Vi har nu använt oss av Hypotesen ($B \rightarrow C$) och vi
     kan se att målet nu har ändrat sig från C till B}
+  \label{fig:bevis3}
 \end{figure}
