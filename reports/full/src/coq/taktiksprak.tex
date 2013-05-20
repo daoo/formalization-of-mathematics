@@ -4,3 +4,54 @@ formella bevisen. Kort sagt skriver man bevis genom att först sätta upp en sat
 som man vill bevisa som en likhet. Sedan använder så kallade taktiker för att
 modifierar uttrycket tills uttrycket är lika. Arbetsgången liknar på så sätt
 bevis med papper och penna dock mycket mer detaljerat.
+
+För att påbörja ett bevis skriver man först \C{Lemma} eller \C{Theorem} följt
+av namnet på beviset. Sedan skriver man kolon (:) följt av satsens
+kvantifikationer, det vill säga de objekt uttrycket beror på. Efter det följer
+ett kommatecken (,) och satsens påstående följt av punkt (.). Sedan kan man om
+man vill skriva nyckelordet \C{Proof}, men det är bara syntaktiskt socker och
+kompilatorn ignorerar det ordet. Till sist kommer beviset självt uppbygt med
+hjälp av \emph{taktiker} följt av \C{Qed.} för att avsluta beviset. För att
+bevisa till exempel en tautologi.
+
+\begin{lstlisting}
+Theorem tautology : forall (A B C: Prop),
+  (A -> B) -> (B -> C) -> A -> C.
+Proof.
+  intros A B C Hab Hbc Ha.
+  apply Hbc.
+  apply Hab.
+  apply Ha.
+Qed.
+\end{lstlisting}
+
+I själva beviset har man ett så kallat kontext och en lista med mål som behöver
+bevisas. Med kontext menas de objekt som användaren kan använda sig av i
+beviset. Genom att använda sig av taktiker modifierar man målen och kontextet.
+Efter \C{Proof.} i \C{tautology} ser kontexten och målet ut på följande sätt
+\begin{lstlisting}
+1 subgoals
+______________________________________(1/1)
+forall A B C : Prop, (A -> B) -> (B -> C) -> A -> C
+\end{lstlisting}
+
+Taktiken \C{intros} flyttar antaganden från målet till kontexten så att de kan
+användas i andra taktiker. I \C{tautology} flyttar vi upp alla implikationerna
+och ger dem namn, det leder till följande kontext och mål
+\begin{lstlisting}
+1 subgoals
+A : Prop
+B : Prop
+C : Prop
+Hab : A -> B
+Hbc : B -> C
+Ha : A
+______________________________________(1/1)
+C
+\end{lstlisting}
+
+Nu är målet att bevisa \C{C}, det kan vi göra genom att applicera hypotesen
+\C{Hbc} med \C{apply} taktiken. Det resulterar i att vi behöver bevisa \C{B}
+vilket vi kan göra med hypotesen \C{Hab}. Till sist får vi målet \C{A} vilket
+kan bevisas med hypotesen \C{Ha}. Kontexten visar då texten \C{No more
+subgoals} och beviset kan avslutas med \C{Qed}.
