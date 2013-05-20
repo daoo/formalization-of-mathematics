@@ -1,7 +1,7 @@
 \section{Implementeringen av Toom-Cook}
 % TODO: Dela upp denna sektionen i flera delar?
-Den version av Toom-Cook som beskrevs i avsnitt~\ref{in:definition} och som
-implementerades i avsnitt~\ref{section:formalg} är generell och på abstrakt
+Den version av Toom-Cook som beskrevs i avsnitt~\ref{sec:definition} och som
+implementerades i avsnitt~\ref{sec:formell} är generell och på abstrakt
 vilket är bra då den ska bevisas. Med vår implementation kan inga beräkningar
 utföras då typen av polynom i \ssr{} är låst, se avsnitt~\ref{avsnitt:ssr}. Om
 det hade funnits tid skulle nästa steg i projektet varit att implementera en
@@ -29,14 +29,14 @@ fungerar inte heller för alla integritetsområden.
 % dessa steg, men det fungerar inte för alla integritetsområden
 % och det finns alternativa sätt att implementera detta.
 
-I evalueringssteget~\ref{in:evaluation} i algoritmen multipliceras
+I evalueringssteget~\ref{sec:evaluation} i algoritmen multipliceras
 evalueringsmatrisen $V_e$ med vektorn av koefficienter till polynomet som ska
 evalueras och detta är inte det enda möjliga sättet att evaluera polynomen på.
 För att optimera en beräkningsbarversion av algoritmen finns möjligheten att
 välja en ordning på operationerna i evalueringen som kräver färre operationer
 än direkt matrismultiplikation{bodrato2007towards}.
 
-I interpolationssteget~\ref{in:interpol} antas det att interpolationsmatrisen
+I interpolationssteget~\ref{sec:interpol} antas det att interpolationsmatrisen
 $V_I$ är inverterbar. Det gör att koefficienterna i polynomet kan fås genom att
 multiplicera inversen av $V_I$ med vektorn av polynomets värden i
 interpolationspunkterna.
@@ -87,7 +87,7 @@ något eller några typer av
 %****familjer(jag vill säga att de ska ha en gemensam isomorf delring eller nåt
 %typ)*** av
 integritetsområden.
-Bodrato\cite{bodrato2007a}\cite{bodrato2007towards}\cite{bodrato2007integer}
+Bodrato\cite{bodrato2007notes}\cite{bodrato2007towards}\cite{bodrato2007integer}
 beskriver optimerade implementationer för karaktärestik 2, 3, 5 och 0 av bland
 annat Toom-Cook-3. GNU Multiple Precision Arithmetic Library använder
 Toom-Cook-3, 4, 6.5 och 8.5 (där 6.5 och 8.5 är algoritmer speciellt anpassade

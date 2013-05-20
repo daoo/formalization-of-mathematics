@@ -36,7 +36,7 @@ Vi låter \C{inter_points} beteckna en kolonnvektor vars element tillhör $R[x]$
 vilket faktiskt skiljer sig från pappersalgoritmen. Det var avgörande för
 pappersalogritmen att punkterna tillhörde $R$ för att graden garanterat skulle
 avta vilket ledde till att induktionsantagandet över graden kunde appliceras,
-se avsnitt~\ref{in:induktion}, men i beviset i\ssr{} görs induktion över en annan
+se avsnitt~\ref{sec:induktion}, men i beviset i\ssr{} görs induktion över en annan
 variabel så det problemet uppstår aldrig. Algoritmen blir dock snabbare om
 interpolationspunkterna tillhör $R$ eller är av låg grad i $R[x]$, se
 avsnitt~\ref{def}.
@@ -120,7 +120,7 @@ Här sker evalueringen av \C{w} i $x^b$ där \C{b} är en inparametern.
 
 \subsection{Rekusiv del}
 
-Fjärde steget i Toom-Cook-algoritmen. se avsnitt~\ref{in:rekursiv},  är en rekusiv del och
+Fjärde steget i Toom-Cook-algoritmen. se avsnitt~\ref{sec:rekursiv},  är en rekusiv del och
 rekusiv del och därmed behövs en rekusiv funktion, nämligen Fixpoint, för att
 kunna stega igenom hela algoritmen. I pappersalgoritmen slutar rekusionen när
 graden har blivit tillräckligt låg och då utförs direktmultiplikation. \coq{}
@@ -165,7 +165,7 @@ Om en \C{n} är lika med noll så sker direktmultiplikation mellan polynomen.
 \end{lstlisting}
 
 Om en \C{n} då är en efterföljare till ett naturligt tal, med andra ord skiljt
-från noll, då sker gradkontrollen, se avsnitt~\ref{in:gradkontroll}, och direkt
+från noll, då sker gradkontrollen, se avsnitt~\ref{sec:gradkontroll}, och direkt
 multiplikation sker. Om båda polynomen är av högre grad än två så stegar vi
 vidare i algoritmen.
 
@@ -188,7 +188,7 @@ retunerar, som tillhör $R[x][y]$. Inparametern \C{m} är antalet splittar, \C{b
 bestämdes i raden före, \C{p} och \C{q} är återigen polynomen i $R[x]$ så blir \C{u}
 \C{u} och \C{v} motsvarande u och v i pappersalgoritmen, se ekvationerna
 (\ref{eq:u}) och (\ref{eq:v}). Det här motsvarar alltså andra steget i
-algoritmen, se avsnitt (\ref{in:uppdelning}).
+algoritmen, se avsnitt (\ref{sec:uppdelning}).
 
 \begin{lstlisting}
 let u_a := evaluate u in
@@ -217,8 +217,8 @@ in recompose b w
 \end{lstlisting}
 
 När rekusionssteget är klart så sker interpolerationssteget, se avsnitt
-\ref{in:interpol}, där inversen av interpolationsmatrisen multipliceras med
+\ref{sec:interpol}, där inversen av interpolationsmatrisen multipliceras med
 kolonnvektorn \C{w_a} och retunerar polynomet \C{w} som är produkten av
 polynomen u och v. Slutligen sker sammansättningen, se avsnitt
-\ref{in:sammansattning}, där \C{b} anger vilken exponent x får som evalueras in
+\ref{sec:sammansattning}, där \C{b} anger vilken exponent x får som evalueras in
 polynomet \C{w} och därmed har vi produkten av polynomen \C{p} och \C{q}.
