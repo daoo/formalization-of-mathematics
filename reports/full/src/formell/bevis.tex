@@ -12,7 +12,7 @@ s bibliotek. En lång rad lemman om bland annat grundläggande egenskaper hos
 polynom, naturliga tal, matriser och summor finns tillgängliga.
 
 Det formella bevisets struktur är modellerad efter det informella bevisets i
-avsnitt \ref{informhuvudbevis}, med ett huvudbevis som bygger på ett flertal
+avsnitt~\ref{informhuvudbevis}, med ett huvudbevis som bygger på ett flertal
 lemman. De formella lemmorna är dock många fler än de för det informella
 beviset, 15 jämfört med två. Det beror delvis på att påståenden delats upp i
 flera delpåståenden för att underlätta arbetsfördelningen inom gruppen, men i
@@ -29,7 +29,7 @@ Nedan beskrivs huvudbeviset rad för rad, och därefter beskrivs några av de me
 lemmorna utan bevis.
 
 \subsection{Huvudbeviset}
-Detta är den formella motsvarigheten till prop \ref{prop:1} för den
+Detta är den formella motsvarigheten till prop~\ref{prop:1} för den
 implementerade algoritmen. Eftersom \C{toom_cook} bara utvärderar
 \C{toom_cook_rec} med ett visst argument så beror dess korrekthet helt på
 följande sats, som säger att \C{toom_cook_rec} är korrekt:
@@ -96,7 +96,7 @@ rekursiva delen av algoritmen är korrekt, givet vissa lemman:
 På rad \C{1} och \C{2} formuleras lemmat och på rad \C{3} anges att beviset
 startar genom \C{Proof}. Rad \C{4} anger med \C{elim=>} att beviset kommer
 göras med induktion över den variabel som står först i
-lemmat, \C{n}. Basfallet är trivialt precis som i prop \ref{prop:1} eftersom
+lemmat, \C{n}. Basfallet är trivialt precis som i prop~\ref{prop:1} eftersom
 \C{toom_cook_rec} är vanlig multiplikation när \C{n}$=0$ och delmålet det utgör
 avslutas direkt med hjälp av \C{//}. Till höger om \C{|} ges instruktioner
 till induktionssteget. Variabeln \C{n'} där \C{n' + 1}  = \C{n},
@@ -137,7 +137,7 @@ av \C{p} eller \C{q} är mindre än 2 (eftersom multiplikation i algoritmen
 då utförs direkt enligt definitionen) och annars
 lika med det mer komplicerade uttrycket som står efter \C{else}. Dessa två
 uttryck skulle motsvarat basfallet och induktionssteget om induktionen hade
-gjorts över graden av p och q, som i prop \ref{prop:1}.
+gjorts över graden av p och q, som i prop~\ref{prop:1}.
 
 Nu görs i stället på
 rad \C{8} med \C{ifP} en falluppdelning över \C{if ... then ... else}-uttrycket

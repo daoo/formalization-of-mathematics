@@ -2,7 +2,7 @@
 \label{sec:formellimplementation}
 I det här avsnittet förklaras hur Toom-Cook-algoritmen är implementerad i \ssr{}
 och hur den överrenstämmer med pappersdefinitionen av algoritmen. Hela
-implementation ligger som ett appendix \ref{appendix:matematikteori}.
+implementation ligger som ett appendix~\ref{appendix:matematikteori}.
 
 \subsection{Definitioner}
 Algoritmen är implementerad med en rad små funktioner och sedan en rekursiv
@@ -36,7 +36,7 @@ Vi låter \C{inter_points} beteckna en kolonnvektor vars element tillhör $R[x]$
 vilket faktiskt skiljer sig från pappersalgoritmen. Det var avgörande för
 pappersalogritmen att punkterna tillhörde $R$ för att graden garanterat skulle
 avta vilket ledde till att induktionsantagandet över graden kunde appliceras,
-se avsnitt \ref{in:induktion}, men i beviset i\ssr{} görs induktion över en annan
+se avsnitt~\ref{in:induktion}, men i beviset i\ssr{} görs induktion över en annan
 variabel så det problemet uppstår aldrig. Algoritmen blir dock snabbare om
 interpolationspunkterna tillhör $R$ eller är av låg grad i $R[x]$, se
 avsnitt~\ref{def}.
@@ -165,7 +165,7 @@ Om en \C{n} är lika med noll så sker direktmultiplikation mellan polynomen.
 \end{lstlisting}
 
 Om en \C{n} då är en efterföljare till ett naturligt tal, med andra ord skiljt
-från noll, då sker gradkontrollen, se avsnitt \ref{in:gradkontroll}, och direkt
+från noll, då sker gradkontrollen, se avsnitt~\ref{in:gradkontroll}, och direkt
 multiplikation sker. Om båda polynomen är av högre grad än två så stegar vi
 vidare i algoritmen.
 

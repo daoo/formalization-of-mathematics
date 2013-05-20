@@ -2,7 +2,7 @@
 \label{informhuvudbevis}
 I detta stycke visar vi att för $p, q \in R[x]$ så är
 $p \cdot q = Toom-Cook (p, q)$. Vi gör detta med hjälp av två lemman, vars bevis
-kommer efter beviset av \ref{prop:1}.
+kommer efter beviset av~\ref{prop:1}.
 
 \begin{proposition}
   \label{prop:1}
@@ -39,15 +39,15 @@ av grad mindre än $n$. Eftersom $n > 2$ så går vi vidare till steg
 \ref{in:gradkontroll} i algoritmen och skapar $u$ och $v$ från $p$ och $q$. När
 detta är gjort evaluerar vi i steg 3 $u$ och $v$ i punkterna $\alpha_0, \dots,
 \alpha_{2m-2}$ genom att multiplicera vektorn av deras koefficienter med
-evalueringsmatrisen. I steg \ref{in:rekursiv} anropar vi Toom-Cook igen, nu med
+evalueringsmatrisen. I steg~\ref{in:rekursiv} anropar vi Toom-Cook igen, nu med
 argumenten $u(\alpha_i) \cdot v(\alpha_i)$ för $i = 0, \ldots , 2m-2$. Dessa är
 polynom i $R[x]$. Eftersom $\grad u(\alpha_i)$, $\grad v(\alpha_i) < n$ enligt
-lemma \ref{lemma:1} så är $Toom-Cook (u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot
-v(\alpha_i)$ enligt induktionsantagnandet. I steg \ref{in:interpol} skall vi
+lemma~\ref{lemma:1} så är $Toom-Cook (u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot
+v(\alpha_i)$ enligt induktionsantagnandet. I steg~\ref{in:interpol} skall vi
 bestämma koefficienterna i $w(y)=u(y) \cdot v(y)$. Detta gör vi genom att lösa
 matrisekvationen (\ref{eq:NAME4}). Eftersom interpolationsmatrisen $V_I$ enligt
 antagande är inverterbar så ges koefficienterna entydigt av (\ref{eq:NAME5}). I
-steg \ref{in:sammansattning} evaluerar vi $w(y)=u(y) \cdot v(y)$ i $x^b$. Lemma
+steg~\ref{in:sammansattning} evaluerar vi $w(y)=u(y) \cdot v(y)$ i $x^b$. Lemma
 \ref{lemma:2} ger att $u(x^b)=p(x)$ och att $v(x^b)=q(x)$. Då $w(y)=u(y) \cdot
 v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
 \end{proof}
@@ -55,7 +55,7 @@ v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
 \begin{lemma}
   \label{lemma:1}
   Antag att $p(x) \in R[x]$ och att $\grad p \geq 2$. Antag också att $u(y)$ är
-  definierad enligt steg \ref{in:uppdelning}, uppdelning, i algoritmen och att
+  definierad enligt steg~\ref{in:uppdelning}, uppdelning, i algoritmen och att
   $\alpha \in R$. Då är $\grad u(\alpha) < \grad p$.
 \end{lemma}
 \begin{proof}
