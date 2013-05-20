@@ -16,7 +16,7 @@ ge kompileringsfel om den stöter på liknande funktioner.
 För att göra en definition i \coq{} skriver använder man nyckelordet
 \C{Definition}, en definition av funktionskomposition kan se ut såhär:
 \begin{lstlisting}
-  Definition compose (a b c: Type) (f: b -> c) (g: a -> b) (x: a) : c := f (g x).
+Definition compose (a b c: Type) (f: b -> c) (g: a -> b) (x: a) : c := f (g x).
 \end{lstlisting}
 I definitionen av \C{compose} måste vi först ge typerna \C{a}, \C{b} och \C{c}
 explicit till skillnad från \textsc{Haskell} där de är definierade implicit.
