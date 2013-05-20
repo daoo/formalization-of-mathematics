@@ -60,16 +60,11 @@ flera stora ickefunktionella språk som \textsc{Python}, \textsc{C} och
 hårdvarukomponenter fungerar korrekt och i det pågående projektet att
 formalisera Keplers förmodan \cite{hales2008formal}.
 
-Toom-Cook är en algoritm för att multiplicera heltal eller polynom. Den är
-intressant eftersom den har en bättre asymptotisk tidskomplexitet än
-polynommultiplikation utförd direkt enligt definitionen \footnote{För
-definition av polynommultiplikation, se
-appendix~\ref{sec:algebra}.}, där man multiplicerar varje term i det
-ena polynomet med varje term i det andra polynomet vilket har den asymptotiska
-tidskomplexiteten\footnote{Funktionen $T(n)$ är $O(f(n))$ om det existerar
-konstanter $c > 0$ och $n_0 \geq 0$ så att $T(n) \leq c \cdot f(n)$ för alla $n
-\geq n_0$.} $\Ordo\left(n^2\right)$, där $n$ är graden på det största av de två
-polynomen som skall multipliceras.
+Toom-Cook är en algoritm för att multiplicera polynom men kan även användas
+för att multiplicera heltal. Den är intressant eftersom den har en bättre
+asymptotisk tidskomplexitet än polynommultiplkiation utförd direkt enligt
+definitionen \footnot{För definition av polynommultiplikation, se
+appendix~\ref{sec:algebra}.}.
 
 \section{Syfte}
 Syftet med det här projektet är att formalisera och bevisa korrektheten hos en
