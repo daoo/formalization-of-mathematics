@@ -7,23 +7,23 @@ förklaras inte närmare. Jämförelser görs med det informella beviset i avsni
 bevisets gång. Variablerna \C{p} och \C{q} betecknar genomgående polynom över
 ett integritetsområde.
 
-I beviset används när så är möjligt redan tidigare bevisade resultat från \ssr{}
-s bibliotek. En lång rad lemman om bland annat grundläggande egenskaper hos
-polynom, naturliga tal, matriser och summor finns tillgängliga.
+I beviset används när så är möjligt redan tidigare bevisade resultat från
+\ssr{}s bibliotek. En lång rad lemman om bland annat grundläggande egenskaper
+hos polynom, naturliga tal, matriser och summor finns tillgängliga.
 
 Det formella bevisets struktur är modellerad efter det informella bevisets i
 avsnitt~\ref{sec:informhuvudbevis}, med ett huvudbevis som bygger på ett
 flertal lemman. De formella lemmorna är dock många fler än de för det
-informella beviset, 15 jämfört med två. Det beror delvis på att påståenden
-delats upp i flera delpåståenden för att underlätta arbetsfördelningen inom
-gruppen, men i första hand på att resonemangssteg som i det informella beviset
-ses som så triviala att de inte ens nämns också måste visas när beviset
-formaliseras. En ytterligare anledning är att det är är lättare att göra
-omskrivningar och slutledningssteg på mindre delpåståenden separat. Ett 50-tal
-mer generella lemman ur \ssr{}-biblioteket och ett par lemman som byggde på
-grundläggande egenskaper hos polynomdivision som gick utanför projektets
-avgränsningar och som tillhandahållits av projektets handledare, Anders
-Mörtberg, har används i huvudbeviset och i beviset av lemmorna.
+informella beviset, 15 jämfört med 2. Det beror delvis på att påståenden delats
+upp i flera delpåståenden för att underlätta arbetsfördelningen inom gruppen,
+men i första hand på att resonemangssteg som i det informella beviset ses som
+så triviala att de inte ens nämns också måste visas när beviset formaliseras.
+En ytterligare anledning är att det är är lättare att göra omskrivningar och
+slutledningssteg på mindre delpåståenden separat. Ett 50-tal mer generella
+lemman ur \ssr{}-biblioteket och ett par lemman som byggde på grundläggande
+egenskaper hos polynomdivision som gick utanför projektets avgränsningar och
+som tillhandahållits av projektets handledare, Anders Mörtberg, har använts i
+huvudbeviset och i beviset av lemmorna.
 
 Nedan beskrivs huvudbeviset rad för rad, och därefter beskrivs några av de mer
 intressanta lemmorna utan bevis.
@@ -97,7 +97,7 @@ På rad~\ref{lst:rad1} och \ref{lst:rad2} och formuleras lemmat och på rad
 anger med \C{elim=>} att beviset kommer göras med induktion över den variabel
 som står först i lemmat, \C{n}. Basfallet är trivialt precis som i
 prop~\ref{prop:1} eftersom \C{toom_cook_rec} är vanlig multiplikation när
-\C{n}$=0$ och delmålet det utgör avslutas direkt med hjälp av \C{//}. Till
+\C{n}$\ =0$ och delmålet det utgör avslutas direkt med hjälp av \C{//}. Till
 höger om \C{|} ges instruktioner till induktionssteget. Variabeln \C{n'} där
 \C{n' + 1}  = \C{n}, för det \C{n} som induktionen görs över instansieras.
 Induktionsantagnandet \C{IHn}, polynomen \C{p} och \C{q} och antagandet
@@ -169,16 +169,15 @@ Eftersom definitionen \C{\\col_i} är låst för beräkning och uttrycket beror 
 indexet \C{i} i kolonnvektorn kan vi inte direkt skriva om uttrycket, se
 avsnitt~\ref{sec:ssr}. Så för att kunna göra det öppnar vi ett nytt delmål
 med taktiken \C{have} på rad~\ref{lst:rad9} där vi bara arbetar med denna del av
-vänsterledet. Där använder vi på rad~\ref{lst:rad12} lemmat \C{colP} som låter oss visa
+vänsterledet. Där använder vi på rad~\ref{lst:rad11} lemmat \C{colP} som låter oss visa
 att två vektorer är lika genom att visa att elementen på motsvarande platser är
 lika i båda vektorerna. (Då vektorer är implementerade i \ssr{} som funktioner
 från mängden av index i vektorn $\{0, \ldots , k\}$ till mängden av element i
 vektorn säger lemmat mer specifikt att två vektorer är lika om de extensionellt
 sett är samma funktion, dvs om de antar samma värden för samma argument.) På
-rad~\ref{lst:rad13} kan vi sedan slutligen visa att uttrycket i vänsterledet i
+rad~\ref{lst:rad12} kan vi sedan slutligen visa att uttrycket i vänsterledet i
 \C{have}-satsen är lika med uttrycket i högerledet i \C{have}-satsen med hjälp
-av induktionshypotesen. Därefter kan det ursprungliga målet skrivas om till: då
-blivit:
+av induktionshypotesen. Då har målet blivit:
 \begin{lstlisting}
 recompose b
   (interpolate (\col_i ((evaluate u) i 0 * (evaluate v) i 0))) =
@@ -189,15 +188,15 @@ Det återstår nu att visa tre saker: För det första att evalueringsfunktionen
 \C{evaluate} faktiskt ger tillbaka en vektor med ett polynom evaluerat i
 interpolationspunkterna, för det andra att interpolationsfunktionen
 \C{interpolate} givet dessa vektorer ger oss koefficienterna i produktpolynomet
-\C{u * v} och för det tredje att \C{recompose]}-funktionen under vissa
+\C{u * v} och för det tredje att \C{recompose}-funktionen under vissa
 förutsättningar är vänsterinvers till \C{split}-funktionen (eftersom \C{u} och
-\C{v} ju fås från \C{p} och \C{q} genom \C{split}.
+\C{v} ju fås från \C{p} och \C{q} genom \C{split}).
 
 Det första och det andra som ska visas är enkla följder av definitionerna av
 matrismultiplikation och -invers och visas inte explicit i det informella
 beviset. I det formella beviset visas detta i två lemman, \C{matrix_evaluation}
-och \C{toom_cook_interpol}, som används på rad~\ref{lst:rad14} respektive
-rad~\ref{lst:rad15} till \ref{lst:rad20} för att skriva om målet till
+och \C{toom_cook_interpol}, som används på rad~\ref{lst:rad13} respektive
+rad~\ref{lst:rad18} att skriva om målet till
 \begin{lstlisting}
  recompose b
  (interpolate (\col_i (u * v).[inter_points i 0])) =
@@ -215,20 +214,21 @@ att visa:
 ______________________________________(2/3)
 size (u * v) <= number_points
 \end{lstlisting}
-Det görs på rad~\ref{lst:rad20} genom lemmat \C{size_split_mul}. Detta är ytterligare
-något som är självklart på pappret, eftersom det vi har definiterat $u$ och $v$
-så det är uppfyllt. Vi behöver också visa att interpolationsmatrisen \C{V_I} är
-inverterbar, men eftersom det är ett av antagandena i kontexten är det trivialt
-och visas på rad~\ref{lst:rad20} med \C{//}.
+Det görs på rad~\ref{lst:rad18} genom lemmat \C{size_split_mul}. Detta är
+ytterligare något som är självklart i det informella beviset, eftersom vi har
+definierat $u$ och $v$ så att det är uppfyllt. Vi behöver också visa att
+interpolationsmatrisen \C{V_I} är inverterbar, men eftersom det är ett av
+antagandena i kontexten är det trivialt och visas på rad~\ref{lst:rad18} med
+\C{//}.
 
-Sedan utvecklar vi på rad~\ref{lst:rad22} definitionen av \C{recompose} och använder
+Sedan utvecklar vi på rad~\ref{lst:rad19} definitionen av \C{recompose} och använder
 lemmat \C{hornerM} som säger att $(p \cdot q)(x) = p(x) \cdot q(x)$, för att
 skriva om målet till:
 \begin{lstlisting}
 u.['X^b] * v.['X^b] = p * q
 \end{lstlisting}
 % Lång krånglig mening
-Då kan vi på rad~\ref{lst:rad23} använda lemmat \C{recompose_split}, som ungefär
+Då kan vi på rad~\ref{lst:rad20} använda lemmat \C{recompose_split}, som ungefär
 motsvarar lemma~\ref{lemma:2} i det informella beviset, för att visa att
 ``sammansättningen'' av de splittade polynomen genom att evaluera i $x^b$ är
 korrekt och därmed skriva om \C{u.['X^b]} till \C{p} och \C{v.['X^b]} till
@@ -245,9 +245,10 @@ ______________________________________(2/2)
 size p <= m * b
 \end{lstlisting}
 Det görs på rad~\ref{lst:rad22} till \ref{lst:rad23} med lemmat
-\C{exp_m_degree} efter att först på rad~\ref{lst:rad21} ha skrivit om det ena
-av målet med ett lemma för att funktionen \C{exponent} är kommutativ, vilket
-avslutar det formella beviset för att Toom Cook ger ett korrekt resultat.
+\C{exp_m_degree} som säger i stort sett detta, efter att först på
+rad~\ref{lst:rad21} ha skrivit om det ena av målet med ett lemma för att
+funktionen \C{exponent} är kommutativ, vilket avslutar det formella beviset för
+att Toom-Cook ger ett korrekt resultat.
 
 \subsubsection{Lemman till huvudbeviset}
 Förutom de 50-tal lemman ur \ssr{}-biblioteket som har används i huvudbeviset har
@@ -261,10 +262,10 @@ presenteras några av dem. Det viktigaste lemmat är
 som säger att \C{recompose} (som evaluerar ett polynom i $x^b$) är
 vänsterinvers till \C{split} för polynom som har tillräckligt låg grad jämfört
 med argumenten \C{m} och \C{b}. Detta motsvarar ungefär lemma~\ref{lemma:2} i
-det informella beviset och man haft Påstående 1 som ett antagande i stället för
-att visa det.
+det informella beviset om man hade haft Påstående 1 som ett antagande i stället
+för att visa det.
 
-Beviset av \C{recompose_split} bygger på 5 mindre lemman som motsvarar
+Beviset av \C{recompose_split} bygger på fem mindre lemman som motsvarar
 delpåståenden i lemma~\ref{lemma:2} och dessutom några lemman som visats av
 projektets handledare Anders Mörtberg eftersom de bygger på grundläggande
 egenskaper hos \ssr{}-funktionen \C{rdivp} för polynomdivision som gick utanför

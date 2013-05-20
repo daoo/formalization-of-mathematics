@@ -14,7 +14,7 @@ p(x)q(x) &= (p_0 + p_1 x^{\frac{n}{2}})(q_0 + q_1 x^{\frac{n}{2}}) \\
          &= p_0 q_0  + (q_0 p_1 +p_0 q_1 )  x^{\frac{n}{2}} + p_1 q_1  x^n
 \end{align*}
 Tricket i Karatsuba är följande enkla omskrivning som gör att vi blir av med en
-multiplikation så att vi istället för fyra multiplikationer bara har tre
+multiplikation så att vi istället för fyra multiplikationer endast behöver tre
 distinkta multiplikationer:
 \begin{equation*}
   p_0 q_0 + ((p_1 + p_0)(q_1 + q_0) - p_1 q_1 - p_0 q_0)  x^{\frac{n}{2}} + p_1 q_1  x^n
@@ -26,4 +26,4 @@ Tidskomplexiteten för Karatsuba-algoritmen är då:
 där $n$ är graden på det största polynomet och $c$ och $d$ är konstanter.
 
 Genom att skriva ut rekurrensekvationen får vi att Karatsuba-algoritmen har den
-asymptotiska tidskomplexiteten $\Ordo(n^{log_2 3})$.
+asymptotiska tidskomplexiteten $\Ordo(n^{\log_2 3})$.

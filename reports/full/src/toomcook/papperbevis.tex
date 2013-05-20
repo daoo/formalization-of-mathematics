@@ -1,7 +1,7 @@
 \section{Informellt bevis av Toom-Cook}
 \label{sec:informhuvudbevis}
 I detta stycke visar vi att för $p, q \in R[x]$ så är
-$p \cdot q = Toom-Cook (p, q)$. Vi gör detta med hjälp av två lemman, vars bevis
+$p \cdot q = \toomm (p, q)$. Vi gör detta med hjälp av två lemman, vars bevis
 kommer efter beviset av~\ref{prop:1}.
 
 \begin{proposition}
@@ -13,7 +13,7 @@ kommer efter beviset av~\ref{prop:1}.
 
   \begin{equation}
     \label{eq:name7}
-    Toom-Cook (p, q) =  p \cdot q.
+    \toomm (p, q) =  p \cdot q.
   \end{equation}
 \end{proposition}
 
@@ -34,7 +34,7 @@ Antag att $p, q \in R[x]$, där
 med $0 \leq s \leq n$.
 
 \bigskip\noindent
-Antag också att $n > 2$ och att $Toom-Cook (f, g) =  f \cdot g$ gäller för polynom
+Antag också att $n > 2$ och att $\toomm (f, g) =  f \cdot g$ gäller för polynom
 av grad mindre än $n$. Eftersom $n > 2$ så går vi vidare till steg
 \ref{sec:gradkontroll} i algoritmen och skapar $u$ och $v$ från $p$ och $q$. När
 detta är gjort evaluerar vi i steg 3 $u$ och $v$ i punkterna $\alpha_0, \dots,
@@ -42,7 +42,7 @@ detta är gjort evaluerar vi i steg 3 $u$ och $v$ i punkterna $\alpha_0, \dots,
 evalueringsmatrisen. I steg~\ref{sec:rekursiv} anropar vi Toom-Cook igen, nu med
 argumenten $u(\alpha_i) \cdot v(\alpha_i)$ för $i = 0, \ldots , 2m-2$. Dessa är
 polynom i $R[x]$. Eftersom $\grad u(\alpha_i)$, $\grad v(\alpha_i) < n$ enligt
-lemma~\ref{lemma:1} så är $Toom-Cook (u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot
+lemma~\ref{lemma:1} så är $\toomm (u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot
 v(\alpha_i)$ enligt induktionsantagandet. I steg~\ref{sec:interpol} skall vi
 bestämma koefficienterna i $w(y)=u(y) \cdot v(y)$. Detta gör vi genom att lösa
 matrisekvationen (\ref{eq:NAME4}). Eftersom interpolationsmatrisen $V_I$ enligt
@@ -61,14 +61,14 @@ v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
 \begin{proof}
   Eftersom $\alpha \in R$ så är
   \begin{align*}
-    \grad u(\alpha) &= \grad (u_0 + u_1 \alpha + ... + u_{m-1}\alpha^{m-1}) = \max \grad u_k,
+    \grad u(\alpha) &= \grad (u_0 + u_1 \alpha + \cdots + u_{m-1}\alpha^{m-1}) = \max \grad u_k,
   \end{align*}
-  där $k={0,1,...,m-1}$.
+  där $k={0,1,\dots,m-1}$.
 
   \bigskip\noindent
   $u_k = p(x)/x^{k b} \modu x^b$, så enligt definition av mod så är $\grad u_k
   < b$. Nu återstår att visa att $b < \grad p = n$. Vi har definierat $b =
-  \floor[\big]{\frac{1 + n}{m}} + 1$. Om $n \geq 2$ och $m \geq 3$ så är
+  \floor[\big]{\frac{1 + n}{m}} + 1$. Om $n \geq 3$ och $m \geq 2$ så är
   \begin{align*}
     n-b &= n - \left( \floor[\bigg]{\frac{1 + n}{m}} + 1 \right) \geq \frac{nm-n-m-1}{m} \geq 0,
   \end{align*}
@@ -97,9 +97,9 @@ v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
                      &= 1 + n - m \left\{ \frac{1 + n}{m} \right\} + m - n \\
                      &= 1 + m \left( 1 - \left\{ \frac{1 + n}{m} \right\} \right) > 0
   \end{align*}
-  eftersom $0 < 1 - \{ x \} \leq 1$ för alla reella tal $x$
-  \footnote{$\{x\}$ betecknar $x-\lfloor x \rfloor$. Se \cite{graham1989concrete}.}.
-  Graden av $p(x)/x^{b(m-1)}$ är $\max \{n - b(m-1),0\}$ som är mindre än $b$,
+  eftersom $0 < 1 - \{ x \} \leq 1$ för alla reella tal
+  \footnote{$\{x\}$ betecknar $x-\lfloor x \rfloor$. Se \cite{graham1989concrete}.}
+  $x$. Graden av $p(x)/x^{b(m-1)}$ är $\max \{n - b(m-1),0\}$ som är mindre än $b$,
   och därmed är $p(x)/x^{b(m-1)}  \modu x^b = p(x)/x^{b(m-1)}$, vilket visar
   Påstående 1. Så
   \begin{align*}

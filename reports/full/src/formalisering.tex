@@ -2,9 +2,9 @@
 matematik och kod.
 % Denna meningen känns lite märklig jag antar "och formalisera bevis för att
 % den är korrekt är kopplad till kod, men det är inte så tydligt //J
-I det här avsnittet ges en introduktion till vad ett matematiskt bevis är och vad som menas med
-formalisering av matematik. Sedan beskrivs vad en bevisassistent är och kan
-göra.
+I det här avsnittet ges en introduktion till vad ett matematiskt bevis är och
+vad som menas med formalisering av matematik. Sedan beskrivs vad en
+bevisassistent är och kan göra.
 
 \section{Matematiska bevis och datorverifiering}
 Vanlig matematisk text är en blandning mellan formler och naturligt språk. Ett
@@ -18,13 +18,11 @@ som det handlar om. Dessa steg kan läsaren själv fylla i.
 
 Det är också vanligt att många saker får framgå av sammanhanget.
 % Kan man formulera det annorlunda än "låter många saker"? //J
-Till
-exempel kan symbolen 1 kan stå för olika saker, bland annat det naturliga talet
-% Två kan //J
-1 som är efterföljare till 0, det rationella talet $\frac{1}{1}$ eller det
-multiplikativa enhetselementet i en ring\footnote{För en definition av ringar,
-se appendix~\ref{sec:algebra}}. Oftast kan en mänsklig läsare ur sammanhanget
-förstå vilken betydelse av 1 som avses i ett visst fall.
+Till exempel kan symbolen 1 stå för olika saker, bland annat det naturliga
+talet 1 som är efterföljare till 0, det rationella talet $\frac{1}{1}$ eller
+det multiplikativa enhetselementet i en ring\footnote{För en definition av
+ringar, se appendix~\ref{sec:algebra}}. Oftast kan en mänsklig läsare ur
+sammanhanget förstå vilken betydelse av 1 som avses i ett visst fall.
 %fast coq kan ju också göra typinferens
 
 För att ett datorsystem ska kunna kontrollera bevis krävs att det finns en
@@ -121,20 +119,19 @@ bevisassistenten vilken form av bevisstrategi som ska användas under olika steg
 i beviset. Till exempel kan användaren instruera bevisassistenten om att
 beviset ska göras med taktiken induktion över någon parameter i satsen.
 
-Användaren kan skriva bevisskriptet interaktivt. Då ger användaren taktikinstruktionerna
-till systemetet en i taget. Efter varje instruktion
-kontrollerar systemet om taktiken gick att genomföra, och efter
-och varje genomförd taktik uppdaterar systemet informationen som visas för användaren
-om var i beviset man nu befinner sig och vad som återstår att bevisa.
-Bevisassistenten bygger så steg för steg upp det formella beviset efter instruktionerna
-från användaren och kontrollerar efter hand att de ger
-upphov till ett korrekt bevis.
+Användaren kan skriva bevisskriptet interaktivt. Då ger användaren
+taktikinstruktionerna till systemet en i taget. Efter varje instruktion
+kontrollerar systemet om taktiken gick att genomföra, och efter varje genomförd
+taktik uppdaterar systemet informationen som visas för användaren om var i
+beviset man nu befinner sig och vad som återstår att bevisa. Bevisassistenten
+bygger på detta sätt steg för steg upp det formella beviset efter
+instruktionerna från användaren och kontrollerar efter hand att de ger upphov
+till ett korrekt bevis.
 % Typcheckning av bevisobjektet finns också i vissa bevisassistenter, men jag vet inte
 % om det är så i alla.
-Bevisassistenter kan utformas så att användaren kan ange att
-vissa steg i beviset ska lösas automatiskt eftersom de är så enkla att
-systemet själv kan hitta de härledningsregler och axiom som krävs för att visa
-dem.
+Bevisassistenter kan utformas så att användaren kan ange att vissa steg i
+beviset ska lösas automatiskt eftersom de är så enkla att systemet själv kan
+hitta de härledningsregler och axiom som krävs för att visa dem.
 
 % Kan man få in ordet interaktiv och mer tydligt förklara vad det innebär
 % att en bevisassistent är interaktiv. //J Nu har jag försökt. Å
@@ -142,5 +139,6 @@ dem.
 Helt automatiserade bevismaskiner finns också. Då behöver användaren bara
 formulera ett antagande, och systemet söker sedan själv efter ett bevis för
 detta. De klarar dock ofta inte av att hitta komplicerade matematiska bevis
-inom skiljda matematiska områden\cite{geuvers2009proof}\cite{gonthier2009ssreflect}.
+inom skiljda matematiska
+områden\cite{geuvers2009proof}\cite{gonthier2009ssreflect}.
 %Sista meningen är lite luddig, för jag vet egentligen inte vad som gäller.

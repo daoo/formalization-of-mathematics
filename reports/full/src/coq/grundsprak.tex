@@ -1,8 +1,8 @@
 \section{Grundspråk}
-Grundspråket kallas \textsc{Gallina} och är som vi redan nämnt funktionellt och
-beroendetypat. Likt andra programmeringsspråk definierar man funktioner och
-deras typ. Dock är det i \coq{} inte tillåtet att definiera funktioner som inte
-terminerar. Det vill säga, i de flesta språk kan man skriva
+Grundspråket i \coq{} kallas \textsc{Gallina} och är som vi redan nämnt
+funktionellt och beroendetypat. Liksom i andra programmeringsspråk definierar
+man funktioner och deras typ. Det är dock inte tillåtet i \coq{} att definiera
+funktioner som inte terminerar. Det vill säga, i de flesta språk kan man skriva
 \begin{verbatim}
 loop :: Integer -> Integer
 loop n = loop (n + 1)
@@ -10,12 +10,12 @@ loop n = loop (n + 1)
 och kompilatorn kommer att kompilera och låta dig köra funktionen. Men
 \verb+loop+ kommer aldrig ge något resultat och kommer snurra i all evighet.
 Kompilatorn till \coq{} tillåter inte denna typen av definitioner utan kommer
-ge kompileringsfel om den stöter på liknande funktioner. För att \coq{}
-ska acceptera en rekursiv funktion krävs det att någon av parametrarna i det
-rekursiva kallet närmar sig basfallet eller så
-måste användaren ange ett bevis för att funktionen är garanterad att avsluta.
-Det går till exempel inte att implementera Collatz funktion som beskrivs i
-ekvation~\ref{eq:collatz} även om den terminerar för alla hitills kända värden.
+ge kompileringsfel om den stöter på liknande funktioner. För att \coq{} ska
+acceptera en rekursiv funktion krävs det att någon av parametrarna i det
+rekursiva anropet närmar sig basfallet eller så måste användaren ange ett bevis
+för att funktionen är garanterad att avsluta. Det går till exempel inte att
+implementera Collatz funktion som beskrivs i ekvation~\ref{eq:collatz} även om
+den terminerar för alla hittills kända värden.
 
 \begin{equation}
 \label{eq:collatz}
@@ -23,10 +23,8 @@ T(n) = \left\{\begin{matrix} n/2, & \mbox{om }n\equiv0\mbox{ (mod 2)} \\ 3n+1,
                          & \mbox{om }n\equiv1\mbox{ (mod 2)} \end{matrix}\right.
 \end{equation}
 
-
-
 För att göra en definition i \coq{} använder man nyckelordet \C{Definition}. En
-definition av funktionskomposition kan se ut såhär:
+definition av funktionskomposition kan se ut så här:
 \begin{lstlisting}
 Definition compose (a b c: Type) (f: b -> c) (g: a -> b) (x: a) : c := f (g x).
 \end{lstlisting}
@@ -35,7 +33,7 @@ explicit, till skillnad från i \haskell{} där de är definierade implicit.
 Parametrarna \C{f}, \C{g} och \C{x} följer sedan direkt. I \coq{} används punkt
 (\C{.}) för att avsluta en definition likt hur man avslutar ett påstående
 (\emph{engelska: statement}) i C med semikolon (;). För att anropa \C{compose}
-måste man ge typer och funktioner och värdet. Till exempel:
+måste man ge typer, funktioner och värdet. Till exempel:
 \begin{lstlisting}
 Definition add1 (x: nat) := x + 1.
 Definition mul2 (x: nat) := x * 2.
@@ -55,10 +53,10 @@ definierade utan namn som används direkt där man skriver dem. Syntaxen för
 lambdauttryck är \C{fun parameters => application}. Med dessa förändringar kan
 vi skriva
 \begin{lstlisting}
-Definition exempel' : nat := compose' (fun x => x + 1) (fun x => x * 2) 5.
+Definition example' : nat := compose' (fun x => x + 1) (fun x => x * 2) 5.
 \end{lstlisting}
-\coq{} har även data typer och de definieras med hjälp av \C{Inductive}. En
-definition av naturliga tal kan se ut såhär:
+\coq{} har även datatyper och de definieras med hjälp av \C{Inductive}. En
+definition av naturliga tal kan se ut så här:
 \begin{lstlisting}
 Inductive nat : Type :=
   | O: nat
@@ -81,14 +79,14 @@ Definition tail (X: Type) (n: nat) (v: vec X (S n)) : vec X n :=
   | element X _ xs => xs
   end.
 \end{lstlisting}
-Mönstermatchning innebär att man för något värde tillhörande någon typ
+Mönstermatchning innebär att man med hjälp av något värde tillhörande någon typ
 bestämmer vad som ska göras för varje konstruktor till typen. Notera i det här
 fallet att funktionen bara är definierad för vektorer \C{vec X n} där \C{n >
-0}. Vi behöver således inte hantera tomma vektorer i mönstermatchningen.
-Värt att notera är likheten mellan mönstermatchningen i \coq{} och 
-\C{case} sats i \textsc{Haskell}
+0}. Vi behöver således inte hantera tomma vektorer i mönstermatchningen. Värt
+att notera är likheten mellan mönstermatchningen i \coq{} och \C{case} sats i
+\textsc{Haskell}.
 
-För att göra en rekursiv funktion använder vi \C{Fixpoint} istället för
+För att definiera en rekursiv funktion använder vi \C{Fixpoint} istället för
 \C{Definition}:
 \begin{lstlisting}
 Fixpoint concatenate (X: Type) {n m: nat} (a: vec X n) (b: vec X m) : vec X (n+m) :=

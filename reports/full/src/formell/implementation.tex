@@ -1,8 +1,8 @@
-Här beskrivs det huvudresultatet i projektet: den formella implementationen och
-beviset av Toom-Cook i \coq{} med \ssr{}. Den fungerar också som en
-illustration på hur definitioner och bevis ser ut och fungerar i \coq{} med
-\ssr{}. De viktigaste funktionerna och lemmana till algoritmen presenteras. Den
-fullständiga källkoden finns i \ref{appendix:coqkod}.
+Här beskrivs det huvudsakliga resultatet i projektet: den formella
+implementationen och beviset av Toom-Cook i \coq{} med \ssr{}. Den fungerar
+också som en illustration på hur definitioner och bevis ser ut och fungerar i
+\coq{} med \ssr{}. De viktigaste funktionerna och lemmana till algoritmen
+presenteras. Den fullständiga källkoden finns i \ref{appendix:coqkod}.
 
 \section{Implementation av Toom-Cook i \coq{} med \ssr{}}
 \label{sec:formellimplementation}
@@ -23,10 +23,10 @@ Variable R : idomainType.
 Implicit Types p q : {poly R}.
 \end{lstlisting}
 
-Först öppnas en ny sektion, inom vilken vi kan låta De här raderna säger att vi
-låter \C{R} beteckna ett godtyckligt men fixt integritetsområde och att
-variabelnamnen \C{p} och \C{q} alltid kommer beteckna polynom i detta område,
-så vi inte behöver ange typen på \C{p} och \C{q} när vi använder de namnen.
+Först öppnas en ny sektion, inom vilken vi kan låta \C{R} beteckna ett
+godtyckligt men fixt integritetsområde och att variabelnamnen \C{p} och \C{q}
+alltid kommer beteckna polynom i detta område, så vi inte behöver ange typen på
+\C{p} och \C{q} när vi använder de namnen.
 
 \begin{lstlisting}
 Variable number_splits : nat.
@@ -36,7 +36,7 @@ Definition number_points := (2 * m) .-1.
 
 Sedan parametriseras funktionen på \C{m} genom att ange den som ett godtyckligt
 men fixt naturligt tal. \C{m} är den parameter som precis som i den informella
-algoritmen anger vilken \toomm{}-instans vi har. Det gör att vi inom sektionen
+algoritmen anger vilken Toom-Cook-instans vi har. Det gör att vi inom sektionen
 inte explicit behöver ge \C{m} som argument till varje funktioner vi definerar,
 men att vi ändå kan använda det i funktionerna. Vi definerar också
 \C{number_points} som det antal interpolationspunkter vi behöver för \toomm{}.
@@ -55,11 +55,11 @@ Detta ska vara en vektor som innehåller interpolationspunkterna. I den
 informella algoritmen låter vi interpolationspunkterna tillhöra $R$. Det gjorde
 det lättare att visa att graden på polynomen skulle minska vid rekursiva anrop
 av Toom-Cook, vilket krävdes för induktionsantagandet som var över graden på
-polynomen, se avsnitt~\ref{in:induktion}. Det kommer dock visa sig längre ner
-att det i formella fallet är lämpligare att definiera interpolationspunkterna
-som element i $R[x]$. För att algoritmen ska vara tillräckligt snabb ska de
-dock vara konstanta polynom (alltså egentligen element i $R$) eller av låg
-grad.
+polynomen, se avsnitt~\ref{sec:informhuvudbevis}. Det kommer dock visa sig
+längre ner att det i formella fallet är lämpligare att definiera
+interpolationspunkterna som element i $R[x]$. För att algoritmen ska vara
+tillräckligt snabb ska de dock vara konstanta polynom (alltså egentligen
+element i $R$) eller av låg grad.
 
 % att vilket faktiskt skiljer sig från pappersalgoritmen. Det var avgörandet för
 % pappersalogritmen att punkterna tillhörde $R$ för att graden garanterat skulle
@@ -73,17 +73,16 @@ grad.
 Hypothesis m_neq_0 : 0 < m.
 \end{lstlisting}
 
-I den informella algoritmen har vi som antagande att \C{m} är större än två och
-här kan vi återigen uttnyttja att induktionen görs över en annan variabel än
-graden, då kommer vi runt problemet i lemma (\ref{lemma:1}), och kan vi få ner
-kravet till att \C{m} måste vara större än noll.
+I den informella algoritmen har vi som antagande att \C{m} är större än 2. Den
+rekursiva delen av formella algoritmen kräver bara att \C{m} är större än 0.
+Algoritmen kommer dock inte fungera som Toom-Cook med \C{m} mindre än 2.
 
 \begin{lstlisting}
 Definition V_e : 'M[{poly R}]_(number_points, m) :=
   \matrix_(i < number_points, j < m) ((inter_points i 0))^+j.
 \end{lstlisting}
-Här definieras evalueringsmatrisen \C{V_e} som en \C{number_points} x \C{m}-matris
-med element som tillhör $R[x]$.
+Här definieras evalueringsmatrisen \C{V_e} som en \C{number_points} $\times$
+\C{m}-matris med element som tillhör $R[x]$.
 \C{\\matrix_(i < number_points, j < m)((inter_points i 0))^+j} säger att matrisen
 på plats \C{(i,j)}, med \C{(i < number_points)} och \C{(j < m)} ska ha \C{i}:te
 elementet ur kolonnvektorn \C{inter_points} upphöjt till \C{j}.
@@ -95,18 +94,18 @@ Definition V_I : 'M[{poly R}]_(number_points) :=
 
 Här definieras interpolationsmatrisen på motsvarade sätt som
 evalueringsmatrisen, skillnaden är att det blir en matris av dimension
-\C{number_points} x \C{number_points} istället.
+\C{number_points} $\times$ \C{number_points} istället.
 
 \begin{lstlisting}
 Definition exponent (m: nat) p q : nat :=
   (maxn (divn (size p) m) (divn (size q) m)).+1.
 \end{lstlisting}
 Här definieras funktionen \C{exponent}. Den motsvarar det $b$ som definieras i
-ekvation~(\ref{eq:b}) i steg~\ref{in:uppdelning} om den anropas med m:et i
-\toomm{}. \C{size p} tar graden av polynomet \C{p} + 1, \C{divn} är exakt
+ekvation~(\ref{eq:b}) i steg~\ref{sec:uppdelning} om den anropas med $m$:et i
+Toom-Cook-$m$. \C{size p} tar graden av polynomet \C{p} + 1, \C{divn} är exakt
 division för naturliga tal och \C{maxn} ger det största av två naturliga tal.
-Funktionerna \C{size}, \C{divn} och \C{maxn} är implementerade i \ssr
-bibliotek. Beteckningen \C{k.+1} står för efterföljaren till \C{k}.
+Funktionerna \C{size}, \C{divn} och \C{maxn} är implementerade i
+\ssr{}-biblioteket. Beteckningen \C{k.+1} står för efterföljaren till \C{k}.
 
 \begin{lstlisting}
 Definition split (n b: nat) p : {poly {poly R}} :=
@@ -117,8 +116,8 @@ ett polynom i $(R[x])[y]$. \C{rmodp} och \C{rdivp} ger oss kvoten och resten
 vid polynomdivision se ekvationerna (\ref{eq:rmod}) och (\ref{eq:rdiv}).
 Funktionerna \C{\\poly_(i<n)}, \C{rmodp} och \C{rdivp} bildar tillsammans
 motsvarande polynom
-$u(y)=(p/x^0\;mod\;x^b)y^0+...+(p/x^{(n-1)b}\;mod\;x^b)y^{n-1}$ där \C{n} och
-\C{b} är inparametrarna.
+$u(y)=(p/x^0\;mod\;x^b)y^0+\cdots+(p/x^{(n-1)b}\;mod\;x^b)y^{n-1}$ där \C{n},
+\C{b} och \C{p} är inparametrarna.
 
 \begin{lstlisting}
 Definition evaluate (u: {poly {poly R}}) : 'cV[{poly R}]_(number_points) :=
@@ -127,22 +126,22 @@ Definition interpolate (u: 'cV[{poly R}]_(number_points)) : {poly {poly R}} :=
   rVpoly (invmx V_I *m u)^T.
 \end{lstlisting}
 
-Här definieras själva matrismultiplikationerna, se ekvation (\ref{align:eval})
+Här definieras själva matrismultiplikationerna, se ekvation (\ref{eq:apabepa})
 och (\ref{eq:NAME5}). \C{evaluate} ger tillbaka en vektor med ett polynoms
 värden i interpolationspunkterna. Funktionen \C{poly_rV} ger tillbaka en
 radvektor med ett polynoms koefficienter (motsvarande funktion finns inte
-implementerad i \ssr för kolonnvektorer, och för att kunna använda resultat
+implementerad i \ssr{} för kolonnvektorer, och för att kunna använda resultat
 från biblioteket i bevisen använder vi den i stället för att definiera en egen
 kolonnversion). \C{^T} transponer radvektorn för att kunna multiplicera den med
 evalueringsmatrisen.
 
-Matrismultiplikation är bara definierat i \ssr mellan matriser och vektorer av
+Matrismultiplikation är bara definierat i \ssr{} mellan matriser och vektorer av
 samma typ. Eftersom polynomet \C{u} som ska evalueras har koefficienter i
 $R[x]$, så att vektorn av dess koefficienter ligger i $R[x]$, måste matrisens
 element också ligga i $R[x]$. Det är därför som vi låter
-interpolationspunkterna ligga i $R[x]$ här i ställer för i $R$. Det hade gått
+interpolationspunkterna ligga i $R[x]$ här i stället för i $R$. Det hade gått
 att lösa det på andra sätt, men det hade gjort bevisen för att \C{evaluate} och
-särskiljt \C{interpolate} mycket mer komplicerade.
+särskilt \C{interpolate} mycket mer komplicerade.
 
 \begin{lstlisting}
 Definition recompose (b: nat) (w: {poly {poly R}}) : {poly R} :=
@@ -151,6 +150,7 @@ Definition recompose (b: nat) (w: {poly {poly R}}) : {poly R} :=
 Här sker evalueringen av \C{w} i $x^b$ där \C{b} är en inparameter.
 
 \subsection{Den rekursiva funktionen och huvudfunktionen}
+\label{sec:formrec}
 % Fjärde steget i Toom-Cook-algoritmen. se avsnitt~\ref{in:rekursiv}, är en rekusiv del och
 % rekusiv del och därmed behövs en rekusiv funktion,
 % nämligen Fixpoint, för att
@@ -163,7 +163,7 @@ definieras med kommandot \C{Fixpoint}) som egentligen gör allt jobbet, och en
 yttre del som bara anropar den rekursiva delen med ett visst argument.
 Anledningen till detta är att \coq{} bara tillåter rekursiva funktioner som
 säkert terminerar. Antingen behöver \coq{} lätt förstå att något av argumenten
-i funktionen avtar mot ett basfall med varje rekursivt anrop, eller så får
+i funktionen minskar mot ett basfall med varje rekursivt anrop, eller så får
 användaren själv bevisa att det hon eller han vill ska vara
 rekursionsparametern, som i det här fallet är graden på polynomen, minskar.
 
@@ -179,7 +179,7 @@ Sedan definierar man en yttre funktion, som anropar den rekursiva funktionen och
 ger det extra argumentet värdet av den riktiga rekursionsparametern.
 
 I \C{toom_cook_rec} är basfallen \C{n} når 0 och att graden av något av polynomen
-blir mindre än 2. Då utförs vanlig polynommultiplikation. Falluppdelningen mellan
+blir mindre än 2. Då utförs naiv polynommultiplikation. Falluppdelningen mellan
 basfall och rekursionsfall för extraargumentet \C{n} görs med en \C{match}-sats.
 Sedan görs falluppdelning mellan basfall och rekursionsfall för den riktiga
 rekursionsparametern med en \C{if ... then ... else}-sats. Nedan beskrivs
@@ -211,7 +211,7 @@ Om en \C{n} är lika med 0 så sker direkt multiplikation mellan polynomen.
 \end{lstlisting}
 Om \C{n} är \C{n'.+1}, det vill säga en efterföljare till något naturligt tal
 \C{n'}, med andra ord större än 0, så kontrolleras graden på polynomen. Det
-motsvarar steg~\ref{in:gradkontroll} i den informella algoritmen. Om graden på
+motsvarar steg~\ref{sec:gradkontroll} i den informella algoritmen. Om graden på
 något av polynomen är mindre än 2 multipliceras de direkt. Annars går vi vidare
 i algoritmen.
 \begin{lstlisting}
@@ -219,22 +219,22 @@ let b := exponent m p q in
 \end{lstlisting}
 Här låter vi \C{b} få värdet från funktionen \C{exponent} vilket som nämnts
 ovan är samma värde som variabeln $b$ får i den informella algoritmen i
-ekvation~(\ref{eq:b}), eftersom \C{m} är $m$:et i \toomm{} och \C{p} och \C{q} är
-polynomen som ska multipliceras.
+ekvation~(\ref{eq:b}), eftersom \C{m} är $m$:et i Toom-Cook-$m$ och \C{p} och
+\C{q} är polynomen som ska multipliceras.
 \begin{lstlisting}
 let u := split m b p in
 let v := split m b q in
 \end{lstlisting}
 Härnäst definierar vi som i den informella algoritmen \C{u} och \C{v}, som fås
 från \C{p} och \C{q} genom uppdelningen i ekvationerna (\ref{eq:u}) och
-(\ref{eq:v}) i steg~\ref{in:uppdelning}.
+(\ref{eq:v}) i steg~\ref{sec:uppdelning}.
 
 \begin{lstlisting}
 let u_a := evaluate u in
 let v_a := evaluate v in
 \end{lstlisting}
 
-Här sker motsvarigheten till steg~\ref{in:evaluering}, evalueringen av \C{u}
+Här sker motsvarigheten till steg~\ref{sec:evaluering}, evalueringen av \C{u}
 och \C{v} i interpolationspunkterna. \C{u_a} och \C{v_a} kommer vara
 kolonnvektorer.
 
@@ -242,25 +242,27 @@ kolonnvektorer.
 let w_a := \col_i toom_cook_rec n' (u_a i 0) (v_a i 0) in
 \end{lstlisting}
 
-Det här motsvarar steg~\ref{in:rekursiv} i den informella algoritmen, den
+Det här motsvarar steg~\ref{sec:rekursiv} i den informella algoritmen, den
 rekursiva multiplikationen. \C{w_a} är en vektor som på plats \C{i} har
 resultatet av att anropa \C{toom_cook_rec} igen, nu med \C{n'} som inparameter,
 vilken har värdet n-1, och \C{i}:te elementet i \C{u_a} och \C{v_a}. (\C{(u_a i
-0)} och \C{(v_a i 0)} är \C{u} och \C{v} evaluerade den i \C{i}:te
+0)} och \C{(v_a i 0)} är \C{u} och \C{v} evaluerade i den \C{i}:te
 interpolationspunkten.)
 \begin{lstlisting}
 let w := interpolate w_a
 in recompose b w
 \end{lstlisting}
 När rekusionssteget är klart så sker interpolerationssteget som motsvarar
-steg~\ref{in:interpol}, där inversen av interpolationsmatrisen multipliceras
+steg~\ref{sec:interpol}, där inversen av interpolationsmatrisen multipliceras
 med kolonnvektorn \C{w_a} och retunerar polynomet \C{w} som är produkten av
 polynomen u och v. Till sist sker sammansättningen som motsvarar steg~
-\ref{in:sammansattning}, där polynomet \C{w} evalueras i $x^b$, och därmed har
+\ref{sec:sammansattning}, där polynomet \C{w} evalueras i $x^b$, och därmed har
 vi fått produkten av polynomen \C{p} och \C{q}.
 
-Slutligen definieras den yttre funktionen \C{toom_cook}, där \C{toom_cook_rec} anropas med
-maximum av graden av polynomen plus 1.
+Slutligen definieras den yttre funktionen \C{toom_cook}, där \C{toom_cook_rec}
+anropas med maximum av graden av polynomen plus 1. När \C{toom_cook_rec}
+anropas med detta tal eller något högre tal kommer den fungera som Toom-Cook
+gör i den informella definitionen i avsnitt~\ref{sec:definition}.
 \begin{lstlisting}
  Definition toom_cook p q : {poly R} :=
   toom_cook_rec (maxn (size p) (size q)) p q.

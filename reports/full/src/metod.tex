@@ -2,13 +2,13 @@ I det här kapitlet beskrivs tillvägagångssättet för formaliseringen av algo
 
 \section{Litteraturstudie och färdighetsträning}
 Som första steg i arbetet genomfördes en studie med mål att projektdeltagarna
-skulle få tillräckligt med kunskaper för att programmera och bevisa med hjälp
-av \coq{} och \ssr{}. Som material användes bland annat \emph{Software
-Foundations} av Benjamin C. Pierce som är kursmaterial till en grundkurs i
-\coq{}\cite{pierce2012software}, \emph{Coq in a Hurry} av Yves Bertot som är en
-kort introduktionsartikel till \coq{}\cite{bertot2006coq} och \emph{SSReflect
-tutorial} av Georges Gonthier som är en introduktion till \ssr{}
-\cite{gonthier2009ssreflect}. Som en övning i att hantera polynom i \ssr
+skulle få tillräckligt med kunskaper för att kunna programmera och skapa bevis
+med hjälp av \coq{} och \ssr{}. Som material användes bland annat
+\emph{Software Foundations} av Benjamin C. Pierce som är kursmaterial till en
+grundkurs i \coq{}\cite{pierce2012software}, \emph{Coq in a Hurry} av Yves
+Bertot som är en kort introduktionsartikel till \coq{}\cite{bertot2006coq} och
+\emph{SSReflect tutorial} av Georges Gonthier som är en introduktion till
+\ssr{} \cite{gonthier2009ssreflect}. Som en övning i att hantera polynom i \ssr
 gjordes även ett bevis av Karatsuba-algoritmen som redan är formaliserad i
 \coq{}. I kapitel~\ref{sec:coq} beskrivs \coq.
 
@@ -19,16 +19,16 @@ implementationen. Resultatet av detta steg i implementationen finns i
 kapitel~\ref{sec:toomcook}.
 
 \section{Implementation i \haskell{}}
-I samband med framtagningen av det informella definitionen och beviset gjordes
+I samband med framtagningen av den informella definitionen och beviset gjordes
 en implementation av Toom-Cook för heltal i \haskell{}. Den gjordes först för
 \toomp{3} men generaliserades sedan till \toomp{m}. Implementationen testades
-QuickCheck genom att jämföra implementationen av Toom-Cook med den
-heltalsmultiplikation som finns definierad i \haskell{}. Resultatet av denna
-fas i projektet finns i appendix~\ref{app:haskell}.
+med testfallsgeneratorn QuickCheck genom att jämföra implementationen av
+Toom-Cook med den heltalsmultiplikation som finns definierad i \haskell{}.
+Resultatet av denna fas i projektet finns i appendix~\ref{app:haskell}.
 
 Anledningen till att en första implementation gjordes i \haskell{} var att
 gruppen inte hade någon erfarenhet av \coq{} innan projektet och man genom att
-först implementera en version av algoritmen i \haskell{} som kundes testas
+först implementera en version av algoritmen i \haskell{} som kunde testas
 kunde få en bättre förståelse för hur Toom-Cook fungerar.
 
 \section{Implementering och bevis i \coq{}}
@@ -48,5 +48,6 @@ polynom och matriser i \ssr{} som beskrivs i avsnitt~\ref{sec:ssr}. Den kan
 alltså användas för att beräkna produkten mellan konkreta polynom. Om tid hade
 funnits hade en eller flera exekverbara versioner av Toom-Cook implementerats,
 som sedan skulle visats korrekt genom att relatera dem till implementationen
-med det låsta typerna. Detta tillvägagångssätt för implementation av
-matematiska algoritmer diskuteras i avsnitt~\ref{sec:exekverbar}.
+med de låsta typerna (se avsnitt~\ref{sec:ssr} för mer information låsning).
+Detta tillvägagångssätt för implementation av matematiska algoritmer diskuteras
+i avsnitt~\ref{sec:exekverbar}.

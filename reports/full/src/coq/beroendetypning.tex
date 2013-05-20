@@ -2,8 +2,8 @@
 För att förklara beroendetypning använder vi begreppen \emph{termer} och
 \emph{typer}. Förenklat sett kan man säga att termer är värden eller funktioner
 och typer är samlingar (matematisk mängder) av värden eller termer. Notera att
-varje term har en typ. Som ett exempel ska vi nu gå igenom hur ett
-funktionellt programmeringsspråk med beroendetypning kan vara uppbyggt.
+varje term har en typ. Vi går nu gå igenom hur ett funktionellt
+programmeringsspråk med beroendetypning kan vara uppbyggt.
 
 \subsection{Termer som beror på termer}
 Den grundläggande idén med funktionell programmering är att \emph{termer kan
@@ -17,14 +17,14 @@ exemplet, skulle man kunna skriva
 där termerna $f$, $g$ och $compose$ är funktioner och termen $x$ är ett värde.
 Här säger man att termen $compose$ beror på termerna $f$, $g$ och $x$.
 Funktionen $compose$ definierar funktionskomposition, oftast noterad med en
-cirkel som $(f \circ g)\ x$.
+cirkel som $(f \circ g)\ (x)$.
 
 % TODO: Explain types in more details, with example definition.
 
 \subsection{Termer som beror på typer}
 Utöver termer som beror på termer kan man även lägga till \emph{termer som
 beror på typer}, vilket brukar kallas polymorfism. För att bygga vidare på vårt
-exempel skulle det kunna se ut såhär:
+ovan exempel skulle det kunna se ut så här:
 \begin{align*}
   &compose' : (b \to c) \to (a \to b) \to a \to c \\
   &compose'\ f\ g\ x = f\ (g\ x)
@@ -32,7 +32,7 @@ exempel skulle det kunna se ut såhär:
 Här har vi i stället för att använda typen $\N$ använt de godtyckliga typerna
 $a$, $b$ och $c$ vilket innebär att termen $compose'$ beror på typerna $a$, $b$
 och $c$. Det låter oss med en enda definition av $compose'$ anropa funktionen
-med termer av olika typer, i stället för att definiera en funktion för varje
+med termer av olika typer, i stället för att definiera $compose$ för varje
 kombination av typer.
 
 Ytterligare ett exempel på polymorfism är \emph{polymorfiska typer}. Till
@@ -42,20 +42,20 @@ exempel kan vi skriva
   &\ \ Nil : List\ a \\
   &\ \ Cons : a \to List\ a \to List\ a
 \end{align*}
-Där $List\ a$ är en polymorfisk datatyp för listor. Vi skulle sedan kunna ge
-typen för en funktion som ger tillbaka det första elementet ifrån en lista:
+där $List\ a$ är en polymorfisk datatyp för listor. Vi skulle sedan kunna ge
+typen för en funktion som ger tillbaka det första elementet ur en lista:
 \begin{align*}
   head : List\ a \to a
 \end{align*}
 
 \subsection{Typer som beror på typer}
-Nästa steg i utvecklingen är att låta \emph{typer bero på typer}. Med denna
-funktionalitet kan man definiera så kallade typoperatorer. Typoperatorer är
-funktioner som tar in typer som parametrar och ger ut typer som resultat, till
-skillnad från vanliga funktioner som tar in termer som parametrar och ger ut
-termer som resultat.
+Nästa steg i utvecklingen mot beroendetypning är att låta \emph{typer bero på
+typer}. Med denna funktionalitet kan man definiera så kallade typoperatorer.
+Typoperatorer är funktioner som tar in typer som parametrar och ger ut typer
+som resultat, till skillnad från vanliga funktioner som tar in termer som
+parametrar och ger ut termer som resultat.
 
-Ett exempel på en typoperator kan vara den kartesiska produkten ($\times$).
+Ett exempel på en typoperator är den kartesiska produkten ($\times$).
 Typoperatorn $\times$ tar in två typer och ger ut en ny typ ofta kallad en
 produkttyp. Eftersom typer är mängder blir kartesiska produkten av två typer
 alla möjliga kombinationer av typernas element. Vi skulle även kunna använda
@@ -86,20 +86,20 @@ listor:
 \begin{align*}
   head' : (n \in \N) \to Vector\ a\ (n+1) \to Vector\ a\ n
 \end{align*}
-Notera att denna funktionen inte fungerar på tomma vektorer eftersom man inte
-kan ta bort ett element som inte finns, kompilatorn kontrollera detta att
-matcha typen på den inskickade vektorn med värdet $n+1$. Om typen har värdet $n
-= 0$ matchar inte typen eftersom det inte finns $m \in \N$ sådant att $m+1 =
-0$. Detta till skillnad från definitionen av $head$ för listor som helt enkelt
-inte kan definieras för tomma listor och i \haskell{} kraschar helt enkelt
-program som använder $head$ på tomma listor.
+Notera att denna funktionen inte tillåter tomma vektorer som argument eftersom
+man inte kan ta bort ett element som inte finns, kompilatorn kontrollerar detta
+genom att matcha typen på den inskickade vektorn med värdet $n+1$. Om vektorn
+har en typ där värdet $n = 0$ matchar inte typen eftersom det inte finns $m \in
+\N$ sådant att $m+1 = 0$. Detta till skillnad från definitionen av $head$ för
+listor som helt enkelt inte kan definieras för tomma listor och i \haskell{}
+kraschar program som använder $head$ på tomma listor.
 
 Värt att notera är att inte bara funktionella språk har beroendetypade
-funktioner. Ett exempel på beroendetypning som de flesta antagligen är bekanta
-med är \texttt{printf} i \textsc{C}. Här bestäms antalet parametrar i
+funktioner. Ett exempel på beroendetypning som de flesta inom datavetenskap är
+bekanta med är \texttt{printf} i \textsc{C}. Här bestäms antalet parametrar i
 funktionen av antalet \% -tecken i den första strängen och vilken typ det ska
 vara på dessa parametrar bestäms av vilken bokstav som står efter respektive
-\%-tecknet.
+\%-tecken.
 \begin{verbatim}
 printf("%s is %d years old and %f.1cm long", name, age, length)
 \end{verbatim}

@@ -1,9 +1,9 @@
 \section{Taktikspråk}
 Taktikspråk i \coq{} heter \textsc{Ltac} och är vad som används för att bygga
 de formella bevisen. Kort sagt skrivs bevis genom att sätta upp satsen som ska
-bevisas som en likhet. Sedan använder så kallade taktiker för att modifierar
-uttrycket tills uttrycket är lika. Arbetsgången liknar på så sätt bevis med
-papper och penna dock mycket mer detaljerat.
+bevisas som uttryck. Sedan användes så kallade taktiker för att modifiera
+uttrycket satsen är bevisad. Arbetsgången liknar på så sätt bevis med papper
+och penna, dock mycket mer detaljerat.
 
 För att påbörja ett bevis skrivs först \C{Lemma} eller \C{Theorem} följt av
 namnet på beviset. Sedan skrivs kolon (:) följt av satsens kvantifikationer,
@@ -12,7 +12,7 @@ det vill säga de objekt uttrycket beror på. Efter det följer ett kommatecken
 nyckelordet \C{Proof}, men det är bara syntaktiskt socker och betyder inget för
 kompilatorn. Till sist kommer beviset självt uppbyggt med hjälp av
 \emph{taktiker} följt av \C{Qed.} för att avsluta beviset. För att bevisa till
-exempel en tautologi.
+exempel en tautologi:
 
 \begin{lstlisting}
 Theorem tautology : forall (A B C: Prop),
@@ -25,10 +25,11 @@ Proof.
 Qed.
 \end{lstlisting}
 
-Innuti själva beviset finns ett så kallat kontext och en lista med mål som
-behöver bevisas. Med kontext menas de objekt som användaren kan använda sig av
-i beviset. Genom att använda sig av taktiker modifieras målen och kontextet.
-Efter \C{Proof.} i \C{tautology} ser kontexten och målet ut på följande sätt
+När satsen är definierad går systemet in i bevisläget. Då visar systemet ett så
+kallat kontext och en lista med mål som behöver bevisas. Med kontext menas de
+hypoteser som användaren kan använda sig av i beviset. Genom att använda sig av
+taktiker modifieras målen och kontexten. Efter \C{Proof.} i \C{tautology} ser
+kontexten och målet ut på följande sätt:
 \begin{lstlisting}
 1 subgoals
 ______________________________________(1/1)
@@ -37,7 +38,7 @@ forall A B C : Prop, (A -> B) -> (B -> C) -> A -> C
 
 Taktiken \C{intros} flyttar antaganden från målet till kontexten så att de kan
 användas i andra taktiker. I \C{tautology} flyttar vi upp alla implikationerna
-och ger dem namn, det leder till följande kontext och mål
+och ger dem namn, det leder till följande kontext och mål:
 \begin{lstlisting}
 1 subgoals
 A : Prop

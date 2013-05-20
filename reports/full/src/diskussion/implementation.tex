@@ -35,7 +35,7 @@ evalueringsstegen på.
 % och det finns alternativa sätt att implementera detta.
 
 \paragraph{Evaluering}
-I avsnitt~\ref{sec:evaluation} i algoritmen multipliceras
+I avsnitt~\ref{sec:evaluering} i algoritmen multipliceras
 evalueringsmatrisen $V_e$ med vektorn av koefficienter till polynomet som ska
 evalueras. Detta är inte det enda möjliga sättet att evaluera polynomen på.
 För att optimera en beräkningsbarversion av algoritmen kan det finnas möjlighet att
@@ -56,8 +56,8 @@ $\alpha_0, \dots, \alpha_d$ är $d + 1$ skilda punkter.
 
 Detta gäller dock inte generellt i ett integritetsområde. Då kan
 ekvationssystemet(\ref{eq:NAME4}) vara entydigt lösbart utan att $V_I$ är
-inverterbar, eftersom matris över ett integritetsområde är inverterbar om och
-endast om dess determinant är ett inverterbart
+inverterbar, eftersom en matris över ett integritetsområde är inverterbar om
+och endast om dess determinant är ett inverterbart
 element\cite{sombatboriboon2011some}. ($V_I$ kommer dock vara inverterbar i
 bråkkroppen över integritetsområdet.)
 
@@ -73,8 +73,8 @@ använda andra ekvationslösningsmetoder än matrisinvertering.
 % det skulle finnas det kanske de inte är de mest lämpliga interpolationspunkterna i
 % andra avseenden. Ska metoder som bygger på matrisinversion användas i interpolationssteget
 
-I de integritetsområden där det matrisinverteringen fungerar finns också möjligheter att
-effektivisera ekvationslösningen genom att använda till exempel
+I de integritetsområden där matrisinverteringen fungerar finns också
+möjligheter att effektivisera ekvationslösningen genom att använda till exempel
 $LU$-faktorisering. Bodrato\cite{bodrato2007towards}\cite{bodrato2007integer}
 beskriver en algoritm för att givet interpolationspunkterna söka efter optimala
 följder av evaluerings- och interpolationsoperationer.
@@ -97,7 +97,7 @@ någon eller några typer av
 %typ)*** av
 integritetsområden.
 Bodrato\cite{bodrato2007notes}\cite{bodrato2007towards}\cite{bodrato2007integer}
-beskriver optimerade implementationer för karaktärestik 2, 3, 5 och 0 av bland
+beskriver optimerade implementationer för karaktäristik 2, 3, 5 och 0 av bland
 annat Toom-Cook-3. GNU Multiple Precision Arithmetic Library använder
 Toom-Cook-3, -4, -6.5 och -8.5 (där -6.5 och -8.5 är algoritmer speciellt anpassade
 för att multiplicera operander med stor storleksskillnad) för att multiplicera
@@ -107,18 +107,18 @@ När en sådan implementering är gjord kan algoritmen appliceras utan att man
 behöver ge interpolationspunkter som argument och man behöver inte räkna ut evaluerings- och
 interpolationsmatriserna vid varje applikation.
 
-\paragraph{Implementationens påverkan på beviset}
-Hur ett steg i algoritmen implementeras har en stor betydelse
-för hur komplicerat det sedan är att visa algoritmens korrekthet. Till exempel
-$recompose\_split$ är ett lemma i vårt formella bevis som säger att vår
-uppdelningsfunktion \C{split} är högerinvers till sammansättningsfunktionen \C{recompose} under vissa förutsättningar.
-Trots att det här är ett synnerligen enkelt lemma så är det
-formella beviset relativt långt och komplicerat. Detta beror till stor del på
-att vi har implementerat uppdelningen, \C{split}, med polynomdivision och
-modulo för polynom vilket i sin tur ledde till svårigheter då vi behövde arbeta
-med de listor som utgör den underliggande strukturen för polynomtypen. Det bör
-finnas en mer naturlig definition av uppdelningsfunktionen som gör att beviset
-för $recompose\_split$ går att skriva på ett fåtal rader.
+\paragraph{Implementationens påverkan på beviset} Hur ett steg i algoritmen
+implementeras har en stor betydelse för hur komplicerat det sedan är att visa
+algoritmens korrekthet. Till exempel $recompose\_split$ är ett lemma i vårt
+formella bevis som säger att vår uppdelningsfunktion \C{split} är högerinvers
+till sammansättningsfunktionen \C{recompose} under vissa förutsättningar. Trots
+att det är ett ganska enkelt lemma så är det formella beviset relativt långt
+och komplicerat. Detta beror till stor del på att vi har implementerat
+uppdelningen, \C{split}, med polynomdivision och modulo för polynom vilket i
+sin tur ledde till svårigheter då vi behövde arbeta med de listor som utgör den
+underliggande strukturen för polynomtypen. Det bör finnas en mer naturlig
+definition av uppdelningsfunktionen som gör att beviset för $recompose\_split$
+går att skriva på ett fåtal rader.
 
 Vi diskuterade en alternativ implementation av \C{split} definierad utan
 polynomdivision och modulo för polynom som såg ut på följande vis:
@@ -126,7 +126,6 @@ polynomdivision och modulo för polynom som såg ut på följande vis:
 Definition split (n b: nat) p : {poly {poly R}} :=
   \poly_(i < n) \poly_(j < b) p`_(i*b+j).
 \end{lstlisting}
-Vilket betyder $\sum_{i=0}^{n-1}\sum_{j=0}^{b-1}(p_{ib+j}x^j)y^i$ där vi har samma inparametrar
-som den ursprungliga \C{split}-definitionen. Vi hann dock inte testa om detta var en effektivare definition.
-
-\end{document}
+Vilket betyder $\sum_{i=0}^{n-1}\sum_{j=0}^{b-1}(p_{ib+j}x^j)y^i$ där
+inparametrarna är samma som i den ursprungliga \C{split}-definitionen. Vi hann
+dock inte testa om detta var en effektivare definition.
