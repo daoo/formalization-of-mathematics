@@ -1,46 +1,52 @@
-Följande avsnitt beskriver tillvägagångssättet för formalisering av algoritmen.
+I det här kapitlet beskrivs tillvägagångssättet för formaliseringen av algoritmen.
 
 \section{Litteraturstudie och färdighetsträning}
-Som första steg i arbetet utfördes en studie med mål att få tillräckligt med
-kunskaper för att programmera och bevisa med hjälp av \coq{} och \ssr{}. Som
-material användes bland annat \emph{Software Foundations} av Benjamin C. Pierce
-som är kursmaterial till en grundkurs i \coq{}, \emph{Coq in a Hurry} av Yves
-Bertot som är en kort introduktionsartikel till \coq{} och \emph{SSReflect
-tutorial} av Georges Gonthier som är en introduktion till \ssr{}. Som övning
-gjordes även ett bevis av Karatsuba-algoritmen i \coq{}.
+Som första steg i arbetet genomfördes en studie med mål att projektdeltagarna
+skulle få tillräckligt med kunskaper för att programmera och bevisa med hjälp
+av \coq{} och \ssr{}. Som material användes bland annat \emph{Software
+Foundations} av Benjamin C. Pierce som är kursmaterial till en grundkurs i
+\coq{}\cite{pierce2012software}, \emph{Coq in a Hurry} av Yves Bertot som är en
+kort introduktionsartikel till \coq{}\cite{bertot2006coq} och \emph{SSReflect
+tutorial} av Georges Gonthier som är en introduktion till \ssr{}
+\cite{gonthier2009ssreflect}. Som en övning i att hantera polynom i \ssr
+gjordes även ett bevis av Karatsuba-algoritmen som redan är formaliserad i
+\coq{}. I kapitel~\ref{sec:coq} beskrivs \coq.
 
 \section{Definition och bevis för hand}
-Först gjordes en informell men detaljerad definition av en generell och
-abstrakt version av Toom-Cook. Med abstrakt menas utan hänsyn till om det går
-att implementera. Ett detaljerat bevis gjordes också på papper för senare
-användning i implementationen.
+Först gjordes en informell men detaljerad definition av en generell version av
+Toom-Cook. Ett detaljerat bevis gjordes också på papper för senare användning i
+implementationen. Resultatet av detta steg i implementationen finns i
+kapitel~\ref{sec:toomcook}.
 
 \section{Implementation i \haskell{}}
-I samband med framtagningen av det informella beviset utvecklades en praktisk
-implementation av Toom-Cook för heltal i \haskell{}. Den byggdes först för
-Toom-Cook-3 men generaliserades sedan till \toomp{n}. Testning gjordes med
-QuickCheck genom att jämföra implementationen av Toom-Cook med
-heltalsmultiplikationen som finns definierad i \haskell{}. Resultatet av denna
-fasen finns i appendix~\ref{app:haskell}.
+I samband med framtagningen av det informella definitionen och beviset gjordes
+en implementation av Toom-Cook för heltal i \haskell{}. Den gjordes först för
+\toomp{3} men generaliserades sedan till \toomp{m}. Implementationen testades
+QuickCheck genom att jämföra implementationen av Toom-Cook med den
+heltalsmultiplikation som finns definierad i \haskell{}. Resultatet av denna
+fas i projektet finns i appendix~\ref{app:haskell}.
 
-Anledningen till att en implementation gjordes i \haskell{} var för att vi i det
-stadiet inte hade tillräckligt med kunskap om \coq{} för att implementera en ny
-algoritm i språket. Eftersom erfarenhet av \haskell{} redan fanns kunde algoritmen
-snabbt implementeras och testas, detta gav också en bättre förståelse för hur
-Toom-Cook fungerar.
+Anledningen till att en första implementation gjordes i \haskell{} var att
+gruppen inte hade någon erfarenhet av \coq{} innan projektet och man genom att
+först implementera en version av algoritmen i \haskell{} som kundes testas
+kunde få en bättre förståelse för hur Toom-Cook fungerar.
 
 \section{Implementering och bevis i \coq{}}
-När informella beviset och den praktiska implementation var färdiga, utfördes
-implementeringen av Toom-Cook och dess bevis i \coq{} med hjälp av \ssr{}.
-Först skapades en definition av algoritmen i \coq{} väldigt lik den i
-\haskell{} fast med polynom istället för heltal. Denna definition omarbetades
-senare under bevisningen för att det skulle vara lättare att arbeta med
-beviset. Uppdelningen av lemmana gjorde det möjligt. Resultatet av detta
-beskrivs i avsnitt~\ref{sec:formellimplementation} och
-avsnitt~\ref{sec:formellbevis}.
+När informella definitionen och beviset och den praktiska implementation var
+färdiga, utfördes implementeringen av Toom-Cook och dess bevis i \coq{} med
+hjälp av \ssr{}. Först skapades en definition av algoritmen i \coq{} med hjälp
+av definitionen av algoritmen i \haskell{} och den informella definitionen och
+som låg nära dessa definitioner. Denna definition omarbetades senare under
+utarbetandet av beviset för att underlätta vissa bevissteg. Det formella
+beviset delades som det informella upp i ett huvudbevis, bland annat för att
+underlätta arbetsfördelning inom gruppen. Resultatet av detta beskrivs i
+avsnitt~\ref{sec:formellimplementation} och avsnitt~\ref{sec:formellbevis}.
 
 \section{Avgränsningar}
-Från början var tanken att en optimerad version av Toom-Cook skulle
-implementeras och jämföras med lång multiplikation men i brist på tid gjordes
-aldrig detta. Vår implementation kan således inte användas, utan vi \emph{vet}
-bara att den är korrekt.
+Algoritmen i \coq{} har implementerats med de låsta typerna för bland annat
+polynom och matriser i \ssr{} som beskrivs i avsnitt~\ref{sec:ssr}. Den kan
+alltså användas för att beräkna produkten mellan konkreta polynom. Om tid hade
+funnits hade en eller flera exekverbara versioner av Toom-Cook implementerats,
+som sedan skulle visats korrekt genom att relatera dem till implementationen
+med det låsta typerna. Detta tillvägagångssätt för implementation av
+matematiska algoritmer diskuteras i avsnitt~\ref{sec:exekverbar}.

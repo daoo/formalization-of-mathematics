@@ -1,0 +1,31 @@
+\section{Formalisering och matematiska algoritmer}
+\label{sec:exekverbert}
+Mörtberg, Dénès och Siles presenterar i \cite{denes2012refinement} en
+metodologi för att implementera effektiva matematiska algoritmer och visa deras
+korrekthet. De delar in processen i tre steg: först definieras algoritmen med
+hjälp av de låsta men uttrycksfulla datatyperna i \ssr{}:s bibliotek och
+bevisas, sedan översätts \ssr{}-algoritmen till en algoritm definierad med
+enklare typer i \ssr{} som det går att utföra beräkningar med, och denna
+visas??? ge samma resultat som algoritmen i det första steget för motsvarande
+argument. Till sist kan den exekverbara algoritmen översättas till något annat
+språk, till exempel \haskell{}.
+
+Implementationen av Toom-Cook i det här projektet kan sägas svara mot första
+steget i den här processen. Om tid hade funnits skulle nästa steg varit att
+implementera en exekverbar algoritm.
+
+I \ssr{} representeras ett polynom som ett par av en lista och ett bevis för
+att det sista elementet i listan inte är 0 och matriser som ändliga funktioner,
+se avsnitt~\ref{formbevis}. I den exekverbara versionen av algoritmen skulle
+polynom representeras med vanliga listor och matriser med listor av listor.
+Polynom- och matrisoperationer för dessa representationer finns implementerade
+i biblioteket \coq{}EAL\cite{coqeal} till \coq{}. Där finns också funktioner
+som översätter mellan olika representationer.
+
+Genom att sedan visa att samma resultat fås av att applicera den redan
+implementerade Toom-Cook-algoritmen och sedan översätta resultatet till
+polynomlistor och att översätta argumenten till listor först och sedan
+applicera listversionen av Toom-Cook-algoritmen skulle man särkerställa att
+listversionen ger korrekta resultat för de argument som är intressanta, det
+vill säga listor där sista elementet är nollskiljt, som därmed är listversioner
+av polynom.
