@@ -1,5 +1,5 @@
 \section{Definition av Toom-Cook}
-\label{in:definition}
+\label{sec:definition}
 Det första steget i formaliseringen av Toom-Cook-algoritmen är en informell men
 detaljerad definition och bevis av algoritmen och att den är korrekt. Detta
 avsnitt är ägnat åt den. Versionen av algoritmen som presenteras bygger på den
@@ -17,13 +17,13 @@ I detta avsnitt definierar vi $\toomm (p, q)$, för naturliga tal $m \geq 3$,
 som resultatet av algoritmen nedan.
 
 \subsection{Gradkontroll}
-\label{in:gradkontroll}
+\label{sec:gradkontroll}
 Om $\grad p = n \leq 2$, låt $\toomm (p, q) = p \cdot q$, där $p\cdot q$
 beräknas med naiv polynommultiplikation, annars gå vidare till steg
 \ref{in:uppdelning}.
 
 \subsection{Uppdelning}
-\label{in:uppdelning}
+\label{sec:uppdelning}
 Låt
 \begin{align}
   b &= \floor[\bigg]{\frac{1 + \grad p}{m}} + 1 = \floor[\bigg]{\frac{1 + n}{m}} + 1. \label{eq:b}
@@ -44,7 +44,7 @@ Låt
 Vi vill alltså att $u(x^b)=p(x)$ och $v(x^b)=q(x)$.
 
 \subsection{Evaluering}
-\label{in:evaluering}
+\label{sec:evaluering}
 Nu ska vi beräkna $w = u \cdot v$. Vi kommer göra detta genom interpolation i
 steg~\ref{in:interpol}. Eftersom
 \begin{align*}
@@ -80,13 +80,13 @@ $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$. Låt
 och motsvarande för $v$.
 
 \subsection{Rekursiv multiplikation}
-\label{in:rekursiv}
+\label{sec:rekursiv}
 Vi beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för i $= 0, \dots, d$
 rekursivt genom att anropa Toom-Cook med $u(\alpha_i)$ och $v(\alpha_i)$ som
 argument. Notera att $u(\alpha_i)$, $v(\alpha_i) \in R[x]$.
 
 \subsection{Interpolation}
-\label{in:interpol}
+\label{sec:interpol}
 Vi bestämmer koefficienterna i $w(y)=w_0 + w_1 y + \ldots + w_d y^d$ genom
 interpolation. Vi vet värdet av $w(y) = u(y) \cdot v(y)$ i $d + 1$ punkter. Om
 
@@ -133,6 +133,6 @@ Vandermondematris så är}
 \end{align}
 
 \subsection{Sammansättning}
-\label{in:sammansattning}
+\label{sec:sammansattning}
 Vi får slutligen $p(x) \cdot q(x)$ genom att evaluera $w$ i $x^b$ eftersom
 $w(x^b) = u(x^b) \cdot v(x^b)$.
