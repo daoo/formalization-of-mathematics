@@ -46,17 +46,16 @@ Lemma toom_cook_correct : forall p q,
 Det formella beviset för att den rekursiva delen av algoritmen är korrekt har
 en struktur som liknar beviset av prop~\ref{prop:1}.
 % Konstig mening svårt att förstå vad som menas:
-Den största skillnaden att
-induktionen i det formella fallet görs över antalet rekursiva anrop av
-algoritmen i stället för att som i beviset av prop~\ref{prop:1} görar över
-graden av de polynom som multipliceras. Det beror på att den rekursiva delen av
-den implementerade algoritmen \C{toom_cook_rec} är definierad med en oberoende
-variabel n, så som beskrivits i \ref{section:formrec}. I stället för att
-induktionen som i det informella beviset bygger på att graden av de polynom som
-\toom anropas med minskar vid rekursiva anrop av algoritmen bygger den på att
-variabeln n minskas vid rekursiva anrop. I båda fallen innebär dock
-induktionsantagandet att vi antar att algoritmen fungerar korrekt för nästa
-lägre rekursiva anrop.
+Den största skillnaden att induktionen i det formella fallet görs över antalet
+rekursiva anrop av algoritmen i stället för att som i beviset av
+prop~\ref{prop:1} görar över graden av de polynom som multipliceras. Det beror
+på att den rekursiva delen av den implementerade algoritmen \C{toom_cook_rec}
+är definierad med en oberoende variabel n, så som beskrivits i
+\ref{section:formrec}. I stället för att induktionen som i det informella
+beviset bygger på att graden av de polynom som Toom-Cook anropas med minskar
+vid rekursiva anrop av algoritmen bygger den på att variabeln n minskas vid
+rekursiva anrop. I båda fallen innebär dock induktionsantagandet att vi antar
+att algoritmen fungerar korrekt för nästa lägre rekursiva anrop.
 %Det nästa lägre anrop, finns det något bättre sätt att säga det här?
 Den andra stora skillnaden mellan pappersbeviset och det formella beviset är
 att många tekniska detaljer, som kan tas för givna i ett informellt bevis måste

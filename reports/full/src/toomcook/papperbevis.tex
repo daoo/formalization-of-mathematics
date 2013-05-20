@@ -1,7 +1,7 @@
 \section{Informellt bevis av Toom-Cook}
 \label{informhuvudbevis}
 I detta stycke visar vi att för $p, q \in R[x]$ så är
-$p \cdot q = \toom (p, q)$. Vi gör detta med hjälp av två lemman, vars bevis
+$p \cdot q = Toom-Cook (p, q)$. Vi gör detta med hjälp av två lemman, vars bevis
 kommer efter beviset av \ref{prop:1}.
 
 \begin{proposition}
@@ -13,7 +13,7 @@ kommer efter beviset av \ref{prop:1}.
 
   \begin{equation}
     \label{eq:name7}
-    \toom (p, q) =  p \cdot q.
+    Toom-Cook (p, q) =  p \cdot q.
   \end{equation}
 \end{proposition}
 
@@ -34,15 +34,15 @@ Antag att $p, q \in R[x]$, där
 med $0 \leq s \leq n$.
 
 \bigskip\noindent
-Antag också att $n > 2$ och att $\toom (f, g) =  f \cdot g$ gäller för polynom
+Antag också att $n > 2$ och att $Toom-Cook (f, g) =  f \cdot g$ gäller för polynom
 av grad mindre än $n$. Eftersom $n > 2$ så går vi vidare till steg
 \ref{in:gradkontroll} i algoritmen och skapar $u$ och $v$ från $p$ och $q$. När
 detta är gjort evaluerar vi i steg 3 $u$ och $v$ i punkterna $\alpha_0, \dots,
 \alpha_{2m-2}$ genom att multiplicera vektorn av deras koefficienter med
-evalueringsmatrisen. I steg \ref{in:rekursiv} anropar vi $\toom$ igen, nu med
+evalueringsmatrisen. I steg \ref{in:rekursiv} anropar vi Toom-Cook igen, nu med
 argumenten $u(\alpha_i) \cdot v(\alpha_i)$ för $i = 0, \ldots , 2m-2$. Dessa är
 polynom i $R[x]$. Eftersom $\grad u(\alpha_i)$, $\grad v(\alpha_i) < n$ enligt
-lemma \ref{lemma:1} så är $\toom (u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot
+lemma \ref{lemma:1} så är $Toom-Cook (u(\alpha_i), v(\alpha_i)) = u(\alpha_i) \cdot
 v(\alpha_i)$ enligt induktionsantagnandet. I steg \ref{in:interpol} skall vi
 bestämma koefficienterna i $w(y)=u(y) \cdot v(y)$. Detta gör vi genom att lösa
 matrisekvationen (\ref{eq:NAME4}). Eftersom interpolationsmatrisen $V_I$ enligt

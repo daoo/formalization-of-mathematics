@@ -1,4 +1,4 @@
-\section{Definition av $\toom$}
+\section{Definition av Toom-Cook}
 \label{in:definition}
 Det första steget i formaliseringen av Toom-Cook-algoritmen är en informell men
 detaljerad definition och bevis av algoritmen och att den är korrekt. Detta
@@ -13,12 +13,12 @@ Låt R vara ett integritetsområde och låt $p, q \in R[x]$, där
   q(x) &= b_0 + b_1 x + \cdots + b_s x^s
 \end{align*}
 med $0 \leq s \leq n$.
-I detta avsnitt definierar vi $\toom (p, q)$, för naturliga tal $m \geq 3$,
+I detta avsnitt definierar vi $\toomm (p, q)$, för naturliga tal $m \geq 3$,
 som resultatet av algoritmen nedan.
 
 \subsection{Gradkontroll}
 \label{in:gradkontroll}
-Om $\grad p = n \leq 2$, låt $\toom (p, q) = p \cdot q$, där $p\cdot q$
+Om $\grad p = n \leq 2$, låt $\toomm (p, q) = p \cdot q$, där $p\cdot q$
 beräknas med naiv polynommultiplikation, annars gå vidare till steg
 \ref{in:uppdelning}.
 
@@ -82,7 +82,7 @@ och motsvarande för $v$.
 \subsection{Rekursiv multiplikation}
 \label{in:rekursiv}
 Vi beräknar $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$ för i $= 0, \dots, d$
-rekursivt genom att anropa $\toom$ med $u(\alpha_i)$ och $v(\alpha_i)$ som
+rekursivt genom att anropa Toom-Cook med $u(\alpha_i)$ och $v(\alpha_i)$ som
 argument. Notera att $u(\alpha_i)$, $v(\alpha_i) \in R[x]$.
 
 \subsection{Interpolation}

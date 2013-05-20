@@ -58,7 +58,7 @@ implementerade\cite{denes2012refinement}.
 
 Det här projektet går ut på att gruppdeltagarna ska lära sig formalisering med
 bevisassistenten \coq och sedan formalisera och bevisa en matematisk algoritm,
-\toom, i \coq.
+Toom-Cook, i \coq.
 
 \coq är en av flera avancerade bevisassistenter som det bedrivs aktiv forskning
 om. Några andra är Agda, som utvecklats på Chalmers, Z3, som har utvecklats av
@@ -67,13 +67,13 @@ som Python, C och .NET och HOL-light, som används av Intel för att bevisa att
 vissa hårdvarukomponenter fungerar korrekt och i det pågående projektet att
 formalisera Keplers förmodan \cite{hales2008formal}.
 
-\toom är en algoritm för att multiplicera heltal eller polynom. Den är
+Toom-Cook är en algoritm för att multiplicera heltal eller polynom. Den är
 intressant eftersom den har en bättre asymptotisk tidskomplexitet än
 polynommultiplikation utförd direkt enligt definitionen \footnote{För
 definition av polynommultiplikation, se
 appedix~\ref{appendix:matematikteori}.}, där man multiplicerar varje term i det
 ena polynomet med varje term i det andra polynomet vilket har den asymptotiska
-tidskomplexiteten $O\left(n^2\right)$\footnote{Funktionen $T(n)$ är $O(f(n))$
+tidskomplexiteten $\Ordo\left(n^2\right)$\footnote{Funktionen $T(n)$ är $O(f(n))$
 om det existerar konstanter $c > 0$ och $n_0 \geq 0$ så att $T(n) \leq c \cdot
 f(n)$ för alla $n \geq n_0$.}, där n är graden på det största av de två
 polynomen som skall multipliceras.
@@ -82,8 +82,8 @@ polynomen som skall multipliceras.
 I kapitel~\ref{metod} beskrivs projektets arbetsmetod. I
 kapitel~\ref{formalisering} introduceras formalisering av matematik och
 bevisassistenter. Kapitel~\ref{coq} beskriver bevisassistenten \coq som har
-använts i projektet. Kapitel~\ref{toomcook} definierar algoritmen \toom och ger
-ett informellt bevis för att den är korrekt. I kapitel~\ref{formellalg}
-presenteras formaliseringen och beviset av \toom i \coq och i
+använts i projektet. Kapitel~\ref{toomcook} definierar algoritmen Toom-Cook och
+ger ett informellt bevis för att den är korrekt. I kapitel~\ref{formellalg}
+presenteras formaliseringen och beviset av Toom-Cook i \coq och i
 kapitel~\ref{diskussion} diskuteras \coq, formalisering och algoritmen.
 

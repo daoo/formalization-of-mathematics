@@ -76,14 +76,14 @@ implementeras. Den skulle dock kräva en av två saker. Antingen att de önskade
 interpolationspunkterna gavs som argument vid varje applikation av algoritmen
 eller att interpolationspunkter för varje möjligt integritetsområde sparades
 eller genererades med hjälp av någon algoritm när Toom-Cook anropades. Eftersom
-$\toom$ går att definera för alla heltal större än 0 skulle en helt generell
+Toom-Cook går att definera för alla heltal större än 0 skulle en helt generell
 implementation kräva att det gick att generera godtyckligt många lämpliga
 interpolationspunkter. Det går natutligtvis inte i ett ändligt
 integritetsområde.
 
 Vid praktiska tillämpningar är det dock mer rimligt att implementera en eller
-några instanser av $\toom$, till exempel Toom-Cook-3 och Toom-Cook-5, för något
-eller några typer av
+några instanser av Toom-Cook, till exempel Toom-Cook-3 och Toom-Cook-5, för
+något eller några typer av
 %****familjer(jag vill säga att de ska ha en gemensam isomorf delring eller nåt
 %typ)*** av
 integritetsområden.

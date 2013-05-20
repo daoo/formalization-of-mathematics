@@ -1,4 +1,4 @@
-$\toom$ är en algoritm för att multiplicera två polynom och är namngiven efter
+Toom-Cook är en algoritm för att multiplicera två polynom och är namngiven efter
 Andrei Toom och Stephen Cook.
 
 Algoritmen är intressant eftersom den har en bättre asymptotisk tidskomplexitet
@@ -16,20 +16,20 @@ att man kan uppnå en bättre asymptotisk tidskomplexitet än den för naiv
 heltalsmultiplikation som lärs ut i grundskolan och har tidskomplexiteten
 $O\left(n^2\right)$, där $n$ är antalet siffror i det största talet.
 
-Det finns flera varianter av $\toom$. $\toomp{k}$ är en enskild instans av
-$\toom$ som delar polynomen som skall multipliceras i $k$ delar. Vanligtvis när
-man talar om $\toom$ syftar man på $\toomp{3}$. Det finns även versioner av
-$\toom$ som delar upp polynomen i olika antal delar. Ett intressant specialfall
-av $\toom$ är $\toomp{2}$ som under vissa förutsättningar svarar mot
+Det finns flera varianter av Toom-Cook. \toomp{k} är en enskild instans av
+Toom-Cook som delar polynomen som skall multipliceras i $k$ delar. Vanligtvis när
+man talar om Toom-Cook syftar man på \toomp{3}. Det finns även versioner av
+Toom-Cook som delar upp polynomen i olika antal delar. Ett intressant specialfall
+av Toom-Cook är \toomp{2} som under vissa förutsättningar svarar mot
 Karatsuba-algoritmen.
 
-$\toomp{k}$ har tidskomplexiteten $O(n^{log_2(2 k-1)/log_2 k})$
+\toomp{k} har tidskomplexiteten $\Ordo(n^{log_2(2 k-1)/log_2 k})$
 \cite{bodrato2007towards}, men konstanten som döljs av ordo-notationen växer
 med $k$ och har en betydande praktisk inverkan. För heltalsmultiplikation
 finns algoritmer som bygger på diskret fouriertransform och har en ännu bättre
 asymptotisk tidskomplexitet, till exempel Schönhage-Strassen-algoritmen.
 
-Både $\toom$ och algoritmer som bygger på diskret fouriertransform används i
+Både Toom-Cook och algoritmer som bygger på diskret fouriertransform används i
 praktiken. I till exempel GMPlib, The GNU Multiple Precision arithmetic
 library, används Schönhage-Strassen-algoritmen samt olika instanser av
-$\toom$-algoritmen för multiplikation av heltal \cite{gmpdoc}.
+Toom-Cook-algoritmen för multiplikation av heltal \cite{gmpdoc}.
