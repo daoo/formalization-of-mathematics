@@ -10,7 +10,20 @@ loop n = loop (n + 1)
 och kompilatorn kommer att kompilera och låta dig köra funktionen. Men
 \verb+loop+ kommer aldrig ge något resultat och kommer snurra i all evighet.
 Kompilatorn till \coq{} tillåter inte denna typen av definitioner utan kommer
-ge kompileringsfel om den stöter på liknande funktioner.
+ge kompileringsfel om den stöter på liknande funktioner. För att \coq{}
+ska acceptera en rekursiv funktion krävs det att någon av parametrarna i det
+rekursiva kallet närmar sig basfallet eller så
+måste användaren ange ett bevis för att funktionen är garanterad att avsluta.
+Det går till exempel inte att implementera Collatz funktion som beskrivs i
+ekvation~\ref{eq:collatz} även om den terminerar för alla hitills kända värden.
+
+\begin{equation}
+\label{eq:collatz}
+T(n) = \left\{\begin{matrix} n/2, & \mbox{om }n\equiv0\mbox{ (mod 2)} \\ 3n+1,
+                         & \mbox{om }n\equiv1\mbox{ (mod 2)} \end{matrix}\right.
+\end{equation}
+
+
 
 För att göra en definition i \coq{} använder man nyckelordet \C{Definition}. En
 definition av funktionskomposition kan se ut såhär:
@@ -72,6 +85,8 @@ Mönstermatchning innebär att man för något värde tillhörande någon typ
 bestämmer vad som ska göras för varje konstruktor till typen. Notera i det här
 fallet att funktionen bara är definierad för vektorer \C{vec X n} där \C{n >
 0}. Vi behöver således inte hantera tomma vektorer i mönstermatchningen.
+Värt att notera är likheten mellan mönstermatchningen i \coq{} och 
+\C{case} sats i \textsc{Haskell}
 
 För att göra en rekursiv funktion använder vi \C{Fixpoint} istället för
 \C{Definition}:
