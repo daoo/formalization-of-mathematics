@@ -148,6 +148,7 @@ särskiljt \C{interpolate} mycket mer komplicerade.
 Definition recompose (b: nat) (w: {poly {poly R}}) : {poly R} :=
   w.['X^b].
 \end{lstlisting}
+<<<<<<< HEAD
 Här sker evalueringen av \C{w} i $x^b$ där \C{b} är en inparameter.
 
 \subsection{Den rekursiva funktionen och huvudfunktionen}
@@ -184,6 +185,30 @@ basfall och rekursionsfall för extraargumentet \C{n} görs med en \C{match}-sat
 Sedan görs falluppdelning mellan basfall och rekursionsfall för den riktiga
 rekursionsparametern med en \C{if ... then ... else}-sats. Nedan beskrivs
 stegen i funktionen ett och ett.
+=======
+
+Här sker evalueringen av \C{w} i $x^b$ där \C{b} är en inparametern.
+
+\subsection{Rekusiv del}
+% Första meningen kan behöva ändras
+Fjärde steget i Toom-Cook-algoritmen. se avsnitt~\ref{in:rekursiv},  är en rekusiv del och
+rekusiv del och därmed behövs en rekusiv funktion, nämligen Fixpoint, för att
+kunna stega igenom hela algoritmen. I pappersalgoritmen slutar rekusionen när
+graden har blivit tillräckligt låg och då utförs direktmultiplikation. \coq
+behöver få bevisat att rekusionen terminar så istället för att visa att graden
+sjunker för varje steg så skickas ett naturligt tal \C{n}, som inparameter, som
+minskar vid varje rekusion och slutar när \C{n} är lika med noll eller när
+graden har blivit mindre än 2 på någotdera av polynomen, och då utförs direkt
+multiplikation. Så för att visa att Toom-Cook-algoritmen fungerar måste
+algoritmen fungera för alla \C{n} eftersom fixpoint-funktion bara kommer motsvara
+Toom-Cook om \C{n} är tillräckligt stort, ty tillräckligt många rekursiva anrop
+måste göras.
+
+% Lite skumt skrivet
+Funktionen match kollar om \C{n} är lika med 0 i så fall retunera \C{p} gånger
+\C{q} eller om \C{n} är en efterföljare till något tal.
+
+>>>>>>> Changes to the CoqIde part
 
 \begin{lstlisting}
 Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
