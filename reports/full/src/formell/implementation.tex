@@ -1,15 +1,14 @@
 Här beskrivs det huvudresultatet i projektet: den formella implementationen och
-beviset av Toom-Cook i \coq med \ssr. Den fungerar också som en illustration på
-hur definitioner och bevis ser ut och fungerar i \coq med \ssr. De viktigaste
-funktionerna och lemmana till algoritmen presenteras. Den fullständiga
-källkoden finns i \ref{appendix:coqkod}.
+beviset av Toom-Cook i \coq{} med \ssr{}. Den fungerar också som en
+illustration på hur definitioner och bevis ser ut och fungerar i \coq{} med
+\ssr{}. De viktigaste funktionerna och lemmana till algoritmen presenteras. Den
+fullständiga källkoden finns i \ref{appendix:coqkod}.
 
-\section{Implementation av Toom-Cook i \coq/\ssr}
+\section{Implementation av Toom-Cook i \coq{} med \ssr{}}
 \label{sec:formellimplementation}
 I det här avsnittet förklaras hur Toom-Cook-algoritmen är implementerad i
 \ssr{} och hur den överrenstämmer med den informella definitionen av
-algoritmen. Hela implementation ligger som ett
-appendix~\ref{appendix:matematikteori}.
+algoritmen.
 
 \subsection{Inledande definitioner och funktioner}
 \label{section:forminl}
@@ -43,7 +42,7 @@ men att vi ändå kan använda det i funktionerna. Vi definerar också
 \C{number_points} som det antal interpolationspunkter vi behöver för \toomm{}.
 
 % definieras variabler av typen nat, naturliga
-% tal\footnote{I \coq och \ssr
+% tal\footnote{I \coq{} och \ssr{}
 % är 0 inkluderad bland de naturliga talen}, vars värde beror på antalet splittar
 % som görs av polynomet.
 
@@ -159,21 +158,22 @@ Här sker evalueringen av \C{w} i $x^b$ där \C{b} är en inparameter.
 % graden har blivit tillräckligt låg och då utförs direktmultiplikation.
 
 Nu har hjälpfunktionerna till algoritmen definierats. Nu definieras själva
-algoritmen. Det görs med hjälp av två funktioner. En rekursiv del (som i \coq
-definieras med kommandot \C{Fixpoint}) som egentligen
-gör allt jobbet, och en yttre del som bara anropar den rekursiva delen med
-ett visst argument. Anledningen till detta är att \coq bara tillåter rekursiva
-funktioner som säkert terminerar. Antingen behöver \coq lätt förstå att något av
-argumenten i funktionen avtar mot ett basfall med varje rekursivt anrop, eller så får
-användaren själv bevisa att det hon eller han vill ska vara rekursionsparametern, som
-i det här fallet är graden på polynomen, minskar.
+algoritmen. Det görs med hjälp av två funktioner. En rekursiv del (som i \coq{}
+definieras med kommandot \C{Fixpoint}) som egentligen gör allt jobbet, och en
+yttre del som bara anropar den rekursiva delen med ett visst argument.
+Anledningen till detta är att \coq{} bara tillåter rekursiva funktioner som
+säkert terminerar. Antingen behöver \coq{} lätt förstå att något av argumenten
+i funktionen avtar mot ett basfall med varje rekursivt anrop, eller så får
+användaren själv bevisa att det hon eller han vill ska vara
+rekursionsparametern, som i det här fallet är graden på polynomen, minskar.
 
-Ett sätt att komma runt detta är att definiera funktionen med ett extra argument,
-i det här fallet \C{n}, ett naturligt tal vars enda uppgift är att minskas med 1
-för varje rekursivt anrop av funktionen. Dessutom definierar man två basfall för
-rekursionen. Ett för när det extra argumentetet \C{n} når 0,
-och ett för den verkliga rekursionsparametern. Då godkänner \coq funktionen, och
-användaren slipper göra ett krångligt bevis för att rekursionsparametern avtar.
+Ett sätt att komma runt detta är att definiera funktionen med ett extra
+argument, i det här fallet \C{n}, ett naturligt tal vars enda uppgift är att
+minskas med 1 för varje rekursivt anrop av funktionen. Dessutom definierar man
+två basfall för rekursionen. Ett för när det extra argumentetet \C{n} når 0,
+och ett för den verkliga rekursionsparametern. Då godkänner \coq{} funktionen,
+och användaren slipper göra ett krångligt bevis för att rekursionsparametern
+avtar.
 
 Sedan definierar man en yttre funktion, som anropar den rekursiva funktionen och
 ger det extra argumentet värdet av den riktiga rekursionsparametern.

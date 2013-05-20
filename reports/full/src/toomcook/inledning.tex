@@ -4,9 +4,9 @@ Andrei Toom och Stephen Cook.
 Algoritmen är intressant eftersom den har en bättre asymptotisk tidskomplexitet
 än naiv polynommultiplikation där man multiplicerar varje term i det ena
 polynomet med varje term i det andra polynomet vilket har tidskomplexiteten
-$O\left(n^2\right)$ \footnote{Funktionen $T(n)$ är $O(f(n))$ om det existerar
+$\Ordo\left(n^2\right)$ \footnote{Funktionen $T(n)$ är $\Ordo(f(n))$ om det existerar
 konstanter $c > 0$ och $n_0 \geq 0$ så att $T(n) \leq c \cdot f(n)$ för alla $n
-\geq n_0$. $O(\cdot )$-notationen beskriver funktionens asymptotiska beteende,
+\geq n_0$. $\Ordo(\cdot )$-notationen beskriver funktionens asymptotiska beteende,
 det vill säga hur funktionen växer med ökande storlek på argumentet.}, där $n$
 är graden på det största av de två polynomen som skall multipliceras. Eftersom
 problemet att multiplicera två heltal kan reduceras till att multiplicera två
@@ -14,22 +14,23 @@ polynom kan algoritmen även användas för heltalsmultiplikation. Denna redukti
 kan göras utan att den asymptotiska tidskomplexiteten försämras. Detta innebär
 att man kan uppnå en bättre asymptotisk tidskomplexitet än den för naiv
 heltalsmultiplikation som lärs ut i grundskolan och har tidskomplexiteten
-$O\left(n^2\right)$, där $n$ är antalet siffror i det största talet.
+$\Ordo\left(n^2\right)$, där $n$ är antalet siffror i det största talet.
 
-Det finns flera varianter av Toom-Cook. \toomp{k} är en enskild instans av
-Toom-Cook som delar polynomen som skall multipliceras i $k$ delar. Vanligtvis när
+Det finns flera varianter av Toom-Cook. \toomp{m} är en enskild instans av
+Toom-Cook som delar polynomen som skall multipliceras i $m$ delar. Vanligtvis när
 man talar om Toom-Cook syftar man på \toomp{3}. Det finns även versioner av
 Toom-Cook som delar upp polynomen i olika antal delar. Ett intressant specialfall
 av Toom-Cook är \toomp{2} som under vissa förutsättningar svarar mot
 Karatsuba-algoritmen.
 
-\toomp{k} har tidskomplexiteten $\Ordo(n^{log_2(2 k-1)/log_2 k})$
-\cite{bodrato2007towards}, men konstanten som döljs av ordo-notationen växer
-med $k$ och har en betydande praktisk inverkan. För heltalsmultiplikation
-finns algoritmer som bygger på diskret fouriertransform och har en ännu bättre
-asymptotisk tidskomplexitet, till exempel Schönhage-Strassen-algoritmen.
+\toomp{m} har tidskomplexiteten $\Ordo \left(n^{\log_2(2 m-1)/\log_2 m}\right)$
+\cite{bodrato2007towards}, där $m$ är graden på det största polynomet.
+Konstanten som döljs av $\Ordo(\cdot)$-notationen växer med $m$ och har dock en
+betydande praktisk inverkan. För heltalsmultiplikation finns algoritmer som
+bygger på diskret fouriertransform och har en ännu bättre asymptotisk
+tidskomplexitet, till exempel Schönhage-Strassen-algoritmen.
 
 Både Toom-Cook och algoritmer som bygger på diskret fouriertransform används i
-praktiken. I till exempel GMPlib, The GNU Multiple Precision arithmetic
-library, används Schönhage-Strassen-algoritmen samt olika instanser av
+praktiken. I till exempel GMP, The GNU Multiple Precision Arithmetic Library,
+används Schönhage-Strassen-algoritmen samt olika instanser av
 Toom-Cook-algoritmen för multiplikation av heltal \cite{gmpdoc}.

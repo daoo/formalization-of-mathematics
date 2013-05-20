@@ -4,8 +4,8 @@ Det första steget i formaliseringen av Toom-Cook-algoritmen är en informell me
 detaljerad definition och bevis av algoritmen och att den är korrekt. Detta
 avsnitt är ägnat åt den. Versionen av algoritmen som presenteras bygger på den
 i \cite{bodrato2007notes} och presentationen av den följer källans. För en
-introduktion till integritetsområden och polynom, se appendix
-\ref{appendix:matematikteori}.
+introduktion till integritetsområden och polynom, se
+appendix~\ref{app:algebra}.
 
 Låt R vara ett integritetsområde och låt $p, q \in R[x]$, där
 \begin{align*}
@@ -48,12 +48,12 @@ Vi vill alltså att $u(x^b)=p(x)$ och $v(x^b)=q(x)$.
 Nu ska vi beräkna $w = u \cdot v$. Vi kommer göra detta genom interpolation i
 steg~\ref{sec:interpol}. Eftersom
 \begin{align*}
- \grad w \leq \grad u + \grad v \leq m - 1 + m -1 = 2m-2 = d
+ \grad w = \grad u + \grad v \leq m - 1 + m - 1 = 2m-2 = d
 \end{align*}
 kan koefficienterna i $w$ bestämmas om vi vet värdet av $w$ i $d + 1$ skiljda
 punkter. Vi evaluerar $w$ i punkterna $\alpha_0, ...,  \alpha_d$, där
 $\alpha_i \in R$. För att göra det beräknar vi i detta steg först $u(\alpha_i)$
-och $v(\alpha_i)$ genom matrismultiplikation. I nästa steg beräknas sen
+och $v(\alpha_i)$ genom matrismultiplikation. I nästa steg beräknas sedan
 $w(\alpha_i)=u(\alpha_i) \cdot v(\alpha_i)$. Låt
 
 \begin{align*}
@@ -126,7 +126,7 @@ interpolation. Vi vet värdet av $w(y) = u(y) \cdot v(y)$ i $d + 1$ punkter. Om
     w(\alpha_d)
   \end{pmatrix}
 \intertext{förutsatt att $V_I$ är inverterbar. Detta är den om determinanten
-$V_I$ är ett invertarbart elemet i $R$ [referens]. Eftersom $V_I$ är en
+$V_I$ är ett invertarbart element i $R$ \ref{somestuff}. Eftersom $V_I$ är en
 Vandermondematris så är}
   \label{eq:NAME6}
   \det V_I &= \prod_{0 \leq i < j \leq d} (\alpha_i - \alpha_j)

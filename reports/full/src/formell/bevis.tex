@@ -12,18 +12,18 @@ s bibliotek. En lång rad lemman om bland annat grundläggande egenskaper hos
 polynom, naturliga tal, matriser och summor finns tillgängliga.
 
 Det formella bevisets struktur är modellerad efter det informella bevisets i
-avsnitt~\ref{sec:informhuvudbevis}, med ett huvudbevis som bygger på ett flertal
-lemman. De formella lemmorna är dock många fler än de för det informella
-beviset, 15 jämfört med två. Det beror delvis på att påståenden delats upp i
-flera delpåståenden för att underlätta arbetsfördelningen inom gruppen, men i
-första hand på att resonemangssteg som i pappersbeviset ses som så triviala att
-de inte ens nämns också måste visas när beviset formaliseras. En ytterligare
-anledning är att det är är lättare att göra omskrivningar och slutledningssteg
-på mindre delpåståenden separat. Ett 50-tal mer generella lemman ur
-\ssr{}-biblioteket och ett par lemman som byggde på grundläggande egenskaper hos
-polynomdivision som gick utanför projektets avgränsningar och som
-tillhandahållits av projektets handledare, Anders Mörtberg, har används i
-huvudbeviset och i beviset av lemmorna.
+avsnitt~\ref{sec:informhuvudbevis}, med ett huvudbevis som bygger på ett
+flertal lemman. De formella lemmorna är dock många fler än de för det
+informella beviset, 15 jämfört med två. Det beror delvis på att påståenden
+delats upp i flera delpåståenden för att underlätta arbetsfördelningen inom
+gruppen, men i första hand på att resonemangssteg som i det informella beviset
+ses som så triviala att de inte ens nämns också måste visas när beviset
+formaliseras. En ytterligare anledning är att det är är lättare att göra
+omskrivningar och slutledningssteg på mindre delpåståenden separat. Ett 50-tal
+mer generella lemman ur \ssr{}-biblioteket och ett par lemman som byggde på
+grundläggande egenskaper hos polynomdivision som gick utanför projektets
+avgränsningar och som tillhandahållits av projektets handledare, Anders
+Mörtberg, har används i huvudbeviset och i beviset av lemmorna.
 
 Nedan beskrivs huvudbeviset rad för rad, och därefter beskrivs några av de mer intressanta
 lemmorna utan bevis.
@@ -57,76 +57,75 @@ vid rekursiva anrop av algoritmen bygger den på att variabeln n minskas vid
 rekursiva anrop. I båda fallen innebär dock induktionsantagandet att vi antar
 att algoritmen fungerar korrekt för nästa lägre rekursiva anrop.
 %Det nästa lägre anrop, finns det något bättre sätt att säga det här?
-Den andra stora skillnaden mellan pappersbeviset och det formella beviset är
+Den andra stora skillnaden mellan det informella och det formella beviset är
 att många tekniska detaljer, som kan tas för givna i ett informellt bevis måste
 visas explicit. Dessutom måste hänsyn tas till hur matriser och polynom är
 representerade i \ssr{}.
 
 Här nedan ges den fullständiga programkoden för att beviset av att den
 rekursiva delen av algoritmen är korrekt, givet vissa lemman:
-\begin{lstlisting}
-1 Lemma toom_cook_rec_correct : forall (n : nat) p q,
-2  unitmx V_I -> toom_cook_rec n p q = p * q.
-3 Proof.
-4 elim=> [ // | n IHn p q V_inver] /=.
-5 set b := exponent m p q.
-6 set u := split m b p.
-7 set v := split m b q.
-8  case: ifP => [ // | _ ].
-9      have ->:
-10      \col_i toom_cook_rec n ((evaluate u) i 0) ((evaluate v) i 0) =
-11      \col_i ((evaluate u) i 0 * (evaluate v) i 0).
-12       apply/colP => j.
-13       by rewrite mxE [X in _ = X]mxE (IH2 _ _ V_inver).
-14     rewrite 2!matrix_evaluation.
-15     have ->:
-16       \col_i ((\col_j u.[inter_points j 0]) i 0 *
-                 (\col_j v.[inter_points j 0]) i 0) =
-17       \col_i (u * v).[(inter_points i 0)].
-18       apply/colP => k.
-19       by rewrite 4!mxE -hornerM.
-20     rewrite toom_cook_interpol //; last by apply: size_split_mul.
-22     rewrite /recompose hornerM.
-23     2?recompose_split //.
-24     rewrite /b exponentC.
-25     by apply: exp_m_degree.
-26     by apply: exp_m_degree.
-27 Qed.
+\lstset{numbers=left}
+\begin{lstlisting}[escapeinside={@}{@}]
+@\label{lst:rad1}@Lemma toom_cook_rec_correct : forall (n : nat) p q,
+@\label{lst:rad2}@  unitmx V_I -> toom_cook_rec n p q = p * q.
+@\label{lst:rad3}@Proof.
+@\label{lst:rad4}@  elim=> [ // | n IHn p q V_inver] /=.
+@\label{lst:rad5}@  set b := exponent m p q.
+  set u := split m b p.
+@\label{lst:rad7}@  set v := split m b q.
+  case: ifP => [ // | _ ].
+    have ->:
+      \col_i toom_cook_rec n ((evaluate u) i 0) ((evaluate v) i 0) = \col_i ((evaluate u) i 0 * (evaluate v) i 0).
+        apply/colP => j.
+        by rewrite mxE [X in _ = X]mxE (IH2 _ _ V_inver).
+      rewrite 2!matrix_evaluation.
+      have ->:
+        \col_i ((\col_j u.[inter_points j 0]) i 0 * (\col_j v.[inter_points j 0]) i 0) = \col_i (u * v).[(inter_points i 0)].
+           apply/colP => k.
+           by rewrite 4!mxE -hornerM.
+      rewrite toom_cook_interpol //; last by apply: size_split_mul.
+      rewrite /recompose hornerM.
+      rewrite 2?recompose_split //.
+      rewrite /b exponentC.
+      by apply: exp_m_degree.
+      by apply: exp_m_degree.
+Qed.
 \end{lstlisting}
-På rad \C{1} och \C{2} formuleras lemmat och på rad \C{3} anges att beviset
-startar genom \C{Proof}. Rad \C{4} anger med \C{elim=>} att beviset kommer
-göras med induktion över den variabel som står först i
-lemmat, \C{n}. Basfallet är trivialt precis som i prop~\ref{prop:1} eftersom
-\C{toom_cook_rec} är vanlig multiplikation när \C{n}$=0$ och delmålet det utgör
-avslutas direkt med hjälp av \C{//}. Till höger om \C{|} ges instruktioner
-till induktionssteget. Variabeln \C{n'} där \C{n' + 1}  = \C{n},
-för det \C{n} som induktionen görs över instansieras.
+\lstset{numbers=none}
+På rad~\ref{lst:rad1} och \ref{lst:rad2} och formuleras lemmat och på rad
+\ref{lst:rad3} anges att beviset startar genom \C{Proof}. Rad \ref{lst:rad4}
+anger med \C{elim=>} att beviset kommer göras med induktion över den variabel
+som står först i lemmat, \C{n}. Basfallet är trivialt precis som i
+prop~\ref{prop:1} eftersom \C{toom_cook_rec} är vanlig multiplikation när
+\C{n}$=0$ och delmålet det utgör avslutas direkt med hjälp av \C{//}. Till
+höger om \C{|} ges instruktioner till induktionssteget. Variabeln \C{n'} där
+\C{n' + 1}  = \C{n}, för det \C{n} som induktionen görs över instansieras.
 Induktionsantagnandet \C{IHn}, polynomen \C{p} och \C{q} och antagandet
-\C{V_inver} om att interpolationsmatrisen är inverterbar instansieras
-också. Till sist skriver \C{/=} om målet genom att utveckla definitionen
-av \C{toom_cook_rec}.
+\C{V_inver} om att interpolationsmatrisen är inverterbar instansieras också.
+Till sist skriver \C{/=} om målet genom att utveckla definitionen av
+\C{toom_cook_rec}.
 
-Raderna \C{5} till \C{7} sätter kortare beteckningar på några av uttrycken
-i målet för att öka bevisets läslighet. Efter det har målet och kontexten
-blivit:
+Raderna \ref{lst:rad5} till \ref{lst:rad7} sätter kortare beteckningar på några
+av uttrycken i målet för att öka bevisets läslighet. Efter det har målet och
+kontexten blivit:
 \begin{lstlisting}
- n' : nat
- IHn : forall p q, unitmx V_I -> toom_cook_rec n' p q = p * q
- p : {poly R}
- q : {poly R}
- V_inver : unitmx V_I
- b := exponent m p q : nat
- u := split m b p : {poly {poly R}}
- v := split m b q : {poly {poly R}}
- ______________________________________(1/1)
- (if (size p <= 2) || (size q <= 2)
+n' : nat
+IHn : forall p q, unitmx V_I -> toom_cook_rec n' p q = p * q
+p : {poly R}
+q : {poly R}
+V_inver : unitmx V_I
+b := exponent m p q : nat
+u := split m b p : {poly {poly R}}
+v := split m b q : {poly {poly R}}
+______________________________________(1/1)
+(if (size p <= 2) || (size q <= 2)
   then p * q
   else
    recompose b
      (interpolate
        (\col_i
          toom_cook_rec n' ((evaluate u) i 0) ((evaluate v) i 0)))) =
- p * q
+p * q
 \end{lstlisting}
 Nästa steg är sedan att skriva om målet så att vi kan använda
 induktionsantagandet \C{IHn}.
@@ -210,7 +209,8 @@ recompose b (u * v) = p * q
 \end{lstlisting}
 Lemmat \C{toom_cook_interpol} har som antagande att graden på det polynom vars
 koefficienter ska hittas genom interpolation, $u \cdot v$, är mindre än antalet
-interpolationspunkter, så när det åberopas uppkommer ett till delmål att visa:
+interpolationspunkter, så när det åberopas uppkommer ytterliggare ett delmål
+att visa:
 \begin{lstlisting}
 ______________________________________(2/3)
 size (u * v) <= number_points
