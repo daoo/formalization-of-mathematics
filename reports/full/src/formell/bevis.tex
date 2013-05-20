@@ -25,8 +25,8 @@ grundläggande egenskaper hos polynomdivision som gick utanför projektets
 avgränsningar och som tillhandahållits av projektets handledare, Anders
 Mörtberg, har används i huvudbeviset och i beviset av lemmorna.
 
-Nedan beskrivs huvudbeviset rad för rad, och därefter beskrivs några av de mer intressanta
-lemmorna utan bevis.
+Nedan beskrivs huvudbeviset rad för rad, och därefter beskrivs några av de mer
+intressanta lemmorna utan bevis.
 
 \subsection{Huvudbeviset}
 Detta är den formella motsvarigheten till prop~\ref{prop:1} för den
@@ -139,11 +139,11 @@ uttryck skulle motsvarat basfallet och induktionssteget om induktionen hade
 gjorts över graden av p och q, som i prop~\ref{prop:1}.
 
 Nu görs i stället på
-rad \C{8} med \C{ifP} en falluppdelning över \C{if ... then ... else}-uttrycket
+rad~\ref{lst:rad8} med \C{ifP} en falluppdelning över \C{if ... then ... else}-uttrycket
 som inte ger oss något nytt induktionsantagende.
 I det första fallet när \C{(size p <= 2) || (size q <= 2)} är höger- och
 vänsterled i målet trivialt lika
-och löses liksom det triviala målet på rad \C{4} direkt med \C{//}.
+och löses liksom det triviala målet på rad \ref{lst:rad4} direkt med \C{//}.
 När det är gjort är målet:
 \begin{lstlisting}
 recompose b
@@ -168,14 +168,14 @@ till \C{((evaluate u) i 0) * ((evaluate v) i 0)} inne i kolonnvektorn
 Eftersom definitionen \C{\\col_i} är låst för beräkning och uttrycket beror av
 indexet \C{i} i kolonnvektorn kan vi inte direkt skriva om uttrycket, se
 avsnitt~\ref{ssreflect}. Så för att kunna göra det öppnar vi ett nytt delmål
-med taktiken \C{have} på rad \C{9} där vi bara arbetar med denna del av
-vänsterledet. Där använder vi på rad \C{12} lemmat \C{colP} som låter oss visa
+med taktiken \C{have} på rad~\ref{lst:rad9} där vi bara arbetar med denna del av
+vänsterledet. Där använder vi på rad~\ref{lst:rad12} lemmat \C{colP} som låter oss visa
 att två vektorer är lika genom att visa att elementen på motsvarande platser är
 lika i båda vektorerna. (Då vektorer är implementerade i \ssr{} som funktioner
 från mängden av index i vektorn $\{0, \ldots , k\}$ till mängden av element i
 vektorn säger lemmat mer specifikt att två vektorer är lika om de extensionellt
 sett är samma funktion, dvs om de antar samma värden för samma argument.) På
-rad \C{13} kan vi sedan slutligen visa att uttrycket i vänsterledet i
+rad~\ref{lst:rad13} kan vi sedan slutligen visa att uttrycket i vänsterledet i
 \C{have}-satsen är lika med uttrycket i högerledet i \C{have}-satsen med hjälp
 av induktionshypotesen. Därefter kan det ursprungliga målet skrivas om till: då
 blivit:
@@ -196,8 +196,8 @@ förutsättningar är vänsterinvers till \C{split}-funktionen (eftersom \C{u} o
 Det första och det andra som ska visas är enkla följder av definitionerna av
 matrismultiplikation och -invers och visas inte explicit i det informella
 beviset. I det formella beviset visas detta i två lemman, \C{matrix_evaluation}
-och \C{toom_cook_interpol}, som används på rad \C{14} respektive rad \C{15}
-till \C{20} för att skriva om målet till
+och \C{toom_cook_interpol}, som används på rad~\ref{lst:rad14} respektive
+rad~\ref{lst:rad15} till \ref{lst:rad20} för att skriva om målet till
 \begin{lstlisting}
  recompose b
  (interpolate (\col_i (u * v).[inter_points i 0])) =
@@ -215,20 +215,20 @@ att visa:
 ______________________________________(2/3)
 size (u * v) <= number_points
 \end{lstlisting}
-Det görs på rad \C{20} genom lemmat \C{size_split_mul}. Detta är ytterligare
+Det görs på rad~\ref{lst:rad20} genom lemmat \C{size_split_mul}. Detta är ytterligare
 något som är självklart på pappret, eftersom det vi har definiterat $u$ och $v$
 så det är uppfyllt. Vi behöver också visa att interpolationsmatrisen \C{V_I} är
 inverterbar, men eftersom det är ett av antagandena i kontexten är det trivialt
-och visas på rad \C{20} med \C{//}.
+och visas på rad~\ref{lst:rad20} med \C{//}.
 
-Sedan utvecklar vi på rad \C{22} definitionen av \C{recompose} och använder
+Sedan utvecklar vi på rad~\ref{lst:rad22} definitionen av \C{recompose} och använder
 lemmat \C{hornerM} som säger att $(p \cdot q)(x) = p(x) \cdot q(x)$, för att
 skriva om målet till:
 \begin{lstlisting}
 u.['X^b] * v.['X^b] = p * q
 \end{lstlisting}
 % Lång krånglig mening
-Då kan vi på rad \C{23} använda lemmat \C{recompose_split}, som ungefär
+Då kan vi på rad~\ref{lst:rad23} använda lemmat \C{recompose_split}, som ungefär
 motsvarar lemma~\ref{lemma:2} i det informella beviset, för att visa att
 ``sammansättningen'' av de splittade polynomen genom att evaluera i $x^b$ är
 korrekt och därmed skriva om \C{u.['X^b]} till \C{p} och \C{v.['X^b]} till
@@ -244,10 +244,10 @@ size q <= m * b
 ______________________________________(2/2)
 size p <= m * b
 \end{lstlisting}
-Det görs på rad \C{25} till \C{26} med lemmat \C{exp_m_degree} efter att först
-på rad \C{24} ha skrivit om det ena av målet med ett lemma för att funktionen
-\C{exponent} är kommutativ, vilket avslutar det formella beviset för att Toom
-Cook ger ett korrekt resultat.
+Det görs på rad~\ref{lst:rad25} till \ref{lst:rad26} med lemmat
+\C{exp_m_degree} efter att först på rad~\ref{lst:rad24} ha skrivit om det ena
+av målet med ett lemma för att funktionen \C{exponent} är kommutativ, vilket
+avslutar det formella beviset för att Toom Cook ger ett korrekt resultat.
 
 \subsubsection{Lemman till huvudbeviset}
 Förutom de 50-tal lemman ur \ssr{}-biblioteket som har används i huvudbeviset har
