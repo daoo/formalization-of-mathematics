@@ -20,4 +20,7 @@ chalmers:
 clean:
 	rm build/*.*
 
+countlabels:
+	grep --no-file -R '\label' src | sed 's@^.*\\label{@@' | sed 's@}.*$\@@' | sort | uniq -c
+
 .PHONY: clean build dropbox www

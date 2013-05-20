@@ -71,25 +71,25 @@ rekursiva delen av algoritmen är korrekt, givet vissa lemman:
 @\label{lst:rad3}@Proof.
 @\label{lst:rad4}@  elim=> [ // | n IHn p q V_inver] /=.
 @\label{lst:rad5}@  set b := exponent m p q.
-  set u := split m b p.
+@\label{lst:rad6}@  set u := split m b p.
 @\label{lst:rad7}@  set v := split m b q.
-  case: ifP => [ // | _ ].
-    have ->:
-      \col_i toom_cook_rec n ((evaluate u) i 0) ((evaluate v) i 0) = \col_i ((evaluate u) i 0 * (evaluate v) i 0).
-        apply/colP => j.
-        by rewrite mxE [X in _ = X]mxE (IH2 _ _ V_inver).
-      rewrite 2!matrix_evaluation.
-      have ->:
-        \col_i ((\col_j u.[inter_points j 0]) i 0 * (\col_j v.[inter_points j 0]) i 0) = \col_i (u * v).[(inter_points i 0)].
-           apply/colP => k.
-           by rewrite 4!mxE -hornerM.
-      rewrite toom_cook_interpol //; last by apply: size_split_mul.
-      rewrite /recompose hornerM.
-      rewrite 2?recompose_split //.
-      rewrite /b exponentC.
-      by apply: exp_m_degree.
-      by apply: exp_m_degree.
-Qed.
+@\label{lst:rad8}@  case: ifP => [ // | _ ].
+@\label{lst:rad9}@    have ->:
+@\label{lst:rad10}@      \col_i toom_cook_rec n ((evaluate u) i 0) ((evaluate v) i 0) = \col_i ((evaluate u) i 0 * (evaluate v) i 0).
+@\label{lst:rad11}@        apply/colP => j.
+@\label{lst:rad12}@        by rewrite mxE [X in _ = X]mxE (IH2 _ _ V_inver).
+@\label{lst:rad13}@      rewrite 2!matrix_evaluation.
+@\label{lst:rad14}@      have ->:
+@\label{lst:rad15}@        \col_i ((\col_j u.[inter_points j 0]) i 0 * (\col_j v.[inter_points j 0]) i 0) = \col_i (u * v).[(inter_points i 0)].
+@\label{lst:rad16}@           apply/colP => k.
+@\label{lst:rad17}@           by rewrite 4!mxE -hornerM.
+@\label{lst:rad18}@      rewrite toom_cook_interpol //; last by apply: size_split_mul.
+@\label{lst:rad19}@      rewrite /recompose hornerM.
+@\label{lst:rad20}@      rewrite 2?recompose_split //.
+@\label{lst:rad21}@      rewrite /b exponentC.
+@\label{lst:rad22}@      by apply: exp_m_degree.
+@\label{lst:rad23}@      by apply: exp_m_degree.
+@\label{lst:rad24}@Qed.
 \end{lstlisting}
 \lstset{numbers=none}
 På rad~\ref{lst:rad1} och \ref{lst:rad2} och formuleras lemmat och på rad
