@@ -7,7 +7,7 @@ förklaras inte närmare. Jämförelser görs med det informella beviset i avsni
 bevisets gång. Variablerna \C{p} och \C{q} betecknar genomgående polynom över
 ett integritetsområde.
 
-I beviset används när så är möjligt redan tidigare bevisade resultat från \ssr
+I beviset används när så är möjligt redan tidigare bevisade resultat från \ssr{}
 s bibliotek. En lång rad lemman om bland annat grundläggande egenskaper hos
 polynom, naturliga tal, matriser och summor finns tillgängliga.
 
@@ -20,7 +20,7 @@ första hand på att resonemangssteg som i pappersbeviset ses som så triviala a
 de inte ens nämns också måste visas när beviset formaliseras. En ytterligare
 anledning är att det är är lättare att göra omskrivningar och slutledningssteg
 på mindre delpåståenden separat. Ett 50-tal mer generella lemman ur
-\ssr-biblioteket och ett par lemman som byggde på grundläggande egenskaper hos
+\ssr{}-biblioteket och ett par lemman som byggde på grundläggande egenskaper hos
 polynomdivision som gick utanför projektets avgränsningar och som
 tillhandahållits av projektets handledare, Anders Mörtberg, har används i
 huvudbeviset och i beviset av lemmorna.
@@ -60,7 +60,7 @@ att algoritmen fungerar korrekt för nästa lägre rekursiva anrop.
 Den andra stora skillnaden mellan pappersbeviset och det formella beviset är
 att många tekniska detaljer, som kan tas för givna i ett informellt bevis måste
 visas explicit. Dessutom måste hänsyn tas till hur matriser och polynom är
-representerade i \ssr.
+representerade i \ssr{}.
 
 Här nedan ges den fullständiga programkoden för att beviset av att den
 rekursiva delen av algoritmen är korrekt, givet vissa lemman:
@@ -172,7 +172,7 @@ avsnitt~\ref{ssreflect}. Så för att kunna göra det öppnar vi ett nytt delmå
 med taktiken \C{have} på rad \C{9} där vi bara arbetar med denna del av
 vänsterledet. Där använder vi på rad \C{12} lemmat \C{colP} som låter oss visa
 att två vektorer är lika genom att visa att elementen på motsvarande platser är
-lika i båda vektorerna. (Då vektorer är implementerade i \ssr som funktioner
+lika i båda vektorerna. (Då vektorer är implementerade i \ssr{} som funktioner
 från mängden av index i vektorn $\{0, \ldots , k\}$ till mängden av element i
 vektorn säger lemmat mer specifikt att två vektorer är lika om de extensionellt
 sett är samma funktion, dvs om de antar samma värden för samma argument.) På
@@ -250,7 +250,7 @@ på rad \C{24} ha skrivit om det ena av målet med ett lemma för att funktionen
 Cook ger ett korrekt resultat.
 
 \subsubsection{Lemman till huvudbeviset}
-Förutom de 50-tal lemman ur \ssr-biblioteket som har används i huvudbeviset har
+Förutom de 50-tal lemman ur \ssr{}-biblioteket som har används i huvudbeviset har
 ett 15-tal specifika lemman till huvudsatsen formulerats och bevisats. Här
 presenteras några av dem. Det viktigaste lemmat är
 \begin{lstlisting}
@@ -267,7 +267,7 @@ att visa det.
 Beviset av \C{recompose_split} bygger på 5 mindre lemman som motsvarar
 delpåståenden i lemma~\ref{lemma:2} och dessutom några lemman som visats av
 projektets handledare Anders Mörtberg eftersom de bygger på grundläggande
-egenskaper hos \ssr-funktionen \C{rdivp} för polynomdivision som gick utanför
+egenskaper hos \ssr{}-funktionen \C{rdivp} för polynomdivision som gick utanför
 projekets ramar.
 %Ramar? Eller hur säger man? Å.
 \C{recompose_split_lemma1} används för att visa \C{recompose_split_lemma2}, som

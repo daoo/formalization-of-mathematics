@@ -2,12 +2,12 @@ Följande avsnitt beskriver tillvägångsättet för formalisering av algoritmen
 
 \section{Litteraturstudie}
 Som första steg i arbetet utfördes en studie med mål att få tillräckligt med
-kunskaper för att programmera och bevisa med hjälp av \coq och \ssr. Som
+kunskaper för att programmera och bevisa med hjälp av \coq{} och \ssr{}. Som
 material användes bland annat artiklar, böcker och kursmaterial. Där ibland
 \emph{Software Foundations} av Benjamin C. Pierce som är kursmaterial till en
-grundkurs i \coq, \emph{Coq in a Hurry} av Yves Bertot som är en kort
-introduktionsartikel till \coq och \emph{SSReflect tutorial} av Georges
-Gonthier som är en introduktion till \ssr. Som övning utvecklades även bevis av
+grundkurs i \coq{}, \emph{Coq in a Hurry} av Yves Bertot som är en kort
+introduktionsartikel till \coq{} och \emph{SSReflect tutorial} av Georges
+Gonthier som är en introduktion till \ssr{}. Som övning utvecklades även bevis av
 Karatsuba-algoritmen.
 
 \section{Definition och bevis för hand}
@@ -25,15 +25,15 @@ heltalsmultiplikationen som finns definierad i Haskell. Resultatet av denna
 fasen finns i appendix~\ref{app:haskell}.
 
 Anledningen till att en implementation gjordes i Haskell var för att vi i det
-stadiet inte hade tillräckligt med kunskap om \coq för att implementera en ny
+stadiet inte hade tillräckligt med kunskap om \coq{} för att implementera en ny
 algoritm i språket. Eftersom erfarenhet av Haskell redan fanns kunde algoritmen
 snabbt implementeras och testas, detta gav också en bättre förståelse för hur
 Toom-Cook fungerar.
 
-\section{Implementering och bevis i \coq}
+\section{Implementering och bevis i \coq{}}
 När pappersbevis och praktisk implementation utfördes implementeringen av
-Toom-Cook och dess bevis i \coq med hjälp av \ssr. Första skapades en
-definition av algoritmen i \coq väldigt lik den i Haskell fast med polynom
+Toom-Cook och dess bevis i \coq{} med hjälp av \ssr{}. Första skapades en
+definition av algoritmen i \coq{} väldigt lik den i Haskell fast med polynom
 istället för heltal. Denna definition omarbetades senare under bevisningen för
 att det skulle vara lättare att arbeta med beviset. Uppdelningen av lemmana
 gjorde det möjligt Resultatet av detta
