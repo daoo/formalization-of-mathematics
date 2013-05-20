@@ -6,7 +6,7 @@ build:
 	mkdir -p build
 	TEXINPUTS=.:src: latexmk -outdir=build -bibtex -pdf report.tex
 
-run: dropbox chalmers
+run: dropbox
 
 dropbox:
 	cp build/report.pdf $(HOME)/dropbox/public/report.pdf
