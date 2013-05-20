@@ -1,31 +1,31 @@
-\section{Formalisering och matematiska algoritmer}
+\subsection{Formalisering och matematiska algoritmer}
 \label{sec:exekverbar}
-Mörtberg, Dénès och Siles presenterar i \cite{denes2012refinement} en
-metodologi för att implementera effektiva matematiska algoritmer och visa deras
-korrekthet. De delar in processen i tre steg: först definieras algoritmen med
-hjälp av de låsta men uttrycksfulla datatyperna i \ssr{}:s bibliotek och
-bevisas, sedan översätts \ssr{}-algoritmen till en algoritm definierad med
-enklare typer i \ssr{} som det går att utföra beräkningar med, och denna visas
-ge samma resultat som algoritmen i det första steget för motsvarande argument.
-Till sist kan den exekverbara algoritmen översättas till något annat språk,
-till exempel \haskell{}.
+Mörtberg, Dénès och Siles presenterar i \cite{denes2012refinement} en metodologi för att
+implementera effektiva matematiska algoritmer och visa deras korrekthet.
+De delar in processen i tre steg: I det första definieras algoritmen med hjälp av de
+låsta men uttrycksfulla datatyperna i \ssr{}:s bibliotek och bevisas. I det andra
+steget översätts denna algoritm till en algoritm definierad med enklare typer i \ssr{}
+som det går att utföra beräkningar med, och denna visar man ger samma resultat som
+algoritmen i det första steget för motsvarande argument. I det tredje steget kan
+algoritmen från steg 2 översättas till något annat språk, till exempel \haskell{}.
 
-Implementationen av Toom-Cook i det här projektet kan sägas svara mot första
-steget i den här processen. Om tid hade funnits skulle nästa steg varit att
-implementera en exekverbar algoritm.
+Implementationen av Toom-Cook i det här projektet kan sägas svara mot det
+första steget i den här processen. Om tid hade funnits i projektet skulle nästa
+steg varit att implementera en exekverbar algoritm som skulle motsvara steg 2 i
+processen ovan.
 
 I \ssr{} representeras ett polynom som ett par av en lista och ett bevis för
 att det sista elementet i listan inte är 0 och matriser som ändliga funktioner,
-se avsnitt~\ref{sec:formellbevis}. I den exekverbara versionen av algoritmen skulle
-polynom representeras med vanliga listor och matriser med listor av listor.
-Polynom- och matrisoperationer för dessa representationer finns implementerade
-i biblioteket \coq{}EAL\cite{coqeal} till \coq{}. Där finns också funktioner
-som översätter mellan olika representationer.
+se avsnitt~\ref{formbevis}. I den exekverbara versionen av Toom-Cook-algoritmen
+skulle polynom representeras med vanliga listor och matriser med listor av
+listor. Polynom- och matrisoperationer för dessa representationer finns
+implementerade i biblioteket \coq{}EAL\cite{coqeal}. Där finns också funktioner
+som översätter mellan olika representationer av polynom och matriser.
 
-Genom att sedan visa att samma resultat fås av att applicera den redan
-implementerade Toom-Cook-algoritmen och sedan översätta resultatet till
-polynomlistor och att översätta argumenten till listor först och sedan
-applicera listversionen av Toom-Cook-algoritmen skulle man särkerställa att
-listversionen ger korrekta resultat för de argument som är intressanta, det
-vill säga listor där sista elementet är nollskiljt, som därmed är listversioner
-av polynom.
+Genom att sedan visa att samma resultat fås om man först applicerar vår redan
+implementerade Toom-Cook-algoritm och sedan översätter resultatet till
+polynomlistor som om man först översätter polynomen till listor och sedan
+applicerer listversionen av Toom-Cook-algoritmen på dessa skulle man då kunna
+säkerställa att listversionen ger korrekta resultat för de argument som är
+intressanta, vilka är listor där det sista elementet är nollskiljt, som därmed
+är listversioner av polynom.
