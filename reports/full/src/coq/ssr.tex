@@ -15,14 +15,13 @@ ett systematiskt sätt så att det går smidigt att söka i biblioteket, med vis
 erfarenhet går det att gissa sig till namnet på en viss sats.
 
 Vad gäller själva taktikspråket introducerar \ssr{} bara tre nya taktiker men
-utökar funktionaliteten i ett antal redan existerande taktiker så att en taktik
-i \ssr{} kan svara mot flera taktiker i \coq, ett exempel på detta är
-\C{rewrite}-taktiken som i \ssr{} utgör ett enat gränssnitt för omskrivningar,
-expansion av definitioner och partiell evaluering \cite{gonthier2008small},
-vilket kräver flera separata taktiker i \coq. I slutändan har vi färre taktiker
-att hålla reda på i \ssr{}. Utöver rent funktionella förändringar
-tillhandahåller \ssr{} även verktyg för en bättre layout och struktur av
-bevisen.
+utökar funktionaliteten i ett antal redan existerande taktiker. Till exempel
+har omskrivningstaktiken \C{rewrite} utökats så att den erbjudar samma
+funktionalitet som en mängd separata taktiker i Coq. Detta överlapp mellan
+taktiker gör att flera gamla taktiker i Coq blir överflödiga. I slutändan har
+vi färre taktiker att hålla reda på i \ssr{}. Utöver rent funktionella
+förändringar tillhandahåller \ssr{} även verktyg för en bättre layout och
+struktur av bevisen.
 
 En del definitioner är låsta i \ssr{}, det gäller till exempel definitionerna
 av matriser och polynom. Låset på definitionerna är till för att undvika att
