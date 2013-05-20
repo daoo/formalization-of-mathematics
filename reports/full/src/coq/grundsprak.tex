@@ -1,25 +1,24 @@
 \section{Grundspråk}
-\coq{} är uppbyggt av två olika programmeringsspråk. Grundspråket som kallas
-\textsc{Gallina} är som vi redan nämnt funktionellt och beroendetypat. Likt
-andra programmeringsspråk definierar man funktioner och deras typ. Dock är det
-i \coq{} inte tillåtet att definiera funktioner som inte terminerar. Det vill
-säga, i \haskell{} kan man skriva
+Grundspråket kallas \textsc{Gallina} och är som vi redan nämnt funktionellt och
+beroendetypat. Likt andra programmeringsspråk definierar man funktioner och
+deras typ. Dock är det i \coq{} inte tillåtet att definiera funktioner som inte
+terminerar. Det vill säga, i de flesta språk kan man skriva
 \begin{verbatim}
 loop :: Integer -> Integer
 loop n = loop (n + 1)
 \end{verbatim}
-och kompilatorn kommer glatt kompilera och låta dig köra funktionen. Men
+och kompilatorn kommer att kompilera och låta dig köra funktionen. Men
 \verb+loop+ kommer aldrig ge något resultat och kommer snurra i all evighet.
 Kompilatorn till \coq{} tillåter inte denna typen av definitioner utan kommer
 ge kompileringsfel om den stöter på liknande funktioner.
 
-För att göra en definition i \coq{} skriver använder man nyckelordet
-\C{Definition}, en definition av funktionskomposition kan se ut såhär:
+För att göra en definition i \coq{} använder man nyckelordet \C{Definition}. En
+definition av funktionskomposition kan se ut såhär:
 \begin{lstlisting}
 Definition compose (a b c: Type) (f: b -> c) (g: a -> b) (x: a) : c := f (g x).
 \end{lstlisting}
 I definitionen av \C{compose} måste vi först ge typerna \C{a}, \C{b} och \C{c}
-explicit till skillnad från \haskell{} där de är definierade implicit.
+explicit, till skillnad från i \haskell{} där de är definierade implicit.
 Parametrarna \C{f}, \C{g} och \C{x} följer sedan direkt. I \coq{} används punkt
 (\C{.}) för att avsluta en definition likt hur man avslutar ett påstående
 (\emph{engelska: statement}) i C med semikolon (;). För att anropa \C{compose}

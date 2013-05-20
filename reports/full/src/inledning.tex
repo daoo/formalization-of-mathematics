@@ -1,15 +1,15 @@
 Under senare år har några mycket långa och komplexa matematiska bevis
-presenterats. Vissa bevis har byggt på en mycket omfattande analys av
+presenterats. Några av dem har också byggt på en mycket omfattande analys av
 tusentals fall utförda av datorprogram. Det är mycket tidsödande och svårt, om
-ens praktiskt möjligt att för hand kontrollera varje steg i ett sådant bevis. Få
-matematiker har tid, lust och den speciella kompetensen inom just det specifika
-matematiska området för att kunna eller vilja ägna år åt att
+ens praktiskt möjligt att för hand kontrollera varje steg i ett sådant bevis.
+Få matematiker har tid, lust och den speciella kompetensen inom just det
+specifika matematiska området för att kunna eller vilja ägna år åt att
 kontrollera korrektheten hos ett sådant bevis. Dessutom finns risken att ett
 fel i ett bevis ändå inte upptäcks vid kontroll om beviset är hundratals- eller
 tusentals sidor långt\cite{harrison2008formal}.
 
 Bevisassistenter är datorsystem för att formalisera och verifiera varje logiskt
-steg i bevis och de kan användas för att kontrollera bevis och därmed minimera
+steg i bevis som kan användas för att kontrollera bevis och därmed minimera
 risken för att bevisen innehåller fel och öka tilltron till att de är korrekta.
 
 Fyrfärgssatsen\cite{gonthier2008formal} och Feit-Thompsons
@@ -25,13 +25,10 @@ verifierades i bevisassistenten \coq{} 1995.
 
 De verktyg som används vid formalisering och datorverifiering kan även användas
 för att verifiera programkod. Formella metoder är således intressant för både
-programmerare och matematiker.
-% Niclas: Den här meningen säger väldigt lite. Varför?? Hur och till vad??
-Dagens stora och komplexa programvaror skulle kunna utnyttja formella metoder.
-%)
-Det kan också vara användbart i kritiska system, till exempel medicinsk
-utrustning, där det inte får bli fel eller i system som inte kan uppdateras i
-efterhand som hårdvarunära mjukvara på ROM-minnen.
+programmerare och matematiker. Dagens stora och komplexa programvaror skulle
+kunna utnyttja formella metoder. Det kan vara användbart i kritiska system,
+till exempel medicinsk utrustning, där det inte får bli fel eller i system som
+inte kan uppdateras i efterhand som hårdvarunära mjukvara på ROM-minnen.
 
 De mest använda metoderna idag för att kontrollera kod bygger på att testa om
 koden ger korrekt resultat för olika indata. På detta sätt har man en chans att
@@ -41,42 +38,43 @@ eftersom det i många fall är omöjligt att testa alla kombinationer av indata.
 Formella metoder skulle i dessa fall kunna användas till att garantera
 korrekthet hos koden.
 
-Ett exempel på projekt för att verifiera kod är CompCert. Det utforskar
-möjligheten att utveckla formellt bevisade kompilatorer. Anledningen att man
-vill ha en formellt bevisad kompilator är att vid vissa optimeringar så kan
-kompilatorn skapa buggar och beräkningsfel. Huvudresultatet av detta är en
-fungerande C-kompilator som är bevisad i \coq{} och som stödjer hela ANSI C (som
-är den första standardiserade versionen av C) med få
-undantag\autocite{compcert}.
+Ett exempel på projekt för att verifiera kod är \textsc{CompCert}. Det
+utforskar möjligheten att utveckla formellt bevisade kompilatorer. Anledningen
+att man vill ha en formellt bevisad kompilator är att vid vissa optimeringar så
+kan kompilatorn skapa buggar och beräkningsfel. Projektets viktigaste resultat
+hittills är en fungerande C-kompilator som är bevisad i \coq{} och som stödjer
+hela \textsc{ANSI C} (som är den första standardiserade versionen av
+\textsc{C}) med få undantag\cite{compcert}.
 
-Matematisk programvara som MATLAB spelar en stor roll för beräkningar inom
-forskning och industri och det finns därmed ett stort intresse av att de är
-% Niclas: känns som det kan finnas bättre ord än buggfria
-pålitliga. De är dock inte buggfria. Ett sätt att göra dem mer pålitliga skulle
-vara att formalisera de ingående algoritmerna och visa att de är korrekt
-implementerade\cite{denes2012refinement}.
+Matematiska programvaror som \textsc{MATLAB} spelar en stor roll för
+beräkningar inom forskning och industri och det finns därmed ett stort intresse
+av att de är pålitliga. De är dock inte buggfria. Ett sätt att göra dem mer
+pålitliga skulle vara att formalisera de ingående algoritmerna och visa att de
+är korrekt implementerade\cite{denes2012refinement}.
 
-Det här projektet går ut på att gruppdeltagarna ska lära sig formalisering med
-bevisassistenten \coq{} och sedan formalisera och bevisa en matematisk algoritm,
-Toom-Cook, i \coq{}.
-
-\coq{} är en av flera avancerade bevisassistenter som det bedrivs aktiv forskning
-om. Några andra är Agda, som utvecklats på Chalmers, Z3, som har utvecklats av
-Microsoft och kan användas tillsammans med flera stora ickefunktionella språk
-som Python, C och .NET och HOL-light, som används av Intel för att bevisa att
-vissa hårdvarukomponenter fungerar korrekt och i det pågående projektet att
+\coq{} är en av flera avancerade bevisassistenter som det bedrivs aktiv
+forskning om. Några andra är \textsc{Agda} som utvecklats på Chalmers.
+\textsc{Z3} som har utvecklats av Microsoft och kan användas tillsammans med
+flera stora ickefunktionella språk som \textsc{Python}, \textsc{C} och
+\textsc{.NET}. \textsc{HOL-light} som används av Intel för att bevisa att vissa
+hårdvarukomponenter fungerar korrekt och i det pågående projektet att
 formalisera Keplers förmodan \cite{hales2008formal}.
 
 Toom-Cook är en algoritm för att multiplicera heltal eller polynom. Den är
 intressant eftersom den har en bättre asymptotisk tidskomplexitet än
 polynommultiplikation utförd direkt enligt definitionen \footnote{För
 definition av polynommultiplikation, se
-appedix~\ref{appendix:matematikteori}.}, där man multiplicerar varje term i det
+appendix~\ref{app:algebra}.}, där man multiplicerar varje term i det
 ena polynomet med varje term i det andra polynomet vilket har den asymptotiska
-tidskomplexiteten $\Ordo\left(n^2\right)$\footnote{Funktionen $T(n)$ är $O(f(n))$
-om det existerar konstanter $c > 0$ och $n_0 \geq 0$ så att $T(n) \leq c \cdot
-f(n)$ för alla $n \geq n_0$.}, där n är graden på det största av de två
+tidskomplexiteten\footnote{Funktionen $T(n)$ är $O(f(n))$ om det existerar
+konstanter $c > 0$ och $n_0 \geq 0$ så att $T(n) \leq c \cdot f(n)$ för alla $n
+\geq n_0$.} $\Ordo\left(n^2\right)$, där $n$ är graden på det största av de två
 polynomen som skall multipliceras.
+
+\section{Syfte}
+Det här projektet går ut på att gruppdeltagarna ska lära sig formalisering med
+bevisassistenten \coq{} och sedan formalisera och bevisa en matematisk algoritm,
+Toom-Cook, i \coq{}.
 
 \section{Rapportens upplägg}
 I kapitel~\ref{sec:metod} beskrivs projektets arbetsmetod. I

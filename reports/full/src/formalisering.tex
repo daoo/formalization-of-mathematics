@@ -34,11 +34,12 @@ att
 ``... the correctness of a mathematical text is verified by comparing it, more or
 less explicitly, with the rules of a formalized language'' -- \cite{bourbaki1968sets}.
 \end{quote}
+% TODO: Översätta citatet?
 
 Givet den definitionen måste ett bevis \emph{formaliseras} för att ett
-datorsystem mekaniskt ska kunna kontrollera det. Sådant som en mänsklig läsare
-förstår ur sammanhanget måste göras explicit. Bevissteg som är så små att de
-ses som självklara för en människa måste också skrivas ut.
+datorsystem mekaniskt ska kunna kontrollera det. Det innebär att sådant som en
+mänsklig läsare förstår ur sammanhanget måste göras explicit och bevissteg som
+är så små att de ses som självklara för en människa måste också skrivas ut.
 
 Datorsystemet kan sedan kontrollera om varje steg i beviset följer från
 föregående steg eller från axiom genom en bestämd mängd fastslagna
@@ -52,11 +53,11 @@ uttryck. Det har ingen matematisk betydelse även om de ingående symbolerna är
 matematiska och logiska symboler. Ett annat exempel på felaktig syntax eller
 felformade uttryck är om man försöker definiera en funktion
 \begin{lstlisting}
- exempel_function (n : nat) : bool := n + 2.
+exempel_funktion (n : nat) : bool := n + 2.
 \end{lstlisting}
 eller med matematisk notation
 \begin{align*}
-  exempel\_function :\ &\mathbb{N} \to \{sant, falskt\} \\
+  exempel\_funktion :\ &\mathbb{N} \to \{sant, falskt\} \\
                        &n \mapsto n + 2
 \end{align*}
 som enligt specifikationen ska gå från naturliga tal (\C{nat}) till boolska
@@ -77,19 +78,18 @@ härledningsregler, axiom och regler för vilka symboler och uttryck som är
 tillåtna ger oss \emph{ett} möjligt logiskt system.
 
 De flesta logiska system som används för att formalisera matematik kan dock
-uttrycka och härleda ungefär samma saker, möjligen på något olika sätt,
-eftersom skaparna har varit intresserade av att fånga och beskriva naturliga
-logiska resonemang.
+uttrycka och härleda ungefär samma matematik och logik, möjligen på något olika
+sätt, eftersom skaparna har varit intresserade av att fånga och beskriva
+naturliga logiska resonemang.
 
 En viktig skillnad är dock den mellan intuitionistisk och klassisk logik. En
 utvidgning av \emph{intuitionistisk typteori}\cite{martin1984intuitionistic} är
-det logiska system som finns i grunden till
-\coq{}/\ssr{}\cite{bertot2004interactive}. Det går att se den som en
-bevisbarhetslogik. Skillnaden mellan den och klassisk logik kan illustreras
-genom följande exempel: I klassisk logik är det en logisk sanning att $A \lor
-\neg A$ gäller för alla satser $A$ \footnote{Detta brukar kallas lagen om det
-uteslutna tredje.}. Så om $A$ inte är sann måste $\neg A$ vara
-sann\cite{bennet2004forsta}.
+det logiska system som finns i grunden till \coq{}\cite{bertot2004interactive}.
+Det går att se den som en bevisbarhetslogik. Skillnaden mellan den och klassisk
+logik kan illustreras genom följande exempel: I klassisk logik är det en logisk
+sanning att $A \lor \neg A$ gäller för alla satser $A$ \footnote{Detta brukar
+kallas lagen om det uteslutna tredje.}. Så om $A$ inte är sann måste $\neg A$
+vara sann\cite{bennet2004forsta}.
 
 I intuitionistisk logik däremot låter vi ``$A$ är giltig'' betyda ``det finns
 ett bevis för $A$''. Om $A$ inte är giltig finns det alltså inget bevis för
@@ -106,21 +106,20 @@ att $A$ gäller.
 \section{Bevisassistenter}
 Ovan diskuteras vad som krävs för att ett datorsystem ska kunna kontrollera
 giltigheten i matematiska bevis. De tidigaste bevissystemen för datorer kunde
-bara göra detta. Det innebär att användaren själv måste skriva in varje enskilt
+endast göra detta så användaren var själv tvungen att skriva in varje enskilt
 logiskt steg i det formella beviset, medan datorsystemet bara passivt
-kontrollerar att dessa är giltiga.
+kontrollerade att dessa var giltiga.
 
 Senare system ger användaren möjligheten att i stället skriva ett
-\emph{bevisskript}, som är en rad instruktioner till systemet som
-talar om hur det ska bygga upp det formella beviset, utan att själv
-behöva göra varje enskilt logiskt steg.
+\emph{bevisskript}, som är en rad instruktioner till systemet som talar om hur
+det ska bygga upp det formella beviset, utan att användaren själv behöver mata
+in varje enskilt logiskt steg.
 % Vad menas med taktiker, har vi förklarat tactic tidigare? //J
 % Du har rätt, jag försöker få in det.
-Instruktionerna i bevisskripet kan ha formen av \emph{taktiker}, som säger
-till bevisassistenten vilken form av bevisstrategi som ska användas
-under olika steg i beviset.
-Till exempel kan användaren instruera bevisassistenten om att beviset ska
-göras med taktiken induktion över någon parameter i satsen.
+Instruktionerna i bevisskripet kan ha formen av \emph{taktiker}, som säger till
+bevisassistenten vilken form av bevisstrategi som ska användas under olika steg
+i beviset. Till exempel kan användaren instruera bevisassistenten om att
+beviset ska göras med taktiken induktion över någon parameter i satsen.
 
 Användaren kan skriva bevisskriptet interaktivt. Då ger användaren taktikinstruktionerna
 till systemetet en i taget. Efter varje instruktion
