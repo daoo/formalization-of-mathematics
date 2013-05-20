@@ -31,7 +31,7 @@ Definition example : nat := compose nat nat nat add1 mul2 5.
 \end{lstlisting}
 Notera att programmerare är lata och vill gärna skriva så lite som möjligt. I
 \coq{} kan man därför se till att typ parametrarna \C{a}, \C{b} och \C{c}
-automatiskt stoppas in på rätt ställe i funktionsanroppen. För att göra detta
+automatiskt sätts in på rätt ställe i funktionsanropen. För att göra detta
 behöver man dock ändra på definitionen av \C{compose} och sätta
 klammerparenteser runt parametrarna istället:
 \begin{lstlisting}
@@ -83,9 +83,8 @@ Fixpoint concatenate (X: Type) {n m: nat} (a: vec X n) (b: vec X m) : vec X (n+m
   end.
 \end{lstlisting}
 
-Detta var en väldigt kort introduktion till \coq{} som funktionellt
+Detta var en mycket kort introduktion till \coq{} som funktionellt
 programmeringsspråk och har därför utelämnat bland annat modulhantering,
 typklasser, kanoniska strukturer, poster, partiell applicering och notationer.
 Dessa ämnen är också viktiga för att förstå \coq{} men är bortom målet med denna
-rapporten.
-% TODO: Out of scope of this report
+rapport.

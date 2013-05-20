@@ -1,5 +1,5 @@
 \section{\ssr{}}
-\ssr{} är ett tillägg till Coq som utvecklats av Georges Gonthier. Namnet
+\ssr{} är ett tillägg till \coq som utvecklats av Georges Gonthier. Namnet
 kommer från small-scale reflection (småskalig reflektion) vilket är en typ av
 bevismetodologi. Denna typ av bevismetodologi lämpar sig särskilt väl för att
 formalisera långa matematiska bevis. En central del i small-scale reflection är
@@ -13,12 +13,12 @@ bland annat finns stora delar av linjär algebra och viktiga resultat inom
 ett systematiskt sätt så att det går smidigt att söka i biblioteket, med viss
 erfarenhet går det att gissa sig till namnet på en viss sats.
 
-Vad gäller själva taktikspråket introducerar \ssr{} bara tre nya tactics men
-utökar funktionaliteten i ett antal redan existerande tactics så att en tactic
-i \ssr{} kan svara mot flera tactics i Coq, ett exempel på detta är
-rewrite-tacticen som i \ssr{} utgör ett enat gränssnitt för omskrivningar,
+Vad gäller själva taktikspråket introducerar \ssr{} bara tre nya taktiker men
+utökar funktionaliteten i ett antal redan existerande taktiker så att en taktik
+i \ssr{} kan svara mot flera taktiker i \coq, ett exempel på detta är
+\C{rewrite}-taktiken som i \ssr{} utgör ett enat gränssnitt för omskrivningar,
 expansion av definitioner och partiell evaluering \cite{gonthier2008small},
-vilket kräver flera separata tactics i Coq. I slutändan har vi färre tactics
+vilket kräver flera separata taktiker i \coq. I slutändan har vi färre taktiker
 att hålla reda på i \ssr{}. Utöver rent funktionella förändringar
 tillhandahåller \ssr{} även verktyg för en bättre layout och struktur av
 bevisen.
