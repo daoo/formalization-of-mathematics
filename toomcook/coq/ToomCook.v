@@ -107,7 +107,8 @@ Lemma toom_cook_interpol : forall (f: {poly {poly R}}),
   (interpolate (\col_i (f.[(inter_points i 0)]))) = f.
 Proof.
   move=> f leq.
-  by rewrite -{2}(poly_rV_K leq) /interpolate (toom_cook_interpol_lemma0 leq) trmxK.
+  by rewrite -{2}(poly_rV_K leq) /interpolate
+    (toom_cook_interpol_lemma0 leq) trmxK.
 Qed.
 
 Lemma rdivpXn_drop : forall p n, rdivp p 'X^n = Poly (drop n p).
@@ -153,10 +154,8 @@ Lemma recompose_split_lemma1 : forall (f: {poly R}) (k b: nat),
   (rdivp f 'X^(k.+1*b)) * 'X^(k.+1*b) = (rdivp f 'X^(k*b)) * 'X^(k*b).
 Proof.
   move => f k b.
-  rewrite {1}mulSnr mulSn 2!exprD mulrA -mulrDl addrC recompose_split_lemma0.
-  rewrite -rdivp_eq.
-  done.
-  by rewrite monicXn.
+  by rewrite {1}mulSnr mulSn 2!exprD mulrA -mulrDl addrC
+    recompose_split_lemma0 -(rdivp_eq (monicXn _ _) _).
 Qed.
 
 Lemma recompose_split_lemma2 : forall (f: {poly R}) (k b: nat),
@@ -176,11 +175,9 @@ Lemma recompose_split_lemma3 : forall (f : {poly R}) (k b : nat),
 Proof.
   move=> f k b.
   elim: k => [ | n IH ].
-    rewrite big_ord_recr //=.
+    rewrite big_ord_recr /=.
     rewrite big_ord0 add0r mul0n rdivp1 mulr1 mul1n addrC.
-    rewrite -rdivp_eq.
-    done.
-    by rewrite monicXn.
+    rewrite -(rdivp_eq (monicXn _ _) _) //.
     by rewrite recompose_split_lemma2 IH.
 Qed.
 
@@ -189,30 +186,28 @@ Lemma recompose_split : forall (f: {poly R}) (b: nat),
   (split m b f).['X^b] = f.
 Proof.
   move=> f b.
+  case: m => [ | [ H | m' H ] ].
+    + rewrite mul0n size_poly_leq0.
+      move/eqP ->.
+      by rewrite horner_poly big_ord0.
 
-  case: m.
-    rewrite mul0n size_poly_leq0.
-    move/eqP ->.
-    by rewrite horner_poly big_ord0.
-  case=> [ H | n H ].
-    rewrite mul1n in H.
-    rewrite horner_poly big_ord_recr //=.
-    rewrite big_ord0 mul0n !expr0 mulr1 rdivp1 add0r.
-    rewrite rmodp_small.
-    done.
-    by rewrite size_polyXn.
+    + rewrite mul1n in H.
+      rewrite horner_poly big_ord_recr /=.
+      rewrite big_ord0 mul0n !expr0 mulr1 rdivp1 add0r.
+      rewrite rmodp_small //.
+      by rewrite size_polyXn.
 
-    rewrite horner_poly big_ord_recr //=.
-    rewrite rmodp_small.
-    rewrite -exprM.
-    rewrite mulnC.
-    rewrite mulnC.
-    have ->: \big[+%R/0]_(i < succn n) (rmodp (R:=R) (rdivp (R:=R)
-                    f 'X^(i * b)) 'X^b * 'X^b ^+ i) =
-                    \big[+%R/0]_(i < succn n) (rmodp (R:=R) (rdivp (R:=R)
-                    f 'X^(i * b)) 'X^b * 'X^(i*b)).
-      apply: eq_bigr => j t.
-      by rewrite -exprM mulnC.
+    + rewrite horner_poly big_ord_recr /=.
+      rewrite rmodp_small.
+      rewrite -exprM.
+      rewrite mulnC.
+      rewrite mulnC.
+
+      have ->:
+          \sum_(i < m'.+1) (rmodp (rdivp f 'X^(i * b)) 'X^b * 'X^b ^+ i) =
+          \sum_(i < m'.+1) (rmodp (rdivp f 'X^(i * b)) 'X^b * 'X^(i*b)).
+        apply: eq_bigr => j t.
+        by rewrite -exprM mulnC.
 
     by rewrite recompose_split_lemma3.
 
@@ -220,8 +215,7 @@ Proof.
 Qed.
 
 Lemma exp_m_degree_lemma : forall p,
-  m > 0 ->
-  size p <= m * succn (size p %/ m).
+  m > 0 -> size p <= m * succn (size p %/ m).
 Proof.
   by move=> p H; rewrite mulnC; apply: (ltnW (ltn_ceil (size _) _)).
 Qed.
@@ -240,8 +234,8 @@ Proof.
 
   have: m * succn (size p %/ m) <= m * succn (maxn (size p %/ m) (size q %/ m)).
     by apply/leq_mul.
-  move=> G.
 
+  move=> G.
   by apply: (leq_trans sp G).
   by apply: exp_m_degree_lemma.
 Qed.
@@ -268,25 +262,24 @@ Qed.
 Lemma toom_cook_rec_correct : forall (n : nat) p q,
   toom_cook_rec n p q = p * q.
 Proof.
-  elim=> [ // | n IHn p q ] /=.
-    case: ifP => [ // | H ].
-      set b := (exponent m p q).
-      set u := split m b p.
-      set v := split m b q.
-
-
-      have ->:
-        \col_i toom_cook_rec n ((evaluate u) i 0) ((evaluate v) i 0) =
-        \col_i ((evaluate u) i 0 * (evaluate v) i 0).
+  elim=> [ // | n' IH p q ] /=.
+    set b := exponent m p q.
+    set u := split m b p.
+    set v := split m b q.
+    + case: ifP => [ // | _ ].
+      * have ->:
+            \col_i toom_cook_rec n' ((evaluate u) i 0) ((evaluate v) i 0) =
+            \col_i ((evaluate u) i 0 * (evaluate v) i 0).
           apply/colP => j.
-          by rewrite mxE [X in _ = X]mxE IHn.
+          by rewrite mxE [X in _ = X]mxE IH.
 
       rewrite /recompose.
       rewrite !matrix_evaluation.
 
-      have ->:
-        \col_i ((\col_j u.[inter_points j 0]) i 0 * (\col_j v.[inter_points j 0]) i 0) =
-        \col_i (u * v).[(inter_points i 0)].
+      * have ->:
+            \col_i ((\col_j u.[inter_points j 0]) i 0 *
+              (\col_j v.[inter_points j 0]) i 0) =
+            \col_i (u * v).[(inter_points i 0)].
           apply/colP => k.
           by rewrite 4!mxE -hornerM.
 
@@ -304,8 +297,7 @@ Definition toom_cook p q : {poly R} :=
 Lemma toom_cook_correct : forall p q,
   toom_cook p q = p * q.
 Proof.
-  move=> p q.
-  by rewrite /toom_cook toom_cook_rec_correct.
+  move=> p q. by apply: toom_cook_rec_correct.
 Qed.
 
 End toomCook.
