@@ -43,19 +43,20 @@ recompose b = go 1 0
     go _  acc []     = acc
     go b' acc (x:xs) = go (b * b') (acc + b' * x) xs
 
+toomCookRec :: ToomCook -> Integer -> Integer -> Integer
+toomCookRec t n m = if n <= 100 || m <= 100
+  then n * m
+  else let b   = 10^(baseExponent (toomK t) n m)
+           n'  = split (toomK t) b n
+           m'  = split (toomK t) b m
+           n'' = evaluate (toomMat t) n'
+           m'' = evaluate (toomMat t) m'
+           r   = zipWith (toomCook t) n'' m''
+           r'  = interpolate (toomInvMat t) r
+        in recompose b r'
+
 toomCook :: ToomCook -> Integer -> Integer -> Integer
-toomCook t n m | n < 0 && m < 0 = toomCook t (abs n) (abs m)
-               | n < 0          = negate $ toomCook t (abs n) m
-               | m < 0          = negate $ toomCook t n (abs m)
-
-               | n <= 100 || m <= 100 = n * m
-
-               | otherwise =
-  let b   = 10^(baseExponent (toomK t) n m)
-      n'  = split (toomK t) b n
-      m'  = split (toomK t) b m
-      n'' = evaluate (toomMat t) n'
-      m'' = evaluate (toomMat t) m'
-      r   = zipWith (toomCook t) n'' m''
-      r'  = interpolate (toomInvMat t) r
-   in recompose b r'
+toomCook t n m | n < 0 && m < 0 = toomCookRec t (abs n) (abs m)
+               | n < 0          = negate $ toomCookRec t (abs n) m
+               | m < 0          = negate $ toomCookRec t n (abs m)
+               | otherwise      = toomCookRec t n m
