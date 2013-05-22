@@ -16,6 +16,11 @@ library
   hs-source-dirs: src
   ghc-options: -Wall
 
+executable main
+  main-is: src/Main.hs
+  build-depends: toomcook, base
+  ghc-options: -Wall
+
 executable bench
   main-is: src/Bench.hs
   build-depends: toomcook, base, criterion
