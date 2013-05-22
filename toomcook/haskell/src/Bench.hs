@@ -1,8 +1,8 @@
 module Main where
 
 import Criterion.Main
+import ImplOpt
 import Settings
-import ToomCook
 
 main :: IO ()
 main = defaultMain $

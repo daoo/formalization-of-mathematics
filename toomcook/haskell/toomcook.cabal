@@ -11,6 +11,8 @@ cabal-version: >=1.8
 library
   exposed-modules:
     ToomCook,
+    Impl,
+    ImplOpt,
     Settings
   build-depends: base, integer-gmp
   hs-source-dirs: src

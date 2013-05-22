@@ -1,5 +1,6 @@
 module Main where
 
+import ImplOpt
 import Settings
 import Test.QuickCheck
 import ToomCook
