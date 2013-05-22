@@ -19,7 +19,7 @@ configure:
 		--enable-tests
 
 ghci:
-	@cabal-dev ghci
+	ghci -isrc -fobject-code -outputdir /tmp src/Properties.hs
 
 clean:
 	@cabal-dev clean --save-configure

@@ -14,6 +14,7 @@ matVecMulRat mat vec = map numerator $ map (sum . zipWith f vec) mat
   where
     f a b = fromInteger a * b
 
+{-# INLINE log10 #-}
 log10 :: Integer -> Integer
 log10 n = assert (n >= 0) $ go 0 n
   where
