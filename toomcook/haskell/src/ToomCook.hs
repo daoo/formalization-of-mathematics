@@ -1,8 +1,5 @@
 {-# LANGUAGE BangPatterns, MagicHash, UnboxedTuples #-}
-module ToomCook
-  ( ToomCook(..)
-  , toomCook
-  ) where
+module ToomCook where
 
 import Control.Exception (assert)
 import Data.Ratio
