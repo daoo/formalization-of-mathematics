@@ -13,7 +13,7 @@ kommer efter beviset av~\ref{prop:1}.
 
   \begin{equation}
     \label{eq:name7}
-    \toomm (p, q) =  p \cdot q.
+    \toomm (p, q) = p \cdot q.
   \end{equation}
 \end{proposition}
 
@@ -34,7 +34,7 @@ Antag att $p, q \in R[x]$, där
 med $0 \leq s \leq n$.
 
 \bigskip\noindent
-Antag också att $n > 2$ och att $\toomm (f, g) =  f \cdot g$ gäller för polynom
+Antag också att $n > 2$ och att $\toomm (f, g) = f \cdot g$ gäller för polynom
 av grad mindre än $n$. Eftersom $n > 2$ så går vi vidare till steg
 \ref{sec:gradkontroll} i algoritmen och skapar $u$ och $v$ från $p$ och $q$. När
 detta är gjort evaluerar vi i steg 3 $u$ och $v$ i punkterna $\alpha_0, \dots,
@@ -61,13 +61,13 @@ v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
 \begin{proof}
   Eftersom $\alpha \in R$ så är
   \begin{align*}
-    \grad u(\alpha) &= \grad (u_0 + u_1 \alpha + \cdots + u_{m-1}\alpha^{m-1}) = \max \grad u_k,
+    \grad u(\alpha) &= \grad (u_0 + u_1 \alpha + \cdots + u_{m-1}\alpha^{m-1}) \leq \max \grad u_k,
   \end{align*}
   där $k={0,1,\dots,m-1}$.
 
   \bigskip\noindent
   $u_k = p(x)/x^{k b} \modu x^b$, så enligt definition av mod så är $\grad u_k
-  < b$. Nu återstår att visa att $b < \grad p = n$. Vi har definierat $b =
+  < b$. Nu återstår bara att visa att $b \leq \grad p = n$. Vi har definierat $b =
   \floor[\big]{\frac{1 + n}{m}} + 1$. Om $n \geq 3$ och $m \geq 2$ så är
   \begin{align*}
     n-b &= n - \left( \floor[\bigg]{\frac{1 + n}{m}} + 1 \right) \geq \frac{nm-n-m-1}{m} \geq 0,
@@ -77,7 +77,7 @@ v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
 
 \begin{lemma}
   \label{lemma:2}
-  Antag att $p(x) \in R[x]$ och att $b$ och $u(y)$ är definierade som i steg 2
+  Antag att $p(x) \in R[x]$ och att $b$ och $u(y)$ är definierade som i steg \ref{sec:uppdelning}
   i algoritmen. Då är $u(x^b)=p(x)$.
 \end{lemma}
 \begin{proof}
@@ -100,7 +100,7 @@ v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
   eftersom $0 < 1 - \{ x \} \leq 1$ för alla reella tal
   \footnote{$\{x\}$ betecknar $x-\lfloor x \rfloor$. Se \cite{graham1989concrete}.}
   $x$. Graden av $p(x)/x^{b(m-1)}$ är $\max \{n - b(m-1),0\}$ som är mindre än $b$,
-  och därmed är $p(x)/x^{b(m-1)}  \modu x^b = p(x)/x^{b(m-1)}$, vilket visar
+  och därmed är $p(x)/x^{b(m-1)} \modu x^b = p(x)/x^{b(m-1)}$, vilket visar
   Påstående 1. Så
   \begin{align*}
     u(x^b) &= \sum_{i = 0}^{m-2} p(x)/x^{bi} (\modu x^b) x^{bi} + p(x)/x^{b(m-1)} x^{b(m-1)}.
@@ -113,21 +113,21 @@ v(y)$ så är $w(x^b)=u(x^b) \cdot v(x^b)=p(x) \cdot q(x)$.
   med $x^b$. Så om vi kan visa att $u(x^b) = p(x) \modu x^b + p(x)/x^{b} x^{b}$
   så är $u(x^b) = p(x)$. Och om sedan
   \begin{align}
-    \sum_{i = 0}^{k} p(x)/x^{bi}  (\modu x^b) x^{bi} + (p(x)/x^{b(k + 1)})  x^{b(k + 1)} = \label{eq:name9} \\
-    \sum_{i = 0}^{k-1} p(x)/x^{bi}  (\modu x^b) x^{bi} + (p(x)/x^{b k})  x^{b k} \label{eq:name10}
+    \sum_{i = 0}^{k} p(x)/x^{bi} (\modu x^b) x^{bi} + (p(x)/x^{b(k + 1)}) x^{b(k + 1)} = \label{eq:name9} \\
+    \sum_{i = 0}^{k-1} p(x)/x^{bi} (\modu x^b) x^{bi} + (p(x)/x^{b k}) x^{b k} \label{eq:name10}
   \end{align}
-  för $k \geq 1$ så ger induktion över $k$ att $u(x^b) =  p(x)$. Nu återstår
+  för $k \geq 1$ så ger induktion över $k$ att $u(x^b) = p(x)$. Nu återstår
   alltså bara att visa att (\ref{eq:name9}) = (\ref{eq:name10}).
 
   \begin{align*}
-    \sum_{i = 0}^{k} p(x)/x^{bi} (\modu x^b) x^{bi} &+ p(x)/x^{b(k + 1)}  x^{b(k + 1)} =\\
+    \sum_{i = 0}^{k} p(x)/x^{bi} (\modu x^b) x^{bi} &+ p(x)/x^{b(k + 1)} x^{b(k + 1)} =\\
     \sum_{i = 0}^{k-1} p(x)/x^{bi} (\modu x^b) x^{bi} &+
-    \left(p(x)/x^{b k} \modu x^b\right) x^{b k} + \left(p(x)/x^{b(k + 1)}\right)  x^{b(k + 1)} = \\
+    \left(p(x)/x^{b k} \modu x^b\right) x^{b k} + \left(p(x)/x^{b(k + 1)}\right) x^{b(k + 1)} = \\
     \sum_{i = 0}^{k-1} p(x)/x^{bi} (\modu x^b) x^{bi} &+
-    \left(p(x)/x^{b k} \modu x^b + \left(p(x)/x^{b(k + 1)}\right)  x^b \right) x^{b k} = \\
+    \left(p(x)/x^{b k} \modu x^b + \left(p(x)/x^{b(k + 1)}\right) x^b \right) x^{b k} = \\
     \sum_{i = 0}^{k-1} p(x)/x^{bi} (\modu x^b) x^{bi} &+
-    (p(x)/x^{b k} \modu x^b + ((p(x)/x^{b k})/x^b)  x^b) x^{b k} =
+    (p(x)/x^{b k} \modu x^b + ((p(x)/x^{b k})/x^b) x^b) x^{b k} =
     \tag{på grund av (\ref{eq:name8})}\\
-    \sum_{i = 0}^{k-1} p(x)/x^{bi}  (\modu x^b) x^{bi} &+ (p(x)/x^{b k}) x^{b k}
+    \sum_{i = 0}^{k-1} p(x)/x^{bi} (\modu x^b) x^{bi} &+ (p(x)/x^{b k}) x^{b k}
   \end{align*}
 \end{proof}
