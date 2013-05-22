@@ -36,11 +36,6 @@ split k b = assert (b > 0) $ go k []
     go !k' acc n = case n `quotRemInteger` b of
       (# n', x' #) -> go (k'-1) (x':acc) n'
 
--- |Merge a splitted integer using some base
--- This is the inverse of split.
-merge :: Integer -> [Integer] -> Integer
-merge b = recompose b . reverse
-
 {-# INLINE evaluate #-}
 -- |Evaluate the splits using the evaluation matrix
 -- Note that since the splitlist is big-endian, either we have

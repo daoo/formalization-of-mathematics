@@ -5,6 +5,11 @@ import Settings
 import Test.QuickCheck
 import ToomCook
 
+-- |Merge a splitted integer using some base
+-- This is the inverse of split.
+merge :: Integer -> [Integer] -> Integer
+merge b = recompose b . reverse
+
 genK :: Gen Int
 genK = choose (2, 10)
 
