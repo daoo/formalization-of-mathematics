@@ -67,8 +67,15 @@ recompose b = go 1 0
     go  _  !acc []     = acc
     go !b' !acc (x:xs) = go (b * b') (acc + b' * x) xs
 
+-- |Boundary where we stop recursing
+-- Assume that multiplying two hardware registers is constant and that Int is
+-- the same size as a hardware register. Thus it makes most sense to stop
+-- recursing on the max bound of Int.
+bound :: Integer
+bound = fromIntegral $ (maxBound :: Int)
+
 toomCookRec :: ToomCook -> Integer -> Integer -> Integer
-toomCookRec !t !n !m = if n <= 100 || m <= 100
+toomCookRec !t !n !m = if n <= bound || m <= bound
   then n * m
   else let b   = 10^(baseExponent (toomK t) n m)
            n'  = split (toomK t) b n
