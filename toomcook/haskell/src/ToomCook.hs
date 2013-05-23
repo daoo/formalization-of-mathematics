@@ -12,7 +12,9 @@ module ToomCook
 
 import Control.Exception (assert)
 import Data.Ratio
+import GHC.Exts
 import GHC.Integer
+import GHC.Integer.Logarithms
 
 data ToomCook = ToomCook
   { toomK :: Int
@@ -28,17 +30,13 @@ matVecMulRat mat vec = map numerator $ map (sum . zipWith f vec) mat
   where
     f a b = fromInteger a * b
 
-log10 :: Integer -> Integer
-log10 n = assert (n >= 0) $ go 0 n
-  where
-    go !acc  0  = acc
-    go !acc !n' = go (acc + 1) (n' `quot` 10)
-
-baseExponent :: Int -> Integer -> Integer -> Integer
+baseExponent :: Int -> Integer -> Integer -> Int
 baseExponent k n m = assert (k > 0) $
   1 + max
-    (log10 n `quotInteger` fromIntegral k)
-    (log10 m `quotInteger` fromIntegral k)
+    (integerLogBase# 10 n `unsafeQuot` k)
+    (integerLogBase# 10 m `unsafeQuot` k)
+  where
+    unsafeQuot x (I# y) = I# (quotInt# x y)
 
 -- |Split an integer into a big-endian list of integers using a given base
 split :: Int -> Integer -> Integer -> [Integer]
