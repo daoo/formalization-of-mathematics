@@ -11,7 +11,6 @@ module ToomCook
   ) where
 
 import Control.Exception (assert)
-import Data.Ratio
 import GHC.Exts
 import GHC.Integer
 import GHC.Integer.Logarithms
@@ -19,16 +18,22 @@ import GHC.Integer.Logarithms
 data ToomCook = ToomCook
   { toomK :: Int
   , toomMat :: [[Integer]]
-  , toomInvMat :: [[Rational]]
+  , toomInvMat :: [(Integer, [Integer])]
   }
 
-matVecMul :: Num a => [[a]] -> [a] -> [a]
-matVecMul mat vec = map (sum . zipWith (*) vec) mat
-
-matVecMulRat :: [[Rational]] -> [Integer] -> [Integer]
-matVecMulRat mat vec = map numerator $ map (sum . zipWith f vec) mat
+dot :: Num a => [a] -> [a] -> a
+dot = go 0
   where
-    f a b = fromInteger a * b
+    go !acc (x:xs) (y:ys) = go (acc + x * y) xs ys
+    go !acc _      _      = acc
+
+matVecMul :: Num a => [[a]] -> [a] -> [a]
+matVecMul mat vec = map (dot vec) mat
+
+-- |Special Matrix, vector multiplication
+-- Each row is devided by the factor after the dot product.
+matVecMulRat :: [(Integer, [Integer])] -> [Integer] -> [Integer]
+matVecMulRat mat vec = map (\(f, r) -> dot vec r `quot` f) mat
 
 baseExponent :: Int -> Integer -> Integer -> Int
 baseExponent k n m = assert (k > 0) $
@@ -53,7 +58,7 @@ split k b = assert (b > 0) $ go k []
 evaluate :: [[Integer]] -> [Integer] -> [Integer]
 evaluate = matVecMul
 
-interpolate :: [[Rational]] -> [Integer] -> [Integer]
+interpolate :: [(Integer, [Integer])] -> [Integer] -> [Integer]
 interpolate = matVecMulRat
 
 recompose :: Integer -> [Integer] -> Integer
