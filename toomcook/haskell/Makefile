@@ -5,7 +5,7 @@ prof:
 	@cabal-dev build --ghc-options="-rtsopts -prof -fprof-auto -H64m"
 
 release:
-	@cabal-dev build --ghc-options="-fllvm -H64m"
+	@cabal-dev build --ghc-options="-fllvm -O2 -H64m"
 
 configure:
 	@cabal-dev install \
