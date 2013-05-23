@@ -1,5 +1,14 @@
 {-# LANGUAGE BangPatterns, MagicHash, UnboxedTuples #-}
-module ToomCook where
+module ToomCook
+  ( ToomCook(..)
+  , baseExponent
+  , split
+  , evaluate
+  , interpolate
+  , recompose
+  , toomCookRec
+  , toomCook
+  ) where
 
 import Control.Exception (assert)
 import Data.Ratio
