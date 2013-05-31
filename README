@@ -1,1 +1,8 @@
-Formalization of Mathematics
+This is the collected works from the Formalization of Mathematics bachelor
+thesis at Chalmers in 2013.
+
+The result of the project is a formal proof of the Toom-Cook algorithm in Coq
+with the SSReflect extension.
+
+The implementation of the algorithm and the proof is available in this repo as
+well as a Haskell implementation of Toom-Cook and the full report (in swedish).
