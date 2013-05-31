@@ -1,26 +1,25 @@
-options = -file-line-error -halt-on-error
+sources = report.tex src/**/*.tex
 
-all: build
+all: build/report.pdf
 
-build:
+build/report.pdf: $(sources)
 	mkdir -p build
 	TEXINPUTS=.:src: latexmk -outdir=build -bibtex -pdf report.tex
 
-run: dropbox
+run: ${HOME}/dropbox/public/report.pdf
 
-dropbox:
-	cp build/report.pdf $(HOME)/dropbox/public/report.pdf
+www: ${HOME}/www/report.pdf
 
-www:
-	cp build/report.pdf $(HOME)/www/report.pdf
+${HOME}/dropbox/public/report.pdf: build/report.pdf
+	cp $< $@
 
-chalmers:
-	cp build/report.pdf /mnt/chalmers/report.pdf
+${HOME}/www/report.pdf: build/report.pdf
+	cp $< $@
 
 clean:
-	rm build/*.*
+	rm -rf build/*
 
 countlabels:
 	grep --no-file -R '\label' src | sed 's@^.*\\label{@@' | sed 's@}.*$\@@' | sort | uniq -c
 
-.PHONY: clean build dropbox www
+.PHONY: clean
