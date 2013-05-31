@@ -1,5 +1,5 @@
 \RequirePackage[l2tabu,orthodox]{nag}
-\documentclass[bachelors,a4paper,gu]{chalmers-thesis}
+\documentclass[a4paper]{report}
 \usepackage[T1]{fontenc}
 \usepackage[backend=biber]{biblatex}
 \usepackage[swedish,english]{babel}
@@ -9,7 +9,7 @@
 \usepackage{color}
 \usepackage{csquotes}
 \usepackage{float}
-\usepackage{hyperref}
+%\usepackage{hyperref}
 \usepackage{listings}
 \usepackage{mathtools}
 \usepackage{microtype}
@@ -22,35 +22,13 @@
 \input{macro}
 
 \title{Formalisering av Algoritmer och Matematiska Bevis}
-\subtitle{En formalisering av Toom-Cook algoritmen i \coq{} med \ssr{}}
+%\subtitle{En formalisering av Toom-Cook algoritmen i \coq{} med \ssr{}}
 \author{Jesper Andersson\and Åsa Lideström\and Daniel Oom\and Anders Sjöberg\and Niclas Ståhl}
-\thesisin{Datateknik och Matematik}
-\department{Datateknik och Matematik}
-\reportno{2013:11}
-\copyrightyear{2013}
+%\reportno{2013:11}
+%\copyrightyear{2013}
 
-\coverfigure{\includegraphics[width=\textwidth,height=\paperheight,keepaspectratio]{figures/Tupp}}
-\covercaption{Tuppen Tuppenuppe är en Åsbohöna}
-
-\firstabstract{\input{abstract-se}}
-\secondabstract{english}{\input{abstract-en}}
-\acknowledgements{\input{acknowledgements}}
-\keywords{Formalisering, Polynommultiplikation, Toom-Cook, \coq{}, \ssr{}}
-
-\DeclareFieldFormat[article]{title}{#1}
-\DeclareFieldFormat[article]{volume}{\mkbibbold{#1}}
-\renewbibmacro{in:}{}
-\DeclareFieldFormat[article]{pages}{#1}
-\renewbibmacro*{journal+issuetitle}{
-  \usebibmacro{shortjournal}
-  \setunit*{\addspace}
-  \iffieldundef{series}{}{\newunit\printfield{series}\setunit{\addspace}}
-  \usebibmacro{volume+number+eid}
-  \setunit{\addspace}
-  \usebibmacro{issue+date}
-  \setunit{\addcolon\space}
-  \usebibmacro{issue}
-  \newunit}
+%\coverfigure{\includegraphics[width=\textwidth,height=\paperheight,keepaspectratio]{figures/Tupp}}
+%\covercaption{Tuppen Tuppenuppe är en Åsbohöna}
 
 \addbibresource{report.bib}
 
@@ -59,8 +37,22 @@
 %\rhead{Grupp 11}
 
 \begin{document}
-\selectlanguage{swedish}
 \maketitle
+
+\selectlanguage{english}
+\begin{abstract}
+\input{abstract-en}
+\end{abstract}
+\selectlanguage{swedish}
+\begin{abstract}
+\input{abstract-se}
+\end{abstract}
+\renewcommand{\abstractname}{Tacksägelser}
+\begin{abstract}
+\input{acknowledgements}
+\end{abstract}
+
+\tableofcontents
 
 \chapter{Inledning}
 \label{sec:inledning}
