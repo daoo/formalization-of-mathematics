@@ -1,5 +1,3 @@
-Require Import ssreflect ssrfun ssrbool eqtype.
-
 Inductive nat: Set :=
   | O: nat
   | S: nat -> nat.
@@ -121,7 +119,12 @@ Theorem plusSwap: forall (n m o: nat),
 Proof.
   intros n m o.
   rewrite plusC.
-  rewrite <- plusA.  
+  rewrite <- plusA.
+  assert (H: plus o n = plus n o).
+    rewrite plusC. reflexivity.
+  rewrite H.
+  reflexivity.
+Qed.
 
 Theorem multSn: forall (n m: nat),
   mult m (S n) = plus m (mult m n).
@@ -136,7 +139,9 @@ Proof.
     intros n.
     simpl.
     rewrite IH.
-    rewrite plusA.
+    rewrite plusSwap.
+    reflexivity.
+Qed.
 
 Theorem multC: forall (n m: nat),
   mult n m = mult m n.
@@ -151,4 +156,33 @@ Proof.
     (* n = S n' *)
     intros m.
     simpl.
-    
+    rewrite multSn.
+    rewrite IH.
+    reflexivity.
+Qed.
+
+Theorem plusDr: forall (n m o: nat),
+  mult (plus n m) o = plus (mult n o) (mult m o).
+Proof.
+  induction n as [ | n' IH ].
+    reflexivity.
+    intros m o.
+    simpl.
+    rewrite IH.
+    rewrite plusA.
+    reflexivity.
+Qed.
+
+Theorem multA: forall (n m o: nat),
+  mult n (mult m o) = mult (mult n m) o.
+Proof.
+  induction o as [ | o' IH ].
+    rewrite multn0.
+    rewrite multn0.
+    rewrite multn0.
+    reflexivity.
+
+    rewrite multC.
+    rewrite multSn.
+    rewrite multSn.
+    rewrite plusDr.
