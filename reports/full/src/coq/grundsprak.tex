@@ -9,7 +9,7 @@ loop n = loop (n + 1)
 \end{verbatim}
 och kompilatorn kommer att kompilera och låta dig köra funktionen. Men
 \verb+loop+ kommer aldrig ge något resultat och kommer snurra i all evighet.
-Kompilatorn till \coq{} tillåter inte denna typen av definitioner utan kommer
+Kompilatorn till \coq{} tillåter inte denna typen av definitioner utan kommer att
 ge kompileringsfel om den stöter på liknande funktioner. För att \coq{} ska
 acceptera en rekursiv funktion krävs det att någon av parametrarna i det
 rekursiva anropet närmar sig basfallet eller så måste användaren ange ett bevis
