@@ -40,7 +40,7 @@ Definition mul2 (x: nat) := x * 2.
 
 Definition example : nat := compose nat nat nat add1 mul2 5.
 \end{lstlisting}
-Notera att programmerare är lata och vill gärna skriva så lite som möjligt. I
+Notera att programmerare är lata och vill skriva så lite som möjligt. I
 \coq{} kan man därför se till att typ parametrarna \C{a}, \C{b} och \C{c}
 automatiskt sätts in på rätt ställe i funktionsanropen. För att göra detta
 behöver man dock ändra på definitionen av \C{compose} och sätta
