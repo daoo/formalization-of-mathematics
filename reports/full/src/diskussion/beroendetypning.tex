@@ -31,7 +31,7 @@ matMul :: Matrix m n -> Matrix n o -> Matrix m o
 matMul = ...
 \end{verbatim}
 
-Denna definitionen ger två fördelar:
+Den här definitionen ger två fördelar:
 
 \begin{itemize}
   \item Det går inte att skicka in fel sorts matriser. Den andra matrisen måste
@@ -46,4 +46,4 @@ inte ingår i typen skulle man kunna anropa funktionen med matriser med
 felaktiga dimensioner. Gör man det kan programmet krascha vid körning med något
 mindre hjälpsamt felmeddelande i stil med ``index out of bounds''. Eller så går
 det ännu värre och funktionen kastar bort hälften av det tänkta resultatet.
-Denna typen av problem kan man slippa när man använder beroendetypning.
+Denna typ av problem kan man slippa när man använder beroendetypning.
