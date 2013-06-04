@@ -7,7 +7,7 @@ förklaras inte närmare. Jämförelser görs med det informella beviset i avsni
 bevisets gång. Variablerna \C{p} och \C{q} betecknar genomgående polynom över
 ett integritetsområde.
 
-I beviset används när så är möjligt redan tidigare bevisade resultat från
+I beviset används, när så är möjligt, redan tidigare bevisade resultat från
 \ssr{}s bibliotek. En lång rad lemman om bland annat grundläggande egenskaper
 hos polynom, naturliga tal, matriser och summor finns tillgängliga.
 
@@ -46,9 +46,9 @@ Lemma toom_cook_correct : forall p q,
 Det formella beviset för att den rekursiva delen av algoritmen är korrekt har
 en struktur som liknar beviset av prop~\ref{prop:1}.
 % Konstig mening svårt att förstå vad som menas:
-Den största skillnaden att induktionen i det formella fallet görs över antalet
+Den största skillnaden är att induktionen i det formella fallet görs över antalet
 rekursiva anrop av algoritmen i stället för att som i beviset av
-prop~\ref{prop:1} görar över graden av de polynom som multipliceras. Det beror
+prop~\ref{prop:1} göra induktionen över graden av de polynom som multipliceras. Det beror
 på att den rekursiva delen av den implementerade algoritmen \C{toom_cook_rec}
 är definierad med en oberoende variabel n, så som beskrivits i
 \ref{sec:formrec}. I stället för att induktionen som i det informella
@@ -174,7 +174,7 @@ att två vektorer är lika genom att visa att elementen på motsvarande platser 
 lika i båda vektorerna. (Då vektorer är implementerade i \ssr{} som funktioner
 från mängden av index i vektorn $\{0, \ldots , k\}$ till mängden av element i
 vektorn säger lemmat mer specifikt att två vektorer är lika om de extensionellt
-sett är samma funktion, dvs om de antar samma värden för samma argument.) På
+sett är samma funktion, dvs om de antar samma värden för samma argument). På
 rad~\ref{lst:rad12} kan vi sedan slutligen visa att uttrycket i vänsterledet i
 \C{have}-satsen är lika med uttrycket i högerledet i \C{have}-satsen med hjälp
 av induktionshypotesen. Då har målet blivit:
