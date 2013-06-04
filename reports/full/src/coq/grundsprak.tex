@@ -26,7 +26,11 @@ T(n) = \left\{\begin{matrix} n/2, & \mbox{om }n\equiv0\mbox{ (mod 2)} \\ 3n+1,
 För att göra en definition i \coq{} använder man nyckelordet \C{Definition}. En
 definition av funktionskomposition kan se ut så här:
 \begin{lstlisting}
-Definition compose (a b c: Type) (f: b -> c) (g: a -> b) (x: a) : c := f (g x).
+Definition compose
+  (a b c: Type)
+  (f: b -> c)
+  (g: a -> b)
+  (x: a) : c := f (g x).
 \end{lstlisting}
 I definitionen av \C{compose} måste vi först ge typerna \C{a}, \C{b} och \C{c}
 explicit, till skillnad från i \haskell{} där de är definierade implicit.
@@ -46,14 +50,19 @@ automatiskt sätts in på rätt ställe i funktionsanropen. För att göra detta
 behöver man dock ändra på definitionen av \C{compose} och sätta
 klammerparenteser runt parametrarna istället:
 \begin{lstlisting}
-Definition compose' {a b c: Type} (f: b -> c) (g: a -> b) (x: a) : c := f (g x).
+Definition compose'
+  {a b c: Type}
+  (f: b -> c)
+  (g: a -> b)
+  (x: a) : c := f (g x).
 \end{lstlisting}
 Vi kan även använda så kallade lambdauttryck, vilket betyder funktioner
 definierade utan namn som används direkt där man skriver dem. Syntaxen för
 lambdauttryck är \C{fun parameters => application}. Med dessa förändringar kan
 vi skriva
 \begin{lstlisting}
-Definition example' : nat := compose' (fun x => x + 1) (fun x => x * 2) 5.
+Definition example' : nat :=
+  compose' (fun x => x + 1) (fun x => x * 2) 5.
 \end{lstlisting}
 \coq{} har även datatyper och de definieras med hjälp av \C{Inductive}. En
 definition av naturliga tal kan se ut så här:
@@ -89,11 +98,15 @@ att notera är likheten mellan mönstermatchningen i \coq{} och \C{case} sats i
 För att definiera en rekursiv funktion använder vi \C{Fixpoint} istället för
 \C{Definition}:
 \begin{lstlisting}
-Fixpoint concatenate (X: Type) {n m: nat} (a: vec X n) (b: vec X m) : vec X (n+m) :=
-  match a with
-  | empty => b
-  | element _ x xs => element x (concatenate X xs b)
-  end.
+Fixpoint concatenate
+  (X: Type)
+  {n m: nat}
+  (a: vec X n)
+  (b: vec X m) : vec X (n+m) :=
+    match a with
+    | empty => b
+    | element _ x xs => element x (concatenate X xs b)
+    end.
 \end{lstlisting}
 
 Detta var en mycket kort introduktion till \coq{} som funktionellt
