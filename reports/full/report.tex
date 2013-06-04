@@ -12,6 +12,7 @@
 \usepackage{listings}
 \usepackage{mathtools}
 \usepackage{microtype}
+\usepackage{pdfpages}
 \usepackage{subfig}
 \usepackage{subfiles}
 \usepackage{tikz}
@@ -26,7 +27,7 @@
 \addbibresource{report.bib}
 
 \begin{document}
-\maketitle
+\includepdf[pages={1,2}]{front.pdf}
 
 \selectlanguage{english}
 \begin{abstract}
