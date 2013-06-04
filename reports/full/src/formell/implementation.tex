@@ -2,7 +2,7 @@ Här beskrivs det huvudsakliga resultatet i projektet: den formella
 implementationen och beviset av Toom-Cook i \coq{} med \ssr{}. Den fungerar
 också som en illustration på hur definitioner och bevis ser ut och fungerar i
 \coq{} med \ssr{}. De viktigaste funktionerna och lemmana till algoritmen
-presenteras. Den fullständiga källkoden finns i \ref{sec:coqkod}.
+presenteras. Den fullständiga källkoden finns i appendix~\ref{sec:coqkod}.
 
 \section{Implementation av Toom-Cook i \coq{} med \ssr{}}
 \label{sec:formellimplementation}
@@ -79,19 +79,19 @@ Algoritmen kommer dock inte fungera som Toom-Cook med \C{m} mindre än 2.
 
 \begin{lstlisting}
 Definition V_e : 'M[{poly R}]_(number_points, m) :=
-  \matrix_(i < number_points, j < m) ((inter_points i 0))^+j.
+  \matrix_(i < number_points, j < m) (inter_points i 0)^+j.
 \end{lstlisting}
 Här definieras evalueringsmatrisen \C{V_e} som en \C{number_points} $\times$
 \C{m}-matris med element som tillhör $R[x]$.
-\C{\\matrix_(i < number_points, j < m)((inter_points i 0))^+j} säger att matrisen
+\C{\\matrix_(i < number_points, j < m) (inter_points i 0)^+j} säger att matrisen
 på plats \C{(i,j)}, med \C{(i < number_points)} och \C{(j < m)} ska ha \C{i}:te
 elementet ur kolonnvektorn \C{inter_points} upphöjt till \C{j}.
 
 \begin{lstlisting}
 Definition V_I : 'M[{poly R}]_(number_points) :=
-  \matrix_(i < number_points, j < number_points) ((inter_points i 0))^+j.
+  \matrix_(i < number_points, j < number_points)
+    (inter_points i 0)^+j.
 \end{lstlisting}
-
 Här definieras interpolationsmatrisen på motsvarade sätt som
 evalueringsmatrisen, skillnaden är att det blir en matris av dimension
 \C{number_points} $\times$ \C{number_points} istället.
@@ -120,12 +120,12 @@ $u(y)=(p/x^0\;mod\;x^b)y^0+\cdots+(p/x^{(n-1)b}\;mod\;x^b)y^{n-1}$ där \C{n},
 \C{b} och \C{p} är inparametrarna.
 
 \begin{lstlisting}
-Definition evaluate (u: {poly {poly R}}) : 'cV[{poly R}]_(number_points) :=
-  V_e *m (poly_rV u)^T.
-Definition interpolate (u: 'cV[{poly R}]_(number_points)) : {poly {poly R}} :=
-  rVpoly (invmx V_I *m u)^T.
-\end{lstlisting}
+Definition evaluate (u: {poly {poly R}}) :
+  'cV[{poly R}]_(number_points) := V_e *m (poly_rV u)^T.
 
+Definition interpolate (u: 'cV[{poly R}]_(number_points)) :
+  {poly {poly R}} := rVpoly (invmx V_I *m u)^T.
+\end{lstlisting}
 Här definieras själva matrismultiplikationerna, se ekvation (\ref{eq:apabepa})
 och (\ref{eq:NAME5}). \C{evaluate} ger tillbaka en vektor med ett polynoms
 värden i interpolationspunkterna. Funktionen \C{poly_rV} ger tillbaka en

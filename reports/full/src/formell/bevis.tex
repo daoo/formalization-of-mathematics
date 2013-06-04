@@ -120,12 +120,11 @@ v := split m b q : {poly {poly R}}
 ______________________________________(1/1)
 (if (size p <= 2) || (size q <= 2)
   then p * q
-  else
-   recompose b
-     (interpolate
-       (\col_i
-         toom_cook_rec n' ((evaluate u) i 0) ((evaluate v) i 0)))) =
-p * q
+  else recompose b
+    (interpolate
+      (\col_i toom_cook_rec n'
+        ((evaluate u) i 0)
+        ((evaluate v) i 0)))) = p * q
 \end{lstlisting}
 Nästa steg är sedan att skriva om målet så att vi kan använda
 induktionsantagandet \C{IHn}.
@@ -138,19 +137,18 @@ lika med det mer komplicerade uttrycket som står efter \C{else}. Dessa två
 uttryck skulle motsvarat basfallet och induktionssteget om induktionen hade
 gjorts över graden av p och q, som i prop~\ref{prop:1}.
 
-Nu görs i stället på
-rad~\ref{lst:rad8} med \C{ifP} en falluppdelning över \C{if ... then ... else}-uttrycket
-som inte ger oss något nytt induktionsantagende.
-I det första fallet när \C{(size p <= 2) || (size q <= 2)} är höger- och
-vänsterled i målet trivialt lika
-och löses liksom det triviala målet på rad \ref{lst:rad4} direkt med \C{//}.
-När det är gjort är målet:
+Nu görs i stället på rad~\ref{lst:rad8} en falluppdelning över
+\C{if ... then ... else}-uttrycket, med \C{ifP}, som inte ger oss något nytt
+induktionsantagende. I det första fallet när \C{(size p <= 2) || (size q <= 2)}
+är höger- och vänsterled i målet trivialt lika och löses liksom det triviala
+målet på rad \ref{lst:rad4} direkt med \C{//}. När det är gjort är målet:
 \begin{lstlisting}
 recompose b
   (interpolate
     (\col_i
-      toom_cook_rec n' ((evaluate u) i 0) ((evaluate v) i 0))) =
- p * q
+      toom_cook_rec n'
+        ((evaluate u) i 0)
+        ((evaluate v) i 0))) = p * q
 \end{lstlisting}
 och vi vill använda induktionsantagandet
 \begin{lstlisting}
@@ -180,8 +178,9 @@ rad~\ref{lst:rad12} kan vi sedan slutligen visa att uttrycket i vänsterledet i
 av induktionshypotesen. Då har målet blivit:
 \begin{lstlisting}
 recompose b
-  (interpolate (\col_i ((evaluate u) i 0 * (evaluate v) i 0))) =
-    p * q
+  (interpolate
+    (\col_i
+      ((evaluate u) i 0 * (evaluate v) i 0))) = p * q
 \end{lstlisting}
 
 Det återstår nu att visa tre saker: För det första att evalueringsfunktionen
@@ -198,9 +197,8 @@ beviset. I det formella beviset visas detta i två lemman, \C{matrix_evaluation}
 och \C{toom_cook_interpol}, som används på rad~\ref{lst:rad13} respektive
 rad~\ref{lst:rad18} att skriva om målet till
 \begin{lstlisting}
- recompose b
- (interpolate (\col_i (u * v).[inter_points i 0])) =
- p * q
+recompose b
+  (interpolate (\col_i (u * v).[inter_points i 0])) = p * q
 \end{lstlisting}
 och sedan till
 \begin{lstlisting}
