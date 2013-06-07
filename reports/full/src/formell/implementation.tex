@@ -140,7 +140,7 @@ samma typ. Eftersom polynomet \C{u} som ska evalueras har koefficienter i
 $R[x]$, så att vektorn av dess koefficienter ligger i $R[x]$, måste matrisens
 element också ligga i $R[x]$. Det är därför som vi låter
 interpolationspunkterna ligga i $R[x]$ här istället för i $R$. Det hade gått
-att lösa det på andra sätt, men det hade gjort bevisen för att \C{evaluate} och
+att lösa det på andra sätt, men det hade gjort bevisen för \C{evaluate} och
 särskilt \C{interpolate} mycket mer komplicerade.
 
 \begin{lstlisting}
@@ -178,12 +178,12 @@ avtar.
 Sedan definierar man en yttre funktion, som anropar den rekursiva funktionen och
 ger det extra argumentet värdet av den riktiga rekursionsparametern.
 
-I \C{toom_cook_rec} är basfallen \C{n} når 0 och att graden av något av polynomen
-blir mindre än 2. Då utförs naiv polynommultiplikation. Falluppdelningen mellan
-basfall och rekursionsfall för extraargumentet \C{n} görs med en \C{match}-sats.
-Sedan görs falluppdelning mellan basfall och rekursionsfall för den riktiga
-rekursionsparametern med en \C{if ... then ... else}-sats. Nedan beskrivs
-stegen i funktionen ett och ett.
+I \C{toom_cook_rec} är basfallen \C{n = 0} och graden av något av polynomen
+mindre än 2. Då utförs naiv polynommultiplikation. Falluppdelningen mellan
+basfall och rekursionsfall för extraargumentet \C{n} görs med en
+\C{match}-sats. Sedan görs falluppdelning mellan basfall och rekursionsfall för
+den riktiga rekursionsparametern med en \C{if ... then ... else}-sats. Nedan
+beskrivs stegen i funktionen ett och ett.
 
 \begin{lstlisting}
 Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
@@ -204,7 +204,7 @@ Fixpoint toom_cook_rec (n: nat) p q : {poly R} :=
 \begin{lstlisting}
 | 0%N => p * q
 \end{lstlisting}
-Om en \C{n} är lika med 0 så sker direkt multiplikation mellan polynomen.
+Om \C{n} är lika med 0 så sker direkt multiplikation mellan polynomen.
 
 \begin{lstlisting}
 | n'.+1 => if (size p <= 2) || (size q <= 2) then p * q else
