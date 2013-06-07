@@ -131,7 +131,7 @@ och (\ref{eq:NAME5}). \C{evaluate} ger tillbaka en vektor med ett polynoms
 värden i interpolationspunkterna. Funktionen \C{poly_rV} ger tillbaka en
 radvektor med ett polynoms koefficienter (motsvarande funktion finns inte
 implementerad i \ssr{} för kolonnvektorer, och för att kunna använda resultat
-från biblioteket i bevisen använder vi den i stället för att definiera en egen
+från biblioteket i bevisen använder vi den istället för att definiera en egen
 kolonnversion). \C{^T} transponerar radvektorn för att kunna multiplicera den med
 evalueringsmatrisen.
 
@@ -139,7 +139,7 @@ Matrismultiplikation är bara definierat i \ssr{} mellan matriser och vektorer a
 samma typ. Eftersom polynomet \C{u} som ska evalueras har koefficienter i
 $R[x]$, så att vektorn av dess koefficienter ligger i $R[x]$, måste matrisens
 element också ligga i $R[x]$. Det är därför som vi låter
-interpolationspunkterna ligga i $R[x]$ här i stället för i $R$. Det hade gått
+interpolationspunkterna ligga i $R[x]$ här istället för i $R$. Det hade gått
 att lösa det på andra sätt, men det hade gjort bevisen för att \C{evaluate} och
 särskilt \C{interpolate} mycket mer komplicerade.
 

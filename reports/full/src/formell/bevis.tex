@@ -47,7 +47,7 @@ Det formella beviset för att den rekursiva delen av algoritmen är korrekt har
 en struktur som liknar beviset av prop~\ref{prop:1}.
 % Konstig mening svårt att förstå vad som menas:
 Den största skillnaden är att induktionen i det formella fallet görs över antalet
-rekursiva anrop av algoritmen i stället för att som i beviset av
+rekursiva anrop av algoritmen istället för att som i beviset av
 proposition~\ref{prop:1} göra induktionen över graden av de polynom som multipliceras. Det beror
 på att den rekursiva delen av den implementerade algoritmen \C{toom_cook_rec}
 är definierad med en oberoende variabel n, så som beskrivits i
@@ -137,7 +137,7 @@ lika med det mer komplicerade uttrycket som står efter \C{else}. Dessa två
 uttryck skulle motsvarat basfallet och induktionssteget om induktionen hade
 gjorts över graden av p och q, som i proposition~\ref{prop:1}.
 
-Nu görs i stället på rad~\ref{lst:rad8} en falluppdelning över
+Nu görs istället på rad~\ref{lst:rad8} en falluppdelning över
 \C{if ... then ... else}-uttrycket, med \C{ifP}, som inte ger oss något nytt
 induktionsantagande. I det första fallet när \C{(size p <= 2) || (size q <= 2)}
 är höger- och vänsterled i målet trivialt lika och löses liksom det triviala
@@ -260,7 +260,7 @@ Lemma recompose_split : forall (f: {poly R}) (b: nat),
 som säger att \C{recompose} (som evaluerar ett polynom i $x^b$) är
 vänsterinvers till \C{split} för polynom som har tillräckligt låg grad jämfört
 med argumenten \C{m} och \C{b}. Detta motsvarar ungefär lemma~\ref{lemma:2} i
-det informella beviset om man hade haft Påstående 1 som ett antagande i stället
+det informella beviset om man hade haft Påstående 1 som ett antagande istället
 för att visa det.
 
 Beviset av \C{recompose_split} bygger på fem mindre lemman som motsvarar
