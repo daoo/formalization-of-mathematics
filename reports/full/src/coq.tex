@@ -154,7 +154,8 @@ Qed.
 
 Lemma recompose_split_lemma1 : forall (f: {poly R}) (k b: nat),
   (rmodp (rdivp f 'X^(k*b)) 'X^(b)) * 'X^(k*b) +
-  (rdivp f 'X^(k.+1*b)) * 'X^(k.+1*b) = (rdivp f 'X^(k*b)) * 'X^(k*b).
+  (rdivp f 'X^(k.+1*b)) * 'X^(k.+1*b) =
+  (rdivp f 'X^(k*b)) * 'X^(k*b).
 Proof.
   move => f k b.
   by rewrite {1}mulSnr mulSn 2!exprD mulrA -mulrDl addrC
@@ -162,10 +163,11 @@ Proof.
 Qed.
 
 Lemma recompose_split_lemma2 : forall (f: {poly R}) (k b: nat),
-  \big[+%R/0]_(i < k.+1) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
-  (rdivp f 'X^(k.+1*b))*'X^(k.+1*b) =
-  \big[+%R/0]_(i < k) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
-  (rdivp f 'X^(k*b))*'X^(k*b).
+  \sum_(i < k.+1)
+    (rmodp (rdivp f 'X^(i*b)) 'X^b) * 'X^(i*b) + (rdivp f 'X^(k.+1*b)) * 'X^(k.+1*b)
+  =
+  \sum_(i < k)
+    (rmodp (rdivp f 'X^(i*b)) 'X^b) * 'X^(i*b) + (rdivp f 'X^(k*b)) * 'X^(k*b).
 Proof.
   move=> f k b.
   symmetry.
@@ -173,8 +175,10 @@ Proof.
 Qed.
 
 Lemma recompose_split_lemma3 : forall (f : {poly R}) (k b : nat),
-  \big[+%R/0]_(i < k.+1) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
-  (rdivp f 'X^(k.+1*b))*'X^(k.+1*b) = f.
+  \sum_(i < k.+1)
+    (rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b) +
+    (rdivp f 'X^(k.+1*b))*'X^(k.+1*b)
+  = f.
 Proof.
   move=> f k b.
   elim: k => [ | n IH ].
