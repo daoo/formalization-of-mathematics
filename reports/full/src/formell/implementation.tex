@@ -7,7 +7,7 @@ presenteras. Den fullständiga källkoden finns i appendix~\ref{sec:coqkod}.
 \section{Implementation av Toom-Cook i \coq{} med \ssr{}}
 \label{sec:formellimplementation}
 I det här avsnittet förklaras hur Toom-Cook-algoritmen är implementerad i
-\ssr{} och hur den överrenstämmer med den informella definitionen av
+\ssr{} och hur den överensstämmer med den informella definitionen av
 algoritmen.
 
 \subsection{Inledande definitioner och funktioner}
@@ -38,7 +38,7 @@ Sedan parametriseras funktionen på \C{m} genom att ange den som ett godtyckligt
 men fixt naturligt tal. \C{m} är den parameter som precis som i den informella
 algoritmen anger vilken Toom-Cook-instans vi har. Det gör att vi inom sektionen
 inte explicit behöver ge \C{m} som argument till varje funktion vi definierar,
-men att vi ändå kan använda det i funktionerna. Vi definerar också
+men att vi ändå kan använda det i funktionerna. Vi definierar också
 \C{number_points} som det antal interpolationspunkter vi behöver för \toomm{}.
 
 % definieras variabler av typen nat, naturliga
@@ -64,7 +64,7 @@ element i $R$) eller av låg grad.
 % att vilket faktiskt skiljer sig från pappersalgoritmen. Det var avgörandet för
 % pappersalogritmen att punkterna tillhörde $R$ för att graden garanterat skulle
 % avta vilket ledde till att induktionsantagandet över graden kunde appliceras,
-% se avsnitt~\ref{in:induktion}, men i beviset i\ssr görs induktion över en annan
+% se avsnitt~\ref{in:induktion}, men i beviset i \ssr{} görs induktion över en annan
 % variabel så det problemet uppstår aldrig. Algoritmen blir dock snabbare om
 % interpolationspunkterna tillhör $R$ eller är av låg grad i $R[x]$, se
 % avsnitt~\ref{def}.
@@ -132,7 +132,7 @@ värden i interpolationspunkterna. Funktionen \C{poly_rV} ger tillbaka en
 radvektor med ett polynoms koefficienter (motsvarande funktion finns inte
 implementerad i \ssr{} för kolonnvektorer, och för att kunna använda resultat
 från biblioteket i bevisen använder vi den i stället för att definiera en egen
-kolonnversion). \C{^T} transponer radvektorn för att kunna multiplicera den med
+kolonnversion). \C{^T} transponerar radvektorn för att kunna multiplicera den med
 evalueringsmatrisen.
 
 Matrismultiplikation är bara definierat i \ssr{} mellan matriser och vektorer av
@@ -170,7 +170,7 @@ rekursionsparametern, som i det här fallet är graden på polynomen, minskar.
 Ett sätt att komma runt detta är att definiera funktionen med ett extra
 argument, i det här fallet \C{n}, ett naturligt tal vars enda uppgift är att
 minskas med 1 för varje rekursivt anrop av funktionen. Dessutom definierar man
-två basfall för rekursionen. Ett för när det extra argumentetet \C{n} når 0,
+två basfall för rekursionen. Ett för när det extra argumentet \C{n} når 0,
 och ett för den verkliga rekursionsparametern. Då godkänner \coq{} funktionen,
 och användaren slipper göra ett krångligt bevis för att rekursionsparametern
 avtar.
@@ -252,9 +252,9 @@ interpolationspunkten.)
 let w := interpolate w_a
 in recompose b w
 \end{lstlisting}
-När rekusionssteget är klart så sker interpolerationssteget som motsvarar
+När rekursionssteget är klart så sker interpolationssteget som motsvarar
 steg~\ref{sec:interpol}, där inversen av interpolationsmatrisen multipliceras
-med kolonnvektorn \C{w_a} och retunerar polynomet \C{w} som är produkten av
+med kolonnvektorn \C{w_a} och returnerar polynomet \C{w} som är produkten av
 polynomen u och v. Till sist sker sammansättningen som motsvarar steg~
 \ref{sec:sammansattning}, där polynomet \C{w} evalueras i $x^b$, och därmed har
 vi fått produkten av polynomen \C{p} och \C{q}.

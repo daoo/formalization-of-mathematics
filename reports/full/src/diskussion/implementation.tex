@@ -71,7 +71,7 @@ använda andra ekvationslösningsmetoder än matrisinvertering.
 % integritetsområdet så att
 % $\det V_I = \prod_{0 \leq i < j \leq d} (\alpha_i - \alpha_j)$ är inverterbar. Även om
 % det skulle finnas det kanske de inte är de mest lämpliga interpolationspunkterna i
-% andra avseenden. Ska metoder som bygger på matrisinversion användas i interpolationssteget
+% andra avseenden. Ska metoder som bygger på matrisinvertering användas i interpolationssteget
 
 I de integritetsområden där matrisinverteringen fungerar finns också
 möjligheter att effektivisera ekvationslösningen genom att använda till exempel
@@ -85,10 +85,10 @@ implementeras. Den skulle dock kräva en av två saker. Antingen att de önskade
 interpolationspunkterna gavs som argument vid varje applikation av algoritmen
 eller att interpolationspunkter för varje möjligt integritetsområde sparades
 eller genererades med hjälp av någon algoritm när Toom-Cook anropades. Eftersom
-Toom-Cook-\emph{m} går att definera för godtyckligt stora heltal $m$ skulle en
+Toom-Cook-\emph{m} går att definiera för godtyckligt stora heltal $m$ skulle en
 helt generell implementation kräva att det gick att generera godtyckligt många
 lämpliga interpolationspunkter eftersom antalet interpolationspunkter är $2m-1$.
-Det går natutligtvis inte i ett ändligt integritetsområde.
+Det går naturligtvis inte i ett ändligt integritetsområde.
 
 Vid praktiska tillämpningar av Toom-Cook är det dock mer rimligt att implementera
 en eller några instanser av den, till exempel Toom-Cook-3 och Toom-Cook-5, för

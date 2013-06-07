@@ -36,8 +36,9 @@ I definitionen av \C{compose} måste vi först ge typerna \C{a}, \C{b} och \C{c}
 explicit, till skillnad från i \haskell{} där de är definierade implicit.
 Parametrarna \C{f}, \C{g} och \C{x} följer sedan direkt. I \coq{} används punkt
 (\C{.}) för att avsluta en definition likt hur man avslutar ett påstående
-(\emph{engelska: statement}) i C med semikolon (;). För att anropa \C{compose}
-måste man ge typer, funktioner och värdet. Till exempel:
+(\emph{engelska: statement}) i programmeringsspråket \textsc{C} med semikolon
+(;). För att anropa \C{compose} måste man ge typer, funktioner och värdet. Till
+exempel:
 \begin{lstlisting}
 Definition add1 (x: nat) := x + 1.
 Definition mul2 (x: nat) := x * 2.
@@ -92,7 +93,7 @@ Mönstermatchning innebär att man med hjälp av något värde tillhörande någ
 bestämmer vad som ska göras för varje konstruktor till typen. Notera i det här
 fallet att funktionen bara är definierad för vektorer \C{vec X n} där \C{n >
 0}. Vi behöver således inte hantera tomma vektorer i mönstermatchningen. Värt
-att notera är likheten mellan mönstermatchningen i \coq{} och \C{case} sats i
+att notera är likheten mellan mönstermatchningen i \coq{} och \C{case} satser i
 \textsc{Haskell}.
 
 För att definiera en rekursiv funktion använder vi \C{Fixpoint} istället för

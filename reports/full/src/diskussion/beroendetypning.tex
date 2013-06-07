@@ -17,14 +17,14 @@ specifik funktion som man inte vet namnet på men man vet vilka typer den ska
 ha. Att typerna ofta förklarar vad funktionerna gör innebär att programmerare
 inte behöver sätta sig in i avancerad kod i funktionen utan det räcker med att
 läsa vilka typer funktionen har. Ett exempel på detta är bevis i \coq{} där
-typerna specifierar vad som ska bevisas medan funktionskropparna ofta är
+typerna specificerar vad som ska bevisas medan funktionskropparna ofta är
 väldigt svårförstådda och inte säger så mycket om vad som bevisas.
 
 Ett exempel är matriser med dimensionerna i typen som gör att man inte kan
 tappa bort en dimension eller av misstag vända på dem. För matrismultiplikation
 vet vi till exempel att om man multiplicerar en $m \times n$-matris och en $n
 \times o$-matris får man en $m \times o$-matris. Med denna kunskap kan man
-definera multiplikations-rutinen i stil med:
+definiera multiplikations-rutinen i stil med:
 
 \begin{verbatim}
 matMul :: Matrix m n -> Matrix n o -> Matrix m o

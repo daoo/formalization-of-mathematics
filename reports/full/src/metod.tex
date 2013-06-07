@@ -8,7 +8,7 @@ med hjälp av \coq{} och \ssr{}. Som material användes bland annat
 grundkurs i \coq{}\cite{pierce2012software}, \emph{Coq in a Hurry} av Yves
 Bertot som är en kort introduktionsartikel till \coq{}\cite{bertot2006coq} och
 \emph{SSReflect tutorial} av Georges Gonthier som är en introduktion till
-\ssr{} \cite{gonthier2009ssreflect}. Som en övning i att hantera polynom i \ssr
+\ssr{} \cite{gonthier2009ssreflect}. Som en övning i att hantera polynom i \ssr{}
 gjordes även ett bevis av Karatsuba-algoritmen som redan är formaliserad i
 \coq{}. I kapitel~\ref{sec:coq} beskrivs \coq.
 
@@ -46,9 +46,9 @@ avsnitt~\ref{sec:formellbevis}.
 \section{Avgränsningar}
 Algoritmen i \coq{} har implementerats med de låsta typerna för bland annat
 polynom och matriser i \ssr{} som beskrivs i avsnitt~\ref{sec:ssr}. Den kan
-alltså användas för att beräkna produkten mellan konkreta polynom. Om tid hade
-funnits hade en eller flera exekverbara versioner av Toom-Cook implementerats,
-som sedan skulle visats korrekt genom att relatera dem till implementationen
-med de låsta typerna (se avsnitt~\ref{sec:ssr} för mer information låsning).
-Detta tillvägagångssätt för implementation av matematiska algoritmer diskuteras
-i avsnitt~\ref{sec:exekverbar}.
+alltså inte användas för att beräkna produkten mellan konkreta polynom. Om tid
+hade funnits hade en eller flera exekverbara versioner av Toom-Cook
+implementerats, som sedan skulle visats korrekt genom att relatera dem till
+implementationen med de låsta typerna (se avsnitt~\ref{sec:ssr} för mer
+information låsning). Detta tillvägagångssätt för implementation av matematiska
+algoritmer diskuteras i avsnitt~\ref{sec:exekverbar}.
