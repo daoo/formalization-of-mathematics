@@ -144,8 +144,8 @@ att lösa det på andra sätt, men det hade gjort bevisen för att \C{evaluate} 
 särskilt \C{interpolate} mycket mer komplicerade.
 
 \begin{lstlisting}
-Definition recompose (b: nat) (w: {poly {poly R}}) : {poly R} :=
-  w.['X^b].
+Definition recompose (b: nat) (w: {poly {poly R}})
+  : {poly R} := w.['X^b].
 \end{lstlisting}
 Här sker evalueringen av \C{w} i $x^b$ där \C{b} är en inparameter.
 
@@ -264,6 +264,6 @@ anropas med maximum av graden av polynomen plus 1. När \C{toom_cook_rec}
 anropas med detta tal eller något högre tal kommer den fungera som Toom-Cook
 gör i den informella definitionen i avsnitt~\ref{sec:definition}.
 \begin{lstlisting}
- Definition toom_cook p q : {poly R} :=
+Definition toom_cook p q : {poly R} :=
   toom_cook_rec (maxn (size p) (size q)) p q.
 \end{lstlisting}

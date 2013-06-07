@@ -23,8 +23,11 @@ graden avtar.
 
 En annan lösning är att definiera polynomen $u$ och $v$ så att de beror på två
 variabler istället för en. Denna definition är tagen ur \cite{bodrato2007notes}
-och lyder $u(y,z) = \displaystyle\sum\limits_{i=0}^{m-1} {u_iz^{m-1-i}y^i}$ där
-$u(x^b,1) = u$, analogt för v. Detta leder till att man evaluerar i $R$x$R$
+och lyder
+\begin{equation*}
+  u(y,z) = \sum\limits_{i=0}^{m-1} {u_iz^{m-1-i}y^i}
+\end{equation*}
+där $u(x^b,1) = u$, analogt för v. Detta leder till att man evaluerar i $R$x$R$
 eller i $R[x]$x$R[x]$ så att interpolationspunkterna är par av element i $R$
 eller i $R[x]$. Till exempel evaluera i punkten $(0,1)$ i $u(y,z)$ ger $u_0$
 vilket motsvarar den konstanta termen i $u(y)$ och evaluera $(1,0)$ i $u(y,z)$

@@ -40,8 +40,8 @@ Lemma toom_cook_rec_correct : forall (n : nat) p q,
 När detta lemma är bevisat följer \C{toom_cook_correct} direkt:
 \begin{lstlisting}
 Lemma toom_cook_correct : forall p q,
-   toom_cook p q = p * q.
- Proof. move=> p q. by apply: toom_cook_rec_correct. Qed.
+  toom_cook p q = p * q.
+Proof. move=> p q. by apply: toom_cook_rec_correct. Qed.
 \end{lstlisting}
 Det formella beviset för att den rekursiva delen av algoritmen är korrekt har
 en struktur som liknar beviset av prop~\ref{prop:1}.
@@ -253,7 +253,7 @@ Förutom de 50-tal lemman ur \ssr{}-biblioteket som har används i huvudbeviset 
 ett 15-tal specifika lemman till huvudsatsen formulerats och bevisats. Här
 presenteras några av dem. Det viktigaste lemmat är
 \begin{lstlisting}
- Lemma recompose_split : forall (f: {poly R}) (b: nat),
+Lemma recompose_split : forall (f: {poly R}) (b: nat),
   size f <= m * b ->
   (split m b f).['X^b] = f.
 \end{lstlisting}
@@ -282,7 +282,7 @@ Lemma exp_m_degree_lemma : forall p,
 Det första lemmat \C{recompose_split_lemma1} är en specik instans av
 (\ref{eq:name8}), dvs av att
 \begin{align*}
- a(x)= a(x)  \modu x^b + \left(a(x)/x^b\right) x^b
+  a(x) = a(x) \modu x^b + \left(a(x)/x^b\right) x^b
 \end{align*}.
 \begin{lstlisting}
 Lemma recompose_split_lemma1 : forall (f: {poly R}) (k b: nat),
@@ -294,18 +294,22 @@ Det andra lemmat motsvarar att (\ref{eq:name9}) = (\ref{eq:name10}), det vill
 säga induktionssteget i lemma~\ref{lemma:2}.
 \begin{lstlisting}
 Lemma recompose_split_lemma2 : forall (f: {poly R}) (k b: nat),
-  \big[+%R/0]_(i < k.+1) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
-  (rdivp f 'X^(k.+1*b))*'X^(k.+1*b) =
-  \big[+%R/0]_(i < k) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
-  (rdivp f 'X^(k*b))*'X^(k*b).
+  \sum_(i < k.+1)
+    (rmodp (rdivp f 'X^(i*b)) 'X^b) * 'X^(i*b) +
+    (rdivp f 'X^(k.+1*b)) * 'X^(k.+1*b) =
+  \sum_(i < k)
+    (rmodp (rdivp f 'X^(i*b)) 'X^b) * 'X^(i*b) +
+    (rdivp f 'X^(k*b)) * 'X^(k*b).
 \end{lstlisting}
 Det tredje lemmat svarar mot att (\ref{eq:name9}) = $p(x)$.Givet
 induktionssteget som görs i \C{recompose_split_lemma2} och basfallet som ges av
 \C{recompose_split_lemma1} så fås
 \begin{lstlisting}
 Lemma recompose_split_lemma3 : forall (f : {poly R}) (k b : nat),
-  \big[+%R/0]_(i < k.+1) ((rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b)) +
-  (rdivp f 'X^(k.+1*b))*'X^(k.+1*b) = f.
+  \sum_(i < k.+1)
+    (rmodp (rdivp f 'X^(i*b)) 'X^b)*'X^(i*b) +
+    (rdivp f 'X^(k.+1*b))*'X^(k.+1*b)
+  = f.
 \end{lstlisting}
 Detta används slutligen för att visa \C{recompose_split}.
 % Precis som beviset av huvudsatsen för att visa likhet mellan vektorer får vi
